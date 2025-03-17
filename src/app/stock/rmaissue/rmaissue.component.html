@@ -1,1 +1,723 @@
-<p>rmaissue works!</p>
+<div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+        <div class="card quotation">
+
+            <div class="card-header color-dark fw-500">
+                <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                    <span class="breadcrumb-item active">RMA Issues</span>
+                </h3>
+                <div class="quotation-btn-section">
+                    <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+                        (click)="AddRmaIssue()" style="margin-right: 10px;">
+                        <i class="fas fa-plus" style="margin-right:4px;"></i>
+                        Add New RMA Issue
+                    </button>
+
+                </div>
+            </div>
+
+
+            <div class="card-body">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive" style="border: rgb(0, 0, 0);">
+
+                        <table class="table mb-0 table-borderless">
+                            <tr>
+                                <td colspan="12" class="search-text-tbl">
+                                    <div class="input-group"><input type="text" class="form-control"
+                                            (keyup)="getRMAIssueListData({'search_text':call_history_search.value})"
+                                            #call_history_search placeholder="search here">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary"
+                                                (click)="getRMAIssueListData({'search_text':call_history_search.value})"><i
+                                                    class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <thead>
+                                <tr class="userDatatable-header">
+
+                                    <th>
+                                        <span class="userDatatable-title">RMA Case Number</span>
+                                    </th>
+
+                                    <th>
+                                        <span class="userDatatable-title">Issue Date</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Biller</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Customer Name</span>
+                                    </th>
+
+                                    <th>
+                                        <span class="userDatatable-title">Product Name</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Serial Number</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Conclusion Status</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Action</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container>
+                                    <tr *ngFor="let list of rma_issue_list;let i=index">
+
+                                        <td>{{list.rma_case_number}}</td>
+                                        <td>{{list.rma_issue_date}}</td>
+                                        <td>
+                                            <span><button type="button" class="buttonClass {{
+                                                list.billerCode}}">{{list.billerCode}}</button></span>
+                                        </td>
+                                        <td>{{list.customer}}</td>
+                                        <td>{{list.product_name}}</td>
+                                        <td>{{list.rma_serial_number}}</td>
+                                        <td>{{list.conclusion_request}}</td>
+                                        <td>
+                                            <div class="page">
+
+                                                <div class="dropdown">
+                                                    <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                    <ul class="dropdown__list">
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="Edit"
+                                                                (click)=" editRmaIssue(list.rma_issue_id)">
+                                                                <img class="show" src="assets/img/icon/nfc-pen-b.png">
+                                                                <img class="hide" src="assets/img/icon/nfc-pen.png">
+                                                            </a>
+
+                                                        </li>
+
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="Mail"
+                                                                (click)="Email(list.rma_issue_id)">
+                                                                <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/gmail-blue.png">
+
+                                                            </a>
+                                                        </li>
+
+
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="Delete" data-toggle="modal"
+                                                                (click)="deleteRmaIssue(list.rma_issue_id)">
+                                                                <img class="show" src="assets/img/icon/remove-b.png">
+                                                                <img class="hide" src="assets/img/icon/remove.png">
+                                                            </a>
+                                                        </li>
+
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="recordNotFound == true">
+                                        <td colspan="12">Data not found</td>
+                                    </tr>
+                                </ng-container>
+
+
+                            </tbody>
+
+                        </table>
+
+
+                        <br>
+                        <br>
+                    </div>
+
+                    <nav class="atbd-page" *ngIf=" recordNotFound === false">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                            <li class="page-item">
+                                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.backtab=='show' ? getRMAIssueListData({'search_text':call_history_search.value,'offset':paginationData.start}) : false"><i
+                                        class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="getRMAIssueListData({'search_text':call_history_search.value,'offset':paginationData.back})"><i
+                                        class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                *ngFor="let pagination of paginationData.data;let i=index">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)=" pagination.load ==true ? getRMAIssueListData({'search_text':call_history_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="getRMAIssueListData({'search_text':call_history_search.value,'offset':paginationData.next})"><i
+                                        class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            <li class="page-item">
+                                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.nexttab =='show' ? getRMAIssueListData({'search_text':call_history_search.value,'offset':paginationData.end}) : false"><i
+                                        class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <br>
+                    <br>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- --------------------------------------------------------  *  ADD  RMA ISSUE POPUP  * ------------------------------------------------------ -->
+
+
+<div class="modal fade bd-example-modal-lg" id="add_rma_issue_popup" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2>New RMA Issues </h2>
+            </div>
+
+            <div class="modal-body">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive">
+                        <div class="table-responsive ml-3">
+                            <form [formGroup]="add_ram_issue_form">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_name">Company Name</label>
+                                            <select name="company_name" class="form-control"
+                                                formControlName="company_name">
+                                                <option *ngFor="let user of add_company_name_list"
+                                                    [ngValue]="user.billerId">
+                                                    {{ user.billerName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6" style="position: relative;">
+                                        <div class="form-group">
+                                            <label for="customer_name">Customer Name</label>
+                                            <input type="text" class="form-control" id="customer_name"
+                                                formControlName="customer_name" (input)="getCustomerList($event)" />
+                                            <input type="hidden" formControlName="customer_name_search"
+                                                id="customer_name_search">
+                                            <ul *ngIf="add_customer_name_list.length > 0" class="dropdown-list">
+                                                <li *ngFor="let customer of add_customer_name_list"
+                                                    (click)="selectCustomer(customer)">
+                                                    {{ customer.customerName }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="rma_case_no">RMA Case Number</label>
+                                            <input type="text" id="rma_case_no" [ngModel]="this.add_generateRmaNumber"
+                                                class="form-control" formControlName="rma_case_no" readonly>
+                                            <input type="hidden" formControlName="rma_case_no_id"
+                                                [ngModel]="this.add_generateRmaNumber_id" id="rma_case_no_id">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" style="position: relative;">
+                                        <div class="form-group">
+                                            <label for="product_serial_no">Product Serial Number</label>
+                                            <input type="text" class="form-control" id="product_serial_no"
+                                                formControlName="product_serial_no" (input)="getserialNumber($event)" />
+                                            <input type="hidden" formControlName="product_serial_no_search"
+                                                id="product_serial_no_search">
+                                            <ul *ngIf="add_serialNumber.length > 0" class="dropdown-list">
+                                                <li *ngFor="let serial of add_serialNumber"
+                                                    (click)="selectserialNo(serial)">
+                                                    {{ serial.product_serial_number }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product_category">Product Category</label>
+                                            <select name="product_category" class="form-control"
+                                                formControlName="product_category"
+                                                (change)="getProductsByCategorylist()">
+                                                <option [ngValue]="null" selected>Select Category</option>
+                                                <option *ngFor="let user of add_product_category_list"
+                                                    value="{{user.product_category_id}}">
+                                                    {{user.product_category_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="product_name">Product Name</label>
+                                            <select name="product_name" class="form-control"
+                                                formControlName="product_name">
+                                                <option [ngValue]="null" selected>Select Product Name</option>
+                                                <option *ngFor="let user of add_product_name_list"
+                                                    value="{{user.productId}}">
+                                                    {{user.productName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="problem_type">Problem Type</label>
+                                            <select name="problem_type" class="form-control"
+                                                formControlName="problem_type">
+                                                <option [ngValue]="null" selected>Select Problem Type</option>
+                                                <option *ngFor="let user of add_problem_type_list"
+                                                    value="{{user.problem_type_id}}">
+                                                    {{user.problem_type_name}}</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fileAttachment">Select Attachment</label>
+                                            <input required type="file" name="fileAttachment" id="fileAttachment"
+                                                class="form-control" formControlName="fileAttachment" multiple
+                                                (change)="fileAttachmentEventPE1($event)">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ramIssue_description">RMA Issue</label>
+                                            <textarea class="form-control " formControlName="ramIssue_description"
+                                                row="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ramCause_description">RMA Cause</label>
+                                            <textarea class="form-control " formControlName="ramCause_description"
+                                                row="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="conclusion_description">Conclusion</label>
+                                            <textarea class="form-control " formControlName="conclusion_description"
+                                                row="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="conclusion_appr_req">Conclusion Approval Request</label>
+                                            <select name="conclusion_appr_req" class="form-control"
+                                                formControlName="conclusion_appr_req">
+                                                <option [ngValue]="null" selected>Select Conclusion Approval Request
+                                                </option>
+                                                <option *ngFor="let user of add_conclusion_appr_req_list"
+                                                    value="{{user.conclusion_request}}">
+                                                    {{user.conclusion_request}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="AddRmaIssue_new()">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- --------------------------------------------------------  *  EDIT & UPDATE  RMA ISSUE POPUP  * ------------------------------------------------------ -->
+
+
+<div class="modal fade bd-example-modal-lg" id="edit_rma_issue_popup" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2>New RMA Issues </h2>
+            </div>
+
+            <div class="modal-body">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive">
+                        <div class="table-responsive ml-3">
+                            <form [formGroup]="edit_ram_issue_form">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_company_name">Company Name</label>
+                                            <select name="edit_company_name" class="form-control"
+                                                formControlName="edit_company_name">
+                                                <option *ngFor="let user of add_company_name_list"
+                                                    [ngValue]="user.billerId">
+                                                    {{ user.billerName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6" style="position: relative;">
+                                        <div class="form-group">
+                                            <label for="edit_customer_name">Customer Name</label>
+                                            <input type="text" class="form-control" id="edit_customer_name"
+                                                formControlName="edit_customer_name"
+                                                (input)="editgetCustomerList($event)" />
+                                            <input type="hidden" formControlName="edit_customer_name_search"
+                                                id="edit_customer_name_search">
+                                            <ul *ngIf="edit_customer_name_list?.length > 0" class="dropdown-list">
+                                                <li *ngFor="let customer of edit_customer_name_list"
+                                                    (click)="editselectCustomer(customer)">
+                                                    {{ customer.customerName }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_rma_case_no">RMA Case Number</label>
+                                            <input type="text" id="edit_rma_case_no"
+                                                [ngModel]="this.edit_generateRmaNumber" class="form-control"
+                                                formControlName="edit_rma_case_no" readonly>
+                                            <input type="hidden" formControlName="edit_rma_case_no_id"
+                                                [ngModel]="this.edit_generateRmaNumber_id" id="edit_rma_case_no_id">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" style="position: relative;">
+                                        <div class="form-group">
+                                            <label for="edit_product_serial_no">Product Serial Number</label>
+                                            <input type="text" class="form-control" id="edit_product_serial_no"
+                                                formControlName="edit_product_serial_no"
+                                                (input)="editgetserialNumber($event)" />
+                                            <input type="hidden" formControlName="edit_product_serial_no_search"
+                                                id="edit_product_serial_no_search">
+                                            <ul *ngIf="edit_serialNumber.length > 0" class="dropdown-list">
+                                                <li *ngFor="let serial of edit_serialNumber"
+                                                    (click)="editselectserialNo(serial)">
+                                                    {{ serial.product_serial_number }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Category -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_product_category">Product Category</label>
+                                            <select name="edit_product_category" class="form-control"
+                                                formControlName="edit_product_category"
+                                                (change)="edit_getProductsByCategorylist()">
+                                                <!-- <option [ngValue]="null" selected>Select Category</option> -->
+                                                <option *ngFor="let category of add_product_category_list"
+                                                    [value]="category.product_category_id">
+                                                    {{ category.product_category_name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_product_name">Product Name</label>
+                                            <select name="edit_product_name" class="form-control"
+                                                formControlName="edit_product_name">
+                                                <!-- <option [ngValue]="null" >Select Product Name</option> -->
+                                                <option *ngFor="let product of edit_product_name_list"
+                                                    [value]="product.productId">
+                                                    {{ product.productName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_problem_type">Problem Type</label>
+                                            <select name="edit_problem_type" class="form-control"
+                                                formControlName="edit_problem_type">
+                                                <option [ngValue]="null" selected>Select Problem Type</option>
+                                                <option *ngFor="let user of add_problem_type_list"
+                                                    value="{{user.problem_type_id}}">
+                                                    {{user.problem_type_name}}</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_ramIssue_description">RMA Issue</label>
+                                            <textarea class="form-control " formControlName="edit_ramIssue_description"
+                                                row="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_ramCause_description">RMA Cause</label>
+                                            <textarea class="form-control " formControlName="edit_ramCause_description"
+                                                row="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_conclusion_description">Conclusion</label>
+                                            <textarea class="form-control "
+                                                formControlName="edit_conclusion_description" row="2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit_conclusion_appr_req">Conclusion Approval Request</label>
+                                            <select name="edit_conclusion_appr_req" class="form-control"
+                                                formControlName="edit_conclusion_appr_req">
+                                                <option [ngValue]="null" selected>Select Conclusion Approval Request
+                                                </option>
+                                                <option *ngFor="let user of add_conclusion_appr_req_list"
+                                                    value="{{user.conclusion_request}}">
+                                                    {{user.conclusion_request}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fileAttachment">Select Attachment</label>
+                                            <input required type="file" name="edit_fileAttachment"
+                                                id="edit_fileAttachment" class="form-control"
+                                                formControlName="edit_fileAttachment" multiple
+                                                (change)="fileAttachmentEventPE1($event)">
+
+                                            <!-- Add this part to show file link if available -->
+                                            <div *ngIf="fileUrl">
+                                                <label>File Attachment</label>
+                                                <a [href]="fileUrl" target="_blank">Click to view the file</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="UpdateRmaIssue_new()">
+                        Update
+                    </button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------Modal Pop Up (BEGIN)  for email Text Editor in customer Contract------>
+
+<div class="modal fade bd-example-modal-lg" id="TextEditorId" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="contractGenerateModalLongTitle">RMA-Email </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="emailForm">
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                                    <option [ngValue]="null" selected>Select From</option>
+                                    <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                                        {{ from.from_email }}
+                                    </option>
+                                </select>
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                            <div class="col-md-9 col-9" style="display: flex;">
+                                <div class="form-check" style="margin-right: 10px;">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="company" [checked]="true" (change)="handle_radioChange_email($event)" />
+
+                                    <label class="form-check-label" for="company"> Company
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="finance" (change)="handle_radioChange_email($event)" />
+                                    <label class="form-check-label" for="finance">Finance
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                            <div class="col-lg-10">
+                                <input type="email" id="emailto" class="form-control" formControlName="email_to" [ngModel]="this.getCustomerEmailCompany">
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="template" class="form-control"
+                                    formControlName="email_template" (change)="templateContentEmailDropdown($event)">
+                                    <option [ngValue]="null" selected>Select Template</option>
+                                    <option *ngFor="let template of email_crmTemplateList"
+                                        value="{{ template.crm_template_id }}">
+                                        {{template.crm_template_name}}
+                                    </option>
+                                </select>
+                                <br>
+
+                                <div *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 ">
+                                    Template is Required
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
+                                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                                    Subject is Required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                            <div class="col-lg-10">
+                                <editor id="tinyID_RMA" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+                            <div *ngIf="fileUrl" class="mt-2">
+                                <a [href]="fileUrl" target="_blank">Click to view the file</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+                    Mail
+
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="emailClear()">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -116,7 +116,7 @@ export class EditcreditnoteComponent implements OnInit {
       'e_vendor_name': new FormControl(null),
       'e_companyNameDropdown': new FormControl(null),
       'e_kind_Attention': new FormControl(null),
-      'e_currency': new FormControl(null),
+      'e_currency': new FormControl(0),
       'e_despatchThrough': new FormControl(null),
       'e_payment': new FormControl(null),
       'e_exchangeRate': new FormControl(null),
@@ -228,18 +228,18 @@ export class EditcreditnoteComponent implements OnInit {
 
         let api_req: any = new Object();
         let api_ProdAutoFill_req: any = new Object();
-        api_req.moduleType = "purchaseorder";
-        api_req.api_url = "purchaseorder/delete_purchase_order_child";
+        api_req.moduleType = "creditNote";
+        api_req.api_url = "creditNote/delete_creditnote_child";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_ProdAutoFill_req.action = "delete_purchase_order_child";
+        api_ProdAutoFill_req.action = "creditNote/delete_creditnote_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.poChildId = purchaseOrderChildId;
+        api_ProdAutoFill_req.child_id = purchaseOrderChildId;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           console.log("response", response);
-          location.reload();
+          // location.reload();
 
 
         });
@@ -322,37 +322,54 @@ export class EditcreditnoteComponent implements OnInit {
    });
  }
 
-  keywordvendorName = 'vendorName';
+  keywordvendorName = 'customerName';
   onFocusedVendor(e: any) {
     // do something when input is focused
     console.log(e);
+  }
+  clearInput(event:any){
+    this.addDo_section1.patchValue({
+      'e_customerAddress1': '',
+      'e_customerAddress2':'',
+      'e_customerAddress3': '',
+   
+      'e_vendor_name': '',
+      'e_companyNameDropdown': '',
+ 
+      // 'e_currency': 0,
+   
+    
+
+    });
+
   }
   searchVendor_selectDropdownData(data: any) {
     this.spinner.show();
 
 
-    this.vendor_ID = data.vendorId;
-    this.vendor_Name = data.vendorName;
+    this.vendor_ID = data.customerId;
+    this.vendor_Name = data.customerName;
 
     this.e_vendor_name = data.vendorName;
     console.log("search data in dropdown", data)
-    console.log("search data-vendor Id", data.vendorId)
-    console.log("search data- vendor name", data.vendorName)
+    console.log("search data-vendor Id", data.customerId)
+    console.log("search data- vendor name", data.customerName)
 
     let api_req: any = new Object();
     let api_SearchVendor_req: any = new Object();
-    api_req.moduleType = "purchaseorder";
-    api_req.api_url = "purchaseorder/vendor_address_details";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/customer_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_SearchVendor_req.action = "vendor_address_details";
+    api_SearchVendor_req.action = "customer_address_details";
     api_SearchVendor_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchVendor_req.vendorId = this.vendor_ID;
+    api_SearchVendor_req.customerId =  this.vendor_ID;
+    api_SearchVendor_req.billerId = this.addDo_section1.value.e_companyName;
     api_req.element_data = api_SearchVendor_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
 
-      if (response.status = true) {
+      if (response.status == true) {
 
         this.spinner.hide();
         
@@ -364,6 +381,19 @@ export class EditcreditnoteComponent implements OnInit {
         this.e_vendor_name = response.vendorName;
         this.e_vendor_company_name = response.vendorName;
         this.e_vendor_company_address=response.vendor_address;
+        this.addDo_section1.patchValue({
+          'e_customerAddress1': response.customer_details.customerAddress1,
+          'e_customerAddress2': response.customer_details.customerAddress2,
+          'e_customerAddress3': response.customer_details.customerAddress3,
+       
+          'e_vendor_name': response.customer_details.customerName,
+          'e_companyNameDropdown': response.customer_details.kind_Attention,
+     
+          'e_currency': response.def_currency_id,
+       
+        
+
+        });
         // this.addDo_section1.patchValue({
 
         //   'e_companyNameDropdown': response.vendorName,
@@ -378,18 +408,18 @@ export class EditcreditnoteComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
-    api_req.moduleType = "purchaseorder";
-    api_req.api_url = "purchaseorder/vendor_name_details";
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_name";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "vendor_name_details";
+    api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    // api_Search_req.billerId = this.addDo_section1.value.companyName;
+     api_Search_req.billerId = this.addDo_section1.value.e_companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-vendor_name response", response);
-      this.searchResult_vendor = response.vendor_list;
+      this.searchResult_vendor = response.customer_list;
 
       if (response!='') {
        
@@ -587,12 +617,13 @@ export class EditcreditnoteComponent implements OnInit {
         // this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
         // this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
         // this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
+        this.vendor_ID=response.data.credit_note_parent.customer_id,
 
         this.addDo_section1.patchValue({          
           'e_companyName': response.data.credit_note_parent.billerId,
           'e_DocNo': response.data.credit_note_parent.credit_note_no,
           'e_DocDate': response.data.credit_note_parent.credit_note_date,
-          'e_companyNameDropdown': response.data.credit_note_parent.customerCompany,
+          'e_companyNameDropdown': response.data.credit_note_parent.kind_Attention,
 
 
           'e_customerAddress1': response.data.credit_note_parent.b_address1,
@@ -682,6 +713,7 @@ export class EditcreditnoteComponent implements OnInit {
 
 
   updatePurchaseOrder() {
+ 
 
     let api_req: any = new Object();
     let api_updatePO_req: any = new Object();
@@ -697,8 +729,21 @@ export class EditcreditnoteComponent implements OnInit {
     api_updatePO_req.credit_note_id = this.credit_note_id;
     api_updatePO_req.credit_note_no = this.addDo_section1.value.e_DocNo;
     api_updatePO_req.date = this.addDo_section1.value.e_DocDate
-    api_updatePO_req.customer_id = this.customer_ID;
-    api_updatePO_req.customerCompany = this.addDo_section1.value.e_companyNameDropdown;
+    if(!this.vendor_ID){
+      alert()
+    }
+    api_updatePO_req.customer_id =    this.vendor_ID  ;
+   
+    if(this.addDo_section1.value.e_vendor_name==undefined || this.addDo_section1.value.e_vendor_name=='' || this.addDo_section1.value.e_vendor_name=='undefined'){
+
+      iziToast.error({
+        message: "Customer Data Missing",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      api_updatePO_req.customerCompany = this.addDo_section1.value.e_vendor_name;
+    }
     api_updatePO_req.b_address1 = this.addDo_section1.value.e_customerAddress1;
     api_updatePO_req.b_address2 = this.addDo_section1.value.e_customerAddress2;
     api_updatePO_req.b_address3 = this.addDo_section1.value.e_customerAddress3;

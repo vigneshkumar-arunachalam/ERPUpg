@@ -52,6 +52,7 @@ export class AttendanceReportComponent implements OnInit {
   timeField_AR: any;
   userID_AR: any;
   userName_AR: any;
+  listShow: boolean=true;
   constructor(public serverService: ServerService,private fileDownloadService: FileDownloadService,
     private excelExportService: ExcelExportService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
@@ -148,6 +149,47 @@ export class AttendanceReportComponent implements OnInit {
       };
 
   }
+  countryDropDownList(event:any) {
+    this.spinner.show();
+        let api_req: any = new Object();
+        let api_postUPd: any = new Object();
+        api_req.moduleType = "hr";
+        api_req.api_url = "hr/attendancCountryWiseUserList";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_postUPd.action = "hr/attendancCountryWiseUserList";
+        api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_postUPd.hr_group_id = event.target.value;
+        api_req.element_data = api_postUPd;
+    
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+          if (response.status == true) {
+    
+            this.spinner.hide();
+        
+            this.userList = response.user;
+            this.attendanceReportList({});
+        
+    
+    
+          } else {
+            iziToast.warning({
+              message: "View List Loading Failed. Please try again",
+              position: 'topRight'
+            });
+    
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+    
+      }
   attendanceTime(id:any) {
     this.spinner.show();
     console.log("id",id);
@@ -316,6 +358,9 @@ export class AttendanceReportComponent implements OnInit {
 
         this.spinner.hide();
         this.attendanceList = response.datas;
+        if(response.datas==null){
+          this.listShow=false;
+        }
         // this.pettyCashListValue = response.data;
         // this.response_total_cnt = response.count;
         this.processData();

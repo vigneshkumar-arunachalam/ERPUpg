@@ -1,0 +1,1797 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card quotation">
+                <div class="card-header color-dark fw-500" *ngIf="this.Global_search_filter==false">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active">Quotation</span>
+                    </h3>
+                    <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
+                    <div class="quotation-btn-section">
+                        <button type="button" *ngIf="(this.quotationPermission_Add=='1')" title="Add New Quotation"
+                            class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                            (click)="addQuotationNew()" style="margin-right: 10px;">
+                            <i class="fas fa-plus" style="margin-right:0;"></i>
+                            Add
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                            data-target="#searchQuotationFormId">
+                            <i class="fas fa-search" style="margin-right:0;"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+
+                                        <!-- <th>
+                                                <span class="userDatatable-title">QuotID</span>
+                                            </th> -->
+                                        <th>
+                                            <span class="userDatatable-title">QuotNo</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Version</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">QuotDate</span>
+                                        </th>
+
+
+                                        <th>
+                                            <span class="userDatatable-title">Customer</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Product</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">GeneratedBy</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Total Amount</span>
+                                        </th>
+                                        <!-- <th>
+                                                <span class="userDatatable-title">Attachment</span>
+                                            </th> -->
+
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let list of quotation_list ; let i = index ;"
+                                        [ngStyle]="{'background-color':(list.approval_staus=='2')? ('#78EFB7') : ((list.approval_staus=='1')? ('#ffffb3') : ('Default'))}">
+
+                                        <!-- <td>
+                                                <span> {{ list.quotationId}}</span>
+                                            </td> -->
+                                        <td>
+                                            {{ list.quotation_no}}
+                                        </td>
+                                        <td [ngSwitch]="list.duplicate_version">
+
+                                            <span *ngSwitchCase="'1.0'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:white; width: 34px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': 'white'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.1'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#ACC8E5; width:34px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#ACC8E5'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.2'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#D697B4; width: 34px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#D697B4'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.3'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#F1D08C; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#F1D08C'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.4'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#11e9d2; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#11e9d2'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.5'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#f1f17c; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#f1f17c'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.6'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#79e649; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#79e649'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchCase="'1.7'">
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#669999; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#669999'}">{{
+                                                    list.duplicate_version}}</button></span>
+                                            <span *ngSwitchDefault>
+                                                <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#84F0F0; width: 34px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                <input type="text" *ngIf="(list.edit_status=='1')"
+                                                    style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                <button type="button" class="mt-1"
+                                                    [ngStyle]="{'backgroundColor': '#84F0F0'}">
+                                                    {{list.duplicate_version}}</button></span>
+
+
+                                        </td>
+                                        <td>
+                                            <span>{{ list.quotation_date}}</span>
+                                            <!-- <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}</button></span> -->
+                                            <span><button type="button" class="buttonClass {{
+                                                            list.billerCode}}">{{
+                                                    list.billerCode}}</button></span>
+                                        </td>
+
+                                        <td>
+                                            <span>{{ list.customerName}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ list.enquiry_product_description}}</span>
+                                            <!-- <td>
+                                                <span>{{ list.enquiry_product_description}}</span>
+                                            </td> -->
+                                        <td>
+                                            {{ list.billGeneratedBy}}
+                                        </td>
+
+                                        <td>
+                                            {{ list.grand_total}}
+                                        </td>
+
+                                        <!-- <td>
+                                                <span> {{ list.attachment}}</span>
+                                            </td> -->
+
+                                        <td>
+
+                                            <div class="page">
+
+                                                <div class="dropdown">
+                                                    <div style="display: flex;align-items: center;">
+                                                        <button class="btn1" data-toggle="modal"
+                                                            attr.data-target="#ActionId{{i}}"><i
+                                                                class="fa fa-bars"></i></button>
+
+                                                    </div>
+                                                    <div class="modal fade" data-backdrop="false" id="ActionId{{i}}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered ActionId"
+                                                            role="document" style="max-width: 1000px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <span class="col-12 modal-title text-center"
+                                                                        style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
+                                                                    </span>
+                                                                    <h6 type="button" class="" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                        <span aria-hidden="true"
+                                                                            style="    font-size: 30px; position: absolute;          top: 23px;">&times;</span>
+                                                                    </h6>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="row"
+                                                                        style="display: flex;
+                                                                                        justify-content: space-between;">
+                                                                        <ul>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_Edit=='1')">
+                                                                                <a class="hover1" title="Edit Quotation"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#editNewQuotationFormId"
+                                                                                    (click)="editQuotationPopUP(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/nfc-pen-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/nfc-pen.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
+                                                                                </a>
+
+                                                                            </li>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_Edit=='1')">
+                                                                                <a class="hover2" title="Duplicate"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#duplicateQuotationFormId"
+                                                                                    (click)="duplicateQuotationPopUP(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/copy-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/copy.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Duplicate</strong></span>
+                                                                                </a>
+
+                                                                            </li>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover1" title="PDF"
+                                                                                    data-toggle="modal"
+                                                                                    (click)="pdf(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon2/pdf-blue.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon2/pdf-black.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_Delete=='1')">
+                                                                                <a class="hover2"
+                                                                                    title="Delete Quotation"
+                                                                                    (click)="deleteQuotation(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/remove-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/remove.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
+                                                                                </a>
+
+                                                                            </li>
+
+
+                                                                        </ul>
+                                                                        <ul>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_Mail=='1')">
+                                                                                <a class="hover2 " title="Email"
+                                                                                    (click)="Email(list.quotationId,i)"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#TextEditorId">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon2/gmail-blue.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon2/gmail-black.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Email</strong></span>
+                                                                                </a>
+
+                                                                            </li>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(list.approval_staus=='0')">
+                                                                                <a class="hover1"
+                                                                                    title="Quotation Approval"
+                                                                                    *ngIf="(list.approval_staus=='0')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#quotationApprovalId"
+                                                                                    (click)="quotationApprovalEdit(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/tick-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/tick.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Quotation
+                                                                                            Approval</strong></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover2"
+                                                                                    title="Proforma Invoice"
+                                                                                    *ngIf="(list.pi_convert_status=='0')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#PIId"
+                                                                                    (click)="PIEdit(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/pi-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/pi.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Proforma
+                                                                                            Invoice</strong></span>
+                                                                                </a>
+
+                                                                                <a class="hover2"
+                                                                                    title="Proforma Invoice PDF"
+                                                                                    *ngIf="(list.pi_convert_status!='0')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#PIPDFId"
+                                                                                    (click)="PIPDF(list.pi_convert_status,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon2/pdf-search-black.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon2/pdf-search-blue.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>PI
+                                                                                            PDF</strong></span>
+                                                                                </a>
+                                                                            </li>
+
+                                                                        </ul>
+                                                                        <ul>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover1"
+                                                                                    title="File Attachment"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#fileAttachmentFormId"
+                                                                                    (click)="fileAttachmentEdit(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/paperclip-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/paperclip.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>File
+                                                                                            Attachment</strong></span>
+                                                                                </a>
+                                                                            </li>
+
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_Share=='1')">
+                                                                                <a class="hover2"
+                                                                                    title="Share Permission"
+                                                                                    data-toggle="modal"
+                                                                                    *ngIf="(list.share_access_state=='0')"
+                                                                                    data-target="#quotationSharedPersonId"
+                                                                                    (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon2/share-square-blue.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon2/share-square-black.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Share
+                                                                                            Permission</strong></span>
+                                                                                </a>
+
+                                                                                <a class="hover2"
+                                                                                    title="Share Permission"
+                                                                                    data-toggle="modal"
+                                                                                    *ngIf="(list.share_access_state=='1')"
+                                                                                    data-target="#quotationSharedPersonId"
+                                                                                    (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon2/share-square-red.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon2/share-square-black.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Share
+                                                                                            Permission</strong></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover1"
+                                                                                    title="Set Template Name"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#setTemplateNameId"
+                                                                                    (click)="setTemplateName(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/gift-card-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/gift-card.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Set
+                                                                                            Template
+                                                                                            Name</strong></span>
+                                                                                </a>
+                                                                            </li>
+
+
+                                                                        </ul>
+                                                                        <ul>
+                                                                            <li class="dropdown__item"
+                                                                                *ngIf="(this.quotationPermission_ActualPrice=='1')">
+                                                                                <a class="hover2"
+                                                                                    title="Set Actual Cost"
+                                                                                    *ngIf="(list.actual_state=='1')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#setActualCostId"
+                                                                                    (click)="setActualCost(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/dollar-symbol-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/dollar-symbol.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Set
+                                                                                            Actual Cost</strong></span>
+                                                                                </a>
+
+                                                                                <a class="hover2"
+                                                                                    title="Set Actual Cost"
+                                                                                    *ngIf="(list.actual_state=='0')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#setActualCostId"
+                                                                                    (click)="setActualCost(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/dollar-symbol-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/dollar-symbol.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Set
+                                                                                            Actual Cost</strong></span>
+                                                                                </a>
+                                                                            </li>
+
+
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover1"
+                                                                                    title="Quotation Comments"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#quotationCommentsId"
+                                                                                    (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/open-book-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/open-book.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Quotation
+                                                                                            Comments</strong></span>
+                                                                                </a>
+                                                                            </li>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover2" title="Excel Export"
+                                                                                    (click)="quotationExcelExport(list.quotationId,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/paper-plane-blue.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/paper-plane.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>Excel
+                                                                                            Export</strong></span>
+                                                                                </a>
+                                                                            </li>
+
+
+
+                                                                        </ul>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-dark"
+                                                                        style="line-height: 10px;" data-dismiss="modal">
+                                                                        Cancel
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <nav class="atbd-page" *ngIf="this.Global_search_filter==false">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                            <li class="page-item">
+                                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.backtab=='show' ? quotationList({'offset':paginationData.start}) : false"><i
+                                        class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="quotationList({'offset':paginationData.back})"><i
+                                        class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                *ngFor="let pagination of paginationData.data;let i=index">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)=" pagination.load ==true ? quotationList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                            </li>
+
+                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="quotationList({'offset':paginationData.next})"><i
+                                        class="fas fa-angle-double-right"></i></a>
+                            </li>
+
+                            <li class="page-item">
+                                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.nexttab =='show' ? quotationList({'offset':paginationData.end}) : false"><i
+                                        class="fas fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+
+                    </nav>
+                    <table border="0" cellspacing="0" cellpadding="0" style="width:100%" >
+                        <tbody >
+                            <tr *ngIf="this.response_total_cnt==0">
+                       
+                              <div style="text-align: center;">
+                                <div>
+                                  <img src="data:image/png;base64,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" alt="">
+                                </div>
+                                <div style="font-size: larger;font-weight: 600;color: red;">No Matching Records Found</div>
+                               
+                              </div>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
+<div class="modal fade" id="addNewQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" (click)="clearAddQuotationGo()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm" (ngSubmit)="AddQuotationGo($event)">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['enquiryFrom_addPopUP'].errors }"
+                                        formControlName="enquiryFrom_addPopUP">
+                                        <option [ngValue]="null" selected>Select Enquiry From</option>
+
+                                        <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                            {{term.enquiry_from_name}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div *ngIf="submitted && f['enquiryFrom_addPopUP'].errors"
+                                    class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['enquiryFrom_addPopUP'].errors['required']">Enquiry From is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['enquirySubject_addPopUP'].errors }"
+                                        formControlName="enquirySubject_addPopUP" id="enq_subject" />
+                                </div>
+                                <div *ngIf="submitted && f['enquirySubject_addPopUP'].errors"
+                                    class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['enquirySubject_addPopUP'].errors['required']">Enquiry Subject is
+                                        required</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
+                                <div class="col-lg-12">
+                                    <select name="quotValidity" id="quot_val" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f['quotationValidity_addPopUP'].errors }"
+                                        formControlName="quotationValidity_addPopUP">
+                                        <option [ngValue]="null" selected>Select Quotation Validity</option>
+                                        <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
+                                            {{validity}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div *ngIf="submitted && f['quotationValidity_addPopUP'].errors"
+                                    class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['quotationValidity_addPopUP'].errors['required']">Enquiry Subject is
+                                        required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="version" class="col-lg-12 col-form-label">Version</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="version_enqForm_addPopUP"
+                                        [readonly]="isReadonly" [(ngModel)]="quotationVersion" id="version" />
+                                </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].dirty || addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    * Required *
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="temp_name" class="col-lg-12 col-form-label">Template Name</label>
+                                <div class="col-lg-12">
+                                    <select name="templateN" id="temp_name" class="form-control"
+                                        formControlName="templateName_addPopUP">
+                                        <option [ngValue]="null" selected >Select Template Name</option>
+
+                                        <option *ngFor="let template of templateNameList"
+                                            value="{{template.quotationId}}">
+                                            {{template.template_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" form="ngForm"
+                    (click)="AddQuotationGo($event)">Go>></button>
+
+
+                <button type="button" class="btn btn-dark" (click)="clearAddQuotationGo()" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- vignesh Add New Quotation Pop up ends------------------------------------------>
+
+
+
+<!------------Modal Pop Up (BEGIN) edit- Pop Up  in customer Contract Classification------------------>
+<div class="modal fade" id="editNewQuotationFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Edit Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)"> Enquiry From Details</h2>
+                <form [formGroup]="editNewQuotationPopUpForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        formControlName="e_enquiryFrom_addPopUP">
+                                        <option [ngValue]="null" selected >Select Enquiry From</option>
+
+                                        <option *ngFor="let term of edit_enquiryFromList"
+                                            value="{{term.enquiry_from_id}}">
+                                            {{term.enquiry_from_name}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    * Required *
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="e_enquirySubject_addPopUP"
+                                        id="enq_subject" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
+                                <div class="col-lg-12">
+                                    <select name="quotValidity" id="quot_val" class="form-control"
+                                        formControlName="e_quotationValidity_addPopUP">
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
+                                        <option *ngFor="let validity of edit_quotationValidityList"
+                                            value="{{validity}}">
+                                            {{validity}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="version" class="col-lg-12 col-form-label">Version</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="e_version_enqForm_addPopUP"
+                                        [readonly]="isReadonly" id="version" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="temp_name" class="col-lg-12 col-form-label">Template Name</label>
+                                <div class="col-lg-12">
+                                    <select name="templateN" id="temp_name" class="form-control"
+                                        formControlName="e_templateName_addPopUP">
+                                        <option [ngValue]="null" selected >Select Template Name</option>
+
+                                        <option *ngFor="let template of edit_templateNameList"
+                                            value="{{template.quotationId}}">
+                                            {{template.template_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="EditQuotationGo()">Go>></button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!---------------- vignesh edit-popup New Quotation Pop up ends------------------------------>
+
+<!----------Modal Pop Up (BEGIN) Duplicate- Pop Up  in customer Contract Classification------------------>
+<div class="modal fade" id="duplicateQuotationFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Duplicate Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+                <form [formGroup]="duplicateQuotationPopUpForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        formControlName="d_enquiryFrom_addPopUP">
+                                        <option [ngValue]="null" selected >Select Enquiry From</option>
+
+                                        <option *ngFor="let term of duplicate_enquiryFromList"
+                                            value="{{term.enquiry_from_id}}">
+                                            {{term.enquiry_from_name}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    * Required *
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="d_enquirySubject_addPopUP"
+                                        id="enq_subject" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
+                                <div class="col-lg-12">
+                                    <select name="quotValidity" id="quot_val" class="form-control"
+                                        formControlName="d_quotationValidity_addPopUP">
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
+                                        <option *ngFor="let validity of duplicate_quotationValidityList"
+                                            value="{{validity}}">
+                                            {{validity}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="version" class="col-lg-12 col-form-label">Version</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="d_version_enqForm_addPopUP"
+                                        [readonly]="isReadonly" id="version" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="temp_name" class="col-lg-12 col-form-label">Template Name</label>
+                                <div class="col-lg-12">
+                                    <select name="templateN" id="temp_name" class="form-control"
+                                        formControlName="d_templateName_addPopUP">
+                                        <option [ngValue]="null" selected >Select Template Name</option>
+
+                                        <option *ngFor="let template of duplicate_templateNameList"
+                                            value="{{template.quotationId}}">
+                                            {{template.template_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="DuplicateQuotationGo()">Go>></button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------- vignesh -Duplicate popup New Quotation Pop up ends------------------------------->
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Advanced
+                    Search</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchQuotationForm">
+                    <div class="row">
+                        <div class="col-lg-4 ">
+                            <div class="form-group">
+                                <label for="temp1" class="col-lg-12 ">Biller Name</label>
+                                <div class="col-lg-12 " *ngFor="let biller of searchBillerResult;let i =index">
+                                    <input type="checkbox" id="{{biller.billerId}}" [value]="biller.billerId"
+                                        checked="{{biller.chk_val=='true' ? 'checked':''}}"
+                                        (change)="QuotationSearchCHK(biller.billerId,$event)">
+                                    {{biller.billerName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <div class="ng-autocomplete">
+                                    <label for="companyName" class="col-lg-12 ">Search Text</label>
+                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                                        (inputChanged)='searchCustomerData($event)'
+                                        (inputCleared)="clearSelection($event)"
+                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                        [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplateCustomer let-item>
+                                        <a [innerHTML]="item.customerName"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+
+                            <div class="form-group row">
+                                <label for="grp" class="col-lg-12 ">Group By Customer</label>
+                                <div class="col-lg-6">
+                                    <input type="checkbox" formControlName="groupby_customer" id="grp"
+                                        (change)="eventCheckGroupByCustomer($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="getSearch1();quotationList({});">
+                    Search
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+
+<!----------Modal Pop Up (BEGIN)  for Quotation Shared Attachment in customer Contract------------------>
+<div class="modal fade" id="quotationSharedPersonId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+              background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+              background: linear-gradient(to right, #262127, #54b7aa);">
+                  Quotation Shared Person </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <div class="modal-body quotationsharedCSS">
+
+                    <div class="">
+                        <div class="row">
+                            <div class="d-flex col-lg-4" *ngFor="let quot of quotationSharedPerson_List;let i =index"
+                                style="margin-bottom: 10px;">
+                                <div class="d-flex">
+                                    <div class="">
+                                        <div class="checkbox-group-wrapper">
+                                            <div class="checkbox-group d-flex">
+                                                <div >
+
+                                                    <input type="checkbox" id="{{ quot.user_id }}"
+                                                        [value]="quot.user_id" 
+                                                        checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                                        (change)="QuotationSharedCHK(quot.user_id,$event)">
+                                                    <label for="{{ quot.user_id }}"
+                                                        ></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <span class="" style="margin: 0px 15px;">{{quot.firstName}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+            
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationSharedPersonUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
+
+
+
+
+<!----------Modal Pop Up (BEGIN)  for Quotation Approval in customer Contract------------------>
+<div class="modal fade" id="quotationApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content quotApprovalcss">
+            <div class="modal-header ">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Approval</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quotationApprovalForm">
+                    <h3 style="color: #df631c;font-weight: 500;">Are you sure to send to approval?</h3>
+                    <table class="demoTable" style="height: 20;">
+                        <tr>
+                            <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr>
+                                        <td>
+
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="single" checked
+                                                    (change)="handle_radioChange($event)" />
+                                                <label class="form-check-label" for="single"> Single
+                                                    Approval</label>
+                                            </div>
+                                            <br>
+                                            <!-- Default checked radio -->
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="double"
+                                                    (change)="handle_radioChange($event)" />
+                                                <label class="form-check-label" for="double"> Double Approval
+                                                </label>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <br>
+                        <br>
+                        <tr>
+                            <td><strong>Approval By </strong>
+                            </td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr style="display: inline-flex ">
+                                        <td>
+                                            <div class="head-depart-per-section">
+                                                <div class="head-depart-per"><input type="checkbox"
+                                                        formControlName="cm_chk" [(ngModel)]="checked"
+                                                        (change)="eventCheck_CM_QuotPermission($event)"
+                                                        style="margin-right:10px;" /> CM</div>
+                                                <div class="head-depart-per"> <input type="checkbox"
+                                                        formControlName="cd_chk" [(ngModel)]="checked"
+                                                        (change)="eventCheck_CD_QuotPermission($event)"
+                                                        style="margin-right:10px;" /> CD</div>
+                                            </div>
+                                            <br>
+
+                                        </td>
+
+                                    </tr>
+                                    <br>
+                                    <div>
+                                        <div>
+                                            <tr *ngFor="let display1 of quotationApprovalResult;let i =index">
+                                                <td>
+                                                    <input type="radio" id="{{i}}"
+                                                        [attr.disabled]="approval_Show_hide ? '' : null"
+                                                        formControlName="radio_approvalPermission"
+                                                        value="{{display1.userId}}"
+                                                        (change)="handleChange($event,display1.userId)" />
+                                                    <label for="{{i}}"
+                                                        class="col-lg-6 col-form-label">{{display1.firstName}}</label>
+
+                                                </td>
+
+                                                <!-- <td>{{display1.firstName}}</td> -->
+                                            </tr>
+                                        </div>
+                                        <div>
+                                            <textarea *ngIf="textarea_Show_hide" formControlName="comments_approvedBy"
+                                                placeholder="Approval By Comments"></textarea>
+                                            <textarea *ngIf="textarea1_Show_hide"
+                                                class="form-control textareaformcontrol" rows="3"
+                                                placeholder="Approval By Comments"
+                                                formControlName="comments_approvedBy"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comments </strong></td>
+                            <td>
+                                <div>
+                                    <textarea class="form-control mt-2 textareaformcontrol"
+                                        formControlName="approval_comments" id="descrip" rows="3"></textarea>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-dark" (click)="quotationApprovalClear()" data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Approval in customer Contract------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for set template name in customer Contract------------------>
+<div class="modal fade" id="setTemplateNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Template Name Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="setTemplateNameForm">
+
+
+                    <div class="form-group row">
+                        <label for="temp1" class="col-lg-6 col-form-label">Template Name</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" formControlName="txt_templateName" id="temp1" />
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="templateNameUpdate()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for set template name in customer Contract------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
+<div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Actual Price Update
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              
+
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+
+                                        <th>
+                                            <span class="userDatatable-title">S.No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Product Name</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Description</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Quantity</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Unit</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Price</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Net Total</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Act Price(%)</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Act Price</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Act Net Total</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Diff Amt</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let list of actualCost_ProductList ; let i = 'index+1'">
+
+
+                                        <td>
+
+                                            <span> {{i}}</span>
+                                            <input type="hidden" id="AP_sno_{{i}}" value="{{i}}">
+                                            <input type="hidden" id="quotationChildId_{{i}}"
+                                                value="{{list.quotationChildId}}">
+
+                                        </td>
+                                        <td>
+                                            <span>{{list.productName}}</span>
+                                            <input type="hidden" id="AP_productName_{{i}}" value="{{list.productName}}">
+                                        </td>
+                                        <td>
+                                            <span>{{list.productDesc}}</span>
+                                            <input type="hidden" id="AP_productDescription_{{i}}"
+                                                value="{{list.productDesc}}">
+                                        </td>
+                                        <td>
+                                            <span>{{list.qty}}</span>
+                                            <input type="hidden" id="product_qty_{{i}}" value="{{list.qty}}">
+
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.unit}}</span>
+                                            <input type="hidden" id="product_unit{{i}}" value="{{list.unit}}">
+
+
+                                        </td>
+                                        <td *ngIf="list.productName=='Courier' || list.productName=='Other'">
+                                            <!-- <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}" > -->
+                                            <input type="hidden" id="invisiable_state_{{i}}"
+                                                value="{{list.invisiable_state}}">
+                                            <input type="text" id="price_{{i}}" value="0" (keyup)="get_actual_total()"
+                                                class="form-control" />
+                                            <input type="hidden" name="product_rate_334837" id="product_rate_{{i}}">
+                                        </td>
+
+
+                                        <td *ngIf="list.productName!='Courier' && list.productName!='Other'">
+                                            <input type="hidden" id="invisiable_state_{{i}}"
+                                                value="{{list.invisiable_state}}">
+                                            <span>{{ list.price}}</span>
+
+                                            <!-- <span>{{ list.totat_amt}}</span> just modified for net total  -->
+                                            <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}">
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{list.totat_amt}}</span>
+                                            <input type="hidden" id="product_net_amt_{{i}}" value="{{list.totat_amt}}"
+                                                (keyup)="get_actual_total()" />
+                                        </td>
+
+                                        <td>
+                                            <input type="text" style="width: 50%;margin: 5px;"
+                                                id="actual_percentage_{{i}}" class="form-control"
+                                                (keyup)="get_actual_total()" value="{{list.actual_percentage}}" />
+
+                                        </td>
+
+                                        <td>
+                                            <input type="text" style="width: 50%;margin: 5px;" class="form-control"
+                                                id="actual_cost_{{i}}" value="{{list.actual_cost}}"
+                                                (keyup)="get_actual_total()" />
+
+                                        </td>
+
+                                        <td>
+                                            <input type="text" style="width: 50%;margin: 5px;" class="form-control"
+                                                id="actual_net_tot_{{i}}" (keyup)="get_actual_total()"
+                                                value="{{ list.actual_net_tot}}" />
+
+                                        </td>
+                                        <td>
+                                            <input type="text" style="width: 50%;margin: 5px;" class="form-control"
+                                                id="act_diff_amt_{{i}}" value="{{ list.act_diff_amt}}" />
+
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+
+                                        <td valign="top" bgcolor="#FFFFF" colspan="6" align="left"
+                                            style="border-bottom:none; border:1px solid #d0d0d0">
+                                            <input type="hidden" name="quotationChildId_count"
+                                                id="quotationChildId_count" value="{{this.quotationChildId_count}}">
+                                            <strong>Total</strong>
+                                        </td>
+
+
+
+
+                                        <td valign="top" bgcolor="#FFFFF"
+                                            style="border-bottom:none; border:1px solid #d0d0d0"><strong>0</strong></td>
+
+                                        <td valign="top" bgcolor="#FFFFF"
+                                            style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                                            &nbsp;</td>
+
+                                        <td valign="top" bgcolor="#FFFFF"
+                                            style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                                            <strong><span id="actual_cost_tot">0</span></strong>
+                                        </td>
+
+                                        <td valign="top" bgcolor="#FFFFF"
+                                            style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                                            <strong><span id="actual_net_tot">0</span></strong>
+
+
+                                        </td>
+                                        <td valign="top" bgcolor="#FFFFF"
+                                            style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                                            <strong><span id="act_diff_amt_tot">0</span></strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+
+                
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
+
+<!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
+<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">
+                    File Attachment</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FileAttachmentForm">
+
+                    <div class="modal-body">
+                        <div>
+                            <label style="color: hsl(226, 59%, 21%)!important;">
+                                Attached Files</label>
+                        </div>
+
+                        <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;"
+                            style="padding-left: 30px;">
+
+                            {{display1.uploadFileName}}
+                            <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
+                                (change)="EditCHK(display1.common_attachmentId,$event)">
+                            <button type="button" class="btn btn-link"
+                                (click)="fileAttachmentDelete(display1.common_attachmentId) "><span
+                                    class="bi bi-trash"></span>
+
+                            </button>
+
+                        </div>
+
+                        <div class="col-lg-12 mt-4">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label>
+                                        Select New Attachment</label>
+                                </div>
+                                <div class="col-lg-8" style="padding-left: 30px;">
+
+                                    <!-- <label for="file">File</label> -->
+
+                                    <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
+                                        class="form-control" (change)="onFileChange($event)">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="fileAttachmentClear()">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->
+
+<!----------Modal Pop Up (BEGIN)  for email Text Editor in customer Contract------>
+<div class="modal fade" id="TextEditorId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="contractGenerateModalLongTitle">Quotation-Email </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="emailForm">
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                                    <option [ngValue]="null" selected >Select From</option>
+                                    <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                                        {{ from.from_email }}
+                                    </option>
+                                </select>
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                            <div class="col-md-9 col-9" style="display: flex;">
+                                <div class="form-check" style="margin-right: 10px;">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="company" [checked]="true" (change)="handle_radioChange_email($event)" />
+
+                                    <label class="form-check-label" for="company"> Company
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="finance" (change)="handle_radioChange_email($event)" />
+                                    <label class="form-check-label" for="finance">Finance
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                            <div class="col-lg-10">
+                                <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+                            <div class="email-cc-template">
+                                <div class="col-lg-10" *ngFor="let i =index;let display1 of email_cc_userList;">
+                                    <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                        formControlName="email_cc"
+                                        (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="template" class="form-control"
+                                    formControlName="email_template" (change)="templateContentEmailDropdown($event)">
+                                    <option [ngValue]="null" selected >Select Template</option>
+                                    <option *ngFor="let template of email_crmTemplateList"
+                                        value="{{ template.crm_template_id }}">
+                                        {{template.crm_template_name}}
+                                    </option>
+                                </select>
+                                <br>
+
+                                <div *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 ">
+                                    Template is Required
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
+                                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                                    Subject is Required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailPDFType" class="col-lg-2 col-form-label"><span>Select PDF Type</span> :</label>
+                            <div class="col-lg-10">
+
+                                <input type="checkbox" formControlName="email_pdfType" id="emailPDFType"
+                                    (change)="eventCheck_PDFType($event)" checked />
+
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                            <div class="col-lg-10">
+                                <editor id="tinyID" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+                    Mail
+
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationEmailClear()">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for email Text Editor in customer Contract------>
+
+
+<!-- -----------------------Modal-Quotation Comments begins-------------------------------- -->
+<div class="modal fade" id="quotationCommentsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">
+                    Comments Entry </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quotationCommentsForm">
+
+                    <div class="modal-body contractFileAttachmentCSS">
+                        <div class="form-group" *ngIf="comment_TransactionID !=null">
+                            <label for="quotationComments" style="color:rgb(29, 40, 99) ; font-weight:800;
+                            font-size:medium;">Comments</label><br>
+                            <label for="quotationComments1" style="color:rgb(17, 17, 17) ; font-weight:500;padding-left: 5px;
+                            font-size:medium;" [innerHtml]="response_CommentResult"></label>
+                            <textarea class="form-control" formControlName="quotation_Comments" id="quotationComments"
+                                rows="3"></textarea>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="quotationCommentsSave()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationCommentsClear()">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation Comments ends-------------------------------------- -->
+
+<!----------Modal Pop Up (BEGIN)  for PI(performa) in customer Contract------------------>
+<div class="modal fade" id="PIId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content invoicecss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">
+                    PI Convertion </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+                    <table class="demoTable">
+                        <tr>
+                            <td height="50"><strong>Customer Name </strong></td>
+                            <td height="50">{{ this.CustomerName_Result}}</td>
+                        </tr>
+                        <tr>
+                            <td height="50"><strong>Product Description </strong></td>
+                            <td height="50">{{this.ProductDescription_Result}} </td>
+                        </tr>
+
+
+                    </table>
+
+             
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationConvertPI($event)">
+                    Update
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for PI(performa) in customer Contract------------------>
+
+
+<!----------Modal Pop Up (BEGIN) PDF------>
+<div class="modal fade" id="pdfFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content temporaryFileGenerateCSS">
+            <div class="modal-header">
+                <h2 class="modal-title">PDF </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <iframe [src]="urlSafe" style="width: 800px; height: 500px"></iframe> -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----------Modal Pop Up (END)PDF------>

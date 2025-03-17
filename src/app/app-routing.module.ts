@@ -152,30 +152,81 @@ import { EditcontmasterComponent } from './hr/monthlycontribution/editcontmaster
 import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component';
 import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
 import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permission.component';
+import { LeaveapprovalComponent } from './hr/leaveapproval/leaveapproval.component';
+import { LicenseKeyManagementComponent } from './license-key-management/license-key-management.component';
+import { AddDecarepiComponent } from './billing/dcare-proforma-invoice/add-decarepi/add-decarepi.component'; 
+import { EditDecarepiComponent } from './billing/dcare-proforma-invoice/edit-decarepi/edit-decarepi.component'; 
+import { DcareProformaInvoiceComponent } from './billing/dcare-proforma-invoice/dcare-proforma-invoice.component';
+import { DcareInvoiceComponent } from './billing/dcare-invoice/dcare-invoice.component';
+import { DcareAddInvoiceComponent } from './billing/dcare-invoice/dcare-add-invoice/dcare-add-invoice.component';
+import { DcareEditInvoiceComponent } from './billing/dcare-invoice/dcare-edit-invoice/dcare-edit-invoice.component';
+import { DcareQuotationComponent } from './billing/dcare-quotation/dcare-quotation.component';
+import { DcareAddQuotationComponent } from './billing/dcare-quotation/dcare-add-quotation/dcare-add-quotation.component';
+import { DcareEditQuotationComponent } from './billing/dcare-quotation/dcare-edit-quotation/dcare-edit-quotation.component';
+import { MyVOIPLicenceKeyComponent } from './mconnect/my-voiplicence-key/my-voiplicence-key.component';
+import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
-  },{
-    path: 'erp-app-permission', component: ErpAppPermissionComponent
-  },{
+  },
+  {
+    path: 'currentPayslip', component: CurrentPayslipComponent
+  },
+  {
+    path: 'myVoipLicenceKey', component: MyVOIPLicenceKeyComponent
+  },
+  {
+    path: 'dcare-pi', component: DcareProformaInvoiceComponent
+  },
+  {
+    path: 'add-dcare-pi', component: AddDecarepiComponent
+  },
+  {
+    path: 'edit-dcare-pi', component: EditDecarepiComponent
+  },
+  {
+    path: 'dcare-invoice', component: DcareInvoiceComponent
+  },
+  {
+    path: 'add-dcare-invoice', component: DcareAddInvoiceComponent
+  },
+  {
+    path: 'edit-dcare-invoice', component: DcareEditInvoiceComponent
+  },
+  {
+    path: 'dcare-quotation', component: DcareQuotationComponent
+  },
+  {
+    path: 'add-dcare-quotation', component: DcareAddQuotationComponent
+  },
+  {
+    path: 'edit-dcare-quotation', component: DcareEditQuotationComponent
+  },
+{
+    path: 'mconnectlicensekeyMgmt', component: LicenseKeyManagementComponent
+},{
+    path: 'leaveapproval', component: LeaveapprovalComponent
+},{
+  path: 'erp-app-permission', component: ErpAppPermissionComponent
+},{
     path: 'leaveRequestFinal', component: LeavereqFinalComponent
-  },{
+},{
     path: 'leaveRequest', component: LeaverequestComponent
-  },{
+},{
     path: 'editmonthlycontribution', component: EditcontmasterComponent
-  },{
+},{
     path: 'addmonthlycontribution', component: AddcontmasterComponent
-  },{
+},{
     path: 'monthlycontribution', component: MonthlycontributionComponent
-  },{
+},{
   path: 'staff_permiss_report', component: StaffpermissionreportComponent
-  },{
+},{
     path: 'attendance_report', component: AttendanceReportComponent
-  },
+},
   {
     path: 'didStock', component: DidStockComponent
-  },{
+},{
     path: 'addcontributionmaster', component: AddcontributionmasterComponent
   },{
     path: 'editcontributionmaster', component: EditcontributionmasterComponent

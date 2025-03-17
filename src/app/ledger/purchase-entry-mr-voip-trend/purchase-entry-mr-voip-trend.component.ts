@@ -115,14 +115,25 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
  
   createAddress(): FormGroup {
     return this.fb.group({
+      status: [''], 
+      backgroundColor:[''], 
       purchase_trend_id: [''],
       purchaseEntryTempId: [''],
       invoiceNo: [''],
+      vendorId: [''],
+      billerid: [''],
+      year_val: [''],
+      ven_id: [''],
+      mon_val: [''],
+      entry_row: [''],
+
+
       invoiceAmount1: [''],
       invoiceAmount2: [''],
       currConvRate: [''],
       fixedAmount1: [''],
       fixedAmount2: [''],
+
       usageAmount1: [''],
       usageAmount2: [''],
       otherAmount1: [''],
@@ -132,12 +143,7 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
       localAmount1: [''],
       localAmount2: [''],
 
-      vendorId: [''],
-      billerid: [''],
-      year_val: [''],
-      ven_id: [''],
-      mon_val: [''],
-      entry_row: [''],
+     
     });
   }
 
@@ -311,29 +317,33 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
           response.vendorTrendDetails.months[month].forEach((record: any) => {
             formArray.push(
               this.fb.group({
-
-                purchaseEntryType: record.purchase_type_id || '',
-                invoiceNumber: record.invoiceNo || '',
-                invoiceDate: record.invoiceDate_show || '',
-                purchaseContent: record.content_purchase || '',
-                PONumber: record.poNo || '',
-                currency: record.currency_id || '',
-                curConvRate: record.conversionRate || '',
-                taxAmount: record.taxAmount || '',
-                taxProvider: record.tax_provider || '',
-                frieghtAmount: record.freight_amt || '',
-                frieghtProvider: record.freight_provider || '',
-                invoiceAmount: record.invoiceAmount || '',
+                status: [record.status], // Store the approval status
+                backgroundColor: [this.getBackgroundColor(record.status)],
+                purchase_trend_id: record.purchase_trend_id ,
+                purchaseEntryTempId: record.purchaseEntryTempId ,
+                invoiceNo: record.invoice_no ,
+                vendorId: record.vendor_id ,
+                billerid:this.OverallBillerValue,
+                year_val: record.year_val ,
+                ven_id: record.vendor_id ,
+                mon_val: record.month_val ,
+                entry_row: record.entryRow ,
+                invoiceAmount1: record.invoice_amount_without_tax,
+                invoiceAmount2: record.invoice_amount_converted,
+             
+                currConvRate: record.conversionRate,
           
-                purchaseEntryTempId: record.purchaseEntryTempId || '',
-                vendorId: record.vendor_id || '',
-                year_val: record.year || '',
-                ven_id: record.vendor_id || '',
+                fixedAmount1: record.fixed_amount,
+                fixedAmount2: record.fixed_amount_converted,
+                usageAmount1: record.usage_amount,
+                usageAmount2: record.usage_amount_converted,
 
-                entry_row: record.entryRow || '',
-                billerid: this.OverallBillerValue,
-                mon_val: record.month || '',
-                // mon_val_title: monthName,
+                otherAmount1: record.other_amount,
+                otherAmount2: record.other_amount_converted,
+                IDDAmount1: record.idd_amount,
+                IDDAmount2:record.idd_amount_converted,
+                localAmount1: record.local_amount,
+                localAmount2: record.local_amount_converted,
           
         
               })
@@ -417,9 +427,9 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
     const rowForm = this.addressControls.at(index);
     if (rowForm.valid) {
       const formData = rowForm.value;
-      console.log('Saving row:', index, formData);
+    //  console.log('Saving row:', index, formData);
       const purchase_trend_id_index = this.addressControls.at(index).get('purchase_trend_id').value;
-    console.log('get-purchase trend id values at each index', purchase_trend_id_index);
+   // console.log('get-purchase trend id values at each index', purchase_trend_id_index);
       // Perform your save logic here, e.g., make an API call
       let api_req: any = new Object();
           let api_Search_req: any = new Object();
@@ -473,7 +483,7 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
   }
   showAttachment(index: number): void {
     const rowForm = this.addressControls.at(index);
-    console.log('Showing attachment for row:', index);
+  //  console.log('Showing attachment for row:', index);
     const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
     console.log('get-purchase entry temp id values at each index', purchaseEntryTempId_index);
     // Implement logic to fetch and display the attachment, e.g., open a modal or redirect
@@ -489,28 +499,13 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
     api_Search_req.purchaseEntryTempId = purchaseEntryTempId_index;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_status response", response);
 
-     
-     // console.log("vignesh-advanced search result", this.searchResult);
      this.attachments = response.attachments;
-     if (this.attachments[0].status==true) {
+     if (this.attachments.length > 0 && this.attachments[0].status === true) {
      
-      console.log("response.attachments.length", response.attachments?.length);
+    //  console.log("response.attachments.length", response.attachments?.length);
       $('#showPDFFormId').modal('show');
-      // Check if the array is valid and contains non-null objects
-      // const validAttachment = this.attachments?.find((attachment) => attachment && attachment.file_url);
-    
-      // if (validAttachment) {
-      //   console.log("The attachments array contains a valid file_url:", validAttachment.file_url);
-        
-      // } else {
-      //   console.log("The attachments array contains null or invalid values.");
-      //   iziToast.warning({
-      //     message: "No Record",
-      //     position: 'topRight',
-      //   });
-      // }
+   
     }else{
       iziToast.warning({
         message: "No Record",
@@ -520,6 +515,16 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
     }
     
     });
+  }
+  getBackgroundColor(status: any): any {
+    //  console.log("status",status);
+    //  console.log("typeof-status",typeof(status));
+    switch (status) {
+      case 1: return '#4CAF50';  // Green
+      case 2: return '#FFFF5C';  // Yellow   
+      case 3: return '#FFFFFF';  // Red
+      default: return '#FFFFFF'; // 
+    }
   }
     
   

@@ -266,12 +266,12 @@ export class DebitnoteComponent implements OnInit {
         Swal.showLoading();
         let api_req: any = new Object();
         let del_req: any = new Object();
-        api_req.moduleType = "creditNote";
-        api_req.api_url = "creditNote/getCreditNotedelete";
+        api_req.moduleType = "debitNote";
+        api_req.api_url = "debitNote/getDebitNotedelete";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        del_req.action = "creditNote/getCreditNotedelete";
-        del_req.credit_note_id = id;
+        del_req.action = "debitNote/getDebitNotedelete";
+        del_req.debit_note_id = id;
         del_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_req.element_data = del_req;
 
@@ -280,7 +280,7 @@ export class DebitnoteComponent implements OnInit {
 
             Swal.close();
             iziToast.success({
-              message: "Credit Note Deleted Successfully",
+              message: "Debit Note Deleted Successfully",
               position: 'topRight'
             });
             this.getTransactionNewList({});
@@ -310,7 +310,12 @@ export class DebitnoteComponent implements OnInit {
   clearSelection(event: any) {
 
     this.searchResultTest = '';
+    this.searchResult_CustomerID='';
 
+  }
+  PDF(id:any){
+    var url = "https://laravelapi.erp1.cal4care.com/api/debitNote/generateDebitNote/" + btoa(id)  + "";
+    window.open(url, '_blank');
   }
 
 

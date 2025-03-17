@@ -61,6 +61,7 @@ export class DIDProviderComponent implements OnInit {
    
   //  this.getProductCategoryCode();
   // this.router.navigate(['/addDIDNumberCatalog']);
+  this.addProductCategory.reset();
   $('#addProductCategoryFormId').modal('show');
   
   }
@@ -235,6 +236,7 @@ export class DIDProviderComponent implements OnInit {
 
   }
   Add() {
+
     this.spinner.show();
     $('#addProductCategoryFormId').modal('show');
     let api_req: any = new Object();
@@ -276,6 +278,10 @@ export class DIDProviderComponent implements OnInit {
 
         this.spinner.hide();
         $('#addProductCategoryFormId').modal('hide');
+        iziToast.success({
+          message: "Added Successfully",
+          position: 'topRight'
+        });
         this.didNumberCatalogList({});
 
       } else {
@@ -348,8 +354,32 @@ export class DIDProviderComponent implements OnInit {
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     // api_postUPd.product_category_id = product_category_id;
     api_postUPd.provider_id = this.editProviderID;
-    api_postUPd.provider_name = this.editProductCategory.value.edit_DIDProviderName;
-    api_postUPd.provider_desc = this.editProductCategory.value.edit_DIDProviderDescr;
+    if (this.editProductCategory.value.edit_DIDProviderName == null || this.editProductCategory.value.edit_DIDProviderName == '') {
+      iziToast.error({
+        message: "Provider Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.provider_name = this.editProductCategory.value.edit_DIDProviderName;
+    }
+
+    if (this.editProductCategory.value.edit_DIDProviderDescr == null || this.editProductCategory.value.edit_DIDProviderDescr == '') {
+      iziToast.error({
+        message: "Provider Description Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.provider_desc = this.editProductCategory.value.edit_DIDProviderDescr;
+    }
+
+
+
+  
+   
     
     api_req.element_data = api_postUPd;
 
@@ -358,6 +388,10 @@ export class DIDProviderComponent implements OnInit {
       if (response.status == true) {
         $('#editProductCategoryFormId').modal('hide');
         this.spinner.hide();
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
         this.didNumberCatalogList({});
 
       } else {

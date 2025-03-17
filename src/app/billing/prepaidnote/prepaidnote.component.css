@@ -805,3 +805,11 @@
     border: 1px dashed #d2e4e9;
   }
   
+
+  #emailFormId_prepaidNote .modal-dialog {
+    max-width: 65%;
+  }
+  
+  #emailFormId_prepaidNote label {
+    font-weight: 500;
+  }

@@ -700,7 +700,18 @@ export class AdddebitnoteComponent implements OnInit {
     
   
     api_req_addPO.customer_id = this.customer_ID;
-    api_req_addPO.customerCompany = this.addDo_section1.value.companyNameDropdown;
+   
+    if(this.customer_NAME==undefined || this.customer_NAME=='' || this.customer_NAME=='undefined'){
+
+      iziToast.error({
+        message: "Customer Data Missing",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      api_req_addPO.customerCompany =this.customer_NAME;
+    }
+
     api_req_addPO.b_address1 = this.addDo_section1.value.customerAddress1;
     api_req_addPO.b_address2 = this.addDo_section1.value.customerAddress2;
     api_req_addPO.b_address3 = this.addDo_section1.value.customerAddress3;

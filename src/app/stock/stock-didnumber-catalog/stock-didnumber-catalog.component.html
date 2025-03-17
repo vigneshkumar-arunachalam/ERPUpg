@@ -20,33 +20,146 @@
                 </div>
                 <div class="card-body">
                     <div class="grid-container">
-                        <div class="grid-item"><div class="number">241</div><div class="description">67157000(SG)</div></div>
-                        <div class="grid-item"><div class="number">163</div><div class="description">63401000(SG)</div></div>
-                        <div class="grid-item"><div class="number">2</div><div class="description">DIDWW</div></div>
-                        <div class="grid-item"><div class="number">106</div><div class="description">0327123100(MY)</div></div>
-                        <div class="grid-item"><div class="number">59</div><div class="description">62061888(SG)</div></div>
-                        <div class="grid-item"><div class="number">101</div><div class="description">043717800(MY)</div></div>
-                        <div class="grid-item"><div class="number">78</div><div class="description">072668000(MY)</div></div>
-                        <div class="grid-item"><div class="number">267</div><div class="description">0364195000(MY)</div></div>
-                        <div class="grid-item"><div class="number">2</div><div class="description">Others</div></div>
-                        <div class="grid-item"><div class="number">1</div><div class="description">Global Roam</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">Voxbone</div></div>
-                        <div class="grid-item"><div class="number">75</div><div class="description">0366359334(JP)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">Hooio(SG)</div></div>
-                        <div class="grid-item"><div class="number">169</div><div class="description">CAT(TH)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">Viva(IND)</div></div>
-                        <div class="grid-item"><div class="number">1</div><div class="description">032707300(MY)</div></div>
-                        <div class="grid-item"><div class="number">46</div><div class="description">0327889500(MY)</div></div>
-                        <div class="grid-item"><div class="number">38</div><div class="description">0327890000(MY)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">0327241100(MY)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">0327888400(MY)</div></div>
-                        <div class="grid-item"><div class="number">65</div><div class="description">60320278500(MY)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">Multitel</div></div>
-                        <div class="grid-item"><div class="number">27</div><div class="description">FPT(VNM)</div></div>
-                        <div class="grid-item"><div class="number">21</div><div class="description">MyRepublic(SG)</div></div>
-                        <div class="grid-item"><div class="number">6</div><div class="description">Jasnita(INDO)</div></div>
-                        <div class="grid-item"><div class="number">0</div><div class="description">Telnyx</div></div>
+                        <div class="grid-item" *ngFor="let item of didNameCount">
+                            <div class="number">{{item.did_number_count}}</div>
+                            <div class="description">{{item.did_trunk_name}}</div>
+                        </div>
+
                     </div>
+                    <div class="grid-container">
+                        <div class="grid-item" *ngFor="let item of didNumberCounts">
+                            <tbody >
+                                <tr>
+                                    <td colspan="2" align="center" bgcolor="#FFCC00" height="35px" style="border: 1px solid #d0d0d0"><span style="font-size:15px;font-weight:bold">{{item.did_trunk_name}}</span></td>    
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">One DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.one_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Two DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.two_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Three DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.three_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Four DID Number	</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.four_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Five DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.five_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Six DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.six_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Seven DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.seven_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Eight DID Number	</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.eight_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Nine DID Number</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.nine_count_val}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td width="80%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">Ten DID Number	</td>
+                                    <td width="20%" bgcolor="#FFFFFF" style="border: 1px solid #d0d0d0; padding:5px">{{item.ten_count_val}}</td>
+                                  </tr>
+                                </tbody>
+                        </div>
+
+                    </div>
+                    <div class="grid-container">
+                       
+                        <div class="grid-item" >
+                            <table class="table table-responsive" style="max-height: 600px;max-width: 600px; overflow: scroll;">
+                            <thead>
+                                <tr colspan="3">NRS List</tr>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Trunk Name</th>
+                                    <th>DID Number</th>
+                                    <th>Customer Name</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody >
+                               
+                                  <tr *ngFor="let item of nrsList;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.did_trunk_name}}</td>
+                                    <td>{{item.did_numbers}}</td>
+                                    <td>{{item.customer_name}}</td>
+                                  </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="grid-item" >
+                            <table class="table">
+                            <thead>
+                                <tr colspan="3">Demo DID Numbers</tr>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Trunk Name</th>
+                                    <th>DID Number</th>
+                                    <th>Customer Name</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody >
+                               
+                                  <tr *ngFor="let item of demo_did_numberList;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.did_trunk_name}}</td>
+                                    <td>{{item.did_numbers}}</td>
+                                    <td>{{item.customer_name}}</td>
+                                  </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="grid-item" >
+                            <table class="table">
+                            <thead>
+                                <tr colspan="3">Blocked DID Numbers</tr>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Trunk Name</th>
+                                    <th>DID Number</th>
+                                    <th>Customer Name</th>
+                                    <th>Block Time</th>
+                                    <th>Duration</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody >
+                               
+                                  <tr *ngFor="let item of demo_did_numberList;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.did_trunk_name}}</td>
+                                    <td>{{item.did_numbers}}</td>
+                                    <td>{{item.customer_name}}</td>
+                                    <td>{{item.did_numbers}}</td>
+                                    <td>{{item.customer_name}}</td>
+                                  </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+              
+
+
+                   
                 </div>
 
             </div>

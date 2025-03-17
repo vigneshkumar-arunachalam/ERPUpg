@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-12 col-12">
                 <div class="form-group row">
-                    <label for="customer_name" class="col-lg-3 col-form-label"><span>Kind Attention<span style="color: red;"> *</span></span></label>
+                    <label for="customer_name" class="col-lg-3 col-form-label"><span>Company Name <span style="color: red;"> *</span></span></label>
                     <div class="col-lg-9">
                         <ng-autocomplete [data]="searchResult_vendor" [searchKeyword]="keywordvendorName"
                             formControlName="vendor_name" (selected)='searchVendor_selectDropdownData($event)'
@@ -92,7 +92,7 @@
    
             <div class="col-md-12 col-12">
                 <div class="form-group row">
-                    <label for="vendorComp" class="col-lg-3 col-form-label"> Company Name</label>
+                    <label for="vendorComp" class="col-lg-3 col-form-label"> Kind Attention</label>
                     <div class="col-lg-9">
                         <input type="text" class="form-control" formControlName="companyNameDropdown">
 

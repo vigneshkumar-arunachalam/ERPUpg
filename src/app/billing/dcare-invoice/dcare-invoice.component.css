@@ -1,0 +1,733 @@
+/* .userDatatable table td{padding:4px 0px 4px!important;} */
+.userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
+/* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+.userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
+.userDatatable .d-flex{justify-content: center;margin-right: 0;}
+.userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
+
+.userDatatable  table  td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
+
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown__list {
+  z-index:2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  border: 1px solid;
+  text-align: center;
+}
+.dropdown__item {
+  list-style-type: none;
+}
+.dropdown__link {
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
+}
+.dropdown__link:hover {
+  opacity: 0.9;
+}
+.dropdown:hover .button {
+  opacity: 0.9;
+}
+/* changes made by aashiq starts */
+.dropdown:hover .dropdown__list {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
+}
+.view:hover {
+ 
+    background: rgba(255, 77, 79, 0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.remove:hover {
+ 
+  background: rgba(118, 177, 103, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.close:hover {
+ 
+background: rgba(195, 101, 233, 0.1);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.dropdown a {
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
+}
+  
+  /* changes made by aashiq ends */
+
+
+  .button {
+    padding: 0.6em 1.5em;
+  
+  }
+  
+  .btn1 {
+    background-color: #007cbc;
+    border: none;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .btn1:hover {
+    background-color: rgb(221, 109, 152);
+  }
+
+  .dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+
+.userDatatable .page .dropdown button {
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+  
+i.fa.fa-bars {
+  color: #fff!important;
+}
+
+tr:nth-child(even) {background: rgb(241, 238, 241)}
+tr:nth-child(odd) {background: #FFF}
+
+.add-reseller-table-section tr:nth-child(even) {background: #fff;line-height: 44px;}
+.add-reseller-table-section tr:nth-child(odd) {background:#fff;line-height: 44px;}
+.add-reseller-table-section tr th {color: #051b5a;font-weight: 500;}
+
+/* #ResellerCommissionFormId .modal-dialog{
+  max-width: 42%;
+} */
+
+.ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input{
+   background: transparent;
+ }
+ .ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input:focus {
+   outline: none;
+   border: 2px solid transparent!important;
+   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+   background-origin: border-box;
+   background-clip: padding-box, border-box;
+   animation: bg-hue 2s linear infinite;
+ }
+
+ .form-control{
+  /* border: 1px solid #e1e1e1; */
+ border: 1px solid #cfbfbf; 
+  
+  background: transparent;
+}
+
+
+
+ .form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+#ResellerCommissionFormId .modal-dialog{
+  width: 90% !important;
+}
+#sharPerissionFormId_inv .modal-dialog{
+  min-width: 60% !important;
+}
+#sharPerissionFormId_inv .modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #f9021b;
+  transition: all 0.5s ease;
+}
+
+
+
+#InvoiceRevenueFormId_inv .modal-dialog{
+  max-width: 70% !important;
+}
+
+#inv_ResellerCommissionFormId .modal-dialog{
+  min-width: 85% !important;
+}
+
+label {
+  font-weight: 500;
+  color: #051b5a!important;
+}
+
+input.form-control {
+  padding: 4px 8px !important;
+}
+select{
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+/* td .PIlistlabel{
+  padding-left: 15px!important;
+ 
+} */
+
+
+
+.hover1:hover {
+   
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover3:hover {
+
+  background: rgba(255, 77, 79, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover4:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover5:hover {
+
+background: rgba(12, 1, 39, 0.973);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover6:hover {
+   
+  background: rgba(228, 231, 14, 0.973);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover7:hover {
+
+background: rgb(34, 46, 32);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover8:hover {
+
+background: rgba(23, 198, 241, 0.973);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
+
+.emailLabel{
+  color: rgba(0, 0, 0, 0.589) !important;
+  font-weight: 400!important;
+}
+
+
+/** BEGIN CSS NEEDED FOR SWITCH **/
+.on-off-toggle {
+  width: 56px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.on-off-toggle__slider {
+  width: 60px;
+  height: 24px;
+  display: block;
+  border-radius: 34px;
+  background-color: #d8d8d8;
+  transition: background-color 0.4s
+  
+}
+
+.on-off-toggle__slider:before {
+    content: '';
+    display: block;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #949494;
+    bottom: 3px;
+    height: 18px;
+    left: 3px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+    z-index: 5;
+    border-radius: 100%;
+  }
+
+.on-off-toggle__slider:after {
+    display: block;
+    line-height: 24px;
+    /* text-transform: uppercase; */
+    font-size: 12px;
+    font-weight: bold;
+    content: 'No';
+    color: #484848;
+    padding-left: 26px;
+    transition: all 0.4s;
+  }
+
+.on-off-toggle__input {
+  /*
+    This way of hiding the default input is better 
+    for accessibility than using display: none;
+  */
+  position: absolute;
+  opacity: 0;
+}
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider {
+  background-color: #009688
+}
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider:before {
+    transform: translateX(37px);
+  }
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider:after {
+    content: 'Yes';
+    color: #FFFFFF;
+    padding-left: 8px;
+  }
+
+/*** END CSS NEEDED FOR SWITCH **/
+
+
+
+.quotationsharedCSS{
+  height: 300px;
+ 
+  overflow-y: scroll;
+}
+
+.nameCSS{
+  font-weight: 400;
+  color: #020096!important;
+
+
+}
+.heightCSS{
+  line-height: 35px;
+}
+
+#processPaymentId_inv .modal-dialog{
+  max-width: 60% !important;
+}
+#processPaymentId_inv label{
+  color: rgb(27, 1, 121)!important;
+  font-weight: 500!important;
+}
+#emailFormId_inv .modal-dialog {
+  max-width: 65%;
+}
+
+#emailFormId_inv label {
+  font-weight: 500;
+}
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* #emailFormId_inv span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label{text-align: right;}
+
+
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f3ecf2 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+
+
+
+/*   checkbox for permission pop up -starts*/
+.chb {
+  visibility: hidden;
+}
+
+.chb + label {
+  position: relative;
+  padding-left: 5px;
+  padding-top: 3px;
+}
+
+
+.chb-3 + label::before {
+  position: absolute;
+  left: -20px;
+  top: 4px;
+/*   text-align: center; */
+  
+  border: 2px solid #3498db;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  
+  transition: all 0.1s ease-in,  border-color 0.05s ease-in;
+}
+
+.chb-3:checked + label::before {
+  transform: rotate(40deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  
+  
+  top: 2px;
+  left: -15px;
+  width: 7px;
+  height: 14px;
+}
+
+/*   checkbox for permission pop up -ends*/
+
+/*   revenue form array table*/
+.userDatatable  table  td th {padding: 5px 10px 5px 10px;}
+
+
+
+#setActualCostId_inv .modal-dialog {
+  max-width: 95%;
+}
+
+#setActualCostId_inv tr th {
+  border-right: 1px solid #ddd;
+}
+
+#LicenseDetailsFormId_inv .modal-dialog{
+  max-width: 95%;
+}
+#searchInvoiceFormId .modal-dialog{
+  max-width: 95%;
+}
+
+#setActualCostId_inv .userDatatable table thead th:first-child{
+  width: 50px;
+}
+#setActualCostId_inv .userDatatable table thead th:nth-child(2){
+  width: 220px;
+}
+#setActualCostId_inv .userDatatable table tr td:nth-child(2) span{
+  width: 220px;
+}
+#setActualCostId_inv .userDatatable table tr td, #setActualCostId_inv .userDatatable table tr th{
+  text-align: center;
+}
+#setActualCostId_inv .userDatatable table tr td:nth-child(2) span{
+  white-space: normal!important;
+}
+#setActualCostId_inv .userDatatable table tr td:first-child span{
+  width: 50px;
+}
+.buttonClass{border:none}
+.userDatatable table td{padding:10px 4px;}
+.userDatatable table td:first-child{text-align: center;}
+.userDatatable table td:first-child button.buttonClass{
+ border-radius: 25px;
+ padding: 2px 10px;
+}
+.border-section td{
+  height: 1px;border-bottom:2px solid #00C;padding:0px 0px!important;
+}
+/* td {
+  border-bottom: 1px solid #a8c91a!important;
+} */
+#InvoiceRevenueFormId_inv tbody:nth-child(odd) {
+  background: rgb(239, 241, 238);
+}
+#InvoiceRevenueFormId_inv tbody:nth-child(even) {
+  background: rgb(255, 255, 228);
+}
+#InvoiceRevenueFormId_inv tbody  tr:nth-child(odd) {
+   background: transparent    
+}
+#InvoiceRevenueFormId_inv .userDatatable table td:first-child span{
+  display: inline-block;
+  width: 60px;
+}
+#InvoiceRevenueFormId_inv input  {
+  border-color: #ddd;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+#InvoiceRevenueFormId_inv .form-control {
+  border: 1px solid #e1e1e1;
+  background: #fff;
+}
+#InvoiceRevenueFormId_inv input:read-only {
+  background-color: #ffefef;
+  cursor: not-allowed;
+}
+
+.userDatatable table tr td span{
+  white-space: normal;
+}
+.userDatatable table tr td:nth-child(4) {
+  width: 25%;
+}
+.userDatatable table tr td:nth-child(4) span{
+  width: 90%;
+}
+.userDatatable table tr td:nth-child(5) span,.userDatatable table tr td:nth-child(6) span,
+.userDatatable table tr td:nth-child(7) span,.userDatatable table tr td:nth-child(3) span,
+.userDatatable table tr td:nth-child(8) span{
+  width: 100%;
+}
+.userDatatable table tr td:nth-child(5),.userDatatable table tr td:nth-child(6){
+  width: 10%;
+}
+#suspendInvoiceFormId .userDatatable table tr td:nth-child(4) {width: 15%;}
+#suspendInvoiceFormId .userDatatable table tr td:nth-child(2) span{
+  width: 100%;
+}
+#suspendInvoiceFormId .userDatatable table tr th{padding: 10px 4px;}
+.userDatatable-header th{
+  background: #6d5dfc;
+}
+#suspendInvoiceFormId   tr:nth-child(even) {background: rgb(241, 238, 241)}
+#suspendInvoiceFormId   tr:nth-child(odd) {background: #f2e6e6 }
+.userDatatable-header th span{
+  color: #e4ebf5;
+}
+/* td{border-bottom: 1px solid #231ac9!important;} */
+.userDatatable .buttonClass{
+  border: 1px solid #ddd;
+  border-radius: 5px!important;
+}
+
+/* ------------ks--------------------- */
+.dropdown__item{
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.dropdown img, .dropdown svg {
+  width: 24px;
+
+}
+.dropdown__item span strong{
+  font-size: 18px;
+}
+.dropdown__item span {width: 100%!important;}
+.recurring-Status{
+  margin: 0px 10px;
+  width: 30px!important;
+  height: 30px;
+  background: #fff;
+  align-items: center;
+  display: flex!important;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+.ActionId li span{
+  overflow: visible!important;
+}
+.ActionId li{cursor: pointer;}
+.dropdown a{
+  width: auto;
+  border-radius: 5px;
+}
+
+/* 
+tr:hover {background-color: rgb(246, 236, 233)!important;} */
+
+tr:hover {background-color: rgb(241, 245, 160)!important;}
+
+#suspendInvoiceFormId .modal-dialog {
+  max-width: 95%;
+}
+#monthlyTurnOverChartFormId .modal-dialog {
+  max-width: 38%;
+  height: 170%;
+}
+
+
+
+
+
+/* search starts */
+
+
+#searchInvoiceFormId .btn-primary {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+#searchInvoiceFormId .modal-content
+{ 
+  background: #f7faff;
+
+}
+#searchInvoiceFormId .modal-content label
+{
+  color: #4b0082	!important;
+  font-weight: 560;
+}
+
+#searchInvoiceFormId .modal-content .form-control
+ {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #f4e0f3 !important;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+} 
+#searchInvoiceFormId .modal-content .form-control:focus
+{
+  outline: none;
+  border: 1mm ridge rgba(211, 220, 50, .2);
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+}
+#searchInvoiceFormId .modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+.ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input{
+   border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #f4e0f3 !important;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+  border-color: #6d5dfc!important;
+ }
+
+
+ /* search ends */
+
+
+
+/* Styling for the tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* Add a dotted border bottom */
+  opacity: 5;
+  z-index: 99;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #090000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (to center the tooltip) */
+}
+
+/* Show the tooltip text when hovering over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+#colorID .userDatatable table tbody tr td:nth-child(5) {
+  width: 0% !important;
+}
+
+tbody td{
+  height: 1px;border-bottom:2px solid rgb(43, 57, 2);padding:0px 0px!important;
+  border:1px solid #eff5f1;
+}
+thead tr th{
+  border:1px solid #eff5f1;
+  /* border:5px solid #aeb3b6; */
+}
+

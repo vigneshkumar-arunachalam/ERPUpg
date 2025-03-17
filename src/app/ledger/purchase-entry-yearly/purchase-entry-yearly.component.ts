@@ -65,8 +65,11 @@ export class PurchaseEntryYearlyComponent implements OnInit {
   vendorlistall: any;
   currencyList: any;
   monthNameVal: string;
-  fetchStatus: boolean=false;;
-  
+  fetchStatus: boolean=false;
+  //file
+  FileAttachmentForm: FormGroup;
+  myFiles: string[] = [];
+  indexValueFile: any;
  
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
@@ -106,6 +109,10 @@ export class PurchaseEntryYearlyComponent implements OnInit {
  
 
     });
+    this.FileAttachmentForm = new FormGroup({
+      'file': new FormControl(null),
+
+    });
     
   }
   onMouseMove(event: MouseEvent): void {
@@ -131,6 +138,8 @@ export class PurchaseEntryYearlyComponent implements OnInit {
  
   createAddress(): FormGroup {
     return this.fb.group({
+      approval_status: [''], 
+      backgroundColor:[''], 
       color_val:[''],
       purchaseEntryType: [''],
       invoiceNumber: [''],
@@ -179,6 +188,12 @@ export class PurchaseEntryYearlyComponent implements OnInit {
     this.currentYearDefault = this.OverallYearValue;
     this.trendDetails();
 
+  }
+  onFileChange(event: any) {
+
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
   }
 
   monthYearCall() {
@@ -249,15 +264,17 @@ export class PurchaseEntryYearlyComponent implements OnInit {
      
       if (response) {
 
-        this.spinner.hide();
+        
      
 
         if(response.vendorList!=null){
+          this.spinner.hide();
           this.vendorList = response.vendorList;
           this.VendorData = response.vendorData;
           this.vendorListNull=false;
         }else{
           this.vendorListNull=true;
+          this.spinner.hide();
         }
        
  
@@ -288,6 +305,89 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       };
 
   }
+  fileAttachmentView(i:any){
+    this.indexValueFile=i;
+    $("#fileAttachmentFormId").modal("show");
+
+  }
+  
+   fileAttachmentUpdate() {
+  
+      this.FileAttachmentForm.reset();
+      //  var data = new FormData();
+      Swal.fire('File Updating');
+      Swal.showLoading();
+  
+      if (this.myFiles.length == 0) {
+        Swal.close();
+        iziToast.warning({
+          message: "Attachment File Missing",
+          position: 'topRight'
+        });
+      }
+  
+      if (this.myFiles.length > 0) {
+  
+        const data = new FormData();
+  
+        for (var i = 0; i < this.myFiles.length; i++) {
+          data.append("trans_file", this.myFiles[i]);
+        }
+        
+  
+        data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+        data.append('purTempId', this.addressControls.at(this.indexValueFile).get('purchaseEntryTempId').value);
+        // data.append('quotation_pdf_add[]',this.edit_array ); 
+        data.append('action', "purchaseEntryYearly/uploadAttachments");
+  
+  
+        var self = this;
+        $.ajax({
+          type: 'POST',
+          url: 'https://laravelapi.erp1.cal4care.com/api/purchaseEntryYearly/uploadAttachments',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: data,
+          success: function (result: any) {
+            if (result.status == true) {
+              self.trendDetails();
+            //  console.log(result);
+              Swal.close();
+              $("#fileAttachmentFormId").modal("hide");
+              this.edit_array = [];
+  
+              iziToast.success({
+                message: "File Attachment Saved successfully",
+                position: 'topRight'
+              });
+            }
+            else {
+              Swal.close();
+              $("#fileAttachmentFormId").modal("hide");
+  
+              iziToast.warning({
+                message: "File Attachment Update Failed",
+                position: 'topRight'
+              });
+            }
+          },
+          error: function (err: any) {
+  
+            console.log("err", err)
+            iziToast.error({
+              message: "Server Side Error",
+              position: 'topRight'
+            });
+            Swal.close();
+            $("#fileAttachmentFormId").modal("hide");
+          }
+  
+        })
+  
+  
+      }
+    }
 
   sendToApproval() {
     this.spinner.show();
@@ -361,19 +461,10 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       };
 
   }
-  getBackgroundColor(status: any): any {
-    console.log("status",status);
-    console.log("typeof-status",typeof(status));
-    switch (status) {
-      case 1: return '#008000';  // Green
-      case 2: return '#FF0000';  // Yellow   
-      case 3: return '#ff007f';  // Red
-      default: return '#FF0000'; // 
-    }
-  }
+
   
   getMonthName(monthVal: number): string {
-    console.log("monthVal",monthVal);
+    // console.log("monthVal",monthVal);
     const months = [
       '', 'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
@@ -421,6 +512,8 @@ export class PurchaseEntryYearlyComponent implements OnInit {
           response.vendorTrendDetails.months[month].forEach((record: any) => {
             formArray.push(
               this.fb.group({
+                approval_status: [record.approval_status], // Store the approval status
+                backgroundColor: [this.getBackgroundColor(record.approval_status)],
 
                 purchaseEntryType: record.purchase_type_id || '',
                 invoiceNumber: record.invoiceNo || '',
@@ -456,7 +549,7 @@ export class PurchaseEntryYearlyComponent implements OnInit {
         });
         
         this.addPI_section2.setControl('addresses', formArray);
-        console.log('FormArray Data:', this.addressControls.value);
+       // console.log('FormArray Data:', this.addressControls.value);
     
 
 
@@ -703,6 +796,17 @@ export class PurchaseEntryYearlyComponent implements OnInit {
     
     });
   }
+  getBackgroundColor(status: any): any {
+    //  console.log("status",status);
+    //  console.log("typeof-status",typeof(status));
+    switch (status) {
+      case 1: return '#4CAF50';  // Green
+      case 2: return '#FFFF5C';  // Yellow   
+      case 3: return '#FFFFFF';  // Red
+      default: return '#FFFFFF'; // 
+    }
+  }
+    
     
   
 

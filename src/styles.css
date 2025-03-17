@@ -29134,7 +29134,8 @@ li ul li a:hover .nav-icon{
     border-left: 1px solid rgb(202 198 198 / 56%);
 }
 .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar {
-    width: 5px;
+    width: 10px;
+    height: 10px;
   }
    
   .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-track {
@@ -29142,7 +29143,8 @@ li ul li a:hover .nav-icon{
   }
    
   .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-thumb {
-    background-color: #2a75a7;
+    /* background-color: #2a75a7; */
+    background-color: #FAF0E6;
     outline: 1px solid #2a6994;
   }
   .profile-section #qr_code_id img{
@@ -29158,14 +29160,16 @@ li ul li a:hover .nav-icon{
     padding: 10px;
   }
   .fc-daygrid-day .fc-daygrid-event .fc-event-title{
-    color: #FF5151;
+    color: white;
     font-size: 12px;
   }
+ 
   a.fc-event.fc-event-start {
     margin: 2px;
   }
   a.fc-event.fc-event-start:hover .fc-event-title{
-    color: #0096cc;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
   }
   .fc-daygrid-day-events::-webkit-scrollbar {
@@ -29188,3 +29192,8 @@ li ul li a:hover .nav-icon{
   .fc-view .fc-col-header tr th .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion{color:#fff!important;}
   
   /* -----------------KS CODE for public task menu--ends-----------------------*/
+
+
+  .mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+    background-color: rgb(210 33 33)!important;
+  }

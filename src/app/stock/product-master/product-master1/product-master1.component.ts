@@ -924,7 +924,7 @@ export class ProductMaster1Component implements OnInit {
             if (response.status == true) {
       
               iziToast.success({
-                message: "Quotation Sent for Approval",
+                message: "Sent for Approval",
                 position: 'topRight'
               });
               $("#prodMasterApprovalId").modal("hide");

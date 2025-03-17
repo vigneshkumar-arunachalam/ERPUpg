@@ -1,0 +1,145 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active"> Leave Approval</span>
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+                                        <th>
+                                            <span class="userDatatable-title">S.No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title"> Name</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Leave Type </span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Leave Category </span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">From Date</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">To Date</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">No of Days</span>
+                                        </th>
+                                        
+                                        <th>
+                                            <span class="userDatatable-title">Reason</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Biller Name</span>
+                                        </th>
+
+
+
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let list of leaveApprovalListAll;let i = index">
+                                    <tr>
+
+                                        <td>
+                                            {{i+1}}
+                                        </td>
+                                        <td>
+                                            {{ list.prepared_by }}
+                                        </td>
+                                        <td>
+                                            <span> {{ list.LeaveTypeName }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.LeaveCatName }} </span>
+                                        </td>
+
+                                        <td>
+
+
+                                            {{ list.start}}
+                                        </td>
+
+                                        <td>
+                                            {{ list.end }}
+                                        </td>
+                                        <td>
+                                            <span> {{ list.daysDifference }} </span>
+                                        </td>
+                                        
+                                        <td>
+                                            <span> {{ list.other_description }} </span>
+                                        </td>
+                                        <td>
+                                            <!-- <span> {{ list.billerName }} </span> -->
+                                            <span><button type="button" 
+                                            class="buttonClass {{list.billerCode}}">{{
+                                                    list.billerCode}}</button></span>
+                                        </td>
+
+
+
+                                        <td>
+                                            <div class="page" style="padding-left: 10px;">
+
+                                                <div class="dropdown">
+                                                    <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                    <ul class="dropdown__list">
+                                                        <li class="dropdown__item">
+                                                            <a class="view" title="Approve Leave Request" (click)="approve(list.transaction_approval_id)">
+                                                                <img class="show" src="assets/img/icon2/tick-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/tick-black.png">
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="dropdown__item">
+                                                            <a class="remove" title="Reject Leave Request" (click)="reject(list.transaction_approval_id)">
+                                                                <img class="show"
+                                                                    src="assets/img/icon2/delete-blue.png">
+                                                                <img class="hide"
+                                                                    src="assets/img/icon2/delete-black.png">
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown__item" *ngIf="list.attachment!=''">
+                                                            <a class="view" title="View Medical Certificate Leave Request" (click)="pdf(list.transaction_approval_id,list.attachment)">
+                                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

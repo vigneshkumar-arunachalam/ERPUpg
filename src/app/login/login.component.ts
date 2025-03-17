@@ -195,7 +195,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user_name', response.firstName)
         localStorage.setItem('role', response.role)
         localStorage.setItem('profile_image', response.profile_image)
-        localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
+        localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports);
 
         // console.log("profile_image", alert);
         this.router.navigate(['/']);
@@ -239,6 +239,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('user_name', response.firstName)
       localStorage.setItem('role', response.role)
       localStorage.setItem('profile_image', response.profile_image);
+      localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports);
     //  localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
     //   console.log("profile_image", alert);
     //   console.log("olderp-login response", response)

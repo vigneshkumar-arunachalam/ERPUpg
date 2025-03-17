@@ -41,7 +41,7 @@
     "icon": "airplay",
     "isActive": false,
     "menuId":2,
-    "IDs": [7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715, 7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715],
+    "IDs": [1000,7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715, 7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715],
     "Type": "Main Menu",
     "children": [ {
             "name": "Quotation New",
@@ -107,11 +107,139 @@
             "subchild": [],
             "isVisible": true,
             "value": "/recurringChecker"
+        },{
+            "name": "Credit Note",
+            "icon": "briefcase",
+            "IDs": [9611,9612,9613,9614,9615],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/creditnote"
+        },{
+            "name": "Debit Note",
+            "icon": "credit-card",
+            "IDs": [9611,9612,9613,9614,9615],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/debitnote"
+        },{
+            "name": "Prepaid Note",
+            "icon": "user-check",
+            "IDs": [9611,9612,9613,9614,9615],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/prepaidnote"
         }
       
     ],
     "isVisible": true,
     "value": "/bing"
+},{
+    "name": "Stock",
+    "icon":"database",
+    "isActive": false,
+    "menuId":6,
+    "IDs": [6001,6002,6003,6004,6005,6091,6092,6093,6094,6095,7006,7007,6006,6007,6008,6009,6010,6087,6088,6089,6090],
+    "Type": "Main Menu",
+    "children": [
+        {
+            "name": "Product Master",
+            "icon": "edit",
+            "IDs": [6001,6002,6003,6004,6005,6081,6082,6083,6084,6085],
+            "Type": "Sub Menu",
+            "subchild": [
+			{
+				"name": "Product Category",
+				"icon": "box",
+				"IDs": [2054],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/ProductCategory"
+				},	{
+				"name": "Product Master-1",
+				"icon": "box",
+				"IDs": [2055],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/ProductMaster1"
+				},	{
+				"name": "Current Stock Master",
+				"icon": "box",
+				"IDs": [2056],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/CurrentStockMaster"
+				},	{
+				"name": "Rate Catalog Master",
+				"icon": "box",
+				"IDs": [2057],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/rateCatalog"
+				}
+				
+							],
+            "isVisible": true,
+            "value": "/stockproductmaster1"
+        },{
+            "name": "DID Master",
+            "icon": "file-text",
+            "IDs": [2049,2050,2051],
+            "Type": "Sub Menu",
+            "subchild": [{
+			"name": "DID Number Catalog",
+				"icon": "box",
+				"IDs": [2049],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDNumberCatalog"
+				},	{
+				"name": "DID Provider",
+				"icon": "box",
+				"IDs": [2050],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDProvider"
+				},	{
+				"name": "DID TrunkName",
+				"icon": "box",
+				"IDs": [2051],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDTrunkName"
+				}],
+            "isVisible": true,
+		"value": "/stockDIDMaster1"
+		},{
+            "name": "DID Inventory Entry",
+            "icon": "grid",
+            "IDs": [2059],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/didStock"
+        }
+      ,{
+            "name": "RMA Issue",
+            "icon": "cpu",
+            "IDs": [7007],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/RMAIssue"
+        }
+    ],
+    "isVisible": true,
+    "value": "/stock1"
 },
 {
     "name": "VOIP Switch",
@@ -134,6 +262,27 @@
     ],
     "isVisible": true,
     "value": "/voipsw--"
+},{
+    "name": "Call4Tel",
+    "icon":"cloud",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "NX32 Serial Number",
+            "icon": "cloud",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/nx32"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/cal4tel--"
 },
  {
     "name": "Masters",
@@ -159,6 +308,15 @@
             "subchild": [],
             "isVisible": true,
             "value": "/ResellerManagement"
+        },
+        {
+            "name": "Calendar Template",
+            "icon": "box",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/calendarTemplate"
         }
        
 
@@ -262,7 +420,7 @@
     "icon":"tool",
     "isActive": false,
     "menuId":5,
-    "IDs": [9964,6034,2043,6115,6064,7021,7022,7023,6044,2039,1165,7014,7084,2060,2038,2083],
+    "IDs": [9964,6034,2043,6115,6064,7021,7022,7023,6044,2039,1165,7014,7084,2060,2038,2083,97131,7132,7133,7134,7135],
     "Type": "Main Menu",
     "children": [{
             "name": "Guru",
@@ -272,6 +430,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/guru"
+        },{
+            "name": "ERP APP Permission",
+            "icon": "users",
+            "IDs": [97131,7132,7133,7134,7135],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/erp-app-permission"
         }
        
        

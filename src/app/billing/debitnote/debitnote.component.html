@@ -116,7 +116,7 @@
   
                               <li class="dropdown__item" *ngIf="Transaction_list_PermissEdit==1">
                                 <a class="hover1" title="Edit"
-                                  (click)=" editCreditNoteGo(list.credit_note_id)">
+                                  (click)=" editCreditNoteGo(list.debit_note_id)">
                                   <img class="show" src="assets/img/icon/nfc-pen-b.png">
                                   <img class="hide" src="assets/img/icon/nfc-pen.png">
                                 </a>
@@ -125,21 +125,21 @@
   
                               <li class="dropdown__item" *ngIf="Transaction_list_PermissDelete==1">
                                 <a class="hover1" title="Delete" data-toggle="modal"
-                                  (click)="deleteTransaction(list.credit_note_id)">
+                                  (click)="deleteTransaction(list.debit_note_id)">
                                   <img class="show" src="assets/img/icon/remove-b.png">
                                   <img class="hide" src="assets/img/icon/remove.png">
                                 </a>
                               </li>
   
-                              <li class="dropdown__item" *ngIf="Transaction_list_PermissEmail==1">
+                              <!-- <li class="dropdown__item" *ngIf="Transaction_list_PermissEmail==1">
                                 <a class="hover1" title="Email" data-toggle="modal"
                                   data-target="#TransactionCommentsId">
                                   <img class="show" src="assets/img/icon2/gmail-blue.png">
                                   <img class="hide" src="assets/img/icon2/gmail-black.png">
                                 </a>
-                              </li>
+                              </li> -->
                               <li class="dropdown__item" *ngIf="Transaction_list_PermissPDF==1">
-                                <a class="hover1" title="PDF">
+                                <a class="hover1" title="PDF" (click)=PDF(list.debit_note_id)>
                                   <img class="show" src="assets/img/icon2/pdf-blue.png">
                                  <img class="hide" src="assets/img/icon2/pdf-black.png">
                                 </a>

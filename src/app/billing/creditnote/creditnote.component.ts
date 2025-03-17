@@ -16,7 +16,7 @@ declare var tinymce: any;
 })
 export class CreditnoteComponent implements OnInit {
   Transaction_list: any;
- 
+
 
   searchTransactionForm: FormGroup;
   //pagination
@@ -35,7 +35,7 @@ export class CreditnoteComponent implements OnInit {
   searchResult1_CustomerID: any;
   searchResult1_CustomerName: any;
   AdvanceSearchResult: any;
-  isReadOnly:boolean=false;
+  isReadOnly: boolean = false;
   commentTransactionID: any;
   transactionTypeNumber: any;
   PC_Description: any;
@@ -56,38 +56,78 @@ export class CreditnoteComponent implements OnInit {
   Cus_email: any;
   Cus_financeemail: any;
   Cus_Contactperson: any;
-  customerIDCredit:any='';
+  customerIDCredit: any = '';
   searchResultTest: string;
-  Transaction_list_Permiss:any;
+  Transaction_list_Permiss: any;
   Transaction_list_PermissAdd: any;
-  Transaction_list_PermissEdit:any; 
-  Transaction_list_PermissDelete:any;
-  Transaction_list_PermissSearch:any;
-  Transaction_list_PermissPDF:any;
-  Transaction_list_PermissList:any;
-  Transaction_list_PermissEmail:any;
+  Transaction_list_PermissEdit: any;
+  Transaction_list_PermissDelete: any;
+  Transaction_list_PermissSearch: any;
+  Transaction_list_PermissPDF: any;
+  Transaction_list_PermissList: any;
+  Transaction_list_PermissEmail: any;
   countDetails: any;
+  //email
+  emailForm: FormGroup;
+  email_TemplateSelection: boolean = false;
+  email_template: any;
+  email_fromList: any;
+  email_crmTemplateList: any;
+  email_cc_userList: any;
+  email_groupMailList: any;
+  edit_array_emailCC_Checkbox: any = [];
+  quotation_Emailtemplate_id: any;
+  messageContent: any;
+  mailContent: any;
+  FromEmailValue: any;
+  Email_BillId: any;
+  CBV_TemplateSelection: any;
+  CBV_PDFLink: any;
+  CBV_PaymentLink: any;
+  SelectType_finance: any;
+  SelectType_company: any;
+  Select_To_Type_radiobox_Value: any;
+  email_array_emailCC_Checkbox: any = [];
+  groupSelect_emailCCId: any;
+  email_checkbox_value: any;
+  checkbox_value: any;
+  msg_id: any;
+  emailTo: any;
+  subjectValue: any;
+  emailBillerName: any;
 
-        
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
-    // Declare dynamic variables
-    purchaseEntryNo: string;
-    vendorName: string;
-    invoiceNo: string;
-    contentOfPurchase: string;
-    poNumber: string;
-    currency: string;
-    currencyConversionRate: string;
-    taxAmount: string;
-    invoiceAmount: string;
-    comments: string;
+  // Declare dynamic variables
+  purchaseEntryNo: string;
+  vendorName: string;
+  invoiceNo: string;
+  contentOfPurchase: string;
+  poNumber: string;
+  currency: string;
+  currencyConversionRate: string;
+  taxAmount: string;
+  invoiceAmount: string;
+  comments: string;
   ngOnInit(): void {
+    this.Select_To_Type_radiobox_Value = 'finance';
     this.searchTransactionForm = new FormGroup({
       'search_billerName1': new FormControl(null),
       'company_Name6': new FormControl(null),
     });
+    this.emailForm = new FormGroup({
+      'Subject_Content': new FormControl(null, Validators.required),
+      'email_to': new FormControl(null, Validators.required),
+      'radio_ApprovalBy': new FormControl(null, Validators.required),
+      'email_From': new FormControl(null, Validators.required),
+      // 'email_pdfType': new FormControl(null, Validators.required),
+      'email_template': new FormControl(null, Validators.required),
+      'email_cc': new FormControl(null, Validators.required),
+      'formControlName="radio_ApprovalBy': new FormControl(null),
+
+    });
+
     this.getTransactionNewList({});
 
     this.Transaction_Type_List = [
@@ -107,41 +147,41 @@ export class CreditnoteComponent implements OnInit {
 
 
 
-  
-   
-   
-      // Initialize dynamic variables with default values
-      // this.purchaseEntryNo = '12345';
-      // this.vendorName = 'Vendor Inc.';
-      // this.invoiceNo = 'INV001';
-      // this.contentOfPurchase = 'Office Supplies';
-      // this.poNumber = 'PO123';
-      // this.currency = 'USD';
-      // this.currencyConversionRate = '1.0';
-      // this.taxAmount = '100';
-      // this.invoiceAmount = '1100';
-      // this.comments = 'N/A';
+
+
+
+    // Initialize dynamic variables with default values
+    // this.purchaseEntryNo = '12345';
+    // this.vendorName = 'Vendor Inc.';
+    // this.invoiceNo = 'INV001';
+    // this.contentOfPurchase = 'Office Supplies';
+    // this.poNumber = 'PO123';
+    // this.currency = 'USD';
+    // this.currencyConversionRate = '1.0';
+    // this.taxAmount = '100';
+    // this.invoiceAmount = '1100';
+    // this.comments = 'N/A';
   }
   addCreditNoteGo() {
     this.router.navigate(['/addcreditnote'])
 
   }
 
-  editCreditNoteGo(id: any, ) {
+  editCreditNoteGo(id: any,) {
     var creditNoteID = id;
-   
+
     this.router.navigate(['/editcreditnote'])
 
     this.router.navigate(['/editcreditnote'], {
       queryParams: {
         e_credit_note_id: creditNoteID,
-      
+
       }
     });
 
   }
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
@@ -153,20 +193,20 @@ export class CreditnoteComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-   // console.log("this.searchBILLERID", this.searchBILLERID);
+    // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
@@ -184,10 +224,10 @@ export class CreditnoteComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_status response", response);
+      //  console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
-     // console.log("vignesh-advanced search result", this.searchResult);
+      // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -209,9 +249,9 @@ export class CreditnoteComponent implements OnInit {
     TNapi_req.off_set = list_data.offset;
     TNapi_req.customer_id = this.customerIDCredit;
     TNapi_req.limit_val = list_data.limit;
-    
-    TNapi_req.search_txt=this.searchResult_CustomerID ;
-  
+
+    TNapi_req.search_txt = this.searchResult_CustomerID;
+
     TNapi_req.current_page = "";
 
     api_req.element_data = TNapi_req;
@@ -219,7 +259,7 @@ export class CreditnoteComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
-        
+
 
         this.Transaction_list = response.data;
         this.Transaction_list_PermissAdd = response.permission_arr.add;
@@ -229,11 +269,11 @@ export class CreditnoteComponent implements OnInit {
         this.Transaction_list_PermissPDF = response.permission_arr.pdf;
         this.Transaction_list_PermissList = response.permission_arr.list;
         this.Transaction_list_PermissEmail = response.permission_arr.email;
-        this.countDetails=response.totalCount;
-  
-        
+        this.countDetails = response.totalCount;
 
-       // console.log(this.Transaction_list);
+
+
+        // console.log(this.Transaction_list);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.totalCount, 'page_limit': this.pageLimit });
 
         $('#searchTransactionFormId').modal('hide');
@@ -302,17 +342,378 @@ export class CreditnoteComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-           // console.log("final error", error);
+            // console.log("final error", error);
           };
       }
     })
   }
-  
+
 
   clearSelection(event: any) {
 
     this.searchResultTest = '';
+    this.searchResult_CustomerID='';
 
+  }
+
+  getEmailDetails(credit_note_id: any, customer_id: any) {
+
+    this.email_TemplateSelection = false;
+    $('#temp').val('');
+
+    $('input:checkbox').removeAttr('checked');
+    this.emailForm.reset();
+    this.spinner.show();
+    this.Email_BillId = credit_note_id;
+    let api_req: any = new Object();
+    let api_emailDetails: any = new Object();
+    api_req.moduleType = "creditNote";
+    api_req.api_url = "creditNote/getEmailDatas";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_emailDetails.action = "getEmailDatas";
+    if (credit_note_id != undefined) {
+      api_emailDetails.credit_note_id = credit_note_id;
+    } else {
+      api_emailDetails.credit_note_id = '';
+    }
+    api_emailDetails.customer_id = customer_id;
+
+    api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_emailDetails;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+        this.email_fromList = response.fromEmails;
+        this.email_groupMailList = response.group_mail;
+        this.email_crmTemplateList = response.creditTemplateList;
+        this.email_cc_userList = response.cc_user;
+        this.messageContent = response.invoice_content;
+        this.SelectType_finance = response.getCustomerEmail.finance_email;
+        this.SelectType_company = response.getCustomerEmail.email;
+        this.emailBillerName=response.billerName;
+
+        this.mailContent = tinymce.get('tinyID1_creditnote').setContent("<p>" + this.messageContent + "</p>");
+        this.emailForm.patchValue({
+
+          'tinyID1_creditnote': this.mailContent,
+          'Subject_Content': response.subject,
+
+
+        })
+        if (this.Select_To_Type_radiobox_Value == 'finance') {
+          this.emailForm.patchValue({
+            'email_to': response.getCustomerEmail.finance_email,
+            'tinyID1_creditnote': this.mailContent,
+          })
+        }
+        else {
+          this.emailForm.patchValue({
+            'email_to': response.getCustomerEmail.email,
+            'tinyID1_creditnote': this.mailContent,
+          })
+        }
+
+
+
+
+      } else {
+        this.spinner.hide();
+
+        $('#processPaymentId_inv').modal("hide");
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  EditCHK_emailCC(data: any, event: any) {
+    console.log("List - CheckBox ID", data);
+    this.groupSelect_emailCCId = data;
+    this.checkbox_value = event.target.checked;
+    console.log(this.checkbox_value)
+    if (this.checkbox_value) {
+
+      this.edit_array_emailCC_Checkbox.push(data);
+      this.edit_array_emailCC_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+    }
+    else {
+      const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+
+    }
+  }
+  CBF_PDFLink(event: any) {
+    this.CBV_PDFLink = event.target.checked;
+    console.log(this.CBV_PDFLink);
+  }
+  CBF_TemplateSelection(event: any) {
+    this.CBV_TemplateSelection = event.target.checked;
+    console.log(this.CBV_TemplateSelection);
+  }
+  CBF_PaymentLink(event: any) {
+    this.CBV_PaymentLink = event.target.checked;
+    console.log(this.CBV_PaymentLink);
+
+  }
+  handle_radioChange_email(event: any) {
+    this.Select_To_Type_radiobox_Value = event.target.id;
+    console.log(this.Select_To_Type_radiobox_Value);
+
+
+    if (this.Select_To_Type_radiobox_Value == 'finance') {
+      this.emailForm.patchValue({
+        'email_to': this.SelectType_finance,
+      })
+    } else {
+      this.emailForm.patchValue({
+        'email_to': this.SelectType_company,
+      })
+    }
+  }
+  sendMail() {
+    Swal.fire('Sending Email');
+    Swal.showLoading();
+
+    // this.FromEmailValue = $('#emailFrom').val();
+    this.FromEmailValue = this.emailForm.value.email_From;
+
+    //  this.emailTo = $('#emailto').val();
+    this.emailTo = this.emailForm.value.email_to;
+    // this.subjectValue = $('#subject').val();
+   // this.subjectValue = this.emailForm.value.Subject_Content;
+   this.subjectValue = $('#subject8').val();
+    this.msg_id = tinymce.get('tinyID1_creditnote').getContent();
+    console.log("msgid", this.msg_id)
+    console.log("email to", this.emailTo)
+    console.log("subject", this.subjectValue)
+ 
+
+    let api_req: any = new Object();
+    let api_email_req: any = new Object();
+    api_req.moduleType = "creditNote";
+    api_req.api_url = "creditNote/sendCreditEmail";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_email_req.action = "sendCreditEmail";
+    api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_email_req.credit_note_id = this.Email_BillId;
+    api_email_req.template_id = this.quotation_Emailtemplate_id;
+    api_email_req.billerName = this.emailBillerName;
+
+    api_email_req.email_from = this.FromEmailValue;
+    if (this.emailForm.value.email_From === null || this.emailForm.value.email_From === '' || this.emailForm.value.email_From === 'undefined' || this.emailForm.value.email_From === undefined) {
+
+      iziToast.warning({
+        message: "Choose From Email Value",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+    api_email_req.to_email = this.emailTo;
+    if (this.emailTo === null) {
+
+      iziToast.warning({
+        message: "Choose To Email Value",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+    // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
+
+   
+
+
+    if ($('#subject8').val() === null || $('#subject8').val() === '' || $('#subject8').val() === 'undefined' || $('#subject8').val() === undefined) {
+
+      iziToast.warning({
+        message: "Choose Subject",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }else{
+      api_email_req.crm_subject_name = this.subjectValue;
+    }
+    api_email_req.crm_template_content = this.msg_id;
+    if (this.msg_id === null) {
+
+      iziToast.warning({
+        message: "Choose Message",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+
+    api_req.element_data = api_email_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      Swal.close();
+      console.log("response status", response.status);
+      if (response.status == true) {
+        $('#subject8').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        tinymce.activeEditor.setContent("");
+
+        Swal.close();
+        iziToast.success({
+          message: "Email Notification Sent Successfully",
+          position: 'topRight'
+        });
+
+        $("#emailFormId_creditNote").modal("hide");
+        // this.getInvoice1({});
+
+      }
+      else {
+        $('#subject8').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        $("#emailFormId_creditNote").modal("hide");
+        tinymce.activeEditor.setContent("");
+        Swal.close();
+        // this.getInvoice1({});
+        iziToast.success({
+          message: "Email Notification Sent !!!!",
+          position: 'topRight'
+        });
+        // this.getInvoice1({});
+
+      }
+      Swal.close();
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+  }
+  initTiny() {
+    var richTextArea_id = 'richTextAreacreated';
+    tinymce.init({
+      selector: '#richTextAreacreated',
+      height: 500,
+      plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
+      toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
+         alignleft aligncenter alignright alignjustify | \
+         bullist numlist outdent indent | autoresize',
+      paste_data_images: true,
+      images_upload_url: 'upload.php',
+      automatic_uploads: false,
+      default_link_target: "_blank",
+      extended_valid_elements: "a[href|target=_blank]",
+      link_assume_external_targets: true,
+      images_upload_handler: function (blobInfo: any, success: any, failure: any) {
+        var xhr: any, formData;
+
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', 'upload.php');
+
+        xhr.onload = function () {
+          var json;
+
+          if (xhr.status != 200) {
+            failure('HTTP Error: ' + xhr.status);
+            return;
+          }
+
+          json = JSON.parse(xhr.responseText);
+
+          if (!json || typeof json.file_path != 'string') {
+            failure('Invalid JSON: ' + xhr.responseText);
+            return;
+          }
+
+          success(json.file_path);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+      },
+    });
+    if (tinymce.editors.length > 0) {
+      //  tinymce.execCommand('mceFocus', true, richTextArea_id );       
+      tinymce.execCommand('mceRemoveEditor', true, richTextArea_id);
+      tinymce.execCommand('mceAddEditor', true, richTextArea_id);
+    }
+  }
+  PIEmailClear() {
+    this.emailForm.reset();
+    this.msg_id = '';
+    // this.getInvoice1({});
+    tinymce.activeEditor.setContent("");
+  }
+
+  templateContentEmailDropdown(event: any) {
+    this.quotation_Emailtemplate_id = event.target.value;
+   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    let api_req: any = new Object();
+    let api_quotationTemplateDropdown_req: any = new Object();
+    api_req.moduleType = "creditNote";
+    api_req.api_url = "creditNote/getTemplateData";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationTemplateDropdown_req.action = "getTemplateData";
+    api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_quotationTemplateDropdown_req.credit_note_id = this.Email_BillId;
+    api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
+    api_req.element_data = api_quotationTemplateDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+    
+      this.messageContent = response.crm_template_content;
+      this.mailContent = tinymce.get('tinyID1_creditnote').setContent("<p>" + this.messageContent + "</p>");
+      $('#subject8').val(response.crm_subject_name);
+      $('#tinyID1_creditnote').val(this.mailContent);
+      if (response != '') {
+        this.emailForm.patchValue({
+
+          // 'Subject_Content': response.crm_subject_name,
+
+          // 'tinyID1_creditnote': this.mailContent,
+
+        });
+
+      }
+      else {
+        this.emailForm.patchValue({
+
+          'email_template': '',
+
+        });
+      }
+
+
+    });
+  }
+  PDF(id:any){
+    var url = "https://laravelapi.erp1.cal4care.com/api/creditNote/generateCreditNote/" + btoa(id)  + "";
+    window.open(url, '_blank');
   }
 
 

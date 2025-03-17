@@ -13,6 +13,9 @@
   .fc-button:hover {
     background-color: #d73c3c;
   }
+  .fc-h-event .fc-event-title-container .fc-event-title fc-sticky{
+    color: #fffafa !important;
+  }
   
   /* Event Styles */
   .fc-event {
@@ -124,12 +127,12 @@
   }
 
   .holiday-event {
-    background-color: grey !important;
+    background-color: rgb(49, 91, 216) !important;
     color: white !important;
   }
   
   .leave-event {
-    background-color: red !important;
+    background-color: rgb(228, 222, 222) !important;
     color: white !important;
   }
 
@@ -175,6 +178,7 @@ ul.nav.nav-pills a.nav-link.active, ul.nav.nav-pills .show > .nav-link {
   background-color: #2c3e50;
 }
 
+
 .inner-html-container p {
   margin-bottom: 10px;
   color: #444;
@@ -184,6 +188,98 @@ ul.nav.nav-pills a.nav-link.active, ul.nav.nav-pills .show > .nav-link {
   font-size: 24px;
   color: #007bff;
 }
+
+
+
+
+
+.section {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.rascal {
+  background: #5d96c5;
+  font-family: Arial, sans-serif;
+}
+.container {
+  width: 80%;
+  margin: auto;
+  background: #d9e9f7;
+  padding: 20px;
+  border-radius: 8px;
+}
+.header {
+  background: #4477a3;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.details, .leave-table, .leave-status {
+  background: white;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+.details p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background: #4477a3;
+  color: white;
+}
+select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+
+
+
+#leaveRequestFormId .modal-dialog,#leaveRequestFormId-2 .modal-dialog {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100vh;
+ 
+  display: flex;
+  align-items: center;
+}
+
+#leaveRequestFormId .modal-content,#leaveRequestFormId-2 .modal-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 0; /* Removes rounded corners */
+}
+
+
+.policy-content h2 {
+  color: #2c3e50;
+}
+
+.policy-content p {
+  font-size: 16px;
+}
+
+.policy-content ul {
+  padding-left: 20px;
+}
+
 
 
   

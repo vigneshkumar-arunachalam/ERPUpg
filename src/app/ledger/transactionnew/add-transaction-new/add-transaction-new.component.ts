@@ -1866,11 +1866,8 @@ export class AddTransactionNewComponent implements OnInit {
       $.ajax({
         type: 'POST',
 
-        url:
-          'https://laravelapi.erp1.cal4care.com/api/stock/' +
-          this.saveVariable +
-          '',
-        // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
+       // url:'https://laravelapi.erp1.cal4care.com/api/stock/' +this.saveVariable +'',
+         url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
         cache: false,
         contentType: false,
         processData: false,
@@ -1920,11 +1917,8 @@ export class AddTransactionNewComponent implements OnInit {
       $.ajax({
         type: 'POST',
 
-        url:
-          'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' +
-          this.saveVariable +
-          '',
-        // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
+      //  url:'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.saveVariable +'',
+         url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
         cache: false,
         contentType: false,
         processData: false,

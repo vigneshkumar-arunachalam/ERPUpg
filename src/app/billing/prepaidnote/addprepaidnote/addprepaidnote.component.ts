@@ -693,19 +693,19 @@ var xft='';
     api_req_addPO.user_id = localStorage.getItem('erp_c4c_user_id');
     //section 1
  
-    api_req_addPO.billerId = this.addDo_section1.value.e_companyName;
-    api_req_addPO.credit_note_no = this.addDo_section1.value.e_DocNo;
-    api_req_addPO.date = this.addDo_section1.value.e_DocDate;
+    api_req_addPO.billerId = this.addDo_section1.value.companyName;
+    api_req_addPO.credit_note_no = this.addDo_section1.value.DocNo;
+    api_req_addPO.date = this.addDo_section1.value.DocDate;
     api_req_addPO.billGeneratedBy=localStorage.getItem('erp_c4c_user_id');
     
   
     api_req_addPO.customer_id = this.customer_ID;
-    api_req_addPO.customerCompany = this.addDo_section1.value.e_companyNameDropdown;
-    api_req_addPO.b_address1 = this.addDo_section1.value.e_customerAddress1;
-    api_req_addPO.b_address2 = this.addDo_section1.value.e_customerAddress2;
-    api_req_addPO.b_address3 = this.addDo_section1.value.e_customerAddress3;
-    api_req_addPO.currency_id = this.addDo_section1.value.e_currency;
-    api_req_addPO.reference = this.addDo_section1.value.e_reference;
+    api_req_addPO.customerCompany =     this.customer_NAME;
+    api_req_addPO.b_address1 = this.addDo_section1.value.customerAddress1;
+    api_req_addPO.b_address2 = this.addDo_section1.value.customerAddress2;
+    api_req_addPO.b_address3 = this.addDo_section1.value.customerAddress3;
+    api_req_addPO.currency_id = this.addDo_section1.value.currency;
+    api_req_addPO.reference = this.addDo_section1.value.reference;
     
 
 
@@ -755,7 +755,7 @@ var xft='';
        ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == 'true') {
         this.gotoPurchaseOrderList();
-        this.router.navigate(['/creditnote']);
+        this.router.navigate(['/prepaidnote']);
         iziToast.success({
           message: "Prepaid Note Saved Successfully",
           position: 'topRight'

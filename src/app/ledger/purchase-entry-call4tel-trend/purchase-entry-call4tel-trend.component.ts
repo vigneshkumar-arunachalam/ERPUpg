@@ -117,6 +117,8 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
  
   createAddress(): FormGroup {
     return this.fb.group({
+      status: [''], 
+      backgroundColor:[''], 
       purchase_trend_id: [''],
       purchaseEntryTempId: [''],
       invoiceNo: [''],
@@ -311,36 +313,40 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
           response.vendorTrendDetails.months[month].forEach((record: any) => {
             formArray.push(
               this.fb.group({
+                status: [record.status], // Store the approval status
+                backgroundColor: [this.getBackgroundColor(record.status)],
 
-                invoiceNo: record.invoice_no || '',
-                invoiceAmount1: record.invoice_amount_without_tax || 0,
-                invoiceAmount2: record.invoice_amount_converted || '',
-                currConvRate: record.conversionRate || '',
 
-                fixedAmount1: record.fixed_amount || 0,
-                fixedAmount2: record.fixed_amount_converted || '',
-                usageAmount1: record.usage_amount || 0,
-                usageAmount2: record.usage_amount_converted || '',
+                invoiceNo: record.invoice_no ,
+                invoiceAmount1: record.invoice_amount_without_tax ,
+                invoiceAmount2: record.invoice_amount_converted ,
+  
+                currConvRate: record.conversionRate ,
 
-                otherAmount1: record.other_amount || 0,
-                otherAmount2: record.other_amount_converted || '',
-                IDDAmount1: record.idd_amount || 0,
-                IDDAmount2: record.idd_amount_converted || '',
+                fixedAmount1: record.fixed_amount,
+                fixedAmount2: record.fixed_amount_converted,
+                usageAmount1: record.usage_amount,
+                usageAmount2: record.usage_amount_converted,
 
-                localAmount1: record.local_amount || 0,
-                localAmount2: record.local_amount_converted || '',
-                purchase_trend_id: record.purchase_trend_id || '',
-                purchaseEntryTempId: record.purchaseEntryTempId || '',
+                otherAmount1: record.other_amount,
+                otherAmount2: record.other_amount_converted,
+                IDDAmount1: record.idd_amount,
+                IDDAmount2: record.idd_amount_converted,
 
-                vendorId: record.vendorId || '',
-                billerid: record.billerid || '',
-                year_val: record.year_val || '',
-                ven_id: record.ven_id || '',
+                localAmount1: record.local_amount,
+                localAmount2: record.local_amount_converted,
+                purchase_trend_id: record.purchase_trend_id,
+                purchaseEntryTempId: record.purchaseEntryTempId,
+
+                vendorId: record.vendorId,
+                billerid: record.billerid,
+                year_val: record.year_val,
+                ven_id: record.vendor_id,
           
               
-                entry_row: record.entryRow || '',
-                mon_val: record.month_val || '',
-                mon_val_title:  record.month_val || '',
+                entry_row: record.entryRow,
+                mon_val: record.month_val,
+                mon_val_title:  record.month_val,
         
               })
             );
@@ -480,9 +486,9 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
   }
   showAttachment(index: number): void {
     const rowForm = this.addressControls.at(index);
-    console.log('Showing attachment for row:', index);
+   // console.log('Showing attachment for row:', index);
     const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
-    console.log('get-purchase entry temp id values at each index', purchaseEntryTempId_index);
+   // console.log('get-purchase entry temp id values at each index', purchaseEntryTempId_index);
     // Implement logic to fetch and display the attachment, e.g., open a modal or redirect
 
     let api_req: any = new Object();
@@ -496,28 +502,13 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
     api_Search_req.purchaseEntryTempId = purchaseEntryTempId_index;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_status response", response);
 
-     
-     // console.log("vignesh-advanced search result", this.searchResult);
      this.attachments = response.attachments;
-     if (this.attachments[0].status==true) {
+     if (this.attachments.length > 0 && this.attachments[0].status === true) {
      
-      console.log("response.attachments.length", response.attachments?.length);
+      // console.log("response.attachments.length", response.attachments?.length);
       $('#showPDFFormId').modal('show');
-      // Check if the array is valid and contains non-null objects
-      // const validAttachment = this.attachments?.find((attachment) => attachment && attachment.file_url);
-    
-      // if (validAttachment) {
-      //   console.log("The attachments array contains a valid file_url:", validAttachment.file_url);
-        
-      // } else {
-      //   console.log("The attachments array contains null or invalid values.");
-      //   iziToast.warning({
-      //     message: "No Record",
-      //     position: 'topRight',
-      //   });
-      // }
+     
     }else{
       iziToast.warning({
         message: "No Record",
@@ -527,6 +518,16 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
     }
     
     });
+  }
+  getBackgroundColor(status: any): any {
+    //  console.log("status",status);
+    //  console.log("typeof-status",typeof(status));
+    switch (status) {
+      case 1: return '#4CAF50';  // Green
+      case 2: return '#FFFF5C';  // Yellow   
+      case 3: return '#FFFFFF';  // Red
+      default: return '#FFFFFF'; // 
+    }
   }
     
   

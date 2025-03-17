@@ -302,7 +302,7 @@ select {
 tr:hover td {
   color: #b1ba1500;
 
-  background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
+
   -webkit-background-clip: text;
   background-clip: text;
   transition: background 1s, color 1s;
@@ -503,11 +503,34 @@ background-color: #f4f2f3 !important;
 cursor: not-allowed;
 }
 
+/* .spinner-container {
+} */
+
+.backdrop {
+  position: fixed; /* Covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2); /* Light transparent overlay */
+  backdrop-filter: blur(5px); /* Blur effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
 .spinner-container {
-display: flex;
+  background: rgba(255, 255, 255, 0.8); /* Slightly opaque background for the spinner */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
 }
+
+
 
 

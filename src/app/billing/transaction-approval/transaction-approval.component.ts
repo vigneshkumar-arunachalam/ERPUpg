@@ -31,7 +31,7 @@ export class TransactionApprovalComponent implements OnInit {
   tabValue: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 100;
+  pageLimit = 50;
   paginationData: any = { "info": "hide" };
   paginationData1: any = { "info": "hide" };
   offset_count = 1;
@@ -43,14 +43,14 @@ export class TransactionApprovalComponent implements OnInit {
   edit_arrayMain: any = [];
   groupSelectCommonIdMain: any;
   checkbox_valueMain: any;
-   //checkbox group-DID Number
-   edit_arrayDIDNum: any = [];
-   groupSelectCommonIdDIDNum: any;
-   checkbox_valueDIDNum: any;
-    //checkbox group-DID Demo
-    edit_arrayDIDdemo: any = [];
-    groupSelectCommonIdDIDdemo: any;
-    checkbox_valueDIDdemo: any;
+  //checkbox group-DID Number
+  edit_arrayDIDNum: any = [];
+  groupSelectCommonIdDIDNum: any;
+  checkbox_valueDIDNum: any;
+  //checkbox group-DID Demo
+  edit_arrayDIDdemo: any = [];
+  groupSelectCommonIdDIDdemo: any;
+  checkbox_valueDIDdemo: any;
   //checkbox group-product issue
   edit_arrayProductIssue: any = [];
   groupSelectCommonIdProductIssue: any;
@@ -127,11 +127,42 @@ export class TransactionApprovalComponent implements OnInit {
   transApprovalList_InvPay: any;
   transApprovalList_OnlineShop: any;
   transApprovalList_DIDDemoList: any;
-
+  transApprovalList_RMAIssueList: any;
+  transApprovalList_OthersList: any;
+  //RMA Group Check
+  selectAll_RMACK = false;
+  selectedTransactionIds_RMA: number[] = [];
+  customerAppCnt: any;
+  //count
+  dataCenterCnt: any;
+  demoProductCnt: any;
+  didAppCnt: any;
+  didDemoAppCnt: any;
+  invPaymentCnt: any;
+  leaveAppCnt: any;
+  mainAppCnt: any;
+  onlineShopCnt: any;
+  productAppCnt: any;
+  quotationAppCnt: any;
+  rmaIssuesCnt: any;
+  //HRA
+  transApprovalList_HRAList: any;
+  //data center
+  transApprovalList_DataCenterList: any;
+  //Others Group Check
+  selectAll_OthersCK = false;
+  selectedTransactionIds_Others: number[] = [];
+  //HRA Group Check
+  selectAll_HRACK = false;
+  selectedTransactionIds_HRA: number[] = [];
+  //Data Center
+  selectAll_DataCenCK = false;
+  selectedTransactionIds_DataCen: number[] = [];
   constructor(public serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.getMainList({})
+    this.getMainList({});
+    this.getTransactionCounts();
     // this.getTransactionApprovalList({});
 
     this.transactionApprovalViewForm = new FormGroup({
@@ -172,6 +203,31 @@ export class TransactionApprovalComponent implements OnInit {
 
     });
   }
+
+
+
+
+  toggleSelectAll() {
+    this.transApprovalList_RMAIssueList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_RMACK;
+      this.updateSelectedTransactions(item);
+    });
+  }
+  updateSelectAllState() {
+    this.selectAll_RMACK = this.transApprovalList_RMAIssueList.every((item: { checked: boolean; }) => item.checked);
+  }
+
+  updateSelectedTransactions(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_RMA.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_RMA.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_RMA = this.selectedTransactionIds_RMA.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_RMA);
+  }
+
   CB_Toggle(event: any) {
     this.checkboxCB_ToggleStatus = event.target.checked;
 
@@ -225,6 +281,37 @@ export class TransactionApprovalComponent implements OnInit {
 
     console.log("Checkbox-all", this.edit_arrayMain);
   }
+  selectAll_RMA(event: any) {
+    // Check if the event target is checked
+    const isChecked = event.target.checked;
+
+    // Iterate over the mulInvPay_list array
+    this.transApprovalList_RMAIssueList.forEach((list: any) => {
+      // Update the checkbox state for each item
+      list.isChecked = isChecked;
+
+      // If it's checked, add transaction_approval_id to the edit_array
+      if (isChecked) {
+        if (!this.edit_arrayMain.includes(list.transaction_approval_id)) {
+          this.edit_arrayMain.push(list.transaction_approval_id);
+        }
+      } else {
+        // If it's unchecked, remove transaction_approval_id from the edit_array
+        const index = this.edit_arrayMain.findIndex((el: any) => el === list.transaction_approval_id);
+        if (index > -1) {
+          this.edit_arrayMain.splice(index, 1);
+        }
+      }
+    });
+    //  console.log("Checkbox-all", this.edit_arrayMain);
+    // Update the state of all checkboxes in the DOM
+    const checkboxes = document.querySelectorAll('.checkbox-group__single input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => {
+      checkbox.checked = isChecked;
+    });
+
+    console.log("Checkbox-all", this.edit_arrayMain);
+  }
 
   selectAll_DIDNumber(event: any) {
     // Check if the event target is checked
@@ -237,7 +324,7 @@ export class TransactionApprovalComponent implements OnInit {
 
       // If it's checked, add transaction_approval_id to the edit_array
       if (isChecked) {
-        if ( list.approval_staus === 0 && !this.edit_arrayDIDNum.includes(list.transaction_approval_id)) {
+        if (list.approval_staus === 0 && !this.edit_arrayDIDNum.includes(list.transaction_approval_id)) {
           this.edit_arrayDIDNum.push(list.transaction_approval_id);
         }
       } else {
@@ -268,7 +355,7 @@ export class TransactionApprovalComponent implements OnInit {
 
       // If it's checked, add transaction_approval_id to the edit_array
       if (isChecked) {
-        if ( list.approval_staus === 0 && !this.edit_arrayDIDdemo.includes(list.transaction_approval_id)) {
+        if (list.approval_staus === 0 && !this.edit_arrayDIDdemo.includes(list.transaction_approval_id)) {
           this.edit_arrayDIDdemo.push(list.transaction_approval_id);
         }
       } else {
@@ -288,7 +375,7 @@ export class TransactionApprovalComponent implements OnInit {
 
     console.log("Checkbox-all", this.edit_arrayDIDdemo);
   }
- 
+
   selectAll_OnlineShop(event: any) {
     // Check if the event target is checked
     const isChecked = event.target.checked;
@@ -355,7 +442,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
 
 
-  EditCHK(transaction_approval_id: any, event: any,approval_staus:any) {
+  EditCHK(transaction_approval_id: any, event: any, approval_staus: any) {
 
     //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonIdMain = transaction_approval_id;
@@ -381,7 +468,7 @@ export class TransactionApprovalComponent implements OnInit {
     console.log("Final Checkbox After checkbox selected list", this.edit_arrayMain);
   }
 
-  EditCHK_DIDNum(transaction_approval_id: any,approval_staus:any, event: any) {
+  EditCHK_DIDNum(transaction_approval_id: any, approval_staus: any, event: any) {
 
     //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonIdDIDNum = transaction_approval_id;
@@ -406,7 +493,7 @@ export class TransactionApprovalComponent implements OnInit {
     }
     console.log("Final Checkbox After checkbox selected list", this.edit_arrayDIDNum);
   }
-  EditCHK_DIDDemo(transaction_approval_id: any,approval_staus:any, event: any) {
+  EditCHK_DIDDemo(transaction_approval_id: any, approval_staus: any, event: any) {
 
     //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonIdDIDdemo = transaction_approval_id;
@@ -433,7 +520,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
 
 
-  EditCHK_ProdIssue(transaction_approval_id: any, event: any,approval_staus:any) {
+  EditCHK_ProdIssue(transaction_approval_id: any, event: any, approval_staus: any) {
 
     //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonIdProductIssue = transaction_approval_id;
@@ -677,6 +764,158 @@ export class TransactionApprovalComponent implements OnInit {
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList_DIDDemoList = response.trans_approve_list;
+        this.tabValue = response.tab_name;
+
+
+        this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
+        this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  DataCenterList(data: any) {
+    this.edit_arrayMain = [];
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/dataCenterList"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "transaction_approval/dataCenterList";
+    api_transactionList.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_transactionList.off_set = list_data.offset;
+    api_transactionList.limit_val = list_data.limit;
+    api_transactionList.current_page = "";
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response) {
+        //  if(=='on'){
+        //   this.transApprovalList = response.trans_approve_list;
+        //  }
+        this.transApprovalList_DataCenterList = response.trans_approve_list;
+        this.tabValue = response.tab_name;
+
+
+        this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
+        this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  HRAList(data: any) {
+    this.edit_arrayMain = [];
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/hraList"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "transaction_approval/hraList";
+    api_transactionList.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_transactionList.off_set = list_data.offset;
+    api_transactionList.limit_val = list_data.limit;
+    api_transactionList.current_page = "";
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response) {
+        //  if(=='on'){
+        //   this.transApprovalList = response.trans_approve_list;
+        //  }
+        this.transApprovalList_HRAList = response.trans_approve_list;
+        this.tabValue = response.tab_name;
+
+
+        this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
+        this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  OthersList(data: any) {
+    this.edit_arrayMain = [];
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/othersList"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "transaction_approval/othersList";
+    api_transactionList.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_transactionList.off_set = list_data.offset;
+    api_transactionList.limit_val = list_data.limit;
+    api_transactionList.current_page = "";
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response) {
+        //  if(=='on'){
+        //   this.transApprovalList = response.trans_approve_list;
+        //  }
+        this.transApprovalList_OthersList = response.trans_approve_list;
+        this.tabValue = response.tab_name;
+
+
+        this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
+        this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  RMAIssueList(data: any) {
+    this.edit_arrayMain = [];
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/rmaIssuesList"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "transaction_approval/rmaIssuesList";
+    api_transactionList.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_transactionList.off_set = list_data.offset;
+    api_transactionList.limit_val = list_data.limit;
+    api_transactionList.current_page = "";
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response) {
+        //  if(=='on'){
+        //   this.transApprovalList = response.trans_approve_list;
+        //  }
+        this.transApprovalList_RMAIssueList = response.trans_approve_list;
         this.tabValue = response.tab_name;
 
 
@@ -1418,6 +1657,54 @@ export class TransactionApprovalComponent implements OnInit {
 
 
   }
+  transactionApprovalReject_Others(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let transAproveQuotReject_req: any = new Object();
+        api_req.moduleType = "transactionApprovalList";
+        api_req.api_url = "transaction_approval/OthersDelete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotReject_req.action = "transaction_approval/OthersDelete";
+        transAproveQuotReject_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        transAproveQuotReject_req.transaction_approval_id = id;
+        api_req.element_data = transAproveQuotReject_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+
+          if (response.status == true) {
+            this.OthersList({});
+
+            iziToast.success({
+              message: "Others Approval Rejected ",
+              position: 'topRight'
+            });
+          } else {
+            iziToast.warning({
+              message: "Others Rejected Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+
+
+  }
   transactionApprovalReject_Main(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -1437,6 +1724,53 @@ export class TransactionApprovalComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         transAproveQuotReject_req.action = "rejectData";
+        transAproveQuotReject_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        transAproveQuotReject_req.trans_id = id;
+        api_req.element_data = transAproveQuotReject_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+
+          if (response.status == true) {
+            this.getMainList({});
+            iziToast.success({
+              message: "Main Approval Rejected ",
+              position: 'topRight'
+            });
+          } else {
+            iziToast.warning({
+              message: "Main Rejected Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+
+
+  }
+  transactionApprovalDelete_Main(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let transAproveQuotReject_req: any = new Object();
+        api_req.moduleType = "transactionApprovalList";
+        api_req.api_url = "transaction_approval/transaction_delete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotReject_req.action = "transaction_delete";
         transAproveQuotReject_req.user_id = localStorage.getItem('erp_c4c_user_id');
         transAproveQuotReject_req.trans_id = id;
         api_req.element_data = transAproveQuotReject_req;
@@ -1548,6 +1882,54 @@ export class TransactionApprovalComponent implements OnInit {
     // });
 
     // window.open(url, '_blank');
+  }
+  approveAllRMA() {
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve All!'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let mainappr: any = new Object();
+        api_req.moduleType = "transactionApprovalList";
+        api_req.api_url = "transaction_approval/approvalAllData";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        mainappr.action = "approvalAllData";
+        mainappr.user_id = localStorage.getItem('erp_c4c_user_id');
+        mainappr.trans_id = this.selectedTransactionIds_RMA;
+
+        api_req.element_data = mainappr;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+          if (response.status == true) {
+            this.getTransactionApprovalList({});
+            this.edit_arrayMain = [];
+            iziToast.success({
+              message: "RMA Approval Success ",
+              position: 'topRight'
+            });
+          } else {
+            iziToast.warning({
+              message: "RMA Approval Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+
   }
 
   approveAllMain() {
@@ -1779,6 +2161,95 @@ export class TransactionApprovalComponent implements OnInit {
       }
     });
 
+  }
+
+  getTransactionCounts() {
+
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transactionApproval";
+    api_req.api_url = "transaction_approval/transaction_counts"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "transaction_counts";
+    api_transactionList.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.customerAppCnt = response.customerAppCnt;
+        this.dataCenterCnt = response.dataCenterCnt;
+        this.demoProductCnt = response.demoProductCnt;
+        this.didAppCnt = response.didAppCnt;
+        this.didDemoAppCnt = response.didDemoAppCnt;
+        this.invPaymentCnt = response.invPaymentCnt;
+        this.leaveAppCnt = response.leaveAppCnt;
+        this.mainAppCnt = response.mainAppCnt;
+        this.onlineShopCnt = response.onlineShopCnt;
+        this.productAppCnt = response.productAppCnt;
+        this.quotationAppCnt = response.quotationAppCnt;
+        this.rmaIssuesCnt = response.rmaIssuesCnt;
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  toggleSelectAll_Others() {
+    this.transApprovalList_OthersList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_OthersCK;
+      this.updateSelectedTransactions(item);
+    });
+  }
+
+  updateSelectedTransactions_Others(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_Others.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_Others.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_Others = this.selectedTransactionIds_Others.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_Others);
+  }
+  toggleSelectAll_HRA() {
+    this.transApprovalList_HRAList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_HRACK;
+      this.updateSelectedTransactions_HRA(item);
+    });
+  }
+
+  updateSelectedTransactions_HRA(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_HRA.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_HRA.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_HRA = this.selectedTransactionIds_HRA.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_HRA);
+  }
+  toggleSelectAll_DataCen() {
+    this.transApprovalList_DataCenterList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_DataCenCK;
+      this.updateSelectedTransactions_DataCen(item);
+    });
+  }
+
+  updateSelectedTransactions_DataCen(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_DataCen.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_DataCen.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_DataCen = this.selectedTransactionIds_DataCen.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_DataCen);
   }
 
 

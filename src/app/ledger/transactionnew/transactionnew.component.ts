@@ -69,6 +69,7 @@ export class TransactionnewComponent implements OnInit {
     taxAmount: string;
     invoiceAmount: string;
     comments: string;
+    total_cnt:any;
   ngOnInit(): void {
     this.searchTransactionForm = new FormGroup({
       'search_billerName1': new FormControl(null),
@@ -224,6 +225,7 @@ export class TransactionnewComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.Transaction_list = response.trans_details;
+        this.total_cnt=response.total_cnt;
        // console.log(this.Transaction_list);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 

@@ -7,16 +7,24 @@
             <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
             <span class="breadcrumb-item active">Leave Request</span>
           </h3>
+          <div class="quotation-btn-section">
+            <button type="button" title="Holiday List" class="btn btn-primary btn-default btn-squared"
+              data-toggle="modal" data-target="#holidayFormId" style="margin-right: 10px;">
+              <i class="fas fa-calendar" style="margin-right:0;"></i>
+
+            </button>
+          </div>
 
         </div>
       </div>
       <div class="card-body">
-        <div style="margin-bottom: 10px;">
+        <!-- <div style="margin-bottom: 10px;">
           <button (click)="calendarOptions.initialView = 'dayGridMonth'">Month View</button>
           <button (click)="calendarOptions.initialView = 'listMonth'">List View</button>
-        </div>
+        </div> -->
 
-        <full-calendar [options]="calendarOptions"></full-calendar>
+
+        <full-calendar #calendar [options]="calendarOptions"></full-calendar>
       </div>
     </div>
   </div>
@@ -44,7 +52,7 @@
             <thead class="thead-dark">
 
               <tr>
-               
+
                 <th class="title_data">Leave Type
                 </th>
                 <th class="title_data"> Total Leave
@@ -61,17 +69,21 @@
             <tbody>
 
               <tr>
-             
-                <td class="title_data" *ngIf="this.billerId!=29">Annual Leave<br> (AL + Carry Forward) <small><b>{{this.annualLeave}}+{{this.carryForward}}</b></small></td>
-                <td class="title_data" *ngIf="this.billerId==29">Annual Leave<br> (AL + Carry Forward + SIL) <small><b>{{this.annualLeave}}+{{this.carryForward}}+{{this.silLeave}}</b></small></td>
+
+                <td class="title_data" *ngIf="this.billerId!=29">Annual Leave<br> (AL + Carry Forward)
+                  <small><b>{{this.annualLeave}}+{{this.carryForward}}</b></small>
+                </td>
+                <td class="title_data" *ngIf="this.billerId==29">Annual Leave<br> (AL + Carry Forward + SIL)
+                  <small><b>{{this.annualLeave}}+{{this.carryForward}}+{{this.silLeave}}</b></small>
+                </td>
                 <td>{{this.annualLeave}} Days</td>
                 <td>{{this.consumedAnnualLeave}} Days</td>
                 <td>{{this.balanceAnnualLeave}} Days</td>
                 <td>{{ this.upcomingCarryForwadLeave}} Days</td>
-              
+
               </tr>
               <tr>
-               
+
                 <td class="title_data">Medical Leave</td>
                 <td>{{ this.MedicalLeave}} Days</td>
                 <td>{{this.consumedMedicalLeave}}Days</td>
@@ -81,56 +93,184 @@
 
             </tbody>
           </table>
+          <table cellpadding="10" style="border-collapse:collapse" *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
+            <thead>
+
+              <tr>
+                <td colspan="5">
+                  <pre>    Hours calculations:
+Total consumed leaves = 11.9 days; //11 days 9 hours
+//In hours calculation only take floating value for calc so leaveHours is 0.9 hrs;
+(Ex.1)11.9 -&gt; 0.9 hrs (Ex.2) 10.5 -&gt; 0.5 hrs (Ex.3) 8.3 -&gt; 0.3 hrs
+Formula:			
+Condition 1: leaveHours &gt;= 0.80 -&gt; 1 //Ex. leaveHours = 0.9 -&gt; become 1 day         
+Condition 2:  0.8 &gt; leaveHours &gt;= 0.4 -&gt; 0.5 //Ex. leaveHours = 0.6 -&gt; become 0.5 hrs        
+Condition 3:  0.4 &gt; leaveHours  -&gt; 0.0 //Ex. leaveHours = 0.3 -&gt; become 0.0 hrs
+Example: 
+consumed leave = 10.7 days;//with hours added leave from Database
+Hours = 0.7 // in consumed leave
+So it satifies condition 2 then hours become 0.5
+Final consumed leave = 10 days + 0.5 hrs = 10.5 //is displayed below 
+</pre>
+                </td>
+                <td colspan="6">
+                  <pre>    Example: <span style="color:red">(For those who are continuing their job for the whole year)</span>	
+carry forward = 1 day;
+Total allocated leave = 13 days; 
+(Annual leave + carry forward)(i.e)12+1
+consumed leave = 10.5 days;//with hours added leave 
+balance leave = 13 - 10.5 ; //2.5 days
+This balance leave become next year carry forward.
+Carry forward calculation:
+balance leave = 2.5 days;
+balance leave &gt;= 4 then the carry forward is 4.
+balance leave &lt; 4 then the carry forward is balance leave . (i.e)3.5&lt;4 =&gt; 3.5  
+<span style="color:red">Note : When there is a termination / resignation the pro rate will be applied.</span>	
+</pre>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <pre>    Leave calculated Formulas:
+AU - Allocated for User, CF -Carry Forward, LCF - Last year CF,
+PL - Personal Leave, ML - Medical Leave   
+</pre>
+                </td>
+                <td colspan="4">
+                  <pre>        Total Leave:
+Personal Leave -&gt; AU, Medical Leave  -&gt; AU,
+Carry Forward -&gt; LCF, Total Days -&gt; PL + CF 
+</pre>
+                </td>
+
+                <td colspan="3">
+                  <pre>        Balance Leave 2025:
+Personal Leave -&gt; Total days - consumed PL
+Medical Leave  -&gt; Total ML - consumed ML     
+</pre>
+                </td>
+              </tr>
+              <tr>
+                <th class="title_data">Leave Type
+                </th>
+                <th class="title_data" colspan="4"> Total Leave
+                </th>
+                <th class="title_data" colspan="3"> Consumed Leave 2025
+                </th>
+                <th class="title_data" colspan="3">Balance Leave 2025</th>
+
+
+
+              </tr>
+              <tr>
+                <th class="title_data">&nbsp;</th>
+                <th class="title_data" style="width:80px">Personal Leave</th>
+                <th class="title_data" style="width:80px">Medical Leave</th>
+                <th class="title_data" style="width:80px">Carry Forward</th>
+                <th class="title_data" style="width:80px">Total Days</th>
+                <th class="title_data">Personal Leave</th>
+                <th class="title_data">Medical Leave</th>
+                <th class="title_data">Unpaid Leave</th>
+
+                <th class="title_data">Personal Leave</th>
+                <th class="title_data">Medical Leave</th>
+
+                <th class="title_data">Next Year - Carry Forward</th>
+
+
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let list of userLeaveDatas">
+                <td class="title_data">{{list.name}}</td>
+                <td>{{list.user_personal_leave}} Days </td>
+                <td>{{list.user_medical_leave}} Days</td>
+                <td>{{list.carry_forward}} Days</td>
+                <td>{{list.total_leave}} Days</td>
+
+                <td>{{list.user_consumed_personal_leave}} Days </td>
+                <td>{{list.user_consumed_medical_leave}} Days </td>
+                <td>{{list.user_consumed_unpaid_leave}}</td>
+                <td>{{list.balance_personal_leave}} Days</td>
+
+                <td>{{list.balance_medical_leave}} Days</td>
+
+                <td>{{list.carry_forward_nextYear}} Days</td>
+
+
+              </tr>
+
+
+
+
+
+
+            </tbody>
+          </table>
 
           <div class="leave_request_tab_data">
-        
-            <ul class="nav nav-pills" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#PreviousYear" role="tab" aria-controls="PreviousYear"
-                  aria-selected="true" > {{this.currentYearValue-1}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab" aria-controls="CurrentYear"
-                  aria-selected="false" >{{this.currentYearValue}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#NextYear" role="tab" aria-controls="NextYear"
-                  aria-selected="false" >{{this.currentYearValue+1}}</a>
-              </li>
-              
-  
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <div id="PreviousYear" class="tab-pane fade " role="tabpanel" aria-labelledby="PreviousYear-tab"><br>
-                <!-- All sub menu starts -->
-  
-               
-                  <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th class="title_data"> Date </th>
-                        <th class="title_data"> Description </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of lastyearHolidaysArray">
-                        <td>{{item.date}}</td>
-                        <td>{{item.description}}<br></td>
-                      </tr>
-        
-                    </tbody>
-                  </table>
-             
-        
-              
-                <div [innerHTML]="policyDescription"></div>
 
-             
-  
-              </div>
-              <div id="CurrentYear" class="tab-pane fade show active" role="tabpanel" aria-labelledby="CurrentYear-tab"><br>
-               
-                <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
+
+            <div class="tab-content" id="myTabContent">
+
+              <div id="CurrentYear" class="tab-pane fade show active" role="tabpanel" aria-labelledby="CurrentYear-tab">
+                <br>
+                <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear"
+                      (click)="changeYear(this.currentYearValue-1)" role="tab" aria-controls="CurrentYear"
+                      aria-selected="true"> {{this.currentYearValue-1}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#CurrentYear"
+                      (click)="changeYear(this.currentYearValue-1)" role="tab" aria-controls="CurrentYear"
+                      aria-selected="false">{{this.currentYearValue}}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear"
+                      (click)="changeYear(this.currentYearValue+1)" role="tab" aria-controls="CurrentYear"
+                      aria-selected="false">{{this.currentYearValue+1}}</a>
+                  </li>
+
+
+                </ul>
+                <br>
+                <ul class="nav nav-pills" role="tablist" *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab"
+                      aria-controls="countryListSGid" (click)="changeCountry(countryListSGid)" aria-selected="true">
+                      SG</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                      aria-controls="countryListMYid" (click)="changeCountry(countryListMYid)" aria-selected="true">
+                      MY</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                      aria-controls="countryListINDid" (click)="changeCountry(countryListINDid)" aria-selected="true">
+                      IND</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                      aria-controls="countryListPHid" (click)="changeCountry(countryListPHid)" aria-selected="true">
+                      PH</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                      aria-controls="countryListUSAid" (click)="changeCountry(countryListUSAid)" aria-selected="true">
+                      USA</a>
+                  </li>
+
+
+
+
+                </ul>
+
+                <table cellpadding="10" style="border-collapse:collapse;width:100%;align-items: center;"
+                  class="table table-striped">
                   <thead class="thead-dark">
                     <tr>
                       <th class="title_data"> Date </th>
@@ -142,34 +282,18 @@
                       <td>{{item.date}}</td>
                       <td>{{item.description}}<br></td>
                     </tr>
-                    
+                    <tr *ngIf="holidaysArray && holidaysArray.length === 0">
+                      <td colspan="2">No Record Found</td>
+                    </tr>
+
                   </tbody>
                 </table>
-                <div [innerHTML]="policyDescription"></div>
-  
+                <div class="policy-content" [innerHTML]="policyDescription"></div>
+
               </div>
-  
-              <div id="NextYear" class="tab-pane fade" role="tabpanel" aria-labelledby="NextYear-tab"><br>
-                <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th class="title_data"> Date </th>
-                      <th class="title_data"> Description </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="12" align="center">
-                        <p>No Holiday Availble</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div  [innerHTML]="policyDescription"></div>
-              </div>
-              
+
             </div>
-          
+
           </div>
         </form>
 
@@ -185,3 +309,242 @@
   </div>
 </div>
 <!----------Modal Pop Up (END)  for edit Petty cash ------------------>
+
+
+
+<!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
+<div class="modal fade" id="leaveRequestFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+          Leave Request </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="leaveRequestForm">
+          <div class="rascal">
+            <div class="container">
+              <!-- <div class="header">LEAVE REQUEST ENTRY</div> -->
+              <div class="section">
+                <!-- <p><strong>Employee ID:</strong> 106</p>
+                          <p><strong>Employee Name:</strong> Mr. VIGNESHKUMAR A</p>
+                          <p><strong>Country</strong> India</p>
+                          <p><strong>Designation:</strong> Angular Developer</p>
+                          <p><strong>Date of Join:</strong> 21-06-2013</p>
+                          <p><strong>Experience:</strong> 2 Years 10 Months</p> -->
+                <table>
+                  <!-- <tr>
+                                  <td>Employee ID:</td>
+                                  <td><input type="text" class="form-control"></td>
+                                  <td>Employee Name:</td>
+                                  <td><input type="text" class="form-control"></td>
+                              </tr> -->
+                  <!-- <tr>
+                                  <td>Date of Join:</td>
+                                  <td><input type="date" class="form-control"></td>
+                                  <td>Designation:</td>
+                                  <td><input type="text" class="form-control"></td>
+                                
+                              </tr> -->
+                  <tr>
+                    <td>Start Date</td>
+                    <td><input type="date" class="form-control" formControlName="startDate"></td>
+                    <td>End Date</td>
+                    <td><input type="date" class="form-control" formControlName="endDate"></td>
+                  </tr>
+                  <tr>
+                    <td>Leave Type</td>
+                    <td>
+                      <select name="leaveType" id="leaveType" (change)="leavetypechange($event)" class="form-control"
+                        formControlName="leaveType">
+                        <option [ngValue]="null" selected>Select Leave Type</option>
+                        <option *ngFor="let from of LeaveType" value="{{ from.LeaveTypeId }}">
+                          {{ from.LeaveTypeName }}
+                        </option>
+                      </select>
+
+                    </td>
+
+                    <td>Duration Type</td>
+                    <td>
+                      <select name="durationType" id="durationType" class="form-control" formControlName="durationType">
+                        <option [ngValue]="null" selected>Select Duration </option>
+                        <option *ngFor="let from of leaveCategory" value="{{ from.LeavCatId }}">
+                          {{ from.LeaveCatName }}
+                        </option>
+                      </select>
+
+
+                    </td>
+
+
+                  </tr>
+
+
+                  <tr>
+
+                    <td>Reason</td>
+                    <td><textarea rows="4" style="width: -webkit-fill-available"
+                        formControlName="leaveReason"></textarea></td>
+
+                    <td *ngIf="this.medicalcert==1">Medical Certificate:</td>
+                    <td *ngIf="this.medicalcert==1"><input type="file" class="form-control"
+                        formControlName="medicalcert"></td>
+
+
+                  </tr>
+                </table>
+              </div>
+              <div class="leave-table">
+                <table>
+                  <tr>
+                    <th>Leave Type</th>
+                    <th>Leave Authorised</th>
+                    <th>Leave Availed</th>
+                    <th>Balance</th>
+                    <th>More</th>
+                  </tr>
+                  <tr>
+                    <td>Personal/Annual(Year) </td>
+                    <td>{{this.TotalAL}}</td>
+                    <td>{{this.consumedAL}}</td>
+                    <td>{{this.balanceAL}}</td>
+                    <td>Details</td>
+                  </tr>
+                  <tr>
+                  <tr>
+                    <td>Personal/Annual(Month-ProRate) </td>
+                    <td>{{this.TotalAL}}</td>
+                    <td>{{this.consumedAL}}</td>
+                    <td>{{this.balanceAL}}</td>
+                    <td>Details</td>
+                  </tr>
+                  <tr>
+                    <td>Medical</td>
+                    <td>{{this.TotalML}}</td>
+                    <td>{{this.consumedML}}</td>
+                    <td>{{this.balanceML}}</td>
+                    <td>Details</td>
+                  </tr>
+                  <tr>
+                    <td>Unpaid</td>
+                    <td> 0</td>
+                    <td>{{this.consumedLOP}}</td>
+                    <td> 0</td>
+                    <td>Details</td>
+                  </tr>
+
+                  <tr>
+                    <td>Permission(Month)</td>
+
+                    <td>2</td>
+                    <td> {{this.permissionCount}}</td>
+                    <td> {{this.remainingPermi}}</td>
+                    <td>Details</td>
+                  </tr>
+                </table>
+
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createLeave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
+<div class="modal fade" id="leaveRequestFormId-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+          Leave Request </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="rascal">
+          <div class="container">
+
+
+            <div class="leave-status">
+              <table>
+                <tr>
+                  <th>S.NO</th>
+                  <th>Name</th>
+                  <th>Leave Type</th>
+                  <th>Leave Category</th>
+                  <th>Biller Name</th>
+
+                </tr>
+                <tr *ngFor="let item of leaveDataList;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.firstName}}<br></td>
+                  <td>{{item.LeaveTypeName}}<br></td>
+                  <td>{{item.LeaveCatName}}<br></td>
+                  <td>
+                    <!-- <span> {{ list.billerName }} </span> -->
+                    <span><button type="button" class="buttonClass {{item.billerCode}}">
+                        {{item.billerCode}}</button></span>
+                  </td>
+                </tr>
+                <tr *ngIf="leaveDataList && leaveDataList.length === 0">
+                  <td colspan="5">No Record Found</td>
+                </tr>
+
+
+                <!-- Leave Status Rows Can Be Added Here -->
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createLeave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->

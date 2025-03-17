@@ -227,13 +227,13 @@ export class EditdebitnoteComponent implements OnInit {
 
         let api_req: any = new Object();
         let api_ProdAutoFill_req: any = new Object();
-        api_req.moduleType = "purchaseorder";
-        api_req.api_url = "purchaseorder/delete_purchase_order_child";
+        api_req.moduleType = "debitNote";
+        api_req.api_url = "debitNote/delete_debitnote_child";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_ProdAutoFill_req.action = "delete_purchase_order_child";
+        api_ProdAutoFill_req.action = "debitNote/delete_debitnote_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.poChildId = purchaseOrderChildId;
+        api_ProdAutoFill_req.child_id = purchaseOrderChildId;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -321,7 +321,7 @@ export class EditdebitnoteComponent implements OnInit {
    });
  }
 
-  keywordvendorName = 'vendorName';
+  keywordvendorName = 'customerName';
   onFocusedVendor(e: any) {
     // do something when input is focused
     console.log(e);
@@ -330,8 +330,8 @@ export class EditdebitnoteComponent implements OnInit {
     this.spinner.show();
 
 
-    this.vendor_ID = data.vendorId;
-    this.vendor_Name = data.vendorName;
+    this.vendor_ID = data.customerId;
+    this.vendor_Name = data.customerName;
 
     this.e_vendor_name = data.vendorName;
     console.log("search data in dropdown", data)
@@ -340,13 +340,13 @@ export class EditdebitnoteComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_SearchVendor_req: any = new Object();
-    api_req.moduleType = "purchaseorder";
-    api_req.api_url = "purchaseorder/vendor_address_details";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/customer_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_SearchVendor_req.action = "vendor_address_details";
+    api_SearchVendor_req.action = "customer_address_details";
     api_SearchVendor_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchVendor_req.vendorId = this.vendor_ID;
+    api_SearchVendor_req.customerId = this.vendor_ID;
     api_req.element_data = api_SearchVendor_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -363,12 +363,19 @@ export class EditdebitnoteComponent implements OnInit {
         this.e_vendor_name = response.vendorName;
         this.e_vendor_company_name = response.vendorName;
         this.e_vendor_company_address=response.vendor_address;
-        // this.addDo_section1.patchValue({
+        this.addDo_section1.patchValue({
+          'e_customerAddress1': response.customer_details.customerAddress1,
+          'e_customerAddress2': response.customer_details.customerAddress2,
+          'e_customerAddress3': response.customer_details.customerAddress3,
+       
+          'e_vendor_name': response.customer_details.customerName,
+          'e_companyNameDropdown': response.customer_details.kind_Attention,
+     
+          'e_currency': response.def_currency_id,
+       
+        
 
-        //   'e_companyNameDropdown': response.vendorName,
-        //   'customerAddress1': response.vendor_address,
-
-        // });
+        });
       }
 
     });
@@ -377,18 +384,19 @@ export class EditdebitnoteComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
-    api_req.moduleType = "purchaseorder";
-    api_req.api_url = "purchaseorder/vendor_name_details";
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_name";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "vendor_name_details";
+    api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     // api_Search_req.billerId = this.addDo_section1.value.companyName;
+    api_Search_req.billerId = this.addDo_section1.value.e_companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-vendor_name response", response);
-      this.searchResult_vendor = response.vendor_list;
+      this.searchResult_vendor = response.customer_list;
 
       if (response!='') {
        
@@ -586,51 +594,52 @@ export class EditdebitnoteComponent implements OnInit {
         // this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
         // this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
         // this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
+        this.vendor_ID=response.data.debit_note_parent.billerId;
 
         this.addDo_section1.patchValue({          
-          'e_companyName': response.data.credit_note_parent.billerId,
-          'e_DocNo': response.data.credit_note_parent.credit_note_no,
-          'e_DocDate': response.data.credit_note_parent.credit_note_date,
-          'e_companyNameDropdown': response.data.credit_note_parent.customerCompany,
+          'e_companyName': response.data.debit_note_parent.billerId,
+          'e_DocNo': response.data.debit_note_parent.debit_note_no,
+          'e_DocDate': response.data.debit_note_parent.debit_note_date,
+          'e_companyNameDropdown': response.data.debit_note_parent.kind_Attention,
 
 
-          'e_customerAddress1': response.data.credit_note_parent.b_address1,
-          'e_customerAddress2': response.data.credit_note_parent.b_address2,
-          'e_customerAddress3': response.data.credit_note_parent.b_address3,
-          'e_currency': response.data.credit_note_parent.currency_id,
-          'e_reference': response.data.credit_note_parent.reference,
+          'e_customerAddress1': response.data.debit_note_parent.b_address1,
+          'e_customerAddress2': response.data.debit_note_parent.b_address2,
+          'e_customerAddress3': response.data.debit_note_parent.b_address3,
+          'e_currency': response.data.debit_note_parent.currency_id,
+          'e_reference': response.data.debit_note_parent.reference,
          
            
-          'e_vendor_name': response.data.credit_note_parent.customerName,
+          'e_vendor_name': response.data.debit_note_parent.customerName,
 
-          'e_customer_name': response.data.credit_note_parent.customerName,
+          'e_customer_name': response.data.debit_note_parent.customerName,
                  
 
         });
         this.addPI_section3.patchValue({
-          'poId':response.data.credit_note_parent.customerName,
-          'section3_gross_total': response.data.credit_note_parent.total_amt,
-          'section3_gst_dropdown': response.data.credit_note_parent.taxId,
-          'section3_tax_per_hd': response.data.credit_note_parent.taxPer,
-          'section3_taxAmt_txtbox': response.data.credit_note_parent.taxAmt,
-          'section3_grand_total': response.data.credit_note_parent.net_total_amt,
+          'poId':response.data.debit_note_parent.customerName,
+          'section3_gross_total': response.data.debit_note_parent.total_amt,
+          'section3_gst_dropdown': response.data.debit_note_parent.taxId,
+          'section3_tax_per_hd': response.data.debit_note_parent.taxPer,
+          'section3_taxAmt_txtbox': response.data.debit_note_parent.taxAmt,
+          'section3_grand_total': response.data.debit_note_parent.net_total_amt,
         });
       //  this.vendor_Name = response.purchaseorderparent_details[0].vendorName;
         
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.data.credit_note_child.length; index++) {
+        for (let index = 0; index < response.data.debit_note_child.length; index++) {
 
-          console.log('credit note child' , index);
+       
 
 
           formArray.push(this.fb.group({
 
-            "pd_PurchaseOrderChildId": response.data.credit_note_child[index].credit_note_child_id,
-            "prodName": response.data.credit_note_child[index].description,
-            "quantity": response.data.credit_note_child[index].qty,
-            "desc": response.data.credit_note_child[index].description,
-            "price": response.data.credit_note_child[index].price,
-            "total": response.data.credit_note_child[index].total_price,
+            "pd_PurchaseOrderChildId": response.data.debit_note_child[index].debit_note_child_id,
+            "prodName": response.data.debit_note_child[index].description,
+            "quantity": response.data.debit_note_child[index].qty,
+            "desc": response.data.debit_note_child[index].description,
+            "price": response.data.debit_note_child[index].price,
+            "total": response.data.debit_note_child[index].total_price,
 
 
           })
@@ -641,7 +650,7 @@ export class EditdebitnoteComponent implements OnInit {
         this.addPI_section2.setControl('addresses', formArray);
         console.log(this.addresses)
         this.editAddress();
-        this.removeAddresstest(response.data.credit_note_child.length);
+        this.removeAddresstest(response.data.debit_note_child.length);
        
         this.getTaxCals();
        
@@ -677,6 +686,22 @@ export class EditdebitnoteComponent implements OnInit {
   keyUpText(event: any){
     this.e_vendor_name=event.target.value;
   }
+  clearInput(event:any){
+    this.addDo_section1.patchValue({
+      'e_customerAddress1': '',
+      'e_customerAddress2':'',
+      'e_customerAddress3': '',
+   
+      'e_vendor_name': '',
+      'e_companyNameDropdown': '',
+ 
+      // 'e_currency': 0,
+   
+    
+
+    });
+
+  }
 
 
   updatePurchaseOrder() {
@@ -695,8 +720,20 @@ export class EditdebitnoteComponent implements OnInit {
               api_updatePO_req.debit_note_id =this.edit_creditNoteID;
               api_updatePO_req.debit_note_no = this.addDo_section1.value.e_DocNo;
               api_updatePO_req.date = this.addDo_section1.value.e_DocDate
-              api_updatePO_req.customer_id = this.customer_ID;
-              api_updatePO_req.customerCompany = this.addDo_section1.value.e_companyNameDropdown;
+          
+              api_updatePO_req.customer_id =    this.vendor_ID  ;
+          
+              if(this.addDo_section1.value.e_vendor_name==undefined || this.addDo_section1.value.e_vendor_name=='' || this.addDo_section1.value.e_vendor_name=='undefined'){
+
+                iziToast.error({
+                  message: "Customer Data Missing",
+                  position: 'topRight'
+                });
+                return false;
+              }else{
+                
+                api_updatePO_req.customerCompany = this.addDo_section1.value.e_vendor_name;
+              }
               api_updatePO_req.b_address1 = this.addDo_section1.value.e_customerAddress1;
               api_updatePO_req.b_address2 = this.addDo_section1.value.e_customerAddress2;
               api_updatePO_req.b_address3 = this.addDo_section1.value.e_customerAddress3;

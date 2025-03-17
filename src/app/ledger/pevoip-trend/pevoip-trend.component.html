@@ -281,7 +281,7 @@
                                         {{ getMonthName(address.value.mon_val) }}
                                       </td>
                                     </tr>
-                                    <tr>
+                                    <tr [style.backgroundColor]="address.get('backgroundColor').value">
                                     <td>
                                       <input type="hidden" class="form-control" formControlName="purchase_trend_id" id="pd_purchase_trend_id{{j}}" />
                                       <input type="hidden" class="form-control" formControlName="purchaseEntryTempId" id="pd_purchaseEntryTempId{{j}}" />

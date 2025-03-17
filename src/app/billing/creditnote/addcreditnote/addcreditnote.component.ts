@@ -467,6 +467,8 @@ var xft='';
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'terms': response.customer_details[0].terms_condition,
+          'vendor_name': response.customer_details.customerName,
+          'companyNameDropdown': response.customer_details.kind_Attention,
         });
       }
       else {
@@ -588,6 +590,8 @@ var xft='';
           'customerAddress1': response.customer_details.customerAddress1,
           'customerAddress2': response.customer_details.customerAddress2,
           'customerAddress3': response.customer_details.customerAddress3,
+       
+          'vendor_name': response.customer_details.customerName,
           'companyNameDropdown': response.customer_details.kind_Attention,
      
           'currency': response.def_currency_id,
@@ -700,7 +704,18 @@ var xft='';
     
   
     api_req_addPO.customer_id = this.customer_ID;
-    api_req_addPO.customerCompany = this.addDo_section1.value.companyNameDropdown;
+    if(this.addDo_section1.value.vendor_name==undefined || this.addDo_section1.value.vendor_name=='' || this.addDo_section1.value.vendor_name=='undefined'){
+
+      iziToast.error({
+        message: "Customer Data Missing",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      api_req_addPO.customerCompany = this.addDo_section1.value.vendor_name;
+    }
+    
+    
     api_req_addPO.b_address1 = this.addDo_section1.value.customerAddress1;
     api_req_addPO.b_address2 = this.addDo_section1.value.customerAddress2;
     api_req_addPO.b_address3 = this.addDo_section1.value.customerAddress3;

@@ -36,7 +36,7 @@
                   
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="e_DocNo" class="col-lg-3 col-form-label">PO No</label>
+                            <label for="e_DocNo" class="col-lg-3 col-form-label">Doc No</label>
                             <div div class="col-lg-9">
                                 <input type="text" id="e_DocNo" class="form-control" 
                                 [readonly]="isReadonly" formControlName="e_DocNo">
@@ -46,7 +46,7 @@
     
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="e_DocDate" class="col-lg-3 col-form-label">PO Date </label>
+                            <label for="e_DocDate" class="col-lg-3 col-form-label">Doc Date </label>
                             <div class="col-lg-9">
                                 <input type="date" id="e_DocDate" class="form-control" formControlName="e_DocDate">
                             </div>
@@ -63,16 +63,18 @@
     
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="customer_name" class="col-lg-3 col-form-label"><span>Kind Attention *</span></label>
+                            <label for="customer_name" class="col-lg-3 col-form-label"><span> Company Name*</span></label>
                             <div class="col-lg-9">
                                 <ng-autocomplete [data]="searchResult_vendor" [searchKeyword]="keywordvendorName"
                                     formControlName="e_vendor_name" (selected)='searchVendor_selectDropdownData($event)'
-                                    (inputChanged)='searchVendorData($event)' (inputFocused)='onFocusedVendor($event)'
+                                    (inputChanged)='searchVendorData($event)'
+                                    (inputCleared)='clearInput($event)'
+                                     (inputFocused)='onFocusedVendor($event)'
                                     [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate" (keyup)="keyUpText($event)">
         
                                 </ng-autocomplete>
                                 <ng-template #itemTemplateVendor let-item>
-                                    <a [innerHTML]="item.vendorName"></a>
+                                    <a [innerHTML]="item.customerName"></a>
                                 </ng-template>
         
                                 <ng-template #notFoundTemplate let-notFound>
@@ -85,7 +87,7 @@
            
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="e_companyNameDropdown" class="col-lg-3 col-form-label">Company Name</label>
+                            <label for="e_companyNameDropdown" class="col-lg-3 col-form-label"> Kind Attention</label>
                             <div class="col-lg-9">
                                 <input type="text" class="form-control" id="e_companyNameDropdown" formControlName="e_companyNameDropdown">
     

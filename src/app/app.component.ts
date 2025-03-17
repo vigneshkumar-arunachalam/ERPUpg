@@ -43,7 +43,7 @@ export class AppComponent {
       if (res) {
         localStorage.clear();
         this.templateAuthView = true;
-      console.log('session expired after 60 seconds');
+    //  console.log('session expired after 60 seconds');
         let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
       //  console.log(currentDateTime);
         // this.router.navigateByUrl('/logout');
@@ -173,7 +173,7 @@ export class AppComponent {
         const today = new Date().toISOString().split('T')[0]; 
         const greetingDates = response.dates;
         
-        console.log(response);
+      //  console.log(response);
         if (greetingDates.includes(today)) {
           
           this.read_state = response.read_state;
@@ -187,15 +187,15 @@ export class AppComponent {
             url: response.url
           };
         } else {
-          console.log('Today is not a greeting date.');
+         // console.log('Today is not a greeting date.');
         }
       } else {
-        console.warn('No greetings found or an error occurred.');
+      //  console.warn('No greetings found or an error occurred.');
        
       }
     },
     (error) => {
-      console.error('Error occurred while fetching data:', error);
+    //  console.error('Error occurred while fetching data:', error);
     });
   }
   updateGreetingStatus1(){
@@ -220,7 +220,7 @@ export class AppComponent {
 
     this.serverService.sendServer(api_req).subscribe(
       (response: any) => {
-        console.log('Greeting status updated:', response);
+       // console.log('Greeting status updated:', response);
         // Close the modal using jQuery after the API call
        
       },

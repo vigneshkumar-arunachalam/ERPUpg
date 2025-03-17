@@ -804,4 +804,12 @@
   .userDatatable table thead tr th {
     border: 1px dashed #d2e4e9;
   }
+
+  #emailFormId_creditNote .modal-dialog {
+    max-width: 65%;
+  }
+  
+  #emailFormId_creditNote label {
+    font-weight: 500;
+  }
   

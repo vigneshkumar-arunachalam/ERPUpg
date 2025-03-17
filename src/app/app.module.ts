@@ -184,8 +184,23 @@ import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component'
 import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permission.component';
-
+import { LeaveapprovalComponent } from './hr/leaveapproval/leaveapproval.component';
+import { LicenseKeyManagementComponent } from './license-key-management/license-key-management.component';
 // import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
+import { AddDecarepiComponent } from './billing/dcare-proforma-invoice/add-decarepi/add-decarepi.component'; 
+import { EditDecarepiComponent } from './billing/dcare-proforma-invoice/edit-decarepi/edit-decarepi.component'; 
+import { DcareProformaInvoiceComponent } from './billing/dcare-proforma-invoice/dcare-proforma-invoice.component';
+import { DcareInvoiceComponent } from './billing/dcare-invoice/dcare-invoice.component';
+import { DcareAddInvoiceComponent } from './billing/dcare-invoice/dcare-add-invoice/dcare-add-invoice.component';
+import { DcareEditInvoiceComponent } from './billing/dcare-invoice/dcare-edit-invoice/dcare-edit-invoice.component';
+import { DcareQuotationComponent } from './billing/dcare-quotation/dcare-quotation.component';
+import { DcareAddQuotationComponent } from './billing/dcare-quotation/dcare-add-quotation/dcare-add-quotation.component';
+import { DcareEditQuotationComponent } from './billing/dcare-quotation/dcare-edit-quotation/dcare-edit-quotation.component';
+import { ToolsComponent } from './tools/tools.component';
+import { MconnectComponent } from './mconnect/mconnect.component';
+import { MyVOIPLicenceKeyComponent } from './mconnect/my-voiplicence-key/my-voiplicence-key.component';
+import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.component';
+
 
 @NgModule({
   declarations: [
@@ -346,6 +361,21 @@ import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permissi
      EditcontmasterComponent,
      LeaverequestComponent,
      LeavereqFinalComponent,
+     LeaveapprovalComponent,
+     LicenseKeyManagementComponent,
+     AddDecarepiComponent,
+     EditDecarepiComponent,
+     DcareProformaInvoiceComponent,
+     DcareInvoiceComponent,
+     DcareAddInvoiceComponent,
+     DcareEditInvoiceComponent,
+     DcareQuotationComponent,
+     DcareAddQuotationComponent,
+     DcareEditQuotationComponent,
+     ToolsComponent,
+     MconnectComponent,
+     MyVOIPLicenceKeyComponent,
+     CurrentPayslipComponent 
      
  
   ],

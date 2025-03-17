@@ -5,9 +5,9 @@
                 <div class="card quotation">
                     <div class="card-header color-dark fw-500">
                         <h3 style="margin-bottom: 0;">Transaction Approval Management</h3>
-                       
+
                     </div>
-                
+
                     <div class="card card-overview border-0">
                         <div class="card-header specific">
 
@@ -18,63 +18,64 @@
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="getMainList({})">Main <span class="notification-alert">
 
-                                            {{this.mainApprovalPendingCount}}
+                                            {{this.mainAppCnt}}
                                         </span></a>
                                     <a class="btn btn-xs btn-white border-light " data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="getTransactionApprovalList({})">Quotation<span
                                             class="notification-alert">
 
-                                            {{this.quotationApprovalPendingCount}}
+                                            {{this.quotationAppCnt}}
                                         </span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="productIssue({})">Product<span class="notification-alert">0</span></a>
+                                        (click)="productIssue({})">Product<span class="notification-alert"> {{this.productAppCnt}}</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="DIDNumberList({})">DID Number<span
-                                            class="notification-alert">0</span></a>
+                                            class="notification-alert">{{this.didAppCnt}}</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="DemoProductList({})">Demo Product<span
-                                            class="notification-alert">0</span></a>
+                                            class="notification-alert">{{this.demoProductCnt}}</span></a>
 
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="invoicePaymentList({})">Invoice Payment <span
                                             class="notification-alert">
 
-                                            {{this.mainApprovalPendingCount}}
+                                            {{this.invPaymentCnt}}
                                         </span></a>
 
-                                        <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="onlineShopList({})">Online Shop <span
-                                            class="notification-alert">
-
-                                            {{this.mainApprovalPendingCount}}
-                                        </span></a>
-                                        <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="DIDDemoList({})">DID Demo <span
-                                            class="notification-alert">
-
-                                            {{this.mainApprovalPendingCount}}
-                                        </span></a>
-                                   
-                                   
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);">RMA
-                                        Issues<span class="notification-alert">0</span></a>
+                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
+                                        (click)="onlineShopList({})">Online Shop <span class="notification-alert">
+
+                                            {{this.onlineShopCnt}}
+                                        </span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false"
+                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
+                                        (click)="DIDDemoList({})">DID Demo <span class="notification-alert">
+
+                                            {{this.didDemoAppCnt}}
+                                        </span></a>
+
+
+                                    <a class="btn btn-xs btn-white border-light" data-toggle="tab"
+                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
+                                        (click)="RMAIssueList({})">
+                                        RMA Issues<span
+                                            class="notification-alert">{{this.rmaIssuesCnt}}</span></a>
+                                    <a class="btn btn-xs btn-white border-light" data-toggle="tab"
+                                        area-controls="f_overview" aria-selected="false" (click)="OthersList({})"
                                         href="javascript:void(0);">Others<span class="notification-alert">0</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false"
+                                        area-controls="f_overview" aria-selected="false" (click)="HRAList({})"
                                         href="javascript:void(0);">HRA<span class="notification-alert">0</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);">Data
-                                        Center</a>
+                                        area-controls="f_overview" aria-selected="false"  (click)="DataCenterList({})"
+                                         href="javascript:void(0);">Data
+                                        Center<span class="notification-alert">{{this.dataCenterCnt}}</span></a>
                                 </div>
                             </div>
                         </div>
@@ -302,6 +303,16 @@
                                                                         src="assets/img/icon2/comment-bl.png">
                                                                     <img class="hide"
                                                                         src="assets/img/icon2/comment-b.png">
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover4" title="Delete" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsIdMain"
+                                                                    (click)="transactionApprovalDelete_Main(list.transaction_approval_id)">
+                                                                    <img class="show" src="assets/img/icon2/trash-blue.png">
+                                                                       
+                                                                    <img class="hide"  src="assets/img/icon2/trash-black.png">
+                                                                       
                                                                 </a>
                                                             </li>
 
@@ -4396,6 +4407,1610 @@
                         </nav>
 
                     </div>
+
+                    <div class="card-body" *ngIf="tabValue=='RMAIssues'">
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-minus"></i> RMA Issues</a>
+                                <span class="breadcrumb-item active">RMA Issues-Pending Approval</span>
+                            </h3>
+                        </div>
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+                                         
+                                            <!-- <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox" id="check-water" (change)=" selectAll_RMA($event)">
+                                                        <label for="check-water">
+                                            
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th> -->
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_RMACK" (change)="toggleSelectAll()">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Customer/Vendor</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_RMAIssueList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+<!-- <td>
+    <div class="d-flex">
+        <div class="userDatatable__imgWrapper d-flex align-items-center">
+            <div class="checkbox-group-wrapper">
+                <div class="checkbox-group d-flex">
+                    <div
+                        class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                        <input class="checkbox" type="checkbox"
+                            id="check-transapp-grp-{{i}}"
+                            (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
+                        <label for="check-transapp-grp-{{i}}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</td> -->
+<td>
+    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions(list)">
+</td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by}}</span>
+                                            </td>
+
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="approveAllMain()">Approve
+                                All</button>
+                            <button type="button" class="btn btn-dark" (click)="rejectAllMain()">Reject All</button>
+
+                        </div>
+                        <div>
+
+                        </div>
+
+
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-plus"></i> Transaction Approval</a>
+                                <span class="breadcrumb-item active">Demo Product-After Approval</span>
+                            </h3>
+                        </div>
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+
+
+                                            <th class="userDatatable-title">
+                                                <input type="checkbox">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Customer/Vendor</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_RMAIssueList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+             list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by}}</span>
+                                            </td>
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getMainList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getMainList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getMainList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <div class="card-body" *ngIf="tabValue=='Others'">
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-minus"></i> Others</a>
+                                <span class="breadcrumb-item active">Others-Pending Approval</span>
+                            </h3>
+                        </div>
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+                                           
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_OthersCK" (change)="toggleSelectAll_Others()">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Customer/Vendor</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+                                            <th>
+                                                <span>Amt</span>
+                                            </th>
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_OthersList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_Others(list)">
+                                            </td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by}}</span>
+                                            </td>
+
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="View"
+                                                                   
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Delete"
+                                                                    (click)="transactionApprovalReject_Others( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="approveAllMain()">Approve
+                                All</button>
+                            <button type="button" class="btn btn-dark" (click)="rejectAllMain()">Reject All</button>
+
+                        </div>
+                        <div>
+
+                        </div>
+
+
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-plus"></i> Transaction Approval</a>
+                                <span class="breadcrumb-item active">Others-After Approval</span>
+                            </h3>
+                        </div>
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+
+
+                                            <th class="userDatatable-title">
+                                                <input type="checkbox">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Customer/Vendor</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+                                            <th>
+                                                <span>Amt</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_RMAIssueList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+             list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by}}</span>
+                                            </td>
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getMainList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getMainList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getMainList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <div class="card-body" *ngIf="tabValue=='HRA'">
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-minus"></i> HRA</a>
+                                <span class="breadcrumb-item active">HRA-Pending Approval</span>
+                            </h3>
+                        </div>
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+                                         
+                                            <!-- <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox" id="check-water" (change)=" selectAll_RMA($event)">
+                                                        <label for="check-water">
+                                            
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th> -->
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_HRACK" (change)="toggleSelectAll_HRA()">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                        
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Date(s)</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_HRAList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+<!-- <td>
+    <div class="d-flex">
+        <div class="userDatatable__imgWrapper d-flex align-items-center">
+            <div class="checkbox-group-wrapper">
+                <div class="checkbox-group d-flex">
+                    <div
+                        class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                        <input class="checkbox" type="checkbox"
+                            id="check-transapp-grp-{{i}}"
+                            (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
+                        <label for="check-transapp-grp-{{i}}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</td> -->
+<td>
+    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_HRA(list)">
+</td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                          
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.dates}}</span>
+                                            </td>
+
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalViewId"
+                                                                    (click)="BeforeApprovaltransactionApprovalView_Main(list.transaction_approval_id,list.type_of_trans);before( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover4" title="Comments" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsIdMain"
+                                                                    (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
+                                                                </a>
+                                                            </li>
+
+
+                                              
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="approveAllMain()">Approve
+                                All</button>
+                            <button type="button" class="btn btn-dark" (click)="rejectAllMain()">Reject All</button>
+
+                        </div>
+                        <div>
+
+                        </div>
+
+
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-plus"></i> Transaction Approval</a>
+                                <span class="breadcrumb-item active">HRA-After Approval</span>
+                            </h3>
+                        </div>
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+
+
+                                            <th class="userDatatable-title">
+                                                <input type="checkbox">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Date(s)</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_HRAList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+             list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+
+
+                                           
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.dates}}</span>
+                                            </td>
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? HRAList({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="HRAList({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? HRAList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="HRAList({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? HRAList({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <div class="card-body" *ngIf="tabValue=='DataCenter'">
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-minus"></i> Data Center</a>
+                                <span class="breadcrumb-item active">Data Center-Pending Approval</span>
+                            </h3>
+                        </div>
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+                                         
+                                            <!-- <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox" id="check-water" (change)=" selectAll_RMA($event)">
+                                                        <label for="check-water">
+                                            
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th> -->
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_DataCenCK" (change)="toggleSelectAll_DataCen()">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                         <th>
+                                                <span>Customer</span>
+                                            </th>
+
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_DataCenterList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+<!-- <td>
+    <div class="d-flex">
+        <div class="userDatatable__imgWrapper d-flex align-items-center">
+            <div class="checkbox-group-wrapper">
+                <div class="checkbox-group d-flex">
+                    <div
+                        class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                        <input class="checkbox" type="checkbox"
+                            id="check-transapp-grp-{{i}}"
+                            (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
+                        <label for="check-transapp-grp-{{i}}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</td> -->
+<td>
+    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_DataCen(list)">
+</td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                          
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="approveAllMain()">Approve
+                                All</button>
+                            <button type="button" class="btn btn-dark" (click)="rejectAllMain()">Reject All</button>
+
+                        </div>
+                        <div>
+
+                        </div>
+
+
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i
+                                        class="fas fa-calendar-plus"></i> Transaction Approval</a>
+                                <span class="breadcrumb-item active">Data Center-After Approval</span>
+                            </h3>
+                        </div>
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+
+
+                                            <th class="userDatatable-title">
+                                                <input type="checkbox">
+                                            </th>
+
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Biller</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Customerr</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span>Transactions Type</span>
+                                            </th>
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+                                            <th>
+                                                <span>Requestor Name</span>
+                                            </th>
+                                            <th>
+                                                <span>Description</span>
+                                            </th>
+
+                                            <th>
+                                                <span>App By</span>
+                                            </th>
+
+
+
+
+
+                                            <th>
+                                                <span>Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_DataCenterList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"
+                                            [ngStyle]="{'background-color':
+
+                  ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
+
+
+
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                {{ list.tic_no}}
+                                            </td>
+                                            <td>
+                                                {{ list.transaction_date_view}}
+
+                                            </td>
+                                            <td>
+
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+             list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+
+                                           
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+
+
+                                            <td>
+                                                <span> {{ list.description.trim()}}</span>
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getMainList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getMainList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getMainList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    
 
 
 

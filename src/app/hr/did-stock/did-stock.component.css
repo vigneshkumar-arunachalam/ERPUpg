@@ -132,3 +132,629 @@ input.calender-search {
     width: 50%;
     margin: 0 auto;
 }
+
+
+
+/* .userDatatable table td{padding:4px 0px 4px!important;} */
+.userDatatable table tr td span {
+  display: block;
+  white-space: nowrap;
+  width: auto;
+  line-height: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+.userDatatable__imgWrapper.d-flex.align-items-center {
+  justify-content: center;
+}
+
+.userDatatable .d-flex {
+  justify-content: center;
+  margin-right: 0;
+}
+
+.userDatatable tbody .custom-checkbox input[type="checkbox"]+label {
+  margin-right: 0px !important;
+}
+
+.userDatatable table td span {
+  display: block;
+  white-space: nowrap;
+  /* width: 120px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.userDatatable[_ngcontent-sip-c158] table[_ngcontent-sip-c158] tbody[_ngcontent-sip-c158] tr[_ngcontent-sip-c158] td[_ngcontent-sip-c158] span[_ngcontent-sip-c158]
+
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* .userDatatable table td {
+  padding: 10px 4px;
+} */
+
+
+
+.userDatatable table td:first-child button.buttonClass {
+  border-radius: 25px;
+  padding: 2px 10px;
+}
+
+.userDatatable table tr td span {
+  white-space: normal;
+}
+.userDatatable table tbody tr  {
+  line-height: 1 !important;
+}
+.userDatatable table tbody tr td {
+  line-height: 1 !important;
+}
+.userDatatable table tbody tr td span {
+  /* line-height: 16px !important; */
+  font-size: 14px;
+}
+
+/* td{border-bottom: 1px solid #231ac9!important;} */
+.userDatatable .buttonClass {
+  border: 1px solid #ddd;
+  border-radius: 5px !important;
+}
+
+.userDatatable-content {
+  line-height: 1 !important;
+  text-align: center;
+}
+
+.userDatatable-header th {
+  /* padding: 0px !important; */
+}
+
+.userDatatable-title {
+  /* color: #182679 !important; */
+  font-weight: bold;
+  text-align: left !important;
+
+}
+
+.userDatatable-header {
+  background-color: white !important;
+}
+
+.userDatatable-header th {
+  background: #6d5dfc;
+
+}
+
+.userDatatable-header th span {
+  color: #e4ebf5;
+}
+
+
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown__list {
+  z-index: 2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  border: 1px solid;
+  text-align: center;
+}
+
+.dropdown__item {
+  list-style-type: none;
+}
+
+.dropdown__link {
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
+}
+
+.dropdown__link:hover {
+  opacity: 0.9;
+}
+
+.dropdown:hover .button {
+  opacity: 0.9;
+}
+
+/* changes made by aashiq starts */
+.dropdown:hover .dropdown__list {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
+}
+
+.view:hover {
+
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.remove:hover {
+
+  background: rgba(129, 198, 112, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.close:hover {
+
+  background: rgba(195, 101, 233, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.dropdown a {
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
+}
+
+/* changes made by aashiq ends */
+
+
+.button {
+  padding: 0.6em 1.5em;
+
+}
+
+.btn1 {
+  background-color: #007cbc;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  /* border-radius: 50%; */
+}
+
+.btn1:hover {
+  background-color: rgb(221, 109, 152);
+}
+
+.dropdown__item .hide {
+  display: none;
+}
+
+.dropdown__item:hover .hide {
+  display: block;
+}
+
+.dropdown__item:hover .show {
+  display: none;
+}
+
+
+
+i.fa.fa-bars {
+  color: #fff !important;
+}
+
+tr:nth-child(even) {
+  background: rgb(241, 238, 241)
+}
+
+tr:nth-child(odd) {
+  background: #FFF
+}
+
+
+
+
+
+
+
+/* #ResellerCommissionFormId .modal-dialog{
+  max-width: 42%;
+} */
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  background: transparent;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input:focus {
+  outline: none;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.form-control{
+
+  /* border: 1px solid #0e8543;
+  background: transparent; */
+
+  /* background: linear-gradient(to right, #dce79a, #b0f2b1); */
+  background: linear-gradient(to right, #eaf5ae, #b0f2b1);
+    color: rgb(41, 42, 28);
+    box-shadow: none;
+}
+
+
+.form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+  background: linear-gradient(to right, #dce79a, #b0f2b1);
+  color: rgb(41, 42, 28);
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+
+
+
+label {
+  font-weight: 500;
+  /* color: #051b5a!important; */
+  color:#f40845 !important;
+}
+input.form-control {
+  padding: 4px 8px !important;
+}
+select{
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+
+/* td .PIlistlabel{
+  padding-left: 15px!important;
+ 
+} */
+
+
+
+.hover1:hover {
+ 
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
+
+
+
+.emailLabel {
+  color: rgba(0, 0, 0, 0.589) !important;
+  font-weight: 400 !important;
+}
+
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f5d4ef !important;
+    /* background-color: #f3ecf2 !important; */
+    opacity: 0.6;
+    color: black!important;
+}
+
+
+
+
+.buttonClass {
+  border: none
+}
+
+.border-section td {
+  height: 1px;
+  border-bottom: 2px solid #00C;
+  padding: 0px 0px !important;
+}
+
+/* td {
+  border-bottom: 1px solid #a8c91a!important;
+} */
+
+
+
+/* ------------ks--------------------- */
+.dropdown__item {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 4px;
+}
+
+.dropdown img,
+.dropdown svg {
+  width: 24px;
+
+}
+
+.dropdown__item span strong {
+  font-size: 18px;
+}
+
+.dropdown__item span {
+  width: 100% !important;
+}
+
+.recurring-Status {
+  margin: 0px 10px;
+  width: 30px !important;
+  height: 30px;
+  background: #fff;
+  align-items: center;
+  display: flex !important;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.ActionId li span {
+  overflow: visible !important;
+}
+
+.ActionId li {
+  cursor: pointer;
+}
+
+.dropdown a {
+  width: auto;
+  border-radius: 5px;
+}
+
+
+tr:hover {
+  background-color: rgb(246, 236, 233) !important;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #f4e0f3 !important;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+  border-color: #6d5dfc !important;
+}
+
+
+/* search ends */
+
+
+
+/* Styling for the tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  /* Add a dotted border bottom */
+  opacity: 5;
+  z-index: 99;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #090000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  /* Use half of the width (to center the tooltip) */
+}
+
+/* Show the tooltip text when hovering over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+#addGuruDetailsFormId .modal-dialog {
+  min-width: 100%;
+}
+
+#editGuruDetailsFormId .modal-dialog {
+  min-width: 80%;
+}
+
+#userAccessGuruDetailsFormId .modal-dialog {
+  min-width: 80%;
+}
+/* #GoogleAuthenticationGuruFormId .modal-dialog {
+  min-width: 100%;
+  min-height: 100%;
+} */
+#searchVSProvisionFormId .modal-dialog {
+  min-width: 60%;
+  min-height: 100%;
+  overflow-y: hidden !important;
+}
+/* #searchVSProvisionFormId .btn-primary{
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+} */
+#addVSProvisionFormId .btn-primary, #editVSProvisionFormId .btn-primary, 
+#searchVSProvisionFormId .btn-primary,#commentVSProvisionFormId .btn-primary,
+#fileAttachmentFormId_vsp .btn-primary {
+  background: linear-gradient(to right, #200122, #6f0000);
+  color: rgb(240 241 219);
+  box-shadow: none;
+}
+
+
+
+#addGuruDetailsFormId .modal-content button.close,
+#editGuruDetailsFormId .modal-content button.close,
+#userAccessGuruDetailsFormId .modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* color: #9baacf; */
+  color: #f9021b;
+  transition: all 0.5s ease;
+}
+
+tr:nth-child(even):hover {
+  
+  background: linear-gradient(to right, #f5fb97, #fcb35f);
+}
+
+tr:nth-child(odd):hover {
+ 
+ 
+  background: linear-gradient(to right, #c9f1a2, #df97b4);
+}
+
+#addGuruDetailsFormId tr:nth-child(even):hover,
+#editGuruDetailsFormId tr:nth-child(even):hover {
+  background: linear-gradient(to right, #e5f2d8, #f2e9ed);
+}
+
+#addGuruDetailsFormId tr:nth-child(odd):hover,
+#editGuruDetailsFormId tr:nth-child(odd):hover {
+  background: linear-gradient(to right, #f5f5f1, #f5ede5);
+}
+
+.userDatatable  table  tbody tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr th{
+  border:1px solid #aeb3b6;
+}
+td {
+  border-bottom: 1px solid #c5d9e0 !important;
+}
+
+.scrollzz{
+  overflow-y: scroll !important;
+  height:560px;
+  overflow-x: scroll !important;
+  width:1380px;
+}
+.transaction-panel{
+  width: 100%;
+}
+.transaction-form-group {
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.transaction-form-group .col-form-label {
+  border: 4px solid #ecf7f0;
+  width: 100%;
+  display: block;
+  width: 30%;
+  text-align: left;
+}
+.transaction-form-group span,.transaction-form-group textarea#view_Comments{
+  width: 60%;
+    border: 4px solid #ecf7f0;
+    height: 43px;
+    background: #fff;
+    display: block;
+    /* line-height: 36px; */
+    padding: 7px 10px;
+}
+
+
+
+#addVSProvisionFormId .modal-dialog,#editVSProvisionFormId .modal-dialog{
+  min-width: 100%;
+}
+
+
+
+.modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+.userDatatable table tbody tr td:first-child span{
+  width:auto;
+ 
+}
+.dropdown__item a:hover svg{
+stroke: #000;
+}
+
+#fileAttachmentFormId_vsp .modal-dialog{
+min-width: 70%;
+}
+#emailFormId_po .modal-dialog{
+min-width: 70%;
+}
+.dummyAlign{
+align-items: center;
+justify-content: space-between;
+}
+.dummyAlign .btn i,.dummyAlign .btn span{
+margin-right: 0;
+}
+.dummyAlign .btn {padding:2px;line-height: 35px;}
+.mm{
+display: flex;
+align-items: center;
+}
+.dummyAlign input{margin: 2px!important;}
