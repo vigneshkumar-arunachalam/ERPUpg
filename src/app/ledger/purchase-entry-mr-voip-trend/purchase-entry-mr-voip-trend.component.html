@@ -60,6 +60,15 @@
                   </div>
                 </div>
   
+                <div class="d-flex align-items-center justify-content-center">
+                  <div class="">
+                    <button class="btn btn-transparent p-0 border-0">
+                      <a class="hover1" title="Charts" (click)="purchaseEntryVoipTrend()">
+                        <img class="graph_img" src="assets/img/icon2/graph1.jpg" alt="Graph Icon">
+                      </a>
+                    </button>
+                  </div>
+                </div>
               </div>
 
             </form>
@@ -99,9 +108,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -115,9 +121,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -134,9 +137,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -151,9 +151,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -168,9 +165,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -185,9 +179,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -202,9 +193,6 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
-                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
-                                     class="fa fa-times-circle" 
-                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -274,14 +262,12 @@
                                 </thead>
                                 <tbody >
                                   <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
-                                   
-                                    <tr *ngIf="j === 0 || address.value.mon_val !== addressControls.controls[j - 1].value.mon_val">
-                                      <td colspan="13" style="border: 1px dotted blue; background-color: antiquewhite; font-weight: 500; color: #801505;">
-                                        {{ getMonthName(address.value.mon_val) }}
-                                      </td>
+                                    <tr>
+                                      <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;    font-weight: 500;
+    color: #801505;">{{months[j]}}</td>
                                     </tr>
                                   
-                                  <tr [style.backgroundColor]="address.get('backgroundColor').value">
+                                  <tr >
                                    
                                     <td>
                                       <input type="hidden" class="form-control" formControlName="purchase_trend_id" id="pd_purchase_trend_id{{j}}" />
@@ -304,18 +290,32 @@
                                     <td>
                                       <input type="number" [readonly]="isReadOnly" [ngClass]="{'readonly-field': isReadOnly}"  class="form-control" formControlName="currConvRate" id="pd_currConvRate{{j}}" />
                                     </td>
-                                  
-                                 
+                                    <!-- <td>
+                                      <input type="number" class="form-control" formControlName="fixedAmount1" id="pd_fixedAmount1{{j}}" />
+                                      <input type="number" class="form-control" formControlName="fixedAmount2" id="pd_fixedAmount2{{j}}" />
+                                    </td> -->
                                     <td>
                                       <div class="input-group">
-                                    
+                                        <!-- <button 
+                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'fixedAmount1')"
+                                        >
+                                          -
+                                        </button> -->
                                         <input 
                                           type="number" 
                                           class="form-control" 
                                           formControlName="fixedAmount1"  (input)="onCurrConvRateChangeFixed(j)"
                                           id="pd_fixedAmount1{{j}}" 
                                         />
-                                       
+                                        <!-- <button 
+                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'fixedAmount1','currConvRate')"
+                                        >
+                                          +
+                                        </button> -->
                                       </div>
                                       <div class="input-group mt-2">
                                         
@@ -350,7 +350,11 @@
                                        
                                       </div>
                                     </td>
-                               
+                                    
+                                    <!-- <td>
+                                      <input type="number" class="form-control" formControlName="usageAmount1" id="pd_usageAmount1{{j}}" />
+                                      <input type="number" class="form-control" formControlName="usageAmount2" id="pd_usageAmount2{{j}}" />
+                                    </td> -->
                                     <td>
                                       <div class="input-group">
                                        
@@ -373,7 +377,10 @@
                                        
                                       </div>
                                     </td>
-                                
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="otherAmount1" id="pd_otherAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="otherAmount2" id="pd_otherAmount2{{j}}" />
+                                    </td> -->
                                     <td>
                                       <div class="input-group">
                                        
@@ -396,7 +403,10 @@
                                        
                                       </div>
                                     </td>
-                                
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="IDDAmount1" id="pd_IDDAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="IDDAmount2" id="pd_IDDAmount2{{j}}" />
+                                    </td> -->
                                     <td>
                                       <div class="input-group">
                                        
@@ -419,7 +429,10 @@
                                        
                                       </div>
                                     </td>
-                                  
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="localAmount1" id="pd_localAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="localAmount2" id="pd_localAmount2{{j}}" />
+                                    </td> -->
                                     <td>
                                       <div class="page">
   
@@ -462,11 +475,8 @@
               </div>
             </div>
             <ng-template #loading>
-              <div class="spinner-container">
-                <mat-spinner color="accent"></mat-spinner>
-                <p>Loading data...</p>
-              </div>
-            </ng-template>	
+              <p>Loading data...</p>
+            </ng-template>
           </div>
           
           <div style="text-align: center;" *ngIf="this.vendorListNull==true">
@@ -530,3 +540,114 @@
     </div>
   </div>
   <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+
+
+
+  
+
+<!----------Modal Pop Up (BEGIN)  FOR GRAPH CHARTS  ------------------>
+
+<div class="modal fade bd-example-modal-lg" id="graph_popup" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Purchase Entry - VoIP Trend Charts</h2>
+      <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Bar Chart and Table -->
+      <div class="row">
+        <!-- Bar Chart -->
+        <div class="col-lg-6">
+          <div *ngIf="chartOptions">
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+              [yaxis]="chartOptions.yaxis" [plotOptions]="chartOptions.plotOptions"
+              [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke" [fill]="chartOptions.fill"
+              [tooltip]="chartOptions.tooltip">
+            </apx-chart>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="col-lg-6">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="thead-dark">
+              <tr>
+                <th>Month</th>
+                <th>Sales Fix</th>
+                <th>Purchase Fix</th>
+                <th>Sales - Purchase Fix</th>
+                <th>Sales Usage</th>
+                <th>Purchase Usage</th>
+                <th>Sales - Purchase Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of table_data;">
+                <td>{{ product.month }}</td>
+                <td>{{ product.sales_fixed_amt_conv }}</td>
+                <td>{{ product.purchase_fixed_amt_conv }}</td>
+                <td>{{ product.fixed_total }}</td>
+                <td>{{ product.sales_usage_amt_conv }}</td>
+                <td>{{ product.purchase_usage_amt_conv }}</td>
+                <td>{{ product.usage_total }}</td>
+              </tr>
+              <tr class="font-weight-bold bg-light" *ngFor="let product of sub_totals;">
+                <td>Sub Total</td>
+                <td>{{ product.sales_fixed_amt_total }}</td>
+                <td>{{ product.purchase_fixed_amt_total }}</td>
+                <td>{{ product.sales_usage_amt_total }}</td>
+                <td>{{ product.purchase_usage_amt_total }}</td>
+                <td>{{ product.sub_fixed_total }}</td>
+                <td>{{ product.sub_usage_total }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- Vendor-wise Pie Charts -->
+      <div class="col-lg-12 text-center">
+        <h2 class="chart-title">Vendor-wise Distribution</h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6" *ngFor="let chartOptions of chartOptionsArray">
+          <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+            [dataLabels]="chartOptions.dataLabels" [legend]="chartOptions.legend" [title]="chartOptions.title"
+            [responsive]="chartOptions.responsive" [noData]="chartOptions.noData">
+          </apx-chart>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- Monthly Usage Pie Charts -->
+      <div class="col-lg-12 text-center">
+        <h2 class="chart-title">Vendor-wise Monthly Usage</h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6" *ngFor="let chartOptions of chartOptionsArrayMonth">
+          <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+            [dataLabels]="chartOptions.dataLabels" [legend]="chartOptions.legend" [title]="chartOptions.title"
+            [responsive]="chartOptions.responsive" [noData]="chartOptions.noData">
+          </apx-chart>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!----------Modal Pop Up (BEGIN)  FOR GRAPH CHARTS  ------------------>

@@ -359,7 +359,9 @@ Medical Leave  -&gt; Total ML - consumed ML
                     <td><input type="date" class="form-control" formControlName="startDate"></td>
                     <td>End Date</td>
                     <td><input type="date" class="form-control" formControlName="endDate"></td>
+
                   </tr>
+                
                   <tr>
                     <td>Leave Type</td>
                     <td>
@@ -375,8 +377,9 @@ Medical Leave  -&gt; Total ML - consumed ML
 
                     <td>Duration Type</td>
                     <td>
-                      <select name="durationType" id="durationType" class="form-control" formControlName="durationType">
-                        <option [ngValue]="null" selected>Select Duration </option>
+                      <select name="durationType" id="durationType" (change)="durationTypeChange($event)"
+                      class="form-control" formControlName="durationType">
+                        <option [ngValue]="null" selected >Select Duration </option>
                         <option *ngFor="let from of leaveCategory" value="{{ from.LeavCatId }}">
                           {{ from.LeaveCatName }}
                         </option>
@@ -386,6 +389,13 @@ Medical Leave  -&gt; Total ML - consumed ML
                     </td>
 
 
+                  </tr>
+                  <tr *ngIf="timeStatus==true">
+                    <td>Start Time</td>
+                    <td><input type="time" class="form-control" formControlName="startTime" (change)="adjustTime()"></td>
+                    <td>End Time</td>
+                    <td><input type="time" class="form-control" formControlName="endTime"></td>
+                    
                   </tr>
 
 

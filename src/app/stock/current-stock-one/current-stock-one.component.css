@@ -1,0 +1,87 @@
+.container {
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+  }
+  
+  thead th {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+
+  #TransactionManagementViewId .modal-content,#TransactionCommentsId .modal-content
+{ 
+  background: #f7faff;
+
+}
+#TransactionManagementViewId .modal-content label,#TransactionCommentsId .modal-content label
+{
+  /* color: #4b0082	!important; */
+  font-weight: 560;
+  color: #C13F13	!important;
+  
+}
+
+
+
+#addNewQuotationFormId .modal-content,  #editNewQuotationFormId .modal-content,  
+#editNewQuotationFormId .modal-content,#searchTransactionFormId .modal-content{ 
+  background: #e4ebf5;
+}
+#addNewQuotationFormId .modal-content label,  #editNewQuotationFormId .modal-content label,  #searchTransactionFormId .modal-content label{
+  color: #5f63f2;
+}
+
+
+#addNewQuotationFormId .modal-content .form-control, #editNewQuotationFormId .modal-content .form-control
+,#TransactionManagementViewId .modal-content .form-control, #searchTransactionFormId .modal-content .form-control {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+} 
+#addNewQuotationFormId .modal-content .form-control:focus, #editNewQuotationFormId .modal-content .form-control:focus 
+, #TransactionManagementViewId .modal-content .form-control:focus, #searchTransactionFormId .modal-content .form-control:focus{
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+}
+#addNewQuotationFormId .modal-content button.close, #editNewQuotationFormId .modal-content button.close
+,#TransactionManagementViewId .modal-content button.close,#TransactionCommentsId .modal-content button.close,#searchTransactionFormId .modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+
+.userDatatable button.buttonClass {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+
+.listRecord {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  background: linear-gradient(to right, #4CAF50, #2196F3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #4CAF50;
+}

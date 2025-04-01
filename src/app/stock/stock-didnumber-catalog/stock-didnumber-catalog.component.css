@@ -397,3 +397,165 @@ select {
     font-weight: 500;
     display: inline-block;
 }
+
+
+
+
+/* Accordion Header Styling */
+.accordion .card-header {
+    /* background: linear-gradient(45deg, #1e90ff, #007bff); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .accordion .card-header:hover {
+    /* background: linear-gradient(45deg, #007bff, #0056b3); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+    transform: scale(1.02);
+  }
+  
+  /* Button inside the header */
+  .accordion .card-header button {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px;
+  }
+  
+  .accordion .card-header button:focus {
+    outline: none;
+  }
+  
+  /* Accordion Body Styling */
+  .accordion .card-body {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Active Header */
+  .accordion .card-header.active {
+    /* background: linear-gradient(45deg, #0056b3, #003f7f); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+  }
+  
+  /* Accordion Container Styling */
+  .accordion {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Card Styling */
+  .accordion .card {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  /* Smooth Transition for Collapsing */
+  .collapse {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Add some shadow for the entire accordion */
+  .accordion {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  
+  .gradient-cell {
+    /* Gradient background */
+    /* background: linear-gradient(135deg, #f8e8c8, #c8e8f8); */
+  
+    background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+    color: #FFFFFF; /* Text color for readability */
+    padding: 10px;
+    text-align: center; /* Center-align text */
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 500; /* Make text bold */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
+  }
+  
+  /* Hover effect */
+  .gradient-cell:hover {
+    background: linear-gradient(135deg, #ff6a00, #ff9966);
+    color: #0f0000; /* Text color for readability */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  .table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
+  .table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
+  
+  
+  .readonly-field {
+  background-color: #f4f2f3 !important;
+  cursor: not-allowed;
+  }
+  
+  /* .spinner-container {
+  } */
+  
+  .backdrop {
+    position: fixed; /* Covers the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Light transparent overlay */
+    backdrop-filter: blur(5px); /* Blur effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  .spinner-container {
+    background: rgba(255, 255, 255, 0.8); /* Slightly opaque background for the spinner */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  }
+
+
+
+
+  .accordion-horizontal {
+    display: flex;
+}
+.accordion-button {
+    width: 350px; /* Adjust width as needed */
+    white-space: nowrap;
+}
+.accordion-item {
+    flex: 1;
+}
+.accordion-body {
+    min-height: 100px;
+}
+  
+  
+  
+  
+  

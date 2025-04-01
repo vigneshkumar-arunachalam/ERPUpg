@@ -1,293 +1,293 @@
 .userDatatable-content .form-control {
-    width: 100%;
+  width: 100%;
 }
 
 .userDatatable-content,
 .userDatatable-inline-title h6 {
-    padding: 5px 10px;
+  padding: 5px 10px;
 }
 
 .userDatatable-title {
-    text-align: right;
-    display: block;
-    padding-right: 10px;
+  text-align: right;
+  display: block;
+  padding-right: 10px;
 }
 
 .userDatatable-header th {
-    background: #6d5dfc;
+  background: #6d5dfc;
 }
 
 .userDatatable-header th span {
-    color: #e4ebf5;
-    text-align: left;
+  color: #e4ebf5;
+  text-align: left;
 }
 
 .userDatatable .page .dropdown button {
-    border-radius: 0px;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 /* common userdatable ends, customization begins */
 
-
 .button {
-    padding: 0.6em 1.5em;
-
+  padding: 0.6em 1.5em;
 }
 
 .btn1 {
-    background-color: #007cbc;
-    border: none;
-    color: white;
-    padding: 0;
-    font-size: 16px;
-    width: 30px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    border-radius: 50%;
+  background-color: #007cbc;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .btn1:hover {
-    background-color: rgb(221, 109, 152);
+  background-color: rgb(221, 109, 152);
 }
 
 .dropdown {
-    position: relative;
+  position: relative;
 }
 
 .dropdown a {
-    font-size: 14px;
-    /* margin: 5px 8px!important; */
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 37px;
-    width: 37px;
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
 }
 
 .dropdown__list {
-    z-index: 2;
-    position: absolute;
-    display: none;
-    padding: 10px;
-    min-width: 100%;
-    background: #fff;
-    cursor: pointer;
-    border: 1px solid;
-    text-align: center;
+  z-index: 2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid;
+  text-align: center;
 }
 
 .dropdown__item {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .dropdown__link {
-    display: block;
-    padding: 0.3em 1em;
-    background: white;
-    color: var(--dropdown__link_clr);
-    text-decoration: none;
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
 }
 
 .dropdown__link:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .dropdown:hover .button {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .dropdown:hover .dropdown__list {
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 31px;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
 }
 
 .dropdown__item .hide {
-    display: none;
+  display: none;
 }
 
 .dropdown__item:hover .hide {
-    display: block;
+  display: block;
 }
 
 .dropdown__item:hover .show {
-    display: none;
+  display: none;
 }
 
 i.fa.fa-bars {
-    color: #fff;
+  color: #fff;
 }
 
 .hover1:hover {
-
-    background: rgba(255, 77, 79, 0.5);
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 
 .hover2:hover {
-
-    background: rgba(118, 177, 103, 0.5);
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
+  background: rgba(118, 177, 103, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 
 .userDatatable .buttonClass {
-    border: 1px solid #ddd;
-    border-radius: 5px !important;
+  border: 1px solid #ddd;
+  border-radius: 5px !important;
 }
 
-
-
-
-
-
-
 #searchPettyCashFormId .modal-dialog {
-    max-width: 65%;
+  max-width: 65%;
 }
 
 #pettycashEditFormId .modal-dialog {
-    min-width: 50%;
+  min-width: 50%;
 }
 
 #pettycashEditFormId .btn-primary,
 #searchPettyCashFormId .btn-primary {
-    background: linear-gradient(to right, #262127, #54b7aa);
-    color: rgb(240 241 219);
-    box-shadow: none;
+  background: linear-gradient(to right, #262127, #54b7aa);
+  color: rgb(240 241 219);
+  box-shadow: none;
 }
 
 #pettycashEditFormId label,
 #searchPettyCashFormId label {
-    font-weight: 500;
-    color: #051b5a !important;
+  font-weight: 500;
+  color: #051b5a !important;
 }
 
 #pettycashEditFormId .modal-content button.close,
- .modal-content button.close {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #f9021b;
-    transition: all 0.5s ease;
+.modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #f9021b;
+  transition: all 0.5s ease;
 }
 
 #pettycashEditFormId .modal-body .form-control:hover {
-    background-color: #f1e80724;
+  background-color: #f1e80724;
 }
 
 #pettycashEditFormId .form-control:focus {
-    outline: none;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-    border: 2px solid transparent !important;
-    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white),
+    linear-gradient(
+      315deg,
+      rgb(236, 160, 255),
+      rgb(170, 178, 255),
+      rgb(132, 255, 201)
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
 }
 
 .close:hover {
-
-    background: rgba(195, 101, 233, 0.1);
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
+  background: rgba(195, 101, 233, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 
 .form-control {
-    border: 1px solid #e1e1e1;
-    background: transparent;
+  border: 1px solid #e1e1e1;
+  background: transparent;
 }
 
 select {
-    padding-left: 4px !important;
+  padding-left: 4px !important;
 }
 
-
-
-
 #searchPettyCashFormId .modal-content {
-    background: #e4ebf5;
+  background: #e4ebf5;
 }
 
 .CheckboxScroll {
-    height: 140px;
-    overflow-y: scroll;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
+  height: 140px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 #searchPettyCashFormId .modal-content .form-control,
 .CheckboxScroll {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7,
+    inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
 }
 
 .CheckboxScroll:hover {
-    background-color: #fcf3f0;
+  background-color: #fcf3f0;
 }
 
 #searchPettyCashFormId .modal-content .btn-primary {
-    grid-column: 1/2;
-    grid-row: 4/5;
-    background: #6d5dfc;
-    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    color: #e4ebf5;
-
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff,
+    inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7,
+    -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
 }
 
 #searchPettyCashFormId .modal-content button.close {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    /* color: #9baacf; */
-    color: #f9021b;
-    transition: all 0.5s ease;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* color: #9baacf; */
+  color: #f9021b;
+  transition: all 0.5s ease;
 }
 
 #searchPettyCashFormId .addcustomernewallcss .form-control,
 .ng-autocomplete::ng-deep .autocomplete-container .input-container input {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7,
+    inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
 }
 
 #searchPettyCashFormId .addcustomernewallcss .form-control:focus,
 .ng-autocomplete::ng-deep .autocomplete-container .input-container input:focus {
-    outline: none;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-    border: 2px solid transparent !important;
-    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white),
+    linear-gradient(
+      315deg,
+      rgb(236, 160, 255),
+      rgb(170, 178, 255),
+      rgb(132, 255, 201)
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
 }
-
 
 /* #cg tr:nth-child(even):hover {
     background: linear-gradient(to right, #c9f1a2, #df97b4);
@@ -299,204 +299,199 @@ select {
     color:#000;
   } */
 
-  tr:hover td {
-    color: #b1ba1500;
+tr:hover td {
+  color: #b1ba1500;
 
-    background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    transition: background 1s, color 1s;
-  }
-  .userDatatable table tbody tr td {
-    border: 1px solid #C5D9E0;
+  background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200%
+    no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background 1s, color 1s;
+}
+.userDatatable table tbody tr td {
+  border: 1px solid #c5d9e0;
 }
 .userDatatable table thead tr th {
-    border: 1px solid #ebf2f4;
+  border: 1px solid #ebf2f4;
 }
 
-
-
-
-
 .table-container {
-    max-width: 100%;
-    overflow-x: auto;
-  
-    table {
-      width: 100%;
-      border-collapse: collapse;
-  
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-      }
-  
-      th {
-        background-color: #4caf50;
-        color: white;
-      }
-  
-      .status-icon {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-  
-        &.status-green {
-          background-color: green;
-          color: white;
-        }
-  
-        &.status-red {
-          background-color: red;
-          color: white;
-        }
-  
-        &.status-yellow {
-          background-color: yellow;
-          color: black;
-        }
-      }
-  
-      .bx {
-        font-size: 1.2rem;
-      }
-    }
-  }
-  
-  
-
-
-
+  max-width: 100%;
+  overflow-x: auto;
 
   table {
     width: 100%;
     border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .status-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+
+      &.status-green {
+        background-color: green;
+        color: white;
+      }
+
+      &.status-red {
+        background-color: red;
+        color: white;
+      }
+
+      &.status-yellow {
+        background-color: yellow;
+        color: black;
+      }
+    }
+
+    .bx {
+      font-size: 1.2rem;
+    }
   }
-  
-  th, td {
-    border: 1px solid #ddd;
-    text-align: center;
-    padding: 8px;
-  }
-  
-  /* .fa-circle {
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+}
+
+/* .fa-circle {
     margin: 2px;
     font-size: 14px;
   } */
-  
 
-  .fa-circle {
-    font-size: 16px;
-    margin: 2px;
-  }
+.fa-circle {
+  font-size: 16px;
+  margin: 2px;
+}
 
-
-      /* Accordion Header Styling */
+/* Accordion Header Styling */
 .accordion .card-header {
-    /* background: linear-gradient(45deg, #1e90ff, #007bff); */
-    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-  
-  .accordion .card-header:hover {
-    /* background: linear-gradient(45deg, #007bff, #0056b3); */
-    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
-    color: #fff;
-    transform: scale(1.02);
-  }
-  
-  /* Button inside the header */
-  .accordion .card-header button {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 10px;
-  }
-  
-  .accordion .card-header button:focus {
-    outline: none;
-  }
-  
-  /* Accordion Body Styling */
-  .accordion .card-body {
-    background-color: #f9f9f9;
-    color: #333;
-    padding: 15px;
-    font-size: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Active Header */
-  .accordion .card-header.active {
-    /* background: linear-gradient(45deg, #0056b3, #003f7f); */
-    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
-    color: #fff;
-  }
-  
-  /* Accordion Container Styling */
-  .accordion {
-    width: 100%;
-    margin: 20px auto;
-    border-radius: 10px;
-  }
-  
-  /* Card Styling */
-  .accordion .card {
-    border: none;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  /* Smooth Transition for Collapsing */
-  .collapse {
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Add some shadow for the entire accordion */
-  .accordion {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  /* background: linear-gradient(45deg, #1e90ff, #007bff); */
+  background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
 
+.accordion .card-header:hover {
+  /* background: linear-gradient(45deg, #007bff, #0056b3); */
+  background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+  color: #fff;
+  transform: scale(1.02);
+}
 
+/* Button inside the header */
+.accordion .card-header button {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 10px;
+}
 
-  .gradient-cell {
-    /* Gradient background */
-    /* background: linear-gradient(135deg, #f8e8c8, #c8e8f8); */
+.accordion .card-header button:focus {
+  outline: none;
+}
 
-    background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-    color: #FFFFFF; /* Text color for readability */
-    padding: 10px;
-    text-align: center; /* Center-align text */
-    border-radius: 8px; /* Rounded corners */
-    font-weight: 500; /* Make text bold */
-    transition: background 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
+/* Accordion Body Styling */
+.accordion .card-body {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Active Header */
+.accordion .card-header.active {
+  /* background: linear-gradient(45deg, #0056b3, #003f7f); */
+  background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+  color: #fff;
+}
+
+/* Accordion Container Styling */
+.accordion {
+  width: 100%;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+/* Card Styling */
+.accordion .card {
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Smooth Transition for Collapsing */
+.collapse {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add some shadow for the entire accordion */
+.accordion {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-cell {
+  /* Gradient background */
+  /* background: linear-gradient(135deg, #f8e8c8, #c8e8f8); */
+
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  color: #ffffff; /* Text color for readability */
+  padding: 10px;
+  text-align: center; /* Center-align text */
+  border-radius: 8px; /* Rounded corners */
+  font-weight: 500; /* Make text bold */
+  transition: background 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
 }
 
 /* Hover effect */
 .gradient-cell:hover {
-    background: linear-gradient(135deg, #ff6a00, #ff9966);
-    color: #0f0000; /* Text color for readability */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    cursor: pointer; /* Change cursor to pointer */
+  background: linear-gradient(135deg, #ff6a00, #ff9966);
+  color: #0f0000; /* Text color for readability */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  cursor: pointer; /* Change cursor to pointer */
 }
-.table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
-.table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
-  
+.table-container tr td,
+.table-container tr th {
+  width: 8%;
+  white-space: normal;
+}
+.table-container tr td:first-child,
+.table-container tr tr:first-child {
+  width: 20%;
+}
 
 .readonly-field {
   background-color: #f4f2f3 !important;
@@ -510,4 +505,123 @@ select {
   justify-content: center;
 }
 
+/* graph css desginS */
 
+.graph_img {
+  width: 40px; /* Adjust size if needed */
+  height: 35px;
+  display: block;
+}
+.btn-transparent {
+  background: none;
+  border: none;
+}
+
+.modal-lg {
+  max-width: 100%;
+  width: 100%;
+}
+
+.modal-body {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.chart-item {
+  flex: 1 1 300px;
+  max-width: 300px;
+  min-width: 250px;
+  text-align: center;
+}
+
+.apexcharts-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.monthly-chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.monthly-chart-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px; /* Adds space below each chart */
+  max-width: 320px; /* Prevents overflow */
+}
+
+.apexcharts-title-text {
+  white-space: normal !important; /* Ensures title wraps */
+  word-break: break-word !important;
+  text-align: center;
+}
+
+#chart2 {
+  width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* #chart {
+  max-width: 650px;
+  margin: 35px auto;
+} */
+
+.chart-title {
+  display: flex;
+  justify-content: center;
+  background-color: #cf7ddf;
+  padding: 10px;
+  border-radius: 30px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.close-btn {
+  font-size: 25px;
+}
+
+@media (max-width: 768px) {
+  .chart-title {
+    font-size: 16px;
+    padding: 8px;
+  }
+  .modal-content {
+    padding: 10px;
+  }
+}

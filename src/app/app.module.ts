@@ -200,6 +200,10 @@ import { ToolsComponent } from './tools/tools.component';
 import { MconnectComponent } from './mconnect/mconnect.component';
 import { MyVOIPLicenceKeyComponent } from './mconnect/my-voiplicence-key/my-voiplicence-key.component';
 import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.component';
+import { VendorComponent } from './vendor/vendor.component';
+import { CustomerProjectComponent } from './customer-project/customer-project.component';
+ import { NgApexchartsModule } from 'ng-apexcharts';
+import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
 
 
 @NgModule({
@@ -375,12 +379,16 @@ import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.co
      ToolsComponent,
      MconnectComponent,
      MyVOIPLicenceKeyComponent,
-     CurrentPayslipComponent 
+     CurrentPayslipComponent,
+     VendorComponent,
+     CustomerProjectComponent,
+     CurrentStockOneComponent
      
  
   ],
   imports: [
-    BrowserModule,CanvasJSAngularChartsModule,MatProgressSpinnerModule,  
+    BrowserModule,CanvasJSAngularChartsModule,MatProgressSpinnerModule, 
+      NgApexchartsModule,
     FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,

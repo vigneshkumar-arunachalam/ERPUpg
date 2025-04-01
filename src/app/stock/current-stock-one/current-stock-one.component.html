@@ -1,0 +1,117 @@
+<div class="contents-section">
+
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card quotation">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Transaction Management</span>
+          </h3>
+
+
+          <div class="quotation-btn-section">
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              data-target="#searchTransactionFormId">
+              <i class="fas fa-search" style="margin-right:4px;"></i>Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-center listRecord">List of Records</h2>
+  <div class="row">
+    <div *ngFor="let category of stockData" class="col-md-4">
+      <table class="table table-bordered">
+        <thead>
+          <tr [style.backgroundColor]="category.color">
+            <th colspan="4">{{ category.brand }}</th>
+          </tr>
+          <tr>
+            <th>{{ category.brand }}</th>
+            <th>STK Qty</th>
+            <th>RMA Qty</th>
+            <th>DEMO Qty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of category.items">
+            <td>{{ item.name }}</td>
+            <td [style.backgroundColor]="item.stkColor">{{ item.stkQty }}</td>
+            <td [style.backgroundColor]="item.rmaColor">{{ item.rmaQty }}</td>
+            <td [style.backgroundColor]="item.demoColor">{{ item.demoQty }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchTransactionFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+          Advanced Search </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="searchTransactionForm">
+          <div class="row">
+
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label for="temp11" class="col-lg-12 ">Transaction Name</label>
+                <div class="col-lg-12 " *ngFor="let biller12 of biller_list;let i =index">
+                  <input type="checkbox" id="{{biller12.id}}" formControlName="search_billerName1"
+                    (change)="searchBillerNameCHK(biller12.id,$event)">
+
+                  {{biller12.billerName}}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-8">
+              <div class="form-group row">
+
+                <label for="company_Name" class="col-lg-12 ">Search Text</label>
+
+                <div class="col-lg-12">
+
+                  <input type="search" class="form-control" formControlName="company_Name6" />
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,17 +29,14 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     plugins: [dayGridPlugin, interactionPlugin],
 
     initialView: 'dayGridMonth',
-    events: [
-      { title: 'Holiday', start: '2025-02-12', classNames: ['holiday-event'] },
-      { title: 'Leave', start: '2025-02-15', classNames: ['leave-event'] },
-      { title: 'Count', }
-    ],
+    events: [],
     // events: [] as EventInput[],
     editable: false,
     selectable: true,
-    select: this.handleDateSelect.bind(this),
+   
     eventClick: this.handleEventClick.bind(this),
-    dateClick: this.preventEmptyDateClick.bind(this),
+   dateClick: this.preventEmptyDateClick.bind(this),
+   select: this.handleDateSelect.bind(this),
     // eventClick: this.onEventClick.bind(this), 
     // dateClick: this.onDateClick.bind(this), 
     // displayEventTime: false,
@@ -140,8 +137,8 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   countryListUSAid: any;
   countryBillerID: any;
   assinedYear: number;
- 
-
+  durationTypeValue:any;
+  timeStatus:boolean=false;
 
   constructor(private cd: ChangeDetectorRef,private spinner: NgxSpinnerService, private http: HttpClient, private serverService: ServerService, private datePipe: DatePipe) {
     this.taskForm = new FormGroup({
@@ -174,12 +171,15 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       'durationType': new FormControl(null),
       'startDate': new FormControl(this.today),
       'endDate': new FormControl(this.today),
+      'startTime': new FormControl(null),
+      'endTime': new FormControl(null),
       'medicalcert': new FormControl(null),
       'leaveReason': new FormControl(null),
     });
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
    // this.user_ids = 169;
    // this.getLeaveHolidayDetails();
+  
      this.getLeaveRequestDetails();
      this.getHolidayList();
      this.getCountryList();
@@ -190,6 +190,29 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   
    
 
+
+  }
+  fetchEvents() {
+    this.http.get<any>('YOUR_API_URL').subscribe(response => {
+      if (response.leaveCount && Array.isArray(response.leaveCount)) {
+        this.calendarOptions.events = response.leaveCount.map((item: any) => ({
+          title: `${item.Subject} (${item.userName})`, // Example title format
+          start: this.formatDate(item.start_dt_time), // Ensure proper date format
+          end: this.formatDate(item.end_dt_time),
+          classNames: ['leave-event'], // Add custom styling class if needed
+          backgroundColor: item.colorCodes // Apply color from API
+        }));
+      }
+    });
+  }
+  durationTypeChange(event:any){
+    this.durationTypeValue=event.target.value;
+    console.log("this.durationTypeValue",this.durationTypeValue);
+    if(this.durationTypeValue==1){
+      this.timeStatus=true;
+    }else{
+      this.timeStatus=false;
+    }
 
   }
   prevMonth(calendar: any) {
@@ -332,7 +355,25 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
 
   }
+  
+  adjustTime() {
+    let timeValue = this.leaveRequestForm.value.startTime;
+    if (!timeValue) return;
+
+    let date = new Date(timeValue);
+    let minutes = date.getMinutes();
+
+    // Adjust minutes to the nearest 15-minute mark
+    let roundedMinutes = Math.round(minutes / 15) * 15;
+    date.setMinutes(roundedMinutes);
+    date.setSeconds(0);
+
+    // Update the form value with the adjusted time
+    this.leaveRequestForm.patchValue({ startTime: date.toISOString().slice(0, 16) });
+  }
   createLeave() {
+    console.log("this.leaveRequestForm.value.startTime",this.leaveRequestForm.value.startTime);
+    console.log("this.leaveRequestForm.value.endTime",this.leaveRequestForm.value.endTime);
     this.spinner.show();
 
     const formData = new FormData();
@@ -341,8 +382,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     formData.append('api_type', 'web');
     formData.append('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI'); // Replace with your access token
     formData.append('action', 'hr/createLeave');
+   if(this.durationTypeValue!=1){
     formData.append('StartTime', this.startLeave);
     formData.append('EndTime', this.EndDate);
+    
     formData.append('start_time', '00:00');
     formData.append('end_time', '00:00');
 
@@ -350,6 +393,23 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
     formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
     formData.append('StartTime_value', this.startLeave);
+   }else{
+    
+    
+    formData.append('StartTime', this.leaveRequestForm.value.startTime);
+    formData.append('EndTime', this.leaveRequestForm.value.endTime);
+     
+    formData.append('start_time', this.startLeave);
+    formData.append('end_time', this.EndDate);
+    
+
+    formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
+    formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
+    formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
+    formData.append('StartTime_value', this.startLeave);
+
+   }
+   
 
     
 
@@ -402,7 +462,9 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
   }
   handleDateSelect(selectInfo: any) {
-    // alert("hi")
+    console.log("selectInfo",selectInfo);
+    
+    alert("hi")
     this.startLeave = selectInfo.startStr;
     // const end = selectInfo.endStr;
     console.log("start-drag", this.startLeave);
@@ -410,6 +472,8 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     endDate1.setDate(endDate1.getDate() - 1); // Subtract 1 day
     this.EndDate = endDate1.toISOString().split('T')[0]; // Convert back to YYYY-MM-DD format
     console.log('Adjusted End Date:', this.EndDate);
+    // const currentDate = new Date(selectInfo.dateStr).toISOString().split('T')[0];
+    // console.log("currentDate", currentDate)
     $('#leaveRequestFormId').modal('show');
     this.leaveRequestForm.patchValue({
       'startDate': this.startLeave,
@@ -419,25 +483,28 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     let api_req: any = new Object();
     let sendMet_req: any = new Object();
     api_req.moduleType = "hr";
+   
     api_req.api_url = "hr/currenctDayLeave";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     sendMet_req.action = "hr/currenctDayLeave";
 
     sendMet_req.user_id = this.user_ids;
-    sendMet_req.startDate = this.startLeave;
-    sendMet_req.endDate = this.EndDate;
+    // sendMet_req.startDate = this.startLeave;
+    // sendMet_req.endDate = this.EndDate;
+    sendMet_req.date = this.startLeave;
     api_req.element_data = sendMet_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response) {
+      if (response.status==true) {
         this.leaveCategory = response.leavecat;
         this.LeaveType = response.leavetype;
         this.leaveDataList = response.leaveData;
         this.permissionCount = response.permissionCount;
-        this.remainingPermi = 2 - this.permissionCount;
+        this.remainingPermi = Number(2 - this.permissionCount);
 
-        this.availableALCurrentMonth = response.indLeaveDatas[0].available_al_current_month;
+        if(response.indLeaveDatas && response.indLeaveDatas.length>0){
+          this.availableALCurrentMonth = response.indLeaveDatas[0].available_al_current_month;
 
         this.TotalAL = response.indLeaveDatas[0].total_al;
         this.balanceAL = response.indLeaveDatas[0].balance_al;
@@ -450,6 +517,12 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
         this.consumedLOP = response.indLeaveDatas[0].consumed_lop;
         this.pendingApproval = response.indLeaveDatas[0].pending_approval;
         this.TotalAvailableLeave = response.indLeaveDatas[0].totalavailableLeave;
+
+        }else{
+          alert("not")
+        }
+
+        
 
 
 
@@ -478,6 +551,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
   }
   handleEventClick(arg: any) {
+  
     // console.log("arg",arg)
  
   //  alert("hello-bottom-last")
@@ -535,6 +609,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
   }
   preventEmptyDateClick(arg: any) {
+    return false;
     //  console.log("arg",arg.dateStr);
     $('#leaveRequestFormId').modal('show');
     // const currentDate=arg.dateStr;
@@ -614,16 +689,41 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.leaveCount = response.leaveCount;
-        this.calendarOptions.events = response.leaveCount.map((item: { leave_count: any; leave_date: any; }) => ({
-          title: `Leave: ${item.leave_count}`, // Display leave count in event title
-          start: item.leave_date
-        }));
-
-
-        this.calendarOptions.hiddenDays = this.calendarOptions.hiddenDays.includes(0)
-          ? this.calendarOptions.hiddenDays.filter(day => day !== 0)
-          : [...this.calendarOptions.hiddenDays, 0];
+        if (response.leaveCount && Array.isArray(response.leaveCount)) {
+          let sortedLeaves = response.leaveCount.sort((a: { start_dt_time: string; }, b: { start_dt_time: string; }) =>
+            new Date(this.formatDate1(a.start_dt_time)).getTime() - 
+            new Date(this.formatDate1(b.start_dt_time)).getTime()
+          );
+    
+          let mergedLeaves: any[] = [];
+          let currentLeave = null;
+    
+          for (let i = 0; i < sortedLeaves.length; i++) {
+            let leave = sortedLeaves[i];
+            let start = this.formatDate1(leave.start_dt_time);
+            let end = this.formatDate1(leave.end_dt_time);
+            
+            if (currentLeave && new Date(start).getTime() === new Date(currentLeave.end).getTime()) {
+              // Extend the existing event if it's consecutive
+              currentLeave.end = end;
+            } else {
+              // Push previous event and start a new one
+              if (currentLeave) mergedLeaves.push(currentLeave);
+              currentLeave = {
+                title: `${leave.Subject} (${leave.userName})`,
+                start: start,
+                end: end, // Ensure continuous mapping
+                backgroundColor: leave.colorCodes || '#B8860B',
+                classNames: ['leave-event']
+              };
+            }
+          }
+    
+          // Push the last merged leave event
+          if (currentLeave) mergedLeaves.push(currentLeave);
+    
+          this.calendarOptions.events = mergedLeaves;
+        }
 
 
 
@@ -646,6 +746,11 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       console.log("final error", error);
     }
 
+  }
+  formatDate1(dateString: string): string {
+    // Convert "19-03-2025" to "2025-03-19"
+    const parts = dateString.split('-');
+    return `${parts[2]}-${parts[1]}-${parts[0]}`;
   }
   changeYear(year:any){
     this.assinedYear=year;

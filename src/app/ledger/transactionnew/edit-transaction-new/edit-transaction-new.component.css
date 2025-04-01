@@ -207,3 +207,46 @@ padding-left: 0px !important;
 }
 
 /* --------------------KS--CSS------------------------------------------ */
+
+
+.othersCalss textarea{
+
+  height: 100px;
+  width: 40%;
+}
+.othersCalss input{
+
+  height: 47px;
+  width: 40%;
+}
+
+
+.btnn {
+  background-color: #c32c17e6;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 11px;
+  border-radius: 30px;
+  transition: all 1.3s;
+}
+
+/* .btnn:hover {
+  background-color: #15cece;
+} */
+
+.btnn.pulse:hover {
+  animation: pulse 1s infinite;
+}
+
+
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

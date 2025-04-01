@@ -165,11 +165,18 @@ import { DcareAddQuotationComponent } from './billing/dcare-quotation/dcare-add-
 import { DcareEditQuotationComponent } from './billing/dcare-quotation/dcare-edit-quotation/dcare-edit-quotation.component';
 import { MyVOIPLicenceKeyComponent } from './mconnect/my-voiplicence-key/my-voiplicence-key.component';
 import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.component';
+import { VendorComponent } from './vendor/vendor.component';
+import { CustomerProjectComponent } from './customer-project/customer-project.component';
+
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
-  },
+  },{
+    path: 'customerProject', component: CustomerProjectComponent
+  },{
+    path: 'vendor', component: VendorComponent
+  },
   {
     path: 'currentPayslip', component: CurrentPayslipComponent
   },

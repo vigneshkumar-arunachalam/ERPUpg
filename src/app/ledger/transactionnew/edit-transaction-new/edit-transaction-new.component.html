@@ -21,7 +21,7 @@
                             <select id="biller_name9" class="form-control" formControlName="billerName"
                                 (change)="BillerChange($event)">
                                 <option [ngValue]="null" selected>Select Biller Name</option>
-                                <option *ngFor="let biller of PC_billerDetails" value="{{biller.billerId}}">
+                                <option *ngFor="let biller of billerDetails" value="{{biller.billerId}}">
                                     {{biller.billerName}}
                                 </option>
                             </select>
@@ -68,58 +68,63 @@
 
                             <!-- Nav pills -->
                             <ul class="nav nav-pills" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link " data-toggle="tab" id="PurchaseEntry_link" href="#PurchaseEntry"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 3">
+                                    <a class="nav-link btnn pulse " data-toggle="tab" id="PurchaseEntry_link" href="#PurchaseEntry"
                                         role="tab" aria-controls="PurchaseEntry" (click)="SelectTransactionType_PE()">
                                         Purchase
                                         Entry</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" id="PettyCash_link" href="#PettyCash"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 5">
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="PettyCash_link" href="#PettyCash"
                                         role="tab" aria-controls="PettyCash" aria-selected="false"
                                         (click)="SelectTransactionType_PC()">Petty Cash</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="Logistics_link" href="#Logistics"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 51" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="Logistics_link" href="#Logistics"
                                         role="tab" aria-controls="Logistics" aria-selected="false"
                                         (click)="SelectTransactionType_Log()">Logistics</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="VendorOrder_link" href="#VendorOrder"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 6" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="VendorOrder_link" href="#VendorOrder"
                                         role="tab" aria-controls="VendorOrder" aria-selected="false"
                                         (click)="SelectTransactionType_VO()">Vendor Order</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="InvoicePayment_link"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 7" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="InvoicePayment_link"
                                         href="#InvoicePayment" role="tab" aria-controls="InvoicePayment"
                                         aria-selected="false" (click)="SelectTransactionType_IP()">Invoice Payment</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="AddNewStock_link" href="#AddNewStock"
+                                
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 15" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="AddNewStock_link" href="#AddNewStock"
                                         role="tab" aria-controls="AddNewStock" aria-selected="false"
                                         (click)="SelectTransactionType_ANS()">Add New Stock</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="StockIssued_link" href="#StockIssued"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 56" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="StockIssued_link" href="#StockIssued"
                                         role="tab" aria-controls="StockIssued" aria-selected="false"
                                         (click)="SelectTransactionType_SI()">Stock Issued</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="StockTransfer_link" href="#StockTransfer"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 58" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="StockTransfer_link" href="#StockTransfer"
                                         role="tab" aria-controls="StockTransfer" aria-selected="false"
                                         (click)="SelectTransactionType_ST()">Stock Transfer</a>
                                 </li>
-                                <li class="nav-item" style="display: none;">
-                                    <a class="nav-link" data-toggle="tab" id="Others_link" href="#Others" role="tab"
+                                <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 8" >
+                                    <a class="nav-link btnn pulse" data-toggle="tab" id="Others_link" href="#Others" role="tab"
                                         aria-controls="Others" aria-selected="false"
                                         (click)="SelectTransactionType_Others()">Others</a>
                                 </li>
                             </ul>
 
                             <!-- Tab panes -->
+
+                           
                             <div class="tab-content">
-                                <div id="PurchaseEntry" class="tab-pane fade show active" role="tabpanel"
-                                    aria-labelledby="PurchaseEntry-tab"><br>
+
+                                 <!-- PurchaseEntry -->
+
+                                <div id="PurchaseEntry" *ngIf="this.edit_TransactionTpeID == 3">
                                     <!-- purchase entry sub menu starts -->
 
 
@@ -382,8 +387,10 @@
                                     <!-- purchase entry sub menu ends -->
 
                                 </div>
-                                <div id="PettyCash" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="PettyCash-tab"><br>
+
+                                <!-- PettyCash -->
+
+                                <div id="PettyCash" *ngIf="this.edit_TransactionTpeID == 5" ><br>
                                     <!-- petty cash entry sub menu ends -->
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -482,8 +489,9 @@
 
 
                                 </div>
-                                <div id="Logistics" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="Logistics-tab"><br>
+
+                                <!-- Logistics -->
+                                <div id="Logistics" *ngIf="this.edit_TransactionTpeID == 51"><br>
                                     <!-- Logistics entry sub menu ends -->
                                     <div class="col-lg-12">
 
@@ -542,6 +550,24 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
+                                                    Files</label></div>
+
+                                            <div class="col-lg-3">
+                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
+                                                
+
+                                                <!-- <button type="button" class="btn btn-link"
+                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
+                                                        class="bi bi-trash"></span>
+                                                </button> -->
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
                                             <div class="col-lg-2"> <label for="PC_FileAttachment"
                                                     class=" col-form-label">File
                                                     Attachment</label></div>
@@ -549,7 +575,7 @@
                                             <div class="col-lg-4">
                                                 <input required type="file" name="Log_FileAttachment" multiple
                                                     id="Log_FileAttachment" class="form-control"
-                                                    (change)="fileAttachmentEventUpdate($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -558,8 +584,8 @@
                                     <!-- Logistics entry sub menu ends -->
                                 </div>
 
-                                <div id="VendorOrder" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="VendorOrder-tab"><br>
+                                <!-- VendorOrder -->
+                                <div id="VendorOrder" *ngIf="this.edit_TransactionTpeID == 6"><br>
                                     <!-- Vendor Order sub menu starts -->
 
                                     <div class="col-lg-12">
@@ -576,6 +602,24 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
+                                                    Files</label></div>
+
+                                            <div class="col-lg-3">
+                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
+                                                
+
+                                                <!-- <button type="button" class="btn btn-link"
+                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
+                                                        class="bi bi-trash"></span>
+                                                </button> -->
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
                                             <div class="col-lg-2"> <label for="VendorOrder_FileAttachment"
                                                     class="col-form-label">File Attachment</label></div>
 
@@ -583,15 +627,16 @@
                                                 <input required type="file" name="VendorOrder_FileAttachment"
                                                     id="VendorOrder_FileAttachment" class="form-control"
                                                     formControlName="VendorOrder_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Vendor Order sub menu ends -->
                                 </div>
 
-                                <div id="InvoicePayment" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="InvoicePayment-tab"><br>
+                                <!-- InvoicePayment -->
+
+                                <div id="InvoicePayment" *ngIf="this.edit_TransactionTpeID == 7"><br>
                                     <!-- Invoice Payment sub menu starts -->
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -713,9 +758,9 @@
                                                 <select id="InvPayment_PaymentMethod" class="form-control"
                                                     formControlName="InvPayment_PaymentMethod">
                                                     <option [ngValue]="null" selected>Select Payment Method</option>
-                                                    <option *ngFor="let inv of purchaseType"
-                                                        value="{{inv.purchase_type_id}}">
-                                                        {{inv.purchase_type_name }}
+                                                    <option *ngFor="let inv of paymentTypeDetails"
+                                                        value="{{inv.payment_type_id}}">
+                                                        {{inv.payment_type_name }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -776,7 +821,24 @@
                                         </div>
                                     </div> -->
 
-                                    <!-- <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
+                                                    Files</label></div>
+
+                                            <div class="col-lg-3">
+                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
+                                                
+
+                                                <!-- <button type="button" class="btn btn-link"
+                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
+                                                        class="bi bi-trash"></span>
+                                                </button> -->
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="PC_FileAttachment"
                                                     class=" col-form-label">File
@@ -787,17 +849,18 @@
                                                 <input required type="file" name="InvPayment_FileAttachment" multiple
                                                     id="InvPayment_FileAttachment" class="form-control"
                                                    
-                                                    (change)="fileAttachmentEventUpdate($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
 
 
                                     <!-- Invoice Payment sub menu ends -->
-                                </div>
+                                 </div>
 
-                                <div id="AddNewStock" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="AddNewStock-tab"><br>
+                                <!-- AddNewStock -->
+
+                                <div id="AddNewStock" *ngIf="this.edit_TransactionTpeID == 15"><br>
 
                                     <!-- Add New Stock sub menu ends -->
                                   
@@ -893,8 +956,9 @@
                                     <!-- Add New Stock  sub menu ends -->
                                 </div>
 
-                                <div id="StockIssued" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="StockIssued-tab"><br>
+                                <!-- StockIssued -->
+
+                                <div id="StockIssued" *ngIf="this.edit_TransactionTpeID == 56"><br>
                                     <!-- Stock Issued  sub menu ends -->
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
@@ -975,8 +1039,9 @@
 
                                 </div>
 
-                                <div id="StockTransfer" class="tab-pane fade" role="tabpanel"
-                                    aria-labelledby="StockTransfer-tab"><br>
+                                <!-- StockTransfer -->
+
+                                <div id="StockTransfer" *ngIf="this.edit_TransactionTpeID == 58"><br>
                                     <!-- Stock Transfer  sub menu ends -->
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
@@ -1050,10 +1115,12 @@
                                     <!-- Stock Transfer sub menu ends -->
                                 </div>
 
-                                <div id="Others" class="tab-pane fade" role="tabpanel" aria-labelledby="Others-tab"><br>
+                                <!-- Others -->
+                                 
+                                <div id="Others" *ngIf="this.edit_TransactionTpeID == 8"><br>
                                     <!-- Others sub menu starts -->
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 othersCalss">
                                         <div class="form-group">
                                             <label for="others_Description" class="form-label">Description</label>
                                             <textarea class="form-control" formControlName="others_Description"
@@ -1061,7 +1128,24 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 othersCalss">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
+                                                    Files</label></div>
+
+                                            <div class="col-lg-3">
+                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
+                                                
+
+                                                <!-- <button type="button" class="btn btn-link"
+                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
+                                                        class="bi bi-trash"></span>
+                                                </button> -->
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 othersCalss">
                                         <div class="form-group row">
                                             <label for="others_FileAttachment" class="col-lg-12 col-form-label">File
                                                 Attachment</label>
@@ -1069,7 +1153,7 @@
                                                 <input required type="file" name="others_FileAttachment"
                                                     id="others_FileAttachment" class="form-control"
                                                     formControlName="others_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>

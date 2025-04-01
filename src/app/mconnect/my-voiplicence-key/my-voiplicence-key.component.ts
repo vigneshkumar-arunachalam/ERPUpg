@@ -180,6 +180,9 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
   closeAddModal() {
     this.showAddModal = false;
     $('#add_licenceKeyGr').modal('hide');
+    $('#setKeyPeriodSerialNo_Gr').modal('hide');
+    $('#customerLicenseForm_Gr').modal('hide');
+  
     this.resetForm();
   }
   getTransactionNewList(data: any) {
@@ -216,7 +219,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
 
 
         // console.log(this.Transaction_list);
-        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.totalCount, 'page_limit': this.pageLimit });
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total, 'page_limit': this.pageLimit });
 
         $('#searchTransactionFormId').modal('hide');
       }
@@ -246,14 +249,18 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     TNapi_req.period_value = this.setKeyPeriodForm.value.SetPeriod;
     TNapi_req.sno_hd =  this.setKeyPeriodSerialNo;
     TNapi_req.concurrent = this.setKeyPeriodForm.value.Concurrent;
-    TNapi_req.from_dt = localStorage.getItem('erp_c4c_user_id');
-    TNapi_req.to_dt = localStorage.getItem('erp_c4c_user_id');
+    TNapi_req.from_dt = '';
+    TNapi_req.to_dt = '';
     api_req.element_data = TNapi_req;
   
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status== true) {
-        
+        $('#setKeyPeriodSerialNo_Gr').modal('hide');
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
   
       }else{
     
@@ -401,7 +408,12 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
       this.spinner.hide();
       if (response.status== true) {
 
-
+        $("#setKeyPeriodSerialNo_Gr").modal("show");
+        this.setKeyPeriodForm.patchValue({
+          'SetPeriod': response.data.key_type,
+          'Concurrent': response.data.concurrent,
+          'licenseKeyUpdate':1
+        })
    
     
       }else{
@@ -438,10 +450,12 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
 
 
         $('#customerLicenseForm_Gr').modal('hide');
+
         iziToast.success({
           message: "Updated Successfully",
           position: 'topRight'
         });
+        this.getTransactionNewList({});
       }else{
         $('#customerLicenseForm_Gr').modal('hide');
         iziToast.error({
@@ -551,6 +565,61 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
             Swal.close();
             iziToast.warning({
               message: "Status Changed Failed",
+              position: 'topRight'
+            });
+            this.getTransactionNewList({});
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            // console.log("final error", error);
+          };
+      }
+    })
+  }
+  delete(sno: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+       
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let del_req: any = new Object();
+        api_req.moduleType = "deleteLicense";
+        api_req.api_url = "key/deleteLicense";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        del_req.action = "key/deleteLicense";
+        del_req.licenseId = sno;
+        del_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_req.element_data = del_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            Swal.close();
+            iziToast.success({
+              message: "Deleted Successfully",
+              position: 'topRight'
+            });
+            this.getTransactionNewList({});
+
+          } else {
+            Swal.close();
+            iziToast.warning({
+              message: "Delete Failed",
               position: 'topRight'
             });
             this.getTransactionNewList({});

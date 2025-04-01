@@ -27,7 +27,8 @@ export class StockDIDNumberCatalogComponent implements OnInit {
   didNameCount: any;
   didNumberCounts: any;
   nrsList: any;
-
+  blocked_list:any;
+  selectedIds_blocked: number[] = [];
   constructor(private serverService: ServerService, private router: Router,
     private http: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
@@ -65,6 +66,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
         this.didNameCount = response.didNameCount;
         this.didNumberCounts = response.didNumberCounts;
         this.nrsList = response.nrsList;
+        this.blocked_list=response.blocked_list;
 
 
 
@@ -98,6 +100,14 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
+  toggleBlocked(did_entry_id: number, event: any) {
+    if (event.target.checked) {
+      this.selectedIds_blocked.push(did_entry_id);
+    } else {
+      this.selectedIds_blocked = this.selectedIds_blocked.filter(id => id !== did_entry_id);
+    }
+    console.log("this.selectedIds_blocked",this.selectedIds_blocked);
+  }
   releaseBlockedDidNumbers() {
     this.spinner.show();
  
@@ -111,7 +121,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     api_postUPd.action = "releaseBlockedDidNumbers";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.did_entry_id = '';
+    api_postUPd.did_entry_id = this.selectedIds_blocked;
   
     api_req.element_data = api_postUPd;
 
@@ -120,6 +130,11 @@ export class StockDIDNumberCatalogComponent implements OnInit {
       if (response.status == true) {
 
         this.spinner.hide();
+        iziToast.success({
+          message: "Blocked DID numbers released successfully",
+          position: 'topRight'
+        });
+        this.getDidCatalogDetailsList({});
 
 
       } else {
@@ -156,7 +171,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     api_postUPd.billerId = '';
     api_postUPd.search_text = '';
     api_postUPd.customer_id = '';
-    api_postUPd.biller_id = '';
+  
   
     api_req.element_data = api_postUPd;
 
@@ -184,6 +199,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
       };
 
   }
+ 
 
 
 }

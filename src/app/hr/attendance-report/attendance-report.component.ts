@@ -301,11 +301,11 @@ export class AttendanceReportComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      if (response) {
 
         this.spinner.hide();
    
-        this.ExcelReportLeaveList = response.data;
+        this.ExcelReportLeaveList = response[0].leaves;
         this.excelExportService.exportAsExcelFile(this.ExcelReportLeaveList, 'LeaveReport');
 
       } else {
@@ -358,6 +358,7 @@ export class AttendanceReportComponent implements OnInit {
 
         this.spinner.hide();
         this.attendanceList = response.datas;
+        this.listShow=true;
         if(response.datas==null){
           this.listShow=false;
         }

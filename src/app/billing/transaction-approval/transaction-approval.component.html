@@ -29,7 +29,8 @@
                                         </span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="productIssue({})">Product<span class="notification-alert"> {{this.productAppCnt}}</span></a>
+                                        (click)="productIssue({})">Product<span class="notification-alert">
+                                            {{this.productAppCnt}}</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="DIDNumberList({})">DID Number<span
@@ -64,8 +65,7 @@
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
                                         (click)="RMAIssueList({})">
-                                        RMA Issues<span
-                                            class="notification-alert">{{this.rmaIssuesCnt}}</span></a>
+                                        RMA Issues<span class="notification-alert">{{this.rmaIssuesCnt}}</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" (click)="OthersList({})"
                                         href="javascript:void(0);">Others<span class="notification-alert">0</span></a>
@@ -73,8 +73,8 @@
                                         area-controls="f_overview" aria-selected="false" (click)="HRAList({})"
                                         href="javascript:void(0);">HRA<span class="notification-alert">0</span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false"  (click)="DataCenterList({})"
-                                         href="javascript:void(0);">Data
+                                        area-controls="f_overview" aria-selected="false" (click)="DataCenterList({})"
+                                        href="javascript:void(0);">Data
                                         Center<span class="notification-alert">{{this.dataCenterCnt}}</span></a>
                                 </div>
                             </div>
@@ -95,16 +95,10 @@
                                     <thead>
                                         <tr>
 
-                                            <th>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-water"
-                                                            (change)="selectAll_Main($event)">
-                                                        <label for="check-water">
 
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_MainCK"
+                                                    (change)="toggleSelectAll_Main()">
                                             </th>
                                             <th class="userDatatable-title">
                                                 <span>Tic.No</span>
@@ -161,24 +155,9 @@
                                             [ngStyle]="{'background-color':
 
                   ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
-
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grp-{{i}}"
-                                                                        (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grp-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_Main(list)">
                                             </td>
 
                                             <td>
@@ -276,6 +255,15 @@
 
                                                             </li>
                                                             <li class="dropdown__item">
+                                                                <a class="hover1" title="Share Permission"
+                                                                   
+                                                                    (click)="sharePermission_Main(list.transaction_approval_id)">
+                                                                    <img class="show" src="assets/img/icon/tick-b.png">
+                                                                    <img class="hide" src="assets/img/icon/tick.png">
+
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
                                                                 <a class="hover2" title="Approve"
                                                                     *ngIf="(list.approval_link_state=='1')"
                                                                     (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
@@ -309,10 +297,12 @@
                                                                 <a class="hover4" title="Delete" data-toggle="modal"
                                                                     data-target="#BeforeApprovaltransactionApprovalCommentsIdMain"
                                                                     (click)="transactionApprovalDelete_Main(list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/trash-blue.png">
-                                                                       
-                                                                    <img class="hide"  src="assets/img/icon2/trash-black.png">
-                                                                       
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/trash-blue.png">
+
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/trash-black.png">
+
                                                                 </a>
                                                             </li>
 
@@ -784,15 +774,8 @@
                                         <tr>
 
                                             <th>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-waterOS"
-                                                            (change)="selectAll_DIDDemo($event)">
-                                                        <label for="check-waterOS">
-
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="selectAll_DIDDemoCK"
+                                                    (change)="toggleSelectAll_DIDDemo()">
                                             </th>
                                             <th class="userDatatable-title">
                                                 <span>Tic.No</span>
@@ -851,22 +834,8 @@
                   ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
 
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grp-{{i}}"
-                                                                        (change)="EditCHK_DIDDemo(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grp-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_DIDDemo(list)">
                                             </td>
 
                                             <td>
@@ -1465,15 +1434,8 @@
                                         <tr>
 
                                             <th>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-water"
-                                                            (change)="selectAll_Main($event)">
-                                                        <label for="check-water">
-
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="selectAll_InvTransAppCK"
+                                                    (change)="toggleSelectAll_InvTransApp()">
                                             </th>
                                             <th class="userDatatable-title">
                                                 <span>Tic.No</span>
@@ -1532,22 +1494,8 @@
                   ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
 
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grp-{{i}}"
-                                                                        (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grp-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_InvTransApp(list)">
                                             </td>
 
                                             <td>
@@ -2174,15 +2122,8 @@
                                         <tr>
 
                                             <th>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-3"
-                                                            (change)="selectAll($event)">
-                                                        <label for="check-3">
-
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="selectAll_QuotCK"
+                                                    (change)="toggleSelectAll_Quot()">
                                             </th>
                                             <th>
                                                 <span class="userDatatable-title">Tic.No</span>
@@ -2238,22 +2179,8 @@
                                         <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;">
 
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grp-{{i}}"
-                                                                        (change)="EditCHK(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grp-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_Quot(list)">
                                             </td>
 
                                             <td>
@@ -2805,15 +2732,8 @@
                                         <tr>
 
                                             <th style="background-color:#e6f3dc!important; ;">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-prodIssu"
-                                                            (change)="selectAll_ProductIssue($event)">
-                                                        <label for="check-prodIssu">
-
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="selectAll_ProductCK"
+                                                    (change)="toggleSelectAll_Product()">
                                             </th>
                                             <th>
                                                 <span>Tic.No</span>
@@ -2869,22 +2789,8 @@
                                         <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;">
 
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grpPI-{{i}}"
-                                                                        (change)="EditCHK_ProdIssue(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grpPI-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_Product(list)">
                                             </td>
 
                                             <td>
@@ -3431,15 +3337,8 @@
                                         <tr>
 
                                             <th>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-water"
-                                                            (change)="selectAll_DIDNumber($event)">
-                                                        <label for="check-water">
-
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="selectAll_DIDNumberCK"
+                                                    (change)="toggleSelectAll_DIDNumber()">
                                             </th>
                                             <th class="userDatatable-title">
                                                 <span>Tic.No</span>
@@ -3497,22 +3396,8 @@
                   ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
 
                                             <td>
-                                                <div class="d-flex">
-                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                                        <div class="checkbox-group-wrapper">
-                                                            <div class="checkbox-group d-flex">
-                                                                <div
-                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                    <input class="checkbox" type="checkbox"
-                                                                        id="check-transapp-grp-{{i}}"
-                                                                        (change)="EditCHK_DIDNum(list.transaction_approval_id,list.approval_staus,$event)">
-                                                                    <label for="check-transapp-grp-{{i}}"></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_DIDNumber(list)">
                                             </td>
 
                                             <td>
@@ -4113,6 +3998,10 @@
                                 <table class="table mb-0 table-borderless">
                                     <thead>
                                         <tr>
+                                            <th>
+                                                <input type="checkbox" [(ngModel)]="selectAll_DemoProductCK"
+                                                    (change)="toggleSelectAll_DemoProduct()">
+                                            </th>
 
 
                                             <th class="userDatatable-title">
@@ -4157,7 +4046,10 @@
 
                   ((list.color_status==0) ? ('#FFFFF') : ( (list.color_status==1) ? ('#BBF3BD') : ( (list.color_status==2) ? ('#e6b0aa') : ('#d0ffc3') ) ))}">
 
-
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_DemoProduct(list)">
+                                            </td>
 
                                             <td>
                                                 <span> {{ i+1}}</span>
@@ -4423,7 +4315,7 @@
                                     <thead>
                                         <tr>
 
-                                         
+
                                             <!-- <th>
                                                 <div class="d-flex align-items-center">
                                                     <div class="custom-checkbox  check-all">
@@ -4435,7 +4327,8 @@
                                                 </div>
                                             </th> -->
                                             <th>
-                                                <input type="checkbox" [(ngModel)]="selectAll_RMACK" (change)="toggleSelectAll()">
+                                                <input type="checkbox" [(ngModel)]="selectAll_RMACK"
+                                                    (change)="toggleSelectAll()">
                                             </th>
 
                                             <th class="userDatatable-title">
@@ -4491,7 +4384,7 @@
 
 
 
-<!-- <td>
+                                            <!-- <td>
     <div class="d-flex">
         <div class="userDatatable__imgWrapper d-flex align-items-center">
             <div class="checkbox-group-wrapper">
@@ -4509,9 +4402,10 @@
 
     </div>
 </td> -->
-<td>
-    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions(list)">
-</td>
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions(list)">
+                                            </td>
                                             <td>
                                                 {{ list.tic_no}}
                                             </td>
@@ -4567,7 +4461,7 @@
 
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Approve"
-                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                  
                                                                     (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
                                                                     <img class="show"
                                                                         src="assets/img/icon2/approvedx-green.png">
@@ -4585,6 +4479,13 @@
                                                                         src="assets/img/icon2/delete-black.png">
                                                                 </a>
                                                             </li>
+                                                            <li class="dropdown__item" >
+                                                                <a class="hover4" title="Email" data-toggle="modal"
+                                                                  data-target="#TextEditorId_TM" (click)="Email(list.link_approval_id)">
+                                                                  <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                                  <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                                                </a>
+                                                              </li>
 
 
                                                         </ul>
@@ -4824,9 +4725,10 @@
                                     <thead>
                                         <tr>
 
-                                           
+
                                             <th>
-                                                <input type="checkbox" [(ngModel)]="selectAll_OthersCK" (change)="toggleSelectAll_Others()">
+                                                <input type="checkbox" [(ngModel)]="selectAll_OthersCK"
+                                                    (change)="toggleSelectAll_Others()">
                                             </th>
 
                                             <th class="userDatatable-title">
@@ -4884,7 +4786,8 @@
 
 
                                             <td>
-                                                <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_Others(list)">
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_Others(list)">
                                             </td>
                                             <td>
                                                 {{ list.tic_no}}
@@ -4945,7 +4848,6 @@
 
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="View"
-                                                                   
                                                                     (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id,list.approve_type)">
                                                                     <img class="show"
                                                                         src="assets/img/icon2/approvedx-green.png">
@@ -5209,7 +5111,7 @@
                                     <thead>
                                         <tr>
 
-                                         
+
                                             <!-- <th>
                                                 <div class="d-flex align-items-center">
                                                     <div class="custom-checkbox  check-all">
@@ -5221,7 +5123,8 @@
                                                 </div>
                                             </th> -->
                                             <th>
-                                                <input type="checkbox" [(ngModel)]="selectAll_HRACK" (change)="toggleSelectAll_HRA()">
+                                                <input type="checkbox" [(ngModel)]="selectAll_HRACK"
+                                                    (change)="toggleSelectAll_HRA()">
                                             </th>
 
                                             <th class="userDatatable-title">
@@ -5235,7 +5138,7 @@
                                                 <span>Biller</span>
                                             </th>
 
-                                        
+
 
 
                                             <th>
@@ -5275,7 +5178,7 @@
 
 
 
-<!-- <td>
+                                            <!-- <td>
     <div class="d-flex">
         <div class="userDatatable__imgWrapper d-flex align-items-center">
             <div class="checkbox-group-wrapper">
@@ -5293,9 +5196,10 @@
 
     </div>
 </td> -->
-<td>
-    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_HRA(list)">
-</td>
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_HRA(list)">
+                                            </td>
                                             <td>
                                                 {{ list.tic_no}}
                                             </td>
@@ -5314,7 +5218,7 @@
                                             </td>
 
 
-                                          
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
@@ -5388,7 +5292,7 @@
                                                             </li>
 
 
-                                              
+
 
 
                                                         </ul>
@@ -5505,7 +5409,7 @@
                                             </td>
 
 
-                                           
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
@@ -5623,7 +5527,7 @@
                                     <thead>
                                         <tr>
 
-                                         
+
                                             <!-- <th>
                                                 <div class="d-flex align-items-center">
                                                     <div class="custom-checkbox  check-all">
@@ -5635,7 +5539,8 @@
                                                 </div>
                                             </th> -->
                                             <th>
-                                                <input type="checkbox" [(ngModel)]="selectAll_DataCenCK" (change)="toggleSelectAll_DataCen()">
+                                                <input type="checkbox" [(ngModel)]="selectAll_DataCenCK"
+                                                    (change)="toggleSelectAll_DataCen()">
                                             </th>
 
                                             <th class="userDatatable-title">
@@ -5649,7 +5554,7 @@
                                                 <span>Biller</span>
                                             </th>
 
-                                         <th>
+                                            <th>
                                                 <span>Customer</span>
                                             </th>
 
@@ -5692,7 +5597,7 @@
 
 
 
-<!-- <td>
+                                            <!-- <td>
     <div class="d-flex">
         <div class="userDatatable__imgWrapper d-flex align-items-center">
             <div class="checkbox-group-wrapper">
@@ -5710,9 +5615,10 @@
 
     </div>
 </td> -->
-<td>
-    <input type="checkbox" [(ngModel)]="list.checked" (change)="updateSelectedTransactions_DataCen(list)">
-</td>
+                                            <td>
+                                                <input type="checkbox" [(ngModel)]="list.checked"
+                                                    (change)="updateSelectedTransactions_DataCen(list)">
+                                            </td>
                                             <td>
                                                 {{ list.tic_no}}
                                             </td>
@@ -5736,7 +5642,7 @@
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
-                                          
+
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
@@ -5907,7 +5813,7 @@
                                                 <span> {{ list.customerName}}</span>
                                             </td>
 
-                                           
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
@@ -6010,7 +5916,7 @@
                         </nav>
 
                     </div>
-                    
+
 
 
 
@@ -6739,3 +6645,284 @@
 </div>
 
 <!---------------Product Issues-Quality-End----------------->
+
+<!----------Modal Pop Up (BEGIN)  for Share Permission-Main-starts------------------>
+<div class="modal fade" id="sharePermission_Main" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content quotApprovalcss">
+            <div class="modal-header ">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #262127, #54b7aa);">
+                    Share to Approval</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quotationApprovalForm">
+                    <h3 style="color: #df631c;font-weight: 500;">Are you sure to send to approval?</h3>
+                    <table class="demoTable" style="height: 20;">
+                        <tr>
+                            <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr>
+                                        <td>
+
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="single" checked
+                                                    (change)="handle_radioChange($event)" />
+                                                <label class="form-check-label" for="single"> Single
+                                                    Approval</label>
+                                            </div>
+                                            <br>
+                                            <!-- Default checked radio -->
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="double"
+                                                    (change)="handle_radioChange($event)" />
+                                                <label class="form-check-label" for="double"> Double Approval
+                                                </label>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <br>
+                        <br>
+                        <tr>
+                            <td><strong>Approval By </strong>
+                            </td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr style="display: inline-flex ">
+                                        <td>
+                                            <div class="head-depart-per-section">
+                                                <div class="head-depart-per"><input type="checkbox"
+                                                        formControlName="cm_chk" [(ngModel)]="checked"
+                                                        (change)="eventCheck_CM_QuotPermission($event)"
+                                                        style="margin-right:10px;" /> CM</div>
+                                                <div class="head-depart-per"> <input type="checkbox"
+                                                        formControlName="cd_chk" [(ngModel)]="checked"
+                                                        (change)="eventCheck_CD_QuotPermission($event)"
+                                                        style="margin-right:10px;" /> CD</div>
+                                            </div>
+                                            <br>
+
+                                        </td>
+
+                                    </tr>
+                                    <br>
+                                    <div>
+                                        <div>
+                                            <tr *ngFor="let display1 of quotationApprovalResult;let i =index">
+                                                <td>
+                                                    <input type="radio" id="{{i}}"
+                                                        [attr.disabled]="approval_Show_hide ? '' : null"
+                                                        formControlName="radio_approvalPermission"
+                                                        value="{{display1.userId}}"
+                                                        (change)="handleChange($event,display1.userId)" />
+                                                    <label for="{{i}}"
+                                                        class="col-lg-6 col-form-label">{{display1.firstName}}</label>
+
+                                                </td>
+
+                                                <!-- <td>{{display1.firstName}}</td> -->
+                                            </tr>
+                                        </div>
+                                        <div>
+                                            <textarea *ngIf="textarea_Show_hide" formControlName="comments_approvedBy"
+                                                placeholder="Approval By Comments"></textarea>
+                                            <textarea *ngIf="textarea1_Show_hide"
+                                                class="form-control textareaformcontrol" rows="3"
+                                                placeholder="Approval By Comments"
+                                                formControlName="comments_approvedBy"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comments </strong></td>
+                            <td>
+                                <div>
+                                    <textarea class="form-control mt-2 textareaformcontrol"
+                                        formControlName="approval_comments" id="descrip" rows="3"></textarea>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-dark"  data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Share Permission-Main-ends------------------>
+
+<!----------Modal Pop Up (BEGIN)  for email Text Editor in customer Contract------>
+
+<div class="modal fade bd-example-modal-lg" id="TextEditorId_TM" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="contractGenerateModalLongTitle">RMA-Email </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="emailForm">
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                                  
+                                    <option [ngValue]="null" selected>Select  From</option>
+                                    <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                                        {{ from.from_email }}
+                                    </option>
+                                </select>
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                            <div class="col-md-9 col-9" style="display: flex;">
+                                <div class="form-check" style="margin-right: 10px;">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="company" [checked]="true" (change)="handle_radioChange_email($event)" />
+
+                                    <label class="form-check-label" for="company"> Company
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
+                                        id="finance" (change)="handle_radioChange_email($event)" />
+                                    <label class="form-check-label" for="finance">Finance
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                            <div class="col-lg-10">
+                                <input type="email" id="emailto" class="form-control" formControlName="email_to" [ngModel]="this.getCustomerEmailCompany">
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="template" class="form-control"
+                                    formControlName="email_template" (change)="templateContentEmailDropdown($event)">
+                                    <option [ngValue]="null" selected>Select Template</option>
+                                    <option *ngFor="let template of email_crmTemplateList"
+                                        value="{{ template.crm_template_id }}">
+                                        {{template.crm_template_name}}
+                                    </option>
+                                </select>
+                                <br>
+
+                                <div *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 ">
+                                    Template is Required
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
+                                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                                    Subject is Required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                            <div class="col-lg-10">
+                                <editor id="tinyID_RMA1" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+                            <div *ngIf="fileUrl" class="mt-2">
+                                <a [href]="fileUrl" target="_blank">Click to view the file</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+                    Mail
+
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="emailClear()">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

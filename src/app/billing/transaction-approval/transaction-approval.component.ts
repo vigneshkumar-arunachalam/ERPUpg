@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 // import { QuotationnewComponent } from '../quotationnew/quotationnew.component';
 declare var $: any;
 declare var iziToast: any;
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+declare var tinymce: any;
 @Component({
   selector: 'app-transaction-approval',
   templateUrl: './transaction-approval.component.html',
@@ -158,9 +159,65 @@ export class TransactionApprovalComponent implements OnInit {
   //Data Center
   selectAll_DataCenCK = false;
   selectedTransactionIds_DataCen: number[] = [];
+  //Main Group Check
+  selectAll_MainCK = false;
+  selectedTransactionIds_Main: number[] = [];
+  //Quotation Group Check
+  selectAll_QuotCK = false;
+  selectedTransactionIds_Quot: number[] = [];
+  //Product Group Check
+  selectAll_ProductCK = false;
+  selectedTransactionIds_Product: number[] = [];
+  //DID Number Group Check
+  selectAll_DIDNumberCK = false;
+  selectedTransactionIds_DIDNumber: number[] = [];
+  //Demo Product Group Check
+  selectAll_DemoProductCK = false;
+  selectedTransactionIds_DemoProduct: number[] = [];
+  //Trans Approval List Group Check
+  selectAll_InvTransAppCK = false;
+  selectedTransactionIds_InvTransApp: number[] = [];
+  //DID Demo List Group Check
+  selectAll_DIDDemoCK = false;
+  selectedTransactionIds_DIDDemo: number[] = [];
+  //share Permission-Main
+  sharePermission_Main_ID:any;
+  sharePermissionList_Main:any;
+   quotationApprovalForm: FormGroup;
+   quotationApprovalResult: any;
+   checked = true;
+   Approval_Type_radiobox_Value: any = 'single';
+   quotationApprovedBy: any;
+   approvalUserID_Radio: any;
+   approval_Show_hide: boolean = true;
+  textarea_Show_hide: boolean;
+  textarea1_Show_hide: boolean;
+  approval_comments: any;
+  //email
+  emailForm: FormGroup;
+  msg_id: any;
+  emailTo: any;
+  subjectValue: any;
+  Select_To_Type_radiobox_Value: any;
+  email_template: any;
+  email_fromList: any;
+  email_crmTemplateList: any;
+  email_cc_userList: any;
+  groupSelect_emailCCId: any;
+  Rma_Emailtemplate_id: any;
+  messageContent: any;
+  mailContent: any;
+  rma_issue_id: any;
+  emailbillerName: any;
+  getCustomerEmail: any;
+  getCustomerEmailCompany: any;
+  userId: any;
+  fileUrl: any;
+
   constructor(public serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.userId = localStorage.getItem('erp_c4c_user_id');
     this.getMainList({});
     this.getTransactionCounts();
     // this.getTransactionApprovalList({});
@@ -202,6 +259,23 @@ export class TransactionApprovalComponent implements OnInit {
       'BeforeApprovaltoggleOff': new FormControl(null),
 
     });
+    this.quotationApprovalForm = new FormGroup({
+      'cm_chk': new FormControl(null),
+      'cd_chk': new FormControl(null),
+      'radio_approvalPermission': new FormControl(null),
+      'approval_comments': new FormControl(null),
+      'comments_approvedBy': new FormControl(null),
+    
+    });
+    this.emailForm = new FormGroup({
+     
+      'email_From': new FormControl(null, [Validators.required]),
+      'email_to': new FormControl('', Validators.required),
+      'email_template': new FormControl(null, [Validators.required]),
+      'Subject_Content': new FormControl('', Validators.required),
+
+      // 'email_pdfType': new FormControl(null, Validators.required),
+    });
   }
 
 
@@ -226,6 +300,135 @@ export class TransactionApprovalComponent implements OnInit {
       this.selectedTransactionIds_RMA = this.selectedTransactionIds_RMA.filter(id => id !== item.transaction_approval_id);
     }
     console.log('Selected Transaction IDs:', this.selectedTransactionIds_RMA);
+  }
+
+  toggleSelectAll_Main() {
+    this.transApprovalList_Main.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_MainCK;
+      this.updateSelectedTransactions_Main(item);
+    });
+  }
+
+  updateSelectedTransactions_Main(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_Main.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_Main.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_Main = this.selectedTransactionIds_Main.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_Main);
+
+  }
+
+  toggleSelectAll_Quot() {
+    this.transApprovalList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_QuotCK;
+      this.updateSelectedTransactions_Quot(item);
+    });
+  }
+
+  updateSelectedTransactions_Quot(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_Quot.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_Quot.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_Quot = this.selectedTransactionIds_Quot.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_Quot);
+
+  }
+  toggleSelectAll_Product() {
+    this.productList_Main.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_ProductCK;
+      this.updateSelectedTransactions_Product(item);
+    });
+  }
+
+  updateSelectedTransactions_Product(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_Product.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_Product.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_Product = this.selectedTransactionIds_Product.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_Product);
+
+  }
+  toggleSelectAll_DIDNumber() {
+    this.DIDNumberLst.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_DIDNumberCK;
+      this.updateSelectedTransactions_DIDNumber(item);
+    });
+  }
+  toggleSelectAll_DemoProduct() {
+    this.DemoProdLst.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_DemoProductCK;
+      this.updateSelectedTransactions_DemoProduct(item);
+    });
+  }
+
+  updateSelectedTransactions_DemoProduct(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_DemoProduct.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_DemoProduct.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_DemoProduct = this.selectedTransactionIds_DemoProduct.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_DemoProduct);
+
+  }
+
+  updateSelectedTransactions_DIDNumber(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_DIDNumber.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_DIDNumber.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_DIDNumber = this.selectedTransactionIds_DIDNumber.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_DIDNumber);
+
+  }
+  toggleSelectAll_InvTransApp() {
+    this.transApprovalList_InvPay.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_InvTransAppCK;
+      this.updateSelectedTransactions_InvTransApp(item);
+    });
+  }
+
+  updateSelectedTransactions_InvTransApp(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_InvTransApp.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_InvTransApp.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_InvTransApp = this.selectedTransactionIds_InvTransApp.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_InvTransApp);
+
+  }
+
+  toggleSelectAll_DIDDemo() {
+    this.transApprovalList_DIDDemoList.forEach((item: { checked: boolean; }) => {
+      item.checked = this.selectAll_DIDDemoCK;
+      this.updateSelectedTransactions_DIDDemo(item);
+    });
+  }
+
+  updateSelectedTransactions_DIDDemo(item: any) {
+    if (item.checked) {
+      if (!this.selectedTransactionIds_DIDDemo.includes(item.transaction_approval_id)) {
+        this.selectedTransactionIds_DIDDemo.push(item.transaction_approval_id);
+      }
+    } else {
+      this.selectedTransactionIds_DIDDemo = this.selectedTransactionIds_DIDDemo.filter(id => id !== item.transaction_approval_id);
+    }
+    console.log('Selected Transaction IDs:', this.selectedTransactionIds_DIDDemo);
+
   }
 
   CB_Toggle(event: any) {
@@ -1953,7 +2156,42 @@ export class TransactionApprovalComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         mainappr.action = "approvalAllData";
         mainappr.user_id = localStorage.getItem('erp_c4c_user_id');
-        mainappr.trans_id = this.edit_arrayMain;
+
+        if (this.tabValue == 'main') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'quotation') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Product') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDNumber') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Demoproduct....') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'InvTransApp') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'OnlineShop') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDDemo') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'RMAIssues') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Others') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'HRA') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DataCenter') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        }
+
+
 
         api_req.element_data = mainappr;
 
@@ -2001,7 +2239,40 @@ export class TransactionApprovalComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         mainappr.action = "approvalAllData";
         mainappr.user_id = localStorage.getItem('erp_c4c_user_id');
-        mainappr.trans_id = this.edit_arrayProductIssue;
+        if (this.tabValue == 'main') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'quotation') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Product') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDNumber') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Demoproduct....') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'InvTransApp') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'OnlineShop') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDDemo') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'RMAIssues') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Others') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'HRA') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DataCenter') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        }
+        // mainappr.trans_id = this.edit_arrayProductIssue;
 
         api_req.element_data = mainappr;
 
@@ -2051,7 +2322,40 @@ export class TransactionApprovalComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         mainappr.action = "rejectAllData";
         mainappr.user_id = localStorage.getItem('erp_c4c_user_id');
-        mainappr.trans_id = this.edit_arrayMain;
+        // mainappr.trans_id = this.edit_arrayMain;
+        if (this.tabValue == 'main') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'quotation') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Product') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDNumber') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Demoproduct....') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'InvTransApp') {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'OnlineShop') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DIDDemo') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'RMAIssues') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'Others') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'HRA') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else if (this.tabValue == 'DataCenter') {
+
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        } else {
+          mainappr.trans_id = this.selectedTransactionIds_Main;
+        }
 
         api_req.element_data = mainappr;
 
@@ -2251,6 +2555,343 @@ export class TransactionApprovalComponent implements OnInit {
     }
     console.log('Selected Transaction IDs:', this.selectedTransactionIds_DataCen);
   }
+  sharePermission_Main(id: any) {
+    $("#sharePermission_Main").modal("show");
+    this.spinner.show();
+   
+    this.sharePermission_Main_ID = id;
+    let api_req: any = new Object();
+    let quot_approval_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_permission_user";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_approval_req.action = "quotation_permission_user";
+    quot_approval_req.quotationId = id;
+    quot_approval_req.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    api_req.element_data = quot_approval_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+    //  console.log("response status", response.status);
+      if (response.status == true) {
+        this.spinner.hide();
+        this.sharePermissionList_Main = response.user_list;
+        this.quotationApprovalResult = response.user_list;
+
+        // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+
+      }
+      else {
+        $("#sharePermission_Main").modal("hide");
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+        // this.editInvoiceGroupForm.reset();
+        // this.contractList();
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+    //  console.log("final error", error);
+    }
+
+  }
+  handle_radioChange(event: any) {
+    this.Approval_Type_radiobox_Value = event.target.id;
+    // console.log(this.Approval_Type_radiobox_Value);
+
+    if (this.Approval_Type_radiobox_Value == "single") {
+      this.approval_Show_hide = true;
+
+    }
+    else if (this.Approval_Type_radiobox_Value == "double") {
+     // console.log(this.Approval_Type_radiobox_Value);
+      this.approval_Show_hide = false;
+
+    }
+  }
+  checkbox_CM_QuotPermission: any;
+  eventCheck_CM_QuotPermission(event: any) {
+    this.checkbox_CM_QuotPermission = event.target.checked;
+   // console.log(this.checkbox_CM_QuotPermission)
+  }
+
+  checkbox_CD_QuotPermission: any;
+  eventCheck_CD_QuotPermission(event: any) {
+    this.checkbox_CD_QuotPermission = event.target.checked;
+   // console.log(this.checkbox_CD_QuotPermission)
+  }
+  handleChange(evt: any, userId: any) {
+
+    this.approvalUserID_Radio = userId;
+    var xyz = evt.target.id;
+    this.quotationApprovedBy = this.approvalUserID_Radio;
+   // console.log(xyz, "target");
+    if (xyz == "0") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = true;
+      this.textarea1_Show_hide = false;
+    }
+    else if (xyz == "1") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "2") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "3") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "4") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "5") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "6") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "7") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "8") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "9") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+  }
+  quotationApprovalUpdate() {}
+  
+  Email(id: any) {
+    // this.emailForm.reset();
+    $('#emailFrom').val('');
+    $('#template').val('');
+    $('#subject').val('');
+    this.msg_id = '';
+    tinymce.activeEditor.setContent('');
+    $('#TextEditorId_TM').modal('show');
+
+    this.rma_issue_id = id;
+
+    let requestObj = {
+      moduleType: 'Rma',
+      api_url: 'Rma/getEmailDatas',
+      api_type: 'web',
+      element_data: {
+        action: 'getEmailDatas',
+        user_id: this.userId,
+        rma_issue_id: this.rma_issue_id,
+        
+      },
+    };
+
+    let api_req: any = JSON.parse(JSON.stringify(requestObj));
+
+    this.serverService.sendServerpath(api_req).subscribe((response: any) => {
+      if (response != '') {
+       
+        if (response.fromEmails !== null && response.fromEmails !== undefined) {
+          this.email_fromList = response.fromEmails;
+        }
+        if (response.rmaTemplateList !== null && response.rmaTemplateList !== undefined) {
+          this.email_crmTemplateList = response.rmaTemplateList;
+        }
+        if (response.billerName !== null && response.billerName !== undefined) {
+          this.emailbillerName = response.billerName;
+        }
+        if (response.getCustomerEmail !== null && response.getCustomerEmail !== undefined) {
+          this.getCustomerEmail = response.getCustomerEmail;
+        }
+        if (response.getCustomerEmail.email !== null && response.getCustomerEmail.email !== undefined) {
+          this.getCustomerEmailCompany = response.getCustomerEmail.email;
+        }
+        if (response.attachment !== null && response.attachment !== undefined) {
+          this.fileUrl = response.attachment;
+        }
+ 
+      }
+    });
+  }
+  handle_radioChange_email(event: any) {
+    this.Select_To_Type_radiobox_Value = event.target.id;
+    if (this.Select_To_Type_radiobox_Value === 'company') {
+      this.emailForm.patchValue({ email_to: this.getCustomerEmail.email });
+    } else if (this.Select_To_Type_radiobox_Value === 'finance') {
+      this.emailForm.patchValue({
+        email_to: this.getCustomerEmail.finance_email,
+      });
+    }
+  }
+  templateContentEmailDropdown(event: any) {
+    this.spinner.show();
+    this.Rma_Emailtemplate_id = event.target.value;
+    let requestObj = {
+      moduleType: 'Rma',
+      api_url: 'Rma/getTemplateData',
+      api_type: 'web',
+      element_data: {
+        action: 'getTemplateData',
+        user_id: this.userId,
+        rma_issue_id: this.rma_issue_id,
+        template_id: this.Rma_Emailtemplate_id,
+      },
+    };
+
+    let api_req: any = JSON.parse(JSON.stringify(requestObj));
+
+    this.serverService.sendServerpath(api_req).subscribe((response: any) => {
+      //  console.log("quotation-template Dropdown response", response)
+
+      if ((response.status = true)) {
+        this.spinner.hide();
+        this.messageContent = response.crm_template_content;
+        this.mailContent = tinymce
+          .get('tinyID_RMA1')
+          .setContent('<p>' + this.messageContent + '</p>');
+
+        this.emailForm.patchValue({
+          Subject_Content: response.crm_subject_name,
+
+          tinyID_RMA1: this.mailContent,
+        });
+      } else {
+        this.spinner.hide();
+        this.emailForm.patchValue({
+          email_template: '',
+        });
+      }
+    });
+  }
+  sendMail() {
+    let email_From = this.emailForm.value.email_From;
+    let Subject_Content = this.emailForm.value.Subject_Content;
+    let email_template = this.emailForm.value.email_template;
+    let email_to_string = this.emailForm.value.email_to;
+    let email_to = email_to_string.split(',');
+    var message_contend = tinymce.get('tinyID_RMA1').getContent();
+
+    if (
+      email_From === '' ||
+      email_From === null ||
+      email_From === undefined ||
+      email_From === 'undefined'
+    ) {
+      iziToast.warning({
+        message: `please Select From )`,
+        position: 'topRight',
+      });
+
+      return false;
+    }
+    if (
+      email_to_string === '' ||
+      email_to_string === null ||
+      email_to_string === undefined ||
+      email_to_string === 'undefined'
+    ) {
+      iziToast.warning({
+        message: `please Enter To email )`,
+        position: 'topRight',
+      });
+
+      return false;
+    }
+    if (
+      email_template === '' ||
+      email_template === null ||
+      email_template === undefined ||
+      email_template === 'undefined'
+    ) {
+      iziToast.warning({
+        message: `please Select Template )`,
+        position: 'topRight',
+      });
+
+      return false;
+    }
+
+    this.spinner.show();
+
+    let requestObj = {
+      moduleType: 'Rma',
+      api_url: 'Rma/sendRmaEmail',
+      api_type: 'web',
+      element_data: {
+        action: 'sendRmaEmail',
+        user_id: this.userId,
+        rma_issue_id: this.rma_issue_id,
+        template_id: email_template,
+        crm_subject_name: Subject_Content,
+        email_from: email_From,
+        to_email: email_to,
+        crm_template_content: message_contend,
+        billerName: this.emailbillerName,
+      },
+    };
+
+    let api_req: any = JSON.parse(JSON.stringify(requestObj));
+
+    this.serverService.sendServerpath(api_req).subscribe((response: any) => {
+      if ((response.status = true)) {
+        iziToast.success({
+          message: response.message,
+          position: 'topRight',
+        });
+        $('#TextEditorId_TM').modal('hide');
+        this.RMAIssueList({});
+        this.spinner.hide();
+      }
+    });
+  }
+  emailClear() {
+    this.emailForm.reset();
+    this.msg_id = '';
+    this.RMAIssueList({});
+    tinymce.activeEditor.setContent('');
+  }
+
+
 
 
 }

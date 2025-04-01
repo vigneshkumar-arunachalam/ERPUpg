@@ -24,10 +24,10 @@
                 <table class="table mb-0 table-borderless">
                   <thead>
                     <tr class="userDatatable-header">
-                        <th>
+                        <!-- <th>
                          
                             <span class="userDatatable-title"><input type="checkbox"></span>
-                          </th>
+                          </th> -->
                       <th>
                         <span class="userDatatable-title">SNo</span>
                       </th>
@@ -74,11 +74,11 @@
                   <tbody>
   
                     <tr *ngFor="let list of Transaction_list; let i = index"
-                      [ngStyle]="{'background-color':(list.status=='1') ? ('#AFF7B2 ') : ( (list.status=='2') ? ('#d0ffc3') : ( (list.status=='3') ? ('#F26969') : ('Default')) )}">
+                      [ngStyle]="{'background-color':(list.status_colour=='1') ? ('#d0ffc3 ') : ( (list.status_colour=='2') ? ('#ffb8b8') : ( (list.status_colour=='3') ? ('#ffffff') : ('Default')) )}">
   
-                      <td>
+                      <!-- <td>
                         <span><input type="checkbox"></span>
-                      </td>
+                      </td> -->
                       <td>
                         <span>{{ list.sno}}</span>
                       </td>
@@ -91,12 +91,12 @@
                       </td>
   
                       <td>
-                        <span>{{ list.product_code}}</span>
+                        <span>{{ list.product_code | uppercase}}</span>
                       </td>
   
   
                       <td>
-                        <span>{{ list.product_name}}</span>
+                        <span>{{ list.product_name | titlecase}}</span>
                       </td>
                       <td>
                         <span>{{ list.hwid}}</span>
@@ -140,26 +140,26 @@
                               </li>
   
                               <li class="dropdown__item" >
-                                <a class="hover1" title="Delete" data-toggle="modal">
+                                <a class="hover1" title="Delete" (click)="delete(list.sno)" >
                                   <img class="show" src="assets/img/icon/remove-b.png">
                                   <img class="hide" src="assets/img/icon/remove.png">
                                 </a>
                               </li>
   
-                              <li class="dropdown__item" >
+                              <!-- <li class="dropdown__item" >
                                 <a class="hover1" title="Email" data-toggle="modal" 
                                   data-target="#emailFormId_creditNote">
                                   <img class="show" src="assets/img/icon2/gmail-blue.png">
                                   <img class="hide" src="assets/img/icon2/gmail-black.png">
                                 </a>
-                              </li>
-                              <li class="dropdown__item" >
+                              </li> -->
+                              <li class="dropdown__item" *ngIf="list.status==1">
                                 <a class="hover1" title="Status Change" (click)="statusChange(list.sno)">
                                   <img class="show" src="assets/img/icon2/P-green.png">
                                  <img class="hide" src="assets/img/icon2/P-black.png">
                                 </a>
                               </li>
-                              <li class="dropdown__item" >
+                              <li class="dropdown__item" *ngIf="list.status==0">
                                 <a class="hover1" title="Status Change" (click)="statusChange(list.sno)">
                                   <img class="show" src="assets/img/icon2/P-red.png">
                                  <img class="hide" src="assets/img/icon2/P-black.png">

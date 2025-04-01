@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormBuilder,
+  AbstractControl,
+} from '@angular/forms';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
@@ -10,24 +17,56 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { NgZone } from '@angular/core';
 
+// charts
 
+import { ViewChild } from '@angular/core';
+
+// column
+
+import {
+  ApexNonAxisChartSeries,
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexYAxis,
+  ApexLegend,
+  ApexStroke,
+  ApexXAxis,
+  ApexFill,
+  ApexTooltip,
+} from 'ng-apexcharts';
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
+  legend: ApexLegend;
+};
 @Component({
   selector: 'app-pevoip-trend',
   templateUrl: './pevoip-trend.component.html',
   styleUrls: ['./pevoip-trend.component.css'],
-
-
 })
 export class PEVoipTrendComponent implements OnInit {
- 
+  @ViewChild('chart') chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
+
   isReadOnly: boolean = true;
-  
+
   yearsList: any;
   monthList: any;
   billerList: any;
@@ -39,8 +78,8 @@ export class PEVoipTrendComponent implements OnInit {
   initialLoadForm: FormGroup;
   public addPI_section2: FormGroup;
   public addresses: FormArray;
-  vendorListNull: boolean=false;
-  
+  vendorListNull: boolean = false;
+
   vendorList: any[] = [];
   VendorData: any;
   vendorArray: any;
@@ -65,27 +104,38 @@ export class PEVoipTrendComponent implements OnInit {
   colorDyn: any;
   xyx: string;
   testColor: any;
-  
- 
+  table_data: any;
+  sub_totals: any;
+  pei_chart_data: any;
+  month_pei_chart_data: any;
+  chartOptionsArray: any;
+  chartOptionsArrayMonth: any;
 
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
-    private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
-    private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
-
+  constructor(
+    public serverService: ServerService,
+    public sanitizer: DomSanitizer,
+    private datePipe: DatePipe,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
+    private zone: NgZone,
+    private bnIdle: BnNgIdleService,
+    private spinner: NgxSpinnerService,
+    private cdr: ChangeDetectorRef
+  ) {
+    
     const currentDate = new Date();
     this.currentYearDefault = currentDate.getFullYear(); // Get the current year
     this.currentMonthDefault = currentDate.getMonth() + 1;
 
     this.addPI_section2 = this.fb.group({
-      addresses: this.fb.array([this.createAddress()])
-      
+      addresses: this.fb.array([this.createAddress()]),
     });
-    
+
+    // charts
   }
 
   ngOnInit(): void {
-
-
     this.OverallBillerValue = 3;
     this.OverallYearValue = '';
     this.OverallMonthValue = '';
@@ -93,39 +143,269 @@ export class PEVoipTrendComponent implements OnInit {
     // console.log("this.currentMonthDefault", this.currentMonthDefault);
     this.trendDetails();
     this.initialLoadForm = new FormGroup({
-      'yearType': new FormControl(null),
-      'monthType': new FormControl(null),
-      'billerType': new FormControl(null),
+      yearType: new FormControl(null),
+      monthType: new FormControl(null),
+      billerType: new FormControl(null),
     });
     this.monthYearCall();
     this.initialLoadForm.patchValue({
-      'yearType': this.currentYearDefault,
-      'monthType': this.currentMonthDefault,
-      'billerType':  this.OverallBillerValue,
- 
-
+      yearType: this.currentYearDefault,
+      monthType: this.currentMonthDefault,
+      billerType: this.OverallBillerValue,
     });
-    
   }
- 
 
-  
-  
+  // //////////////////////////////       Chart Start   ////////////////////////////////////////////////////////////////////////
+
+  async purchaseEntryVoipTrend() {
+    this.spinner.show();
+    let user_id = localStorage.getItem('erp_c4c_user_id');
+    let biller_id = this.initialLoadForm.value.billerType;
+    let yearType = this.initialLoadForm.value.yearType;
+
+    let api_req = `{
+      "moduleType": "purchaseEntryVoipTrend",
+      "api_url": "purchaseEntryVoipTrend/getVendormonthWiseChart",
+      "api_type": "web",
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI",
+      "element_data": {
+        "action": "getVendormonthWiseChart",
+        "user_id": "${user_id}",
+        "biller_id": "${biller_id}",
+        "year": "${yearType}"
+      }
+    }`;
+
+    try {
+      // Await API response
+      let response: any = await this.serverService
+        .sendServerpath(api_req)
+        .toPromise();
+
+      if (response.status === true) {
+        this.table_data = response.table_data;
+        this.sub_totals = response.sub_totals;
+        this.pei_chart_data = response.pei_chart_data;
+        this.month_pei_chart_data = response.month_pei_chart_data;
+
+        // Process bar chart
+        await this.processBarChart(this.table_data);
+
+        // Process Pie Charts for Vendors
+        await this.processPieCharts(this.pei_chart_data);
+
+        // Process Pie Charts for Monthly Data
+        await this.processPieChartsMonth(this.month_pei_chart_data);
+
+        // Stop the spinner
+        this.spinner.hide();
+
+        // Open the modal popup
+        setTimeout(() => {
+          $('#graph_popup').modal('show');
+        }, 500);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      this.spinner.hide();
+    }
+  }
+
+  // Function to Process Bar Chart
+  async processBarChart(tableData: any) {
+    return new Promise((resolve) => {
+      this.chartOptions = {
+        series: [
+          {
+            name: 'Purchase Fix',
+            data: tableData.map(
+              (item: { purchase_fixed_amt_conv: any }) =>
+                item.purchase_fixed_amt_conv
+            ),
+          },
+          {
+            name: 'Sale Fix',
+            data: tableData.map(
+              (item: { sales_fixed_amt_conv: any }) => item.sales_fixed_amt_conv
+            ),
+          },
+          {
+            name: 'Purchase Usage',
+            data: tableData.map(
+              (item: { purchase_usage_amt_conv: any }) =>
+                item.purchase_usage_amt_conv
+            ),
+          },
+          {
+            name: 'Sale Usage',
+            data: tableData.map(
+              (item: { sales_usage_amt_conv: any }) => item.sales_usage_amt_conv
+            ),
+          },
+        ],
+        chart: { type: 'bar', height: 350 },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded',
+          },
+        },
+        dataLabels: { enabled: false },
+        stroke: { show: true, width: 2, colors: ['transparent'] },
+        xaxis: {
+          categories: tableData.map((item: { month: any }) => item.month),
+        },
+        yaxis: { title: { text: 'Purchase Entry' } },
+        fill: { opacity: 1 },
+        tooltip: { y: { formatter: (val: any) => val } },
+      };
+      resolve(true);
+    });
+  }
+
+  // Function to Process Vendor Pie Charts
+  async processPieCharts(vendorData: any) {
+    return new Promise((resolve) => {
+      this.chartOptionsArray = vendorData.map(
+        (vendor: { chartData: any[]; vendorName: any }) => {
+          const series: number[] = vendor.chartData.map(
+            ([_, amount]: [string, number]) => amount
+          );
+          const labels: string[] = vendor.chartData.map(
+            ([category, _]: [string, number]) => category
+          );
+          return {
+            series: series.length > 0 ? series : [],
+            chart: {
+              type: 'pie',
+              height: 300,
+              width: 300,
+              toolbar: { show: false },
+            },
+            labels: labels,
+            dataLabels: { enabled: false },
+            tooltip: {
+              enabled: true,
+              y: {
+                formatter: (val: number, opts: any) =>
+                  `${opts.w.config.labels[opts.seriesIndex]}: ${val.toFixed(
+                    1
+                  )}%`,
+              },
+            },
+            legend: { show: false },
+            title: {
+              text: vendor.vendorName,
+              align: 'center',
+              floating: false,
+              style: {
+                fontSize: '10px',
+                fontWeight: 'bold',
+                wordWrap: 'break-word',
+                whiteSpace: 'normal',
+              },
+              offsetY: 10,
+              margin: 70,
+            },
+            noData: {
+              text: 'No Data Found',
+              align: 'center',
+              verticalAlign: 'middle',
+              style: { color: '#808080', fontSize: '16px', fontWeight: 'bold' },
+            },
+            responsive: [
+              {
+                breakpoint: 768,
+                options: { chart: { height: 250, width: 250 } },
+              },
+            ],
+          };
+        }
+      );
+      resolve(true);
+    });
+  }
+
+  // Function to Process Monthly Pie Charts
+
+  async processPieChartsMonth(monthData: any) {
+    return new Promise((resolve) => {
+      this.chartOptionsArrayMonth = monthData.map(
+        (vendor: { chartData: any[]; month: any }) => {
+          const series: number[] = vendor.chartData.map(
+            ([_, amount]: [string, number]) => amount
+          );
+          const labels: string[] = vendor.chartData.map(
+            ([category, _]: [string, number]) => category
+          );
+
+          return {
+            series: series.length > 0 ? series : [],
+            chart: {
+              type: 'pie',
+              height: 300,
+              width: 300,
+              toolbar: { show: false },
+            },
+            labels: labels,
+            dataLabels: { enabled: false },
+            tooltip: {
+              enabled: true,
+              y: {
+                formatter: (val: number, opts: any) =>
+                  `${opts.w.config.labels[opts.seriesIndex]}: ${val.toFixed(
+                    1
+                  )}%`,
+              },
+            },
+            legend: { show: false },
+            title: {
+              text: vendor.month,
+              align: 'center',
+              floating: false,
+              style: {
+                fontSize: '10px',
+                fontWeight: 'bold',
+                wordWrap: 'break-word',
+                whiteSpace: 'normal',
+              },
+              offsetY: 10,
+              margin: 70,
+            },
+            noData: {
+              text: 'No Data Found',
+              align: 'center',
+              verticalAlign: 'middle',
+              style: { color: '#808080', fontSize: '16px', fontWeight: 'bold' },
+            },
+            responsive: [
+              {
+                breakpoint: 768,
+                options: { chart: { height: 250, width: 250 } },
+              },
+            ],
+          };
+        }
+      );
+      resolve(true);
+    });
+  }
+
   get addressControls() {
-    return this.addPI_section2.get('addresses') as FormArray
+    return this.addPI_section2.get('addresses') as FormArray;
   }
   addAddress() {
     this.addressControls.push(this.createAddress());
   }
   removeAddress(i: number) {
-   // this.addressControls.removeAt(i);
+    // this.addressControls.removeAt(i);
   }
- 
- 
+
   createAddress(): FormGroup {
     return this.fb.group({
-      status: [''], 
-      backgroundColor:[''], 
+      status: [''],
+      backgroundColor: [''],
       purchase_trend_id: [''],
       purchaseEntryTempId: [''],
       invoiceNo: [''],
@@ -154,24 +434,21 @@ export class PEVoipTrendComponent implements OnInit {
 
   billerChange(event: any) {
     this.OverallBillerValue = event.target.value;
-   // console.log(" this.OverallBillerValue", this.OverallBillerValue);
+    // console.log(" this.OverallBillerValue", this.OverallBillerValue);
     this.trendDetails();
-
   }
 
   monthChange(event: any) {
     this.OverallMonthValue = event.target.value;
-  //  console.log(" this.OverallMonthValue", this.OverallMonthValue);
+    //  console.log(" this.OverallMonthValue", this.OverallMonthValue);
     this.currentMonthDefault = this.OverallMonthValue;
     //  this.trendDetails();
-
   }
   yearChange(event: any) {
     this.OverallYearValue = event.target.value;
-  //  console.log(" this.OverallYearValue", this.OverallYearValue);
+    //  console.log(" this.OverallYearValue", this.OverallYearValue);
     this.currentYearDefault = this.OverallYearValue;
     this.trendDetails();
-
   }
 
   monthYearCall() {
@@ -179,59 +456,54 @@ export class PEVoipTrendComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "purchaseEntryVoipTrend";
-    api_req.api_url = "purchaseEntryVoipTrend/getYearMonthList";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "getYearMonthList";
+    api_req.moduleType = 'purchaseEntryVoipTrend';
+    api_req.api_url = 'purchaseEntryVoipTrend/getYearMonthList';
+    api_req.api_type = 'web';
+    api_req.access_token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+    api_postUPd.action = 'getYearMonthList';
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_postUPd;
 
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response) {
-
         this.spinner.hide();
         this.billerList = response.billerList;
-       // console.log("this.billerList", this.billerList);
+        // console.log("this.billerList", this.billerList);
         this.monthList = response.months;
-       // console.log("this.monthList", this.monthList);
+        // console.log("this.monthList", this.monthList);
         this.yearsList = response.years;
-       // console.log(" this.yearsList", this.yearsList);
-
+        // console.log(" this.yearsList", this.yearsList);
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Petty Cash List Loading Failed. Please try again",
-          position: 'topRight'
+          message: 'Petty Cash List Loading Failed. Please try again',
+          position: 'topRight',
         });
-
       }
     }),
       (error: any) => {
         this.spinner.hide();
         iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
+          message: 'Sorry, some server issue occur. Please contact admin',
+          position: 'topRight',
         });
-        console.log("final error", error);
-
+        console.log('final error', error);
       };
-
   }
 
   trendDetails() {
-  
     this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "purchaseEntryVoipTrend";
-    api_req.api_url = "purchaseEntryVoipTrend/purchase_entry_trendDetails";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "purchase_entry_trendDetails";
+    api_req.moduleType = 'purchaseEntryVoipTrend';
+    api_req.api_url = 'purchaseEntryVoipTrend/purchase_entry_trendDetails';
+    api_req.api_type = 'web';
+    api_req.access_token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+    api_postUPd.action = 'purchase_entry_trendDetails';
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.biller_id = this.OverallBillerValue;
@@ -242,63 +514,68 @@ export class PEVoipTrendComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response) {
-
         this.spinner.hide();
-     
-        if(response.vendorList!=null){
+
+        if (response.vendorList != null) {
           this.vendorList = response.vendorList;
           this.VendorData = response.vendorData;
-          this.vendorListNull=false;
-        }else{
-          this.vendorListNull=true;
+          this.vendorListNull = false;
+        } else {
+          this.vendorListNull = true;
         }
-       
- 
+
         // this.extractVendorData();
         Array.isArray(this.vendorList);
         Array.isArray(this.VendorData);
-       
-        this.VendorData = response.vendorData;  
-        
 
+        this.VendorData = response.vendorData;
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Warning",
-          position: 'topRight'
+          message: 'Warning',
+          position: 'topRight',
         });
-
       }
     }),
       (error: any) => {
         this.spinner.hide();
         iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
+          message: 'Sorry, some server issue occur. Please contact admin',
+          position: 'topRight',
         });
-        console.log("final error", error);
-
+        console.log('final error', error);
       };
-
   }
   getMonthName(monthVal: number): string {
     const months = [
-      '', 'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
     return months[monthVal] || '';
   }
-  fetchVendorDetails(vendorID:any) {
-    this.vendorID_selected=vendorID;
+  fetchVendorDetails(vendorID: any) {
+    this.vendorID_selected = vendorID;
     this.spinner.show();
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "purchaseEntryVoipTrend";
-    api_req.api_url = "purchaseEntryVoipTrend/getPurchasetrendDetails";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "getPurchasetrendDetails";
+    api_req.moduleType = 'purchaseEntryVoipTrend';
+    api_req.api_url = 'purchaseEntryVoipTrend/getPurchasetrendDetails';
+    api_req.api_type = 'web';
+    api_req.access_token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+    api_postUPd.action = 'getPurchasetrendDetails';
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.biller_id = this.OverallBillerValue;
@@ -310,17 +587,13 @@ export class PEVoipTrendComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response) {
-
         this.spinner.hide();
         const vendorData = response.vendorTrendDetails;
         const formArray = new FormArray([]);
-  
 
         // Loop through each month
         Object.keys(response.vendorTrendDetails.months).forEach((month) => {
-          
           response.vendorTrendDetails.months[month].forEach((record: any) => {
-        
             formArray.push(
               this.fb.group({
                 status: [record.status], // Store the approval status
@@ -328,7 +601,7 @@ export class PEVoipTrendComponent implements OnInit {
 
                 invoiceNo: record.invoice_no,
                 invoiceAmount1: record.invoice_amount_without_tax,
-                invoiceAmount2: record.invoice_amount_converted ,
+                invoiceAmount2: record.invoice_amount_converted,
                 currConvRate: record.conversionRate,
 
                 fixedAmount1: record.fixed_amount,
@@ -344,50 +617,42 @@ export class PEVoipTrendComponent implements OnInit {
                 localAmount1: record.local_amount,
                 localAmount2: record.local_amount_converted,
                 purchase_trend_id: record.purchase_trend_id,
-                purchaseEntryTempId: record.purchaseEntryTempId ,
+                purchaseEntryTempId: record.purchaseEntryTempId,
 
                 vendorId: record.vendorId,
-                billerid: record.billerid ,
+                billerid: record.billerid,
                 year_val: record.year_val,
                 ven_id: record.ven_id,
-          
-              
+
                 entry_row: record.entryRow,
                 mon_val: record.month_val,
-                mon_val_title:  record.month_val,
-        
+                mon_val_title: record.month_val,
               })
             );
           });
         });
-        
-        this.addPI_section2.setControl('addresses', formArray);
-        console.log("this.addPI_section2",this.addPI_section2);
-       
-       
 
+        this.addPI_section2.setControl('addresses', formArray);
+        console.log('this.addPI_section2', this.addPI_section2);
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Warning",
-          position: 'topRight'
+          message: 'Warning',
+          position: 'topRight',
         });
-
       }
     }),
       (error: any) => {
         this.spinner.hide();
         iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
+          message: 'Sorry, some server issue occur. Please contact admin',
+          position: 'topRight',
         });
-        console.log("final error", error);
-
+        console.log('final error', error);
       };
-
   }
   getEntriesForMonthAndVendor(data: any[], month: number): any[] {
-    return data.filter(entry => entry.month === month);
+    return data.filter((entry) => entry.month === month);
   }
   onCurrConvRateChangeFixed(index: number): void {
     const row = this.addressControls.at(index);
@@ -396,8 +661,10 @@ export class PEVoipTrendComponent implements OnInit {
     const fixedAmount2 = fixedAmount1 * currConvRate;
 
     row.get('fixedAmount2')?.setValue(fixedAmount2);
-    const fixedAmount2_final = this.addressControls.at(index).get('fixedAmount2');
-    console.log("fixedAmount2_final",fixedAmount2_final);
+    const fixedAmount2_final = this.addressControls
+      .at(index)
+      .get('fixedAmount2');
+    console.log('fixedAmount2_final', fixedAmount2_final);
   }
   onCurrConvRateChangeUsage(index: number): void {
     const row = this.addressControls.at(index);
@@ -433,7 +700,7 @@ export class PEVoipTrendComponent implements OnInit {
 
     row.get('localAmount2')?.setValue(localAmount2);
   }
- 
+
   // increaseValue(index: number, controlName: string,currConvRate:string): void {
   //   const control = this.addressControls.at(index).get(controlName);
   //   const currencyvalue = this.addressControls.at(index).get(currConvRate);
@@ -445,15 +712,14 @@ export class PEVoipTrendComponent implements OnInit {
   // increaseValue(index: number, controlName: string, currConvRate: string): void {
   //   const control = this.addressControls.at(index).get(controlName);
   //   const currencyControl = this.addressControls.at(index).get(currConvRate);
-  
+
   //   if (control && currencyControl) {
   //     const currentValue = control.value || 0; // Default to 0 if null/undefined
   //     const currencyValue = +currencyControl.value || 1; // Convert to a number, default to 1 if null/undefined
   //     control.setValue(currentValue * currencyValue);
   //   }
   // }
-  
-  
+
   // decreaseValue(index: number, controlName: string): void {
   //   const control = this.addressControls.at(index).get(controlName);
   //   if (control) {
@@ -469,55 +735,83 @@ export class PEVoipTrendComponent implements OnInit {
     if (rowForm.valid) {
       const formData = rowForm.value;
       console.log('Saving row:', index, formData);
-      const purchase_trend_id_index = this.addressControls.at(index).get('purchase_trend_id').value;
-    console.log('get-purchase trend id values at each index', purchase_trend_id_index);
+      const purchase_trend_id_index = this.addressControls
+        .at(index)
+        .get('purchase_trend_id').value;
+      console.log(
+        'get-purchase trend id values at each index',
+        purchase_trend_id_index
+      );
       // Perform your save logic here, e.g., make an API call
       let api_req: any = new Object();
-          let api_Search_req: any = new Object();
-          api_req.moduleType = "purchaseEntryVoipTrend";
-          api_req.api_url = "purchaseEntryVoipTrend/updatePurchaseTrendDetails";
-          api_req.api_type = "web";
-          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-          api_Search_req.action = "updatePurchaseTrendDetails";
-          api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-          api_Search_req.purchase_trend_id = this.addressControls.at(index).get('purchase_trend_id').value;
+      let api_Search_req: any = new Object();
+      api_req.moduleType = 'purchaseEntryVoipTrend';
+      api_req.api_url = 'purchaseEntryVoipTrend/updatePurchaseTrendDetails';
+      api_req.api_type = 'web';
+      api_req.access_token =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+      api_Search_req.action = 'updatePurchaseTrendDetails';
+      api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_Search_req.purchase_trend_id = this.addressControls
+        .at(index)
+        .get('purchase_trend_id').value;
 
-          
+      api_Search_req.invoice_amt = this.addressControls
+        .at(index)
+        .get('invoiceAmount1').value;
+      api_Search_req.fixed_amt = this.addressControls
+        .at(index)
+        .get('fixedAmount1').value;
+      api_Search_req.usage_amt = this.addressControls
+        .at(index)
+        .get('usageAmount1').value;
+      api_Search_req.other_amt = this.addressControls
+        .at(index)
+        .get('otherAmount1').value;
+      api_Search_req.idd_amt = this.addressControls
+        .at(index)
+        .get('IDDAmount1').value;
+      api_Search_req.local_amt = this.addressControls
+        .at(index)
+        .get('localAmount1').value;
+      api_Search_req.fixed_amt_conv = this.addressControls
+        .at(index)
+        .get('fixedAmount2').value;
+      api_Search_req.usage_amt_conv = this.addressControls
+        .at(index)
+        .get('usageAmount2').value;
+      api_Search_req.other_amt_conv = this.addressControls
+        .at(index)
+        .get('otherAmount2').value;
+      api_Search_req.idd_amt_conv = this.addressControls
+        .at(index)
+        .get('IDDAmount2').value;
+      api_Search_req.local_amt_conv = this.addressControls
+        .at(index)
+        .get('localAmount2').value;
+      api_Search_req.invoiceNo = this.addressControls
+        .at(index)
+        .get('invoiceNo').value;
 
-          api_Search_req.invoice_amt = this.addressControls.at(index).get('invoiceAmount1').value;
-          api_Search_req.fixed_amt = this.addressControls.at(index).get('fixedAmount1').value;
-          api_Search_req.usage_amt = this.addressControls.at(index).get('usageAmount1').value;
-          api_Search_req.other_amt = this.addressControls.at(index).get('otherAmount1').value;
-          api_Search_req.idd_amt = this.addressControls.at(index).get('IDDAmount1').value;
-          api_Search_req.local_amt = this.addressControls.at(index).get('localAmount1').value;
-          api_Search_req.fixed_amt_conv = this.addressControls.at(index).get('fixedAmount2').value;
-          api_Search_req.usage_amt_conv = this.addressControls.at(index).get('usageAmount2').value;
-          api_Search_req.other_amt_conv = this.addressControls.at(index).get('otherAmount2').value;
-          api_Search_req.idd_amt_conv = this.addressControls.at(index).get('IDDAmount2').value;
-          api_Search_req.local_amt_conv = this.addressControls.at(index).get('localAmount2').value;
-          api_Search_req.invoiceNo = this.addressControls.at(index).get('invoiceNo').value;
+      api_Search_req.vendorId = this.vendorID_selected;
+      api_Search_req.billerid = this.OverallBillerValue;
+      api_Search_req.year_val = this.currentYearDefault;
 
-          api_Search_req.vendorId = this.vendorID_selected;
-          api_Search_req.billerid = this.OverallBillerValue;
-          api_Search_req.year_val = this.currentYearDefault;
-        
-          api_Search_req.mon_val = this.currentMonthDefault;
-          api_Search_req.entry_row = this.addressControls.at(index).get('entry_row').value;
+      api_Search_req.mon_val = this.currentMonthDefault;
+      api_Search_req.entry_row = this.addressControls
+        .at(index)
+        .get('entry_row').value;
 
-
-          api_req.element_data = api_Search_req;
-          this.serverService.sendServer(api_req).subscribe((response: any) => {
-       
-            if (response) {
-              this.spinner.hide();
-              iziToast.success({
-                message: "Updated Successfully",
-                position: 'topRight'
-              });
-             
-
-            }
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        if (response) {
+          this.spinner.hide();
+          iziToast.success({
+            message: 'Updated Successfully',
+            position: 'topRight',
           });
+        }
+      });
     } else {
       console.log('Form is invalid for row:', index);
     }
@@ -525,40 +819,37 @@ export class PEVoipTrendComponent implements OnInit {
   showAttachment(index: number): void {
     this.spinner.show();
     const rowForm = this.addressControls.at(index);
-   // console.log('Showing attachment for row:', index);
-    const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
-   // console.log('get-purchase entry temp id values at each index', purchaseEntryTempId_index);
-
+    // console.log('Showing attachment for row:', index);
+    const purchaseEntryTempId_index = this.addressControls
+      .at(index)
+      .get('purchaseEntryTempId').value;
+    // console.log('get-purchase entry temp id values at each index', purchaseEntryTempId_index);
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
-    api_req.moduleType = "purchaseEntryVoipTrend";
-    api_req.api_url = "purchaseEntryVoipTrend/getPurchaseAttachments";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "getPurchaseAttachments";
+    api_req.moduleType = 'purchaseEntryVoipTrend';
+    api_req.api_url = 'purchaseEntryVoipTrend/getPurchaseAttachments';
+    api_req.api_type = 'web';
+    api_req.access_token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+    api_Search_req.action = 'getPurchaseAttachments';
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_Search_req.purchaseEntryTempId = purchaseEntryTempId_index;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.attachments = response.attachments;
 
-     this.attachments = response.attachments;
-   
-     if (this.attachments.length > 0 && this.attachments[0].status === true) {
-      this.spinner.hide();
-     // console.log("response.attachments.length", response.attachments?.length);
-      $('#showPDFFormId').modal('show');
-   
-    }
-    else{
-      this.spinner.hide();
-      iziToast.warning({
-        message: "No Record",
-        position: 'topRight',
-      });
-
-    }
-    
+      if (this.attachments.length > 0 && this.attachments[0].status === true) {
+        this.spinner.hide();
+        // console.log("response.attachments.length", response.attachments?.length);
+        $('#showPDFFormId').modal('show');
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: 'No Record',
+          position: 'topRight',
+        });
+      }
     });
   }
 
@@ -566,13 +857,14 @@ export class PEVoipTrendComponent implements OnInit {
     //  console.log("status",status);
     //  console.log("typeof-status",typeof(status));
     switch (status) {
-      case 1: return '#4CAF50';  // Green
-      case 2: return '#FFFF5C';  // Yellow   
-      case 3: return '#FFFFFF';  // Red
-      default: return '#FFFFFF'; // 
+      case 1:
+        return '#4CAF50'; // Green
+      case 2:
+        return '#FFFF5C'; // Yellow
+      case 3:
+        return '#FFFFFF'; // Red
+      default:
+        return '#FFFFFF'; //
     }
   }
-    
-  
-
 }

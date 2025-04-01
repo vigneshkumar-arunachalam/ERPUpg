@@ -289,23 +289,20 @@ select {
 }
 
 
-/* #cg tr:nth-child(even):hover {
+#cg tr:nth-child(even):hover {
   background: linear-gradient(to right, #c9f1a2, #df97b4);
-  color:#000;
 }
 
 #cg tr:nth-child(odd):hover {
   background: linear-gradient(to right, #f3f4e6, #f4c5d9);
-  color:#000;
-} */
+}
 
 tr:hover td {
-  color: #b1ba1500;
-
+  color: #0000;
   background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
-  transition: background 1s, color 1s;
+  transition: background 2s, color 2s;
 }
 .userDatatable table tbody tr td {
   border: 1px solid #C5D9E0;
@@ -476,10 +473,8 @@ th, td {
 
 .gradient-cell {
   /* Gradient background */
-  /* background: linear-gradient(135deg, #f8e8c8, #c8e8f8); */
-
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-  color: #FFFFFF; /* Text color for readability */
+  background: linear-gradient(135deg, #fa0b0bc7, #82f77e);
+  color: #000000; /* Text color for readability */
   padding: 10px;
   text-align: center; /* Center-align text */
   border-radius: 8px; /* Rounded corners */
@@ -490,24 +485,136 @@ th, td {
 /* Hover effect */
 .gradient-cell:hover {
   background: linear-gradient(135deg, #ff6a00, #ff9966);
-  color: #0f0000; /* Text color for readability */
   transform: scale(1.05); /* Slightly enlarge on hover */
   cursor: pointer; /* Change cursor to pointer */
 }
 .table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
 .table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
 
-
 .readonly-field {
-background-color: #f4f2f3 !important;
-cursor: not-allowed;
-}
-
-.spinner-container {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+  background-color: #f4f2f3 !important;
+  cursor: not-allowed;
 }
 
 
+
+/* graph css desginS */
+
+.graph_img {
+  width: 40px; /* Adjust size if needed */
+  height: 35px;
+  display: block;
+}
+.btn-transparent {
+  background: none;
+  border: none;
+}
+
+.modal-lg {
+  max-width: 100%;
+  width: 100%;
+}
+
+.modal-body {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.chart-item {
+  flex: 1 1 300px;
+  max-width: 300px;
+  min-width: 250px;
+  text-align: center;
+}
+
+.apexcharts-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.monthly-chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.monthly-chart-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 20px; /* Adds space below each chart */
+  max-width: 320px; /* Prevents overflow */
+}
+
+.apexcharts-title-text {
+  white-space: normal !important; /* Ensures title wraps */
+  word-break: break-word !important;
+  text-align: center;
+}
+
+#chart2 {
+  width: 100%;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+/* #chart {
+  max-width: 650px;
+  margin: 35px auto;
+} */
+
+.chart-title {
+  display: flex;
+  justify-content: center;
+  background-color: #cf7ddf;
+  padding: 10px;
+  border-radius: 30px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+
+.close-btn {
+  font-size: 25px;
+}
+
+@media (max-width: 768px) {
+  .chart-title {
+    font-size: 16px;
+    padding: 8px;
+  }
+  .modal-content {
+    padding: 10px;
+  }
+}

@@ -651,8 +651,16 @@ label {
 .dropdown__item:hover .hide{display: block;}
 .dropdown__item:hover .show{display: none;}
 
+#viewCustomerPjctMgmtID .modal-dialog{
+  min-width: 75%;
+}
+
 #TransactionManagementViewId .modal-dialog{
   min-width: 75%;
+
+}
+#getCustPhoneProvID .modal-dialog{
+  min-width: 95%;
 
 }
 
@@ -712,8 +720,7 @@ label {
   outline: none;
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
 }
-#addNewQuotationFormId .modal-content button.close, #editNewQuotationFormId .modal-content button.close
-,#TransactionManagementViewId .modal-content button.close,#TransactionCommentsId .modal-content button.close,#searchTransactionFormId .modal-content button.close{
+ .modal-content button.close{
   width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -761,7 +768,7 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
   height: 45px;
 }
 .transaction-form-group .col-form-label {
-  /* border: 4px solid #ecf7f0; */
+  border: 4px solid #ecf7f0;
   width: 100%;
   display: block;
   width: 30%;
@@ -792,159 +799,42 @@ tr:nth-child(odd):hover {
 }
 
 tr:hover td {
+  color: #0000;
   background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   transition: background 2s, color 2s;
 }
 .userDatatable table tbody tr td {
-  border: 1px solid #C5D9E0;
+  border: 1px dashed #0094bc;
 }
 .userDatatable table thead tr th {
-  border: 1px solid #ebf2f4;
+  border: 1px dashed #d2e4e9;
 }
 
 
-
-/* css my degins */
-
-/* Modal Styling */
-.modal-custom {
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+#emailFormId_prepaidNote .modal-dialog {
+  max-width: 65%;
 }
 
-/* Header Styling */
-.custom-header {
-  background: linear-gradient(to right, #200122, #b79dce);
-  color: rgb(230, 241, 12);
-  font-family: cursive;
-  padding: 15px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.modal-title {
-  color: white;
-  font-size: 20px;
-  text-align: center;
-  flex-grow: 1;
-}
-
-/* Close Button */
-.close-btn {
-  color: white;
-  font-size: 40px;
-  transition: 0.3s;
-}
-
-.close-btn:hover {
-  color: #ffcc00;
-  transform: scale(1.1);
-}
-
-/* Body Styling */
-.custom-body {
-  padding: 20px;
-  background: #f8f9fa;
-}
-
-/* Input Styling */
-.custom-input {
-  border-radius: 6px;
-  border: 1px solid #ced4da;
-  padding: 8px 12px;
-  transition: all 0.3s ease-in-out;
-}
-
-.custom-input:focus {
-  border-color: #b79dce;
-  box-shadow: 0 0 5px rgba(111, 0, 0, 0.5);
-}
-
-/* Form Labels */
-label {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Transaction Panel */
-.transaction-panel {
-  background: #fff;
-  padding: 0px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  margin-top: 10px;
-}
-
-/* Transaction Items */
-.transaction-form-group {
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.transaction-form-group:last-child {
-  border-bottom: none;
-}
-
-.transaction-form-group label {
-  font-weight: 600;
-  color: #444;
-}
-
-.transaction-form-group span {
+#emailFormId_prepaidNote label {
   font-weight: 500;
-  color: #666;
 }
 
-/* Footer */
-.custom-footer {
-  background: #b79dce;
-  padding: 0;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  text-align: center;
-}
 
-.custom-close-btn {
-  background: #333;
+
+
+.badge {
+  background-color: #f0ad4e;
   color: white;
-  padding: 0px 30px;
-  border-radius: 8px;
-  transition: 0.3s;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.custom-close-btn:hover {
-  background: #ffcc00;
-  color: #222;
-}
-
-
-
-/* Labels */
-.labels {
-  font-size: 15px !important;
-  font-weight: 600 !important;
-  color: #444 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  display: block !important;
-  margin-bottom: 5px !important;
-}
-
-/* Spans */
-.spans {
-  display: inline-block !important;
-  font-size: 14px !important;
-  color: #2d2d2d !important;
-  padding: 8px 12px !important;
-  border-bottom: 2px solid #6c757d !important;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.15)) !important;
-  border-radius: 4px !important;
+.owner-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
 }

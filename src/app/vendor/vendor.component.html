@@ -1,0 +1,518 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card quotation">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active">Vendor Management</span>
+                    </h3>
+
+
+                    <div class="quotation-btn-section">
+                        <button type="button" title="Add New Vendor" class="btn btn-primary btn-default btn-squared"
+                            (click)="open_Vendor_popup()" style="margin-right: 10px;">
+                            <i class="fas fa-plus" style="margin-right:4px;"></i>
+                            Add New Vendor
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-borderless">
+                                <tr>
+                                    <td colspan="12" class="search-text-tbl">
+                                        <div class="input-group"><input type="text" class="form-control"
+                                                (keyup)="getVendorListData({'search_text':call_history_search.value})"
+                                                #call_history_search placeholder="search here">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary"
+                                                    (click)="getVendorListData({'search_text':call_history_search.value})"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+                                        <th>
+                                            <span class="userDatatable-title">Company Name</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Vendor Name</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Address</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Phone No</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Contact Person</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Email Id</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Bank Details</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let list of vendor_list;let i=index">
+
+                                        <td><span>{{list.companyName}}</span></td>
+                                        <td><span>{{list.vendorName}}</span></td>
+                                        <td><span>{{list.Address1}}</span></td>
+                                        <td><span>{{list.phone}}</span></td>
+                                        <td><span>{{list.companyName}}</span></td>
+                                        <td><span>{{list.email}}</span></td>
+                                        <td><span>{{list.Bankdetails}}</span></td>
+                                        <td>
+                                            <div class="page">
+
+                                                <div class="dropdown">
+                                                    <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                    <ul class="dropdown__list">
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="View"
+                                                                (click)=" viewVendor(list.vendorId)">
+                                                                <img class="show" src="assets/img/icon/eye-bl.png">
+                                                                <img class="hide" src="assets/img/icon/eye-b.png">
+                                                            </a>
+
+                                                        </li>
+
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="Edit"
+                                                                (click)="EditVendor(list.vendorId)">
+                                                                <img class="show" src="assets/img/icon/nfc-pen-b.png">
+                                                                <img class="hide" src="assets/img/icon/nfc-pen.png">
+
+                                                            </a>
+                                                        </li>
+
+
+
+                                                        <li class="dropdown__item">
+                                                            <a class="hover1" title="Delete" data-toggle="modal"
+                                                                (click)="deleteVendor(list.vendorId)">
+                                                                <img class="show" src="assets/img/icon/remove-b.png">
+                                                                <img class="hide" src="assets/img/icon/remove.png">
+                                                            </a>
+                                                        </li>
+
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="recordNotFound == true">
+                                        <td colspan="12">Data not found</td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <nav class="atbd-page" *ngIf=" recordNotFound === false">
+                        <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                            <li class="page-item">
+                                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.backtab=='show' ? getVendorListData({'search_text':call_history_search.value,'offset':paginationData.start}) : false"><i
+                                        class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="getVendorListData({'search_text':call_history_search.value,'offset':paginationData.back})"><i
+                                        class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                *ngFor="let pagination of paginationData.data;let i=index">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)=" pagination.load ==true ? getVendorListData({'search_text':call_history_search.value,'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                <a class="page-link" href="javascript:void(0)"
+                                    (click)="getVendorListData({'search_text':call_history_search.value,'offset':paginationData.next})"><i
+                                        class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            <li class="page-item">
+                                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.nexttab =='show' ? getVendorListData({'search_text':call_history_search.value,'offset':paginationData.end}) : false"><i
+                                        class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li class="dropdown__item">
+                                <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <br>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ------------------------------------------               ADD VENDOR                ----------------------------------  -->
+
+
+<div class="modal fade bd-example-modal-lg" id="vendorNewManagement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content modal-custom">
+            <div class="modal-header custom-header">
+                <h2 class="modal-title">Vendor Management</h2>
+                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
+                    aria-hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body custom-body">
+                <form [formGroup]="addVendorForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="company_code">Company Code *</label>
+                                <input type="text" class="form-control custom-input " [ngModel]="this.countryCode"
+                                    formControlName="company_code" id="company_code" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="company_name">Company Name *</label>
+                                <input type="text" class="form-control custom-input " formControlName="company_name"
+                                    id="company_name" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="vendor_name">Vendor Name *</label>
+                                <input type="text" class="form-control custom-input " formControlName="vendor_name"
+                                    id="vendor_name" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="address_1">Address-1</label>
+                                <input type="text" class="form-control custom-input " formControlName="address_1"
+                                    id="address_1" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="address_2">Address-2</label>
+                                <input type="text" class="form-control custom-input " formControlName="address_2"
+                                    id="address_2" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="city">City</label>
+                                <input type="text" class="form-control custom-input " formControlName="city"
+                                    id="city" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="state">State</label>
+                                <input type="text" class="form-control custom-input " formControlName="state"
+                                    id="state" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="country">Country</label>
+                                <input type="text" class="form-control custom-input " formControlName="country"
+                                    id="country" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="phone">Phone</label>
+                                <input type="number" class="form-control custom-input " formControlName="phone"
+                                    id="phone" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="mobile_phone">Mobile Phone</label>
+                                <input type="number" class="form-control custom-input " formControlName="mobile_phone"
+                                    id="mobile_phone" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="fax">Fax</label>
+                                <input type="text" class="form-control custom-input " formControlName="fax" id="fax" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="e_mail">Email</label>
+                                <input type="email" class="form-control custom-input " formControlName="e_mail"
+                                    id="e_mail" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-dark" (click)="AddVendor()">Save</button>
+                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ------------------------------------------               ADD VENDOR                ----------------------------------  -->
+
+
+<div class="modal fade bd-example-modal-lg" id="EditvendorNewManagement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content modal-custom">
+            <div class="modal-header custom-header">
+                <h2 class="modal-title"> Update Vendor Management</h2>
+                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
+                    aria-hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body custom-body">
+                <form [formGroup]="editVedorForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_company_code">Company Code *</label>
+                                <input type="text" class="form-control custom-input "
+                                    formControlName="edit_company_code" id="edit_company_code" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_company_name">Company Name *</label>
+                                <input type="text" class="form-control custom-input "
+                                    formControlName="edit_company_name" id="edit_company_name" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_vendor_name">Vendor Name *</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_vendor_name"
+                                    id="edit_vendor_name" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_address_1">Address-1</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_address_1"
+                                    id="edit_address_1" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_address_2">Address-2</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_address_2"
+                                    id="edit_address_2" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_city">City</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_city"
+                                    id="edit_city" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_state">State</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_state"
+                                    id="edit_state" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_country">Country</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_country"
+                                    id="edit_country" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_phone">Phone</label>
+                                <input type="number" class="form-control custom-input " formControlName="edit_phone"
+                                    id="edit_phone" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_mobile_phone">Mobile Phone</label>
+                                <input type="number" class="form-control custom-input "
+                                    formControlName="edit_mobile_phone" id="edit_mobile_phone" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_fax">Fax</label>
+                                <input type="text" class="form-control custom-input " formControlName="edit_fax"
+                                    id="edit_fax" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="labels" for="edit_e_mail">Email</label>
+                                <input type="email" class="form-control custom-input " formControlName="edit_e_mail"
+                                    id="edit_e_mail" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-dark" (click)="updateVendor()">Update</button>
+                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ------------------------------------------              VIEW VENDOR                ----------------------------------  -->
+
+
+<div class="modal fade bd-example-modal-lg" id="ViewvendorNewManagement" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content modal-custom">
+            <div class="modal-header custom-header">
+                <h2 class="modal-title"> View Vendor Management</h2>
+                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
+                    aria-hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body custom-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_company_code">Company Code</label>
+                            <span class="spanss">{{edit_company_code}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_company_name">Company Name</label>
+                            <span class="spanss">{{edit_company_name}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_vendor_name">Vendor Name</label>
+                            <span class="spanss">{{edit_vendor_name}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_address_1">Address-1</label>
+                            <span class="spanss">{{edit_address_1}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_address_2">Address-2</label>
+                            <span class="spanss">{{edit_address_2}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_city">City</label>
+                            <span class="spanss">{{edit_city}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_state">State</label>
+                            <span class="spanss">{{edit_state}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_country">Country</label>
+                            <span class="spanss">{{edit_country}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_phone">Phone</label>
+                            <span class="spanss">{{edit_phone}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_mobile_phone">Mobile Phone</label>
+                            <span class="spanss">{{edit_mobile_phone}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_fax">Fax</label>
+                            <span class="spanss">{{edit_fax}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="labelss" for="edit_e_mail">Email</label>
+                            <span class="spanss">{{edit_e_mail}}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

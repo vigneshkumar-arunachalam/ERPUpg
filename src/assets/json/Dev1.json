@@ -365,14 +365,14 @@
     "value": "/stock1"
 },{
     "name": "CRM",
-    "icon":"layers",
+    "icon":"watch",
     "isActive": false,
     "menuId":5,
     "IDs": [6071, 6072, 6073, 6074, 6075],
     "Type": "Main Menu",
     "children": [{
             "name": "Enquiry New",
-            "icon": "image",
+            "icon": "box",
             "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
             "subchild": [],
@@ -385,6 +385,28 @@
     "isVisible": true,
     "value": "/crm--"
 }, {
+    "name": "Customer Project",
+    "icon":"layers",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Customer Project",
+            "icon": "image",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/customerProject"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/crm--"
+},
+{
     "name": "HR",
     "icon":"users",
     "isActive": false,

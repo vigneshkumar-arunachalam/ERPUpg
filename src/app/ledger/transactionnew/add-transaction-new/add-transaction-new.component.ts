@@ -120,7 +120,7 @@ export class AddTransactionNewComponent implements OnInit {
     this.addLoad();
     // this.addLoad_2();
     this.getProductCategory();
-    this.getTransferBiller()
+    this.getTransferBiller();
     this.http
       .get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode')
       .subscribe((data: any) => {
@@ -316,7 +316,7 @@ export class AddTransactionNewComponent implements OnInit {
       entry_product_category_id: '',
       entry_product_id: '',
       entry_quantity: '1',
-      entry_serail_no_str: ''
+      entry_serail_no_str: '',
     });
   }
 
@@ -888,7 +888,6 @@ export class AddTransactionNewComponent implements OnInit {
   updateCheckbox(isChecked: any, index: any) {
     this.addressControls_issueStock.at(index).patchValue({
       demo_type: isChecked ? 1 : 0,
-
     });
   }
 
@@ -902,7 +901,7 @@ export class AddTransactionNewComponent implements OnInit {
       if (response.data.length != 0) {
         this.productCategoryList = response.data;
 
-        console.log('this.productCategoryList', this.productCategoryList);
+        // console.log('this.productCategoryList', this.productCategoryList);
       } else {
       }
     });
@@ -1025,7 +1024,6 @@ export class AddTransactionNewComponent implements OnInit {
   }
 
   getInvoiceNumber(event: any, index: any) {
-    
     if (event === '1') {
       id = 'Invoice';
     } else {
@@ -1055,7 +1053,6 @@ export class AddTransactionNewComponent implements OnInit {
     });
   }
   getTransferBiller() {
-    
     let api_req: any =
       '{"moduleType":"transaction_entry","api_url":"transaction_entry/getStockBillers","access_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"transaction_entry/getStockBillers","user_id":"' +
       this.userID +
@@ -1065,13 +1062,12 @@ export class AddTransactionNewComponent implements OnInit {
       if ((response.status = true)) {
         this.transfer_biller = response.biller;
       } else {
-        
       }
     });
   }
 
   saveTransaction() {
-    
+    this.spinner.show();
     var data = new FormData();
     if (this.addTransaction_section1.value.billerName === null) {
       iziToast.error({
@@ -1332,12 +1328,16 @@ export class AddTransactionNewComponent implements OnInit {
     if (this.Select_Transaction_Type == 51) {
       this.saveVariable = 'logistics';
 
-      let description= this.addTransaction_section1.value.Log_Description;
-      let log_type= this.addTransaction_section1.value.Log_Type;
-      let Log_Amount= this.addTransaction_section1.value.Log_Amount;
+      let description = this.addTransaction_section1.value.Log_Description;
+      let log_type = this.addTransaction_section1.value.Log_Type;
+      let Log_Amount = this.addTransaction_section1.value.Log_Amount;
 
-      if(description === '' ||description === null || description === undefined || description==='undefined'){
-
+      if (
+        description === '' ||
+        description === null ||
+        description === undefined ||
+        description === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Description )`,
           position: 'topRight',
@@ -1345,8 +1345,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(log_type === '' ||log_type === null || log_type === undefined || log_type==='undefined'){
-
+      if (
+        log_type === '' ||
+        log_type === null ||
+        log_type === undefined ||
+        log_type === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Select Type )`,
           position: 'topRight',
@@ -1354,8 +1358,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(Log_Amount === '' ||Log_Amount === null || Log_Amount === undefined || Log_Amount==='undefined'){
-
+      if (
+        Log_Amount === '' ||
+        Log_Amount === null ||
+        Log_Amount === undefined ||
+        Log_Amount === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Amount )`,
           position: 'topRight',
@@ -1363,7 +1371,7 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      
+
       data.append(
         'logistics_description',
         this.addTransaction_section1.value.Log_Description
@@ -1381,7 +1389,7 @@ export class AddTransactionNewComponent implements OnInit {
       // data.append('file_attachment_name', this.addTransaction_section1.value.Log_FileAttachment);
       if (this.myFiles.length < 4) {
         for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('trans_file[]' + i, this.myFiles[i]);
+          data.append('trans_attachment_filename', this.myFiles[i]);
         }
       }
     }
@@ -1389,12 +1397,18 @@ export class AddTransactionNewComponent implements OnInit {
     // vendor_order
 
     if (this.Select_Transaction_Type == 6) {
+     
       this.saveVariable = 'vendor_order';
 
-      let description= this.addTransaction_section1.value.VendorOrder_Description;
+      let description =
+        this.addTransaction_section1.value.VendorOrder_Description;
 
-      if(description === '' ||description === null || description === undefined || description==='undefined'){
-
+      if (
+        description === '' ||
+        description === null ||
+        description === undefined ||
+        description === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Description )`,
           position: 'topRight',
@@ -1409,7 +1423,7 @@ export class AddTransactionNewComponent implements OnInit {
       // data.append('file_attachment_name', this.addTransaction_section1.value.VendorOrder_FileAttachment);
       if (this.myFiles.length < 4) {
         for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('trans_file[]', this.myFiles[i]);
+          data.append('trans_attachment_filename', this.myFiles[i]);
         }
       }
     }
@@ -1419,15 +1433,20 @@ export class AddTransactionNewComponent implements OnInit {
     if (this.Select_Transaction_Type == 7) {
       this.saveVariable = 'Invoice_payment';
 
-      let invoice_no= this.addTransaction_section1.value.InvPayment_InvoiceNumber;
-      let amount= this.addTransaction_section1.value.InvPayment_Amount;
-      let date= this.addTransaction_section1.value.InvPayment_date;
-      let payment_type = this.addTransaction_section1.value.InvPayment_PaymentMethod;
+      let invoice_no =
+        this.addTransaction_section1.value.InvPayment_InvoiceNumber;
+      let amount = this.addTransaction_section1.value.InvPayment_Amount;
+      let date = this.addTransaction_section1.value.InvPayment_date;
+      let payment_type =
+        this.addTransaction_section1.value.InvPayment_PaymentMethod;
       let note = this.addTransaction_section1.value.InvPayment_Notes;
 
-      
-      if(invoice_no === '' ||invoice_no === null || invoice_no === undefined || invoice_no==='undefined'){
-
+      if (
+        invoice_no === '' ||
+        invoice_no === null ||
+        invoice_no === undefined ||
+        invoice_no === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Select Invoice No )`,
           position: 'topRight',
@@ -1435,8 +1454,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(amount === '' ||amount === null || amount === undefined || amount==='undefined'){
-
+      if (
+        amount === '' ||
+        amount === null ||
+        amount === undefined ||
+        amount === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Amount )`,
           position: 'topRight',
@@ -1444,8 +1467,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(date === '' ||date === null || date === undefined || date==='undefined'){
-
+      if (
+        date === '' ||
+        date === null ||
+        date === undefined ||
+        date === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Select Date )`,
           position: 'topRight',
@@ -1453,8 +1480,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(payment_type === '' ||payment_type === null || payment_type === undefined || payment_type==='undefined'){
-
+      if (
+        payment_type === '' ||
+        payment_type === null ||
+        payment_type === undefined ||
+        payment_type === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Select Payment Type/Method )`,
           position: 'topRight',
@@ -1462,8 +1493,12 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-      if(note === '' ||note === null || note === undefined || note==='undefined'){
-
+      if (
+        note === '' ||
+        note === null ||
+        note === undefined ||
+        note === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Note )`,
           position: 'topRight',
@@ -1471,7 +1506,6 @@ export class AddTransactionNewComponent implements OnInit {
 
         return false;
       }
-
 
       data.append(
         'invoice_no',
@@ -1502,7 +1536,7 @@ export class AddTransactionNewComponent implements OnInit {
       // data.append('file_attachment_name', this.addTransaction_section1.value.InvPayment_FileAttachment);
       if (this.myFiles.length < 4) {
         for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('trans_file[]', this.myFiles[i]);
+          data.append('trans_attachment_filename', this.myFiles[i]);
         }
       }
     }
@@ -1512,10 +1546,14 @@ export class AddTransactionNewComponent implements OnInit {
     if (this.Select_Transaction_Type == 8) {
       this.saveVariable = 'others';
 
-      let description= this.addTransaction_section1.value.others_Description;
+      let description = this.addTransaction_section1.value.others_Description;
 
-      if(description === '' ||description === null || description === undefined || description==='undefined'){
-
+      if (
+        description === '' ||
+        description === null ||
+        description === undefined ||
+        description === 'undefined'
+      ) {
         iziToast.warning({
           message: `please Enter Description )`,
           position: 'topRight',
@@ -1534,30 +1572,55 @@ export class AddTransactionNewComponent implements OnInit {
       // );
       if (this.myFiles.length < 4) {
         for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('trans_file[]', this.myFiles[i]);
+          data.append('trans_attachment_filename', this.myFiles[i]);
         }
       }
     }
     // add_new_stock_save
 
     if (this.Select_Transaction_Type == 15) {
-
       var addr: any = this.addStock_section2.value.addresses;
       var billerName = this.addTransaction_section1.value.billerName;
       var priority = this.addTransaction_section1.value.priority;
 
-     
       for (let i = 0; i < addr.length; i++) {
-      
-        let vendorId = this.addStock_section2.get(['addresses', i, 'vendorId']).value;
-        let lic_pur_date = this.addStock_section2.get(['addresses', i, 'lic_pur_date']).value;
-        let entry_product_category_id = this.addStock_section2.get(['addresses', i, 'entry_product_category_id']).value;
-        let entry_product_id = this.addStock_section2.get(['addresses', i, 'entry_product_id']).value;
-        let entry_quantity = this.addStock_section2.get(['addresses', i, 'entry_quantity']).value;
-        let entry_serail_no_str = this.addStock_section2.get(['addresses', i, 'entry_serail_no_str']).value;
-      
-        if(vendorId === '' ||vendorId === null || vendorId === undefined || vendorId==='undefined'){
+        let vendorId = this.addStock_section2.get([
+          'addresses',
+          i,
+          'vendorId',
+        ]).value;
+        let lic_pur_date = this.addStock_section2.get([
+          'addresses',
+          i,
+          'lic_pur_date',
+        ]).value;
+        let entry_product_category_id = this.addStock_section2.get([
+          'addresses',
+          i,
+          'entry_product_category_id',
+        ]).value;
+        let entry_product_id = this.addStock_section2.get([
+          'addresses',
+          i,
+          'entry_product_id',
+        ]).value;
+        let entry_quantity = this.addStock_section2.get([
+          'addresses',
+          i,
+          'entry_quantity',
+        ]).value;
+        let entry_serail_no_str = this.addStock_section2.get([
+          'addresses',
+          i,
+          'entry_serail_no_str',
+        ]).value;
 
+        if (
+          vendorId === '' ||
+          vendorId === null ||
+          vendorId === undefined ||
+          vendorId === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Vendor Name ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1565,8 +1628,12 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(lic_pur_date === '' ||lic_pur_date === null || lic_pur_date === undefined || lic_pur_date==='undefined'){
-
+        if (
+          lic_pur_date === '' ||
+          lic_pur_date === null ||
+          lic_pur_date === undefined ||
+          lic_pur_date === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Pur Date ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1574,8 +1641,12 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(entry_product_category_id === '' ||entry_product_category_id === null || entry_product_category_id === undefined || entry_product_category_id==='undefined'){
-
+        if (
+          entry_product_category_id === '' ||
+          entry_product_category_id === null ||
+          entry_product_category_id === undefined ||
+          entry_product_category_id === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Category Name ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1583,17 +1654,27 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(entry_product_id === '' ||entry_product_id === null || entry_product_id === undefined || entry_product_id==='undefined'){
-
+        if (
+          entry_product_id === '' ||
+          entry_product_id === null ||
+          entry_product_id === undefined ||
+          entry_product_id === 'undefined'
+        ) {
           iziToast.warning({
-            message: `please Select Product Name Serial / MAC No ( section - ${i + 1} )`,
+            message: `please Select Product Name Serial / MAC No ( section - ${
+              i + 1
+            } )`,
             position: 'topRight',
           });
 
           return false;
         }
-        if(entry_quantity === '' ||entry_quantity === null || entry_quantity === undefined || entry_quantity==='undefined'){
-
+        if (
+          entry_quantity === '' ||
+          entry_quantity === null ||
+          entry_quantity === undefined ||
+          entry_quantity === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Enter Qty ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1601,8 +1682,7 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        
-      
+
         addr[i].vendorId = vendorId;
         addr[i].lic_pur_date = lic_pur_date;
         addr[i].entry_product_category_id = entry_product_category_id;
@@ -1610,12 +1690,12 @@ export class AddTransactionNewComponent implements OnInit {
         addr[i].entry_quantity = entry_quantity;
         addr[i].entry_serail_no_str = entry_serail_no_str;
       }
-      
+
       // Check if there are warnings
-     
-        var x = JSON.stringify(addr);
-        console.log(x); // Proceed with your logic
-        this.spinner.show();
+
+      var x = JSON.stringify(addr);
+      console.log(x); // Proceed with your logic
+      this.spinner.show();
 
       let api_req: any =
         '{"moduleType":"stock","api_url":"stock/addstock","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"stock/addstock","user_id":"' +
@@ -1650,18 +1730,53 @@ export class AddTransactionNewComponent implements OnInit {
       var addr: any = this.stockIssueForm.value.addresses_issueStock;
 
       for (let i = 0; i < addr.length; i++) {
+        let product_category_id = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'product_category_id',
+        ]).value;
+        let product_id = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'product_id',
+        ]).value;
+        let serial_no = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'serial_no',
+        ]).value;
+        let customer_id_hd = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'customer_id_hd',
+        ]).value;
+        let number_type = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'number_type',
+        ]).value;
+        let invoice_number = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'invoice_number',
+        ]).value;
+        let demo_type = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'demo_type',
+        ]).value;
+        let quantity = this.stockIssueForm.get([
+          'addresses_issueStock',
+          i,
+          'quantity',
+        ]).value;
 
-        let product_category_id = this.stockIssueForm.get(['addresses_issueStock', i, 'product_category_id']).value;
-        let product_id = this.stockIssueForm.get(['addresses_issueStock', i, 'product_id']).value;
-        let serial_no = this.stockIssueForm.get(['addresses_issueStock', i, 'serial_no']).value;
-        let customer_id_hd = this.stockIssueForm.get(['addresses_issueStock', i, 'customer_id_hd']).value;
-        let number_type = this.stockIssueForm.get(['addresses_issueStock', i, 'number_type']).value;
-        let invoice_number = this.stockIssueForm.get(['addresses_issueStock', i, 'invoice_number']).value;
-        let demo_type = this.stockIssueForm.get(['addresses_issueStock', i, 'demo_type']).value;
-        let quantity = this.stockIssueForm.get(['addresses_issueStock', i, 'quantity']).value;
-
-        if(product_category_id === '' ||product_category_id === null || product_category_id === undefined || product_category_id==='undefined'){
-
+        if (
+          product_category_id === '' ||
+          product_category_id === null ||
+          product_category_id === undefined ||
+          product_category_id === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Category Name ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1669,8 +1784,12 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(product_id === '' ||product_id === null || product_id === undefined || product_id==='undefined'){
-
+        if (
+          product_id === '' ||
+          product_id === null ||
+          product_id === undefined ||
+          product_id === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Product Name ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1681,15 +1800,19 @@ export class AddTransactionNewComponent implements OnInit {
         // if(serial_no === '' ||serial_no === null || serial_no === undefined || serial_no==='undefined'){
 
         //   iziToast.warning({
-        
+
         //     message: `please Select Serial/MAC No ( section - ${i + 1} )`,
         //     position: 'topRight',
         //   });
 
         //   return false;
         // }
-        if(customer_id_hd === '' ||customer_id_hd === null || customer_id_hd === undefined || customer_id_hd==='undefined'){
-
+        if (
+          customer_id_hd === '' ||
+          customer_id_hd === null ||
+          customer_id_hd === undefined ||
+          customer_id_hd === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Enter Issue Customer ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1697,8 +1820,12 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(invoice_number === '' ||invoice_number === null || invoice_number === undefined || invoice_number==='undefined'){
-
+        if (
+          invoice_number === '' ||
+          invoice_number === null ||
+          invoice_number === undefined ||
+          invoice_number === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Select Invoice Number ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1706,8 +1833,12 @@ export class AddTransactionNewComponent implements OnInit {
 
           return false;
         }
-        if(quantity === '' ||quantity === null || quantity === undefined || quantity==='undefined'){
-
+        if (
+          quantity === '' ||
+          quantity === null ||
+          quantity === undefined ||
+          quantity === 'undefined'
+        ) {
           iziToast.warning({
             message: `please Enter Qty ( section - ${i + 1} )`,
             position: 'topRight',
@@ -1726,8 +1857,6 @@ export class AddTransactionNewComponent implements OnInit {
           demo_type,
           quantity,
         };
-
-
       }
 
       var x = JSON.stringify(addr);
@@ -1765,71 +1894,106 @@ export class AddTransactionNewComponent implements OnInit {
       var priority = this.addTransaction_section1.value.priority;
 
       for (let i = 0; i < addr.length; i++) {
-        
-        let trans_product_category_id = this.StockTransferForm.get(['addresses_stocktransfer', i, 'trans_product_category_id']).value;
-  let trans_product_id = this.StockTransferForm.get(['addresses_stocktransfer', i, 'trans_product_id']).value;
-  let trans_serial_no = this.StockTransferForm.get(['addresses_stocktransfer', i, 'trans_serial_no']).value;
-  let transfer_billerId = this.StockTransferForm.get(['addresses_stocktransfer', i, 'transfer_billerId']).value;
-  let trans_quantity = this.StockTransferForm.get(['addresses_stocktransfer', i, 'trans_quantity']).value;
+        let trans_product_category_id = this.StockTransferForm.get([
+          'addresses_stocktransfer',
+          i,
+          'trans_product_category_id',
+        ]).value;
+        let trans_product_id = this.StockTransferForm.get([
+          'addresses_stocktransfer',
+          i,
+          'trans_product_id',
+        ]).value;
+        let trans_serial_no = this.StockTransferForm.get([
+          'addresses_stocktransfer',
+          i,
+          'trans_serial_no',
+        ]).value;
+        let transfer_billerId = this.StockTransferForm.get([
+          'addresses_stocktransfer',
+          i,
+          'transfer_billerId',
+        ]).value;
+        let trans_quantity = this.StockTransferForm.get([
+          'addresses_stocktransfer',
+          i,
+          'trans_quantity',
+        ]).value;
 
-  if(trans_product_category_id === '' ||trans_product_category_id === null || trans_product_category_id === undefined || trans_product_category_id==='undefined'){
+        if (
+          trans_product_category_id === '' ||
+          trans_product_category_id === null ||
+          trans_product_category_id === undefined ||
+          trans_product_category_id === 'undefined'
+        ) {
+          iziToast.warning({
+            message: `please Select Category Name ( section - ${i + 1} )`,
+            position: 'topRight',
+          });
 
-    iziToast.warning({
-      message: `please Select Category Name ( section - ${i + 1} )`,
-      position: 'topRight',
-    });
+          return false;
+        }
+        if (
+          trans_product_id === '' ||
+          trans_product_id === null ||
+          trans_product_id === undefined ||
+          trans_product_id === 'undefined'
+        ) {
+          iziToast.warning({
+            message: `please Select Product Name ( section - ${i + 1} )`,
+            position: 'topRight',
+          });
 
-    return false;
-  }
-  if(trans_product_id === '' ||trans_product_id === null || trans_product_id === undefined || trans_product_id==='undefined'){
+          return false;
+        }
+        // if(trans_serial_no === '' ||trans_serial_no === null || trans_serial_no === undefined || trans_serial_no==='undefined'){
 
-    iziToast.warning({
-      message: `please Select Product Name ( section - ${i + 1} )`,
-      position: 'topRight',
-    });
+        //   iziToast.warning({
 
-    return false;
-  }
-  // if(trans_serial_no === '' ||trans_serial_no === null || trans_serial_no === undefined || trans_serial_no==='undefined'){
+        //     message: `please Enter Serial/MAC No ( section - ${i + 1} )`,
+        //     position: 'topRight',
+        //   });
 
-  //   iziToast.warning({
-  
-  //     message: `please Enter Serial/MAC No ( section - ${i + 1} )`,
-  //     position: 'topRight',
-  //   });
+        //   return false;
+        // }
+        if (
+          transfer_billerId === '' ||
+          transfer_billerId === null ||
+          transfer_billerId === undefined ||
+          transfer_billerId === 'undefined'
+        ) {
+          iziToast.warning({
+            message: `please Select Transfer Biller ( section - ${i + 1} )`,
+            position: 'topRight',
+          });
 
-  //   return false;
-  // }
-  if(transfer_billerId === '' ||transfer_billerId === null || transfer_billerId === undefined || transfer_billerId==='undefined'){
+          return false;
+        }
+        if (
+          trans_quantity === '' ||
+          trans_quantity === null ||
+          trans_quantity === undefined ||
+          trans_quantity === 'undefined'
+        ) {
+          iziToast.warning({
+            message: `please Enter Qty ( section - ${i + 1} )`,
+            position: 'topRight',
+          });
 
-    iziToast.warning({
-      message: `please Select Transfer Biller ( section - ${i + 1} )`,
-      position: 'topRight',
-    });
+          return false;
+        }
 
-    return false;
-  }
-  if(trans_quantity === '' ||trans_quantity === null || trans_quantity === undefined || trans_quantity==='undefined'){
-
-    iziToast.warning({
-      message: `please Enter Qty ( section - ${i + 1} )`,
-      position: 'topRight',
-    });
-
-    return false;
-  }
-
-  addr[i] = {
-    trans_product_category_id,
-    trans_product_id,
-    trans_serial_no,
-    transfer_billerId,
-    trans_quantity,
-  };
-       }
+        addr[i] = {
+          trans_product_category_id,
+          trans_product_id,
+          trans_serial_no,
+          transfer_billerId,
+          trans_quantity,
+        };
+      }
       var x = JSON.stringify(addr);
       console.log(x);
-      
+
       this.spinner.show();
       let api_req: any =
         '{"moduleType":"stock","api_url":"stock/stocktransfer","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"stock/stocktransfer","user_id":"' +
@@ -1866,8 +2030,11 @@ export class AddTransactionNewComponent implements OnInit {
       $.ajax({
         type: 'POST',
 
-       // url:'https://laravelapi.erp1.cal4care.com/api/stock/' +this.saveVariable +'',
-         url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
+        url:
+          'https://laravelapi.erp1.cal4care.com/api/stock/' +
+          this.saveVariable +
+          '',
+        // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
         cache: false,
         contentType: false,
         processData: false,
@@ -1911,14 +2078,16 @@ export class AddTransactionNewComponent implements OnInit {
       this.saveVariable === 'purchase_entry_save' ||
       this.saveVariable === 'petty_cash_save'
     ) {
-
       this.spinner.show();
       var self = this;
       $.ajax({
         type: 'POST',
 
-      //  url:'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.saveVariable +'',
-         url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
+        url:
+          'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' +
+          this.saveVariable +
+          '',
+        // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
         cache: false,
         contentType: false,
         processData: false,
