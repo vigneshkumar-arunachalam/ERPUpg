@@ -704,7 +704,7 @@ export class PurchaseEntryComponent implements OnInit {
     this.spinner.show();
     this.getCurrencyCode = event.target.value;
     this.recurringEditCurrencyID= event.target.value;
-    alert( this.recurringEditCurrencyID);
+   // alert( this.recurringEditCurrencyID);
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "base";
@@ -1584,6 +1584,8 @@ export class PurchaseEntryComponent implements OnInit {
   }
  
   PurchaseEntryList(data: any) {
+   // alert("hi")
+
 
 
     this.spinner.show();

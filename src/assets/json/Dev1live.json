@@ -29,6 +29,38 @@
             "subchild": [],
             "isVisible": true,
             "value": "/pettyCash"
+        },{
+            "name": "Purchase Entry-Yearly",
+            "icon": "columns",
+            "IDs": [2065],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEYearly"
+        },{
+            "name": "Purchase Entry-Voip Trend",
+            "icon": "film",
+            "IDs": [2076],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEVoipTrend"
+        },{
+            "name": "Purchase Entry-MrVoip Trend",
+            "icon": "move",
+            "IDs": [2095],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEMrVoipTrend"
+        },{
+            "name": "Purchase Entry-Call4Tell Trend",
+            "icon": "phone-call",
+            "IDs": [2103],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEMrCall4telTrend"
         }
        
 

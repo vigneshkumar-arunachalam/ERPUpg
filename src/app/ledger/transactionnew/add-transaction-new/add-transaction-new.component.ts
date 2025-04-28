@@ -2031,7 +2031,7 @@ export class AddTransactionNewComponent implements OnInit {
         type: 'POST',
 
         url:
-          'https://laravelapi.erp1.cal4care.com/api/stock/' +
+          'https://erp1.cal4care.com/api/stock/' +
           this.saveVariable +
           '',
         // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
@@ -2084,7 +2084,7 @@ export class AddTransactionNewComponent implements OnInit {
         type: 'POST',
 
         url:
-          'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' +
+          'https://erp1.cal4care.com/api/transaction_entry/' +
           this.saveVariable +
           '',
         // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',

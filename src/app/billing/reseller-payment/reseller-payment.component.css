@@ -793,3 +793,142 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
  /* search in list ends*/
 
 
+ /* .btn-custom {
+  background-color: #009688;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-custom:hover {
+  background-color: #00796b;
+} */
+
+
+
+/* Add spacing, clean design and hover effect */
+.form-label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.custom-select,
+.custom-multiselect {
+  border-radius: 8px;
+  padding: 6px 12px;
+  border: 1px solid #ced4da;
+  background-color: #f9f9f9;
+  font-size: 0.85rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-select:focus,
+.custom-multiselect:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.custom-multiselect {
+  height: 100px;
+  overflow-y: auto;
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .col-md-2{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+
+.raveen{
+
+  height: 100px !important;
+}
+
+
+.searchButton {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  background: #669bbc;
+  box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  cursor: pointer;
+  margin-top: 52px;
+  margin-left: 23px;
+  height: 33px;
+}
+
+.searchButton:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 0%;
+  height: 100%;
+  background: #383f51;
+  transition: all 0.4s ease-in-out;
+}
+
+.searchButton:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.searchButton span {
+  /* text-align: center; */
+  /* text-decoration: none; */
+  /* width: 100%; */
+  padding: 5px 25px;
+  color: #fff;
+  font-size: 18px;
+  /* font-weight: 700; */
+  letter-spacing: 1px;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
+  font-family: cursive;
+}
+
+.searchButton:hover span {
+  color: #ffd700;
+  animation: scaleUp 0.3s ease-in-out;
+}
+
+.searchButton:not(:hover) span {
+  animation: scaleDown 0.3s ease-in-out;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+} 
+
+@keyframes scaleDown {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

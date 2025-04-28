@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -149,7 +150,11 @@ export class ResellerPaymentComponent implements OnInit {
   CustomerSearchTextValue: any;
   statusFalse: boolean;
 
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer,
+  yearmonthForm:FormGroup;
+  yearFilter:any;
+  monthFilter:any;
+
+  constructor(public serverService: ServerService,private eRef: ElementRef,private http: HttpClient, public sanitizer: DomSanitizer,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.resellerCommissionForm = this.fb.group({
@@ -241,6 +246,11 @@ export class ResellerPaymentComponent implements OnInit {
       'RP_multiple_amount': new FormControl(null),
       'RP_multiple_paymentType': new FormControl(null),
       'RP_multiple_Description': new FormControl(null),
+
+    });
+    this.yearmonthForm = new FormGroup({
+      'yearly': new FormControl(null),
+      'monthly': new FormControl(null),
 
     });
     this.RP_SharePermissionForm = new FormGroup({
@@ -997,11 +1007,33 @@ export class ResellerPaymentComponent implements OnInit {
     });
   }
 
+  dropDownYearMonth(){
+
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/reseller/getYearMonthData')
+      .subscribe((data: any) => {
+        this.yearFilter = data.years;
+        this.monthFilter = data.months;
+        console.log("this.yearFilter", this.yearFilter)
+        console.log("this.monthFilter", this.monthFilter)
+      });
+
+  }
+
 
   getResellerPaymentdetails(data: any, customerid: any) {
 
     // console.log("data---in list", data);
     // console.log("customerid---in list", customerid);
+    let year =this.yearmonthForm.value.yearly;
+    let month = this.yearmonthForm.value.monthly;
+
+    if (year === null || year === undefined || year === 'null') {
+      year = ""; 
+    }
+    
+    if (month === null || month === undefined || month === 'null') {
+      month = ""; 
+    }
     $('#RP_multiple_amount').val('');
 
     if (customerid !== '' && typeof customerid !== 'object') {
@@ -1032,6 +1064,8 @@ export class ResellerPaymentComponent implements OnInit {
 
     api_getReseller.off_set = list_data.offset;
     api_getReseller.limit_val = list_data.limit;
+    api_getReseller.year = year;
+    api_getReseller.month = month;
     //   api_getReseller.off_set = 50;
     //  api_getReseller.limit_val = 50;
     api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
@@ -1059,8 +1093,10 @@ export class ResellerPaymentComponent implements OnInit {
           'offset': response.off_set,
           'total': response.total_cnt, 'page_limit': this.pageLimit
         });
+        this.yearmonthForm.reset()
         this.spinner.hide();
 
+        
 
       } else {
 

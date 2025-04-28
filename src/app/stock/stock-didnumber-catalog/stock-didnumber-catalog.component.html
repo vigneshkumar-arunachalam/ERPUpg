@@ -26,7 +26,7 @@
             </div>
 
           </div>
-          <div class="grid-container">
+          <div class="grid-container" style="background-color: #054650;">
             <div class="grid-item" *ngFor="let item of didNumberCounts">
               <tbody>
                 <tr>
@@ -88,248 +88,209 @@
             </div>
 
           </div>
- 
 
+          <!-- <p>
+            <button class="btn btn-primary " (click)="toggleCollapse('nrs1')" >NRS List</button>
+            <button class="btn btn-primary ml-2" (click)="toggleCollapse('nrs2')">Demo DID Numbers</button>
+            <button class="btn btn-primary ml-2" (click)="toggleCollapse('nrs3')">Blocked DID Numbers</button>
+            
+          </p> -->
+          <div style="background-color: rgb(237, 229, 222);">
+            <p class="mt-2">
+              <button class="btn"
+                [ngClass]="{ 'btn-primary': activeSection === 'nrs1', 'btn-outline-primary': activeSection !== 'nrs1' }"
+                (click)="toggleCollapse1('nrs1')">
+                NRS List
+              </button>
 
+              <button class="btn ml-2"
+                [ngClass]="{ 'btn-primary': activeSection === 'nrs2', 'btn-outline-primary': activeSection !== 'nrs2' }"
+                (click)="toggleCollapse1('nrs2')">
+                Demo DID Numbers
+              </button>
 
+              <button class="btn ml-2"
+                [ngClass]="{ 'btn-primary': activeSection === 'nrs3', 'btn-outline-primary': activeSection !== 'nrs3' }"
+                (click)="toggleCollapse1('nrs3')">
+                Blocked DID Numbers
+              </button>
+            </p>
+            <div class="tables-wrapper" *ngIf="activeSection === 'nrs1'">
+              <div class="table-card">
+                <div class="table-header">NRS List</div>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="bggClass">S.No</th>
+                        <th class="bggClass">Trunk Name</th>
+                        <th class="bggClass">DID Number</th>
+                        <th class="bggClass">Customer Name</th>
 
-
-
-          <div class="container mt-4">
-            <div class="accordion-horizontal">
-              <div class="accordion accordion-flush" id="accordionExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseOne">
-                      NRS List
-                    </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="grid-item">
-                        <table class="table table-responsive">
-                          <thead>
-
-                            <tr>
-                              <th>S.No</th>
-                              <th>Trunk Name</th>
-                              <th>DID Number</th>
-                              <th>Customer Name</th>
-
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                            <tr *ngFor="let item of nrsList;let i=index">
-                              <td>{{i+1}}</td>
-                              <td>{{item.did_trunk_name}}</td>
-                              <td>{{item.did_numbers}}</td>
-                              <td>{{item.customer_name}}</td>
-                            </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo">
-                      Demo DID Numbers
-                    </button>
-                  </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="grid-item">
-                        <table class="table">
-                          <thead>
-
-                            <tr>
-                              <th>S.No</th>
-                              <th>Trunk Name</th>
-                              <th>DID Number</th>
-                              <th>Customer Name</th>
-
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                            <tr *ngFor="let item of demo_did_numberList;let i=index">
-                              <td>{{i+1}}</td>
-                              <td>{{item.did_trunk_name}}</td>
-                              <td>{{item.did_numbers}}</td>
-                              <td>{{item.customer_name}}</td>
-                            </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseThree">
-                      Blocked DID Numbers
-                    </button>
-                  </h2>
-                  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="grid-item">
-                        <table class="table">
-                          <thead>
-               
-                            <tr>
-                              <th>S.No</th>
-                              <th>Trunk Name</th>
-                              <th>DID Number</th>
-                              <th>Customer Name</th>
-                              <th>Block Time</th>
-                              <th>Duration</th>
-
-                            </tr>
-                          </thead>
-                          <tbody>
-
-                            <tr *ngFor="let item of blocked_list;let i=index">
-                              <td>
-                                <input type="checkbox" (change)="toggleBlocked(item.did_entry_id, $event)" />
-                                {{ item.did_trunk_name }}
-                              </td>
-                              <td>{{item.did_trunk_name}}</td>
-                              <td>{{item.did_numbers}}</td>
-                              <td>{{item.customer_name}}</td>
-                              <td>{{item.block_dt_show}}</td>
-                              <td>{{item.block_duration}}</td>
-                            </tr>
-                            <button type="button" class="btn btn-primary"
-                              (click)="releaseBlockedDidNumbers()">Release</button>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of nrsList; let i = index">
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_1  }">{{ i + 1 }}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_2  }">{{ item.did_trunk_name }}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_3  }">{{ item.did_numbers }}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_4 }">{{ item.customer_name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="tables-wrapper" *ngIf="activeSection === 'nrs2'">
+              <div class="table-card">
+                <div class="table-header">Demo DID Numbers</div>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="bggClass">S.No</th>
+                        <th class="bggClass">Trunk Name</th>
+                        <th class="bggClass">DID Number</th>
+                        <th class="bggClass">Customer Name</th>
 
-          <div class="grid-container">
-            <div class="accordion" id="accordionDIDNum">
-              <div class="card">
-                <!-- Accordion Header -->
-                <div class="card-header" [id]="'headingNRS' ">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" [attr.data-toggle]="'collapse'"
-                      [attr.data-target]="'#collapse' " aria-expanded="false" [attr.aria-controls]="'collapse' "
-                      (click)="getDidCatalogDetailsList({})">
-
-                    </button>NRS List
-                  </h2>
-                </div>
-
-                <!-- Accordion Content -->
-                <div [id]="'collapse'" class="collapse" [attr.aria-labelledby]="'headingNRS'"
-                  data-parent="#accordionDIDNum">
-                  <div class="card-body">
-
-                    <div class="grid-item">
-                      <table class="table table-responsive"
-                        style="max-height: 600px;max-width: 600px; overflow: scroll;">
-                        <thead>
-                          <tr colspan="3">NRS List</tr>
-                          <tr>
-                            <th>S.No</th>
-                            <th>Trunk Name</th>
-                            <th>DID Number</th>
-                            <th>Customer Name</th>
-
-                          </tr>
-                        </thead>
-                        <tbody>
-
-                          <tr *ngFor="let item of nrsList;let i=index">
-                            <td>{{i+1}}</td>
-                            <td>{{item.did_trunk_name}}</td>
-                            <td>{{item.did_numbers}}</td>
-                            <td>{{item.customer_name}}</td>
-                          </tr>
-
-                        </tbody>
-                      </table>
-                    </div>
-
-
-                  </div>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of demo_did_numberList;let i=index">
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_1  }">{{i+1}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_2  }">{{item.did_trunk_name}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_3  }">{{item.did_numbers}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_4 }">{{item.customer_name}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
+            <div class="tables-wrapper" *ngIf="activeSection === 'nrs3'">
+              <div class="table-card">
+                <div class="table-header">Blocked DID Numbers</div>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="bggClass">S.No</th>
+                        <th class="bggClass">Trunk Name</th>
+                        <th class="bggClass">DID Number</th>
+                        <th class="bggClass">Customer Name</th>
+                        <th class="bggClass">Block Time</th>
+                        <th class="bggClass">Duration</th>
 
-            <div class="grid-item">
-              <table class="table">
-                <thead>
-                  <tr colspan="3">Demo DID Numbers</tr>
-                  <tr>
-                    <th>S.No</th>
-                    <th>Trunk Name</th>
-                    <th>DID Number</th>
-                    <th>Customer Name</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="let item of demo_did_numberList;let i=index">
-                    <td>{{i+1}}</td>
-                    <td>{{item.did_trunk_name}}</td>
-                    <td>{{item.did_numbers}}</td>
-                    <td>{{item.customer_name}}</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-            <div class="grid-item">
-              <table class="table">
-                <thead>
-                  <tr colspan="3">Blocked DID Numbers</tr>
-                  <tr>
-                    <th>S.No</th>
-                    <th>Trunk Name</th>
-                    <th>DID Number</th>
-                    <th>Customer Name</th>
-                    <th>Block Time</th>
-                    <th>Duration</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="let item of blocked_list;let i=index">
-                    <td>
-                      <input type="checkbox" (change)="toggleBlocked(item.did_entry_id, $event)" />
-                      {{ item.did_trunk_name }}
-                    </td>
-                    <td>{{item.did_trunk_name}}</td>
-                    <td>{{item.did_numbers}}</td>
-                    <td>{{item.customer_name}}</td>
-                    <td>{{item.block_dt_show}}</td>
-                    <td>{{item.block_duration}}</td>
-                  </tr>
-                  <button type="button" class="btn btn-primary" (click)="releaseBlockedDidNumbers()">Release</button>
-
-                </tbody>
-              </table>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of blocked_list;let i=index">
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_1  }">
+                          <input type="checkbox" (change)="toggleBlocked(item.did_entry_id, $event)" />
+                          {{ item.did_trunk_name }}
+                        </td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_2  }">{{item.did_trunk_name}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_3  }">{{item.did_numbers}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_4  }">{{item.customer_name}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_5  }">{{item.block_dt_show}}</td>
+                        <td [ngStyle]="{ 'background-color':  item.bg_color_6  }">{{item.block_duration}}</td>
+                      </tr>
+                      <button type="button" class="btn btn-primary mt-2 mb-2 ml-2 mr-2"
+                        (click)="releaseBlockedDidNumbers()">Release</button>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
           </div>
 
 
+
+
+
+          <div class="tables-wrapper">
+            <div class="table-card" *ngFor="let trunk of DIDDetailList">
+              <div class="table-header">{{ trunk.trunkName }}</div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="bggClass">S.No</th>
+                      <th class="bggClass">DID Number</th>
+                      <th class="customer-col bggClass">Customer Name</th>
+
+                      <th class="bggClass">None</th>
+                      <th class="bggClass">Bronze</th>
+                      <th class="bggClass">Silver</th>
+                      <th class="bggClass">Gold</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let did of trunk.DidtrunkList; let i = index">
+                      <td [ngStyle]="{ 'background-color': did.bgcolor }">{{ i + 1 }}</td>
+                      <td [ngStyle]="{ 'background-color': did.did_trunk_name_color }">{{ did.did_numbers }}</td>
+                      <td [ngStyle]="{ 'background-color': did.cus_color }" class="customer-col">
+                        <span *ngIf="did.status==0">{{ did.customerName }}</span>
+                    
+                        <span *ngIf="did.status == 1" (click)="onRClick(did.did_entry_id)"
+                              style="cursor: pointer; color: blue; text-decoration: underline;">
+                          R
+                        </span>
+                        <span *ngIf="did.status==2">2</span>
+                      </td>
+                    
+                      <!-- ONE td PER column: None -->
+                      <td [ngStyle]="{ 'background-color': did.none_color }">
+                        <input *ngIf="did.status == 1"
+                               type="radio"
+                               [name]="'option_' + did.did_entry_id"
+                               value="4"
+                               [checked]="did.none == 4"
+                               (change)="onRadioSelect(did, 'none')">
+                        <!-- <span *ngIf="did.status != 1">{{ did.none }}</span> -->
+                      </td>
+                    
+                      <!-- Bronze -->
+                      <td [ngStyle]="{ 'background-color': did.bronze_color }">
+                        <input *ngIf="did.status == 1"
+                               type="radio"
+                               [name]="'option_' + did.did_entry_id"
+                               value="1"
+                               [checked]="did.bronze == 1"
+                               (change)="onRadioSelect(did, 'bronze')">
+                        <!-- <span *ngIf="did.status != 1">{{ did.bronze }}</span> -->
+                      </td>
+                    
+                      <!-- Silver -->
+                      <td [ngStyle]="{ 'background-color': did.silver_color }">
+                        <input *ngIf="did.status == 1"
+                               type="radio"
+                               [name]="'option_' + did.did_entry_id"
+                               value="2"
+                               [checked]="did.silver == 2"
+                               (change)="onRadioSelect(did, 'silver')">
+                        <!-- <span *ngIf="did.status != 1">{{ did.silver }}</span> -->
+                      </td>
+                    
+                      <!-- Gold -->
+                      <td [ngStyle]="{ 'background-color': did.gold_color }">
+                        <input *ngIf="did.status == 1"
+                               type="radio"
+                               [name]="'option_' + did.did_entry_id"
+                               value="3"
+                               [checked]="did.gold == 3"
+                               (change)="onRadioSelect(did, 'gold')">
+                        <!-- <span *ngIf="did.status != 1">{{ did.gold }}</span> -->
+                      </td>
+                    </tr>
+                    
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
 
         </div>
@@ -340,3 +301,79 @@
   </div>
 
 </div>
+
+
+
+  
+  <!----------Modal Pop Up (BEGIN)  for SST Tax begin ------------------>
+  <div class="modal fade" id="DIDInvReserve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+           DID Inventory Reserve </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="DIDInvReserveForm">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex; ">
+                <div class="col-lg-3 ">
+                  <label>Reserve Customer </label>
+                </div>
+                <div class="col-lg-9">
+                  <div class="form-group row">
+                    <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
+                        formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                        (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                        [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                        style="padding: 4px 5px !important;">
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplateCustomer let-item>
+                        <a [innerHTML]="item.customerName"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+
+                    </div>
+
+
+                  </div>
+                </div>
+         
+              </div>
+
+
+
+
+            </div>
+            <div class="mt-4">
+
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" (click)="saveCustomer()">
+            Update
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------Modal Pop Up (END)  for SST Tax end------------------>

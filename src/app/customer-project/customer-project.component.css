@@ -206,6 +206,20 @@ border-radius: 50%;
   padding: 0.6em 1.5em;
 
 }
+.btn2 {
+  background-color: #5c8d40;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 50%;
+}
 
 .btn1 {
   background-color: #007cbc;
@@ -655,7 +669,7 @@ label {
   min-width: 75%;
 }
 
-#TransactionManagementViewId .modal-dialog{
+#TransactionManagementViewId .modal-dialog,#emailFormId_cusproj .modal-dialog{
   min-width: 75%;
 
 }
@@ -820,6 +834,9 @@ tr:hover td {
 #emailFormId_prepaidNote label {
   font-weight: 500;
 }
+#AddAttachmentID .modal-dialog,#CustPjctMgmtEdit .modal-dialog {
+  max-width: 75%;
+}
 
 
 
@@ -837,4 +854,30 @@ tr:hover td {
   height: 30px;
   border-radius: 50%;
   margin-right: 5px;
+}
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

@@ -167,12 +167,14 @@ import { MyVOIPLicenceKeyComponent } from './mconnect/my-voiplicence-key/my-voip
 import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { CustomerProjectComponent } from './customer-project/customer-project.component';
-
+import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },{
+    path: 'Currentstock', component: CurrentStockOneComponent
+  },{
     path: 'customerProject', component: CustomerProjectComponent
   },{
     path: 'vendor', component: VendorComponent

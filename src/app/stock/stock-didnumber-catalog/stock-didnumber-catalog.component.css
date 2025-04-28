@@ -364,10 +364,12 @@ select {
     /* max-width: 1000px; */
     width: 100%;
     padding: 20px;
+   
 }
 
 .grid-item {
-    background: rgba(255, 255, 255, 0.2);
+    /* background: rgba(255, 255, 255, 0.2); */
+    background: rgba(162, 218, 200, 0.8);
     border-radius: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -558,4 +560,106 @@ select {
   
   
   
-  
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    text-align: center;
+
+
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
+    gap: 20px;
+    /* max-width: 1000px; */
+    width: 100%;
+    padding: 20px;
+  }
+
+
+
+
+     .customer-col {
+        width: 100px; /* Adjust as needed */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+
+      .tables-wrapper {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding: 20px;
+      }
+      
+      .table-card {
+        min-width: 750px;
+        max-width: 750px;
+        border: 2px solid #333;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+      }
+      
+      .table-header {
+        font-weight: bold;
+        background: #cede3f;
+        /* background: #f0f0f0; */
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      .table-scroll {
+        max-height: 500px;
+        overflow-y: auto;
+      }
+      
+      .tables-wrapper table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      
+      .tables-wrapper table th, td {
+        border: 1px solid #ccc;
+        padding: 6px;
+        text-align: left;
+      }
+      
+      .tables-wrapper table thead {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 1;
+      }
+      .bggClass{
+        background-color: #144656;
+        color:#ddd;
+
+      }
+
+
+      a {
+        font-size: 14px;
+        /* margin: 5px 8px!important; */
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 37px;
+        width: 37px;
+    }
+
+    .badge {
+        background-color: red;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+      
+      
+      

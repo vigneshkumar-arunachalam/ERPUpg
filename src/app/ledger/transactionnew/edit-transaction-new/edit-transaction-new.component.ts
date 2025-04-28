@@ -2042,7 +2042,7 @@ export class EditTransactionNewComponent implements OnInit {
     $.ajax({
       type: 'POST',
       url:
-        'https://laravelapi.erp1.cal4care.com/api/edit/' +
+        'https://erp1.cal4care.com/api/edit/' +
         this.updateVariable +
         '',
       // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',

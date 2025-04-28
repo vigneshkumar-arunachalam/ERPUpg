@@ -317,7 +317,7 @@ export class EditcreditnoteComponent implements OnInit {
  
      // this.companyNameList = response.biller_details;
      this.addDo_section1.patchValue({
-       'DocNo': response.creditNo,
+       'e_DocNo': response.creditNo,
      });
    });
  }

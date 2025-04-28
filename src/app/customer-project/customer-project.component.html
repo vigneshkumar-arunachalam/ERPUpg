@@ -97,7 +97,8 @@
                                                         <ul class="dropdown__list">
 
                                                             <li class="dropdown__item">
-                                                                <a class="hover1" title="Add" (click)="openAdd()">
+                                                                <a class="hover1" title="Add"
+                                                                    (click)="openAdd(list.work_details_id)">
                                                                     <img class="hide"
                                                                         src="assets/img/icon2/add-user-black.png">
                                                                     <img class="show"
@@ -106,10 +107,21 @@
 
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover1" title="Edit">
+                                                                <a class="hover1" title="Edit"
+                                                                    (click)="openEdit(list.work_details_id )">
                                                                     <img class="show"
                                                                         src="assets/img/icon/nfc-pen-b.png">
                                                                     <img class="hide" src="assets/img/icon/nfc-pen.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="Delete"
+                                                                    (click)="openDelete(list.work_details_id )">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
                                                                 </a>
 
                                                             </li>
@@ -158,6 +170,72 @@
                                                 </td>
                                                 <td>
                                                     <span>{{ list1.project_details_id}}</span>
+                                                </td>
+                                                <td>
+                                                    <div class="page">
+
+                                                        <div class="dropdown">
+                                                            <button class="btn2"><i class="fa fa-bars"></i></button>
+                                                            <ul class="dropdown__list">
+
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover1" title="View"
+                                                                        (click)="viewCustomerPrjMgmt(list1.project_details_id)">
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/notepad.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/notepad-black.png">
+                                                                    </a>
+
+                                                                </li>
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover1" title="Edit"
+                                                                        (click)="openEdit(list1.project_details_id )">
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/edit-blue.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/edit-black.png">
+                                                                    </a>
+
+                                                                </li>
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover1" title="Email" data-toggle="modal"
+                                                                    data-target="#emailFormId_cusproj"
+                                                                        (click)="openEmail(list1.project_details_id )">
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/gmail-blue.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/gmail-black.png">
+                                                                    </a>
+
+                                                                </li>
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover1" title="Credentials"
+                                                                        (click)="openCredentials(list1.project_details_id)">
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/share-square-red.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/share-square-black.png">
+                                                                    </a>
+
+                                                                </li>
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover1" title="Delete"
+                                                                        (click)="subDelete(list1.project_details_id )">
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/delete-blue.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/delete-black.png">
+                                                                    </a>
+
+                                                                </li>
+
+
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
 
@@ -225,8 +303,18 @@
                                 <div class="col-lg-12">
 
                                     <!-- <input type="text"  class="form-control" formControlName="viewDescription"  /> -->
-                                    <textarea [innerHTML]="this.viewDescr" class="form-control" rows="4"
-                                        formControlName="viewDescription"></textarea>
+                                    <!-- <textarea [innerHTML]="this.viewDescr" class="form-control" rows="4"
+                                        formControlName="viewDescription"></textarea> -->
+                                        <p>Description:{{this.viewDescr}}</p>
+                                        <div *ngFor="let test of viewDescrcomments">
+                                            <p>--------</p>
+                                            <p>comment:{{test.comments}}</p>
+                                            <p>Created Date:{{test.create_datetime}}</p>
+                                            <p>Project Comment ID:{{test.create_datetime}}</p>
+                                         
+
+                                        </div>
+                                       
                                 </div>
 
                             </div>
@@ -237,8 +325,8 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary">
-                    Upload
+                <button type="button" class="btn btn-primary" (click)="viewUpdate()">
+                    Update
                 </button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
@@ -248,7 +336,7 @@
     </div>
 </div>
 <!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
-<!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
+<!----------Modal Pop Up (BEGIN)  for Add attachment in customer Contract------------------>
 <div class="modal fade" id="AddAttachmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -295,7 +383,7 @@
 
                         <div class="col-lg-6 ">
                             <div class="form-group row">
-                                <label for="edit_date" class="col-lg-12 col-form-label">Project Name *</label>
+                                <label for="add_projName" class="col-lg-12 col-form-label">Project Name *</label>
                                 <div class="col-lg-12">
                                     <input type="text" class="form-control" formControlName="add_projName">
                                 </div>
@@ -304,17 +392,27 @@
 
                         <div class="col-lg-6 ">
                             <div class="form-group row">
-                                <label for="edit_date" class="col-lg-12 col-form-label">Project Date *</label>
+                                <label for="add_projDate" class="col-lg-12 col-form-label">Project Date *</label>
                                 <div class="col-lg-12">
-                                    <input type="number" class="form-control" formControlName="add_projDate">
+                                    <input type="date" class="form-control" formControlName="add_projDate">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 ">
                             <div class="form-group row">
-                                <label for="edit_date" class="col-lg-12 col-form-label">Subject Name *</label>
+                                <label for="add_subjName" class="col-lg-12 col-form-label">Subject Name *</label>
                                 <div class="col-lg-12">
-                                    <input type="number" class="form-control" formControlName="add_subjName">
+                                    <input type="text" class="form-control" formControlName="add_subjName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_date" class="col-lg-12 col-form-label">Select Attachment</label>
+                                <div class="col-lg-12">
+                                    <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
+                                        class="form-control" (change)="onFileChange($event)">
+
                                 </div>
                             </div>
                         </div>
@@ -322,8 +420,121 @@
                             <div class="form-group row">
                                 <label for="edit_date" class="col-lg-12 col-form-label">Description</label>
                                 <div class="col-lg-12">
-                                    
+
                                     <editor id="tinyID_addCP" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" (click)="addAttachmentUpdate()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for edit attachment in customer Contract------------------>
+<div class="modal fade" id="CustPjctMgmtEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+                    Customer Project Management</h2>
+
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editAttachmentForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_billerName" class="col-lg-12 col-form-label">Biller Name *</label>
+                                <div class="col-lg-12">
+                                    <select name="edit_billerName" class="form-control" aria-label="Select Sub Customer"
+                                        formControlName="edit_billerName">
+                                        <option value="null">Select Biller Name</option>
+
+                                        <option *ngFor="let classif of billerDataList" value="{{classif.billerId}}">
+                                            {{classif.biller_info}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_selectCustomer" class="col-lg-12 col-form-label">Select Customer
+                                    *</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_selectCustomer">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_owner" class="col-lg-12 col-form-label">Owner *</label>
+                                <div class="col-lg-12">
+                                    <select name="edit_owner" class="form-control" aria-label="Select Sub Customer"
+                                        formControlName="edit_owner">
+                                        <option value="null">Select Owner</option>
+
+                                        <option *ngFor="let classif of OwnerDataList" value="{{classif.userId}}">
+                                            {{classif.firstName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_pjctFollower" class="col-lg-12 col-form-label">Project Follower</label>
+                                <div class="email-cc-template">
+                                    <div class="col-lg-10" *ngFor="let i =index;let display1 of projectFollower;">
+                                        <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                            checked="{{display1.chk_val == 'true' ? 'checked' : ''}}"
+                                            (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 ">
+                            <div class="form-group row">
+                                <label for="tinyID_editCP" class="col-lg-12 col-form-label">Description</label>
+                                <div class="col-lg-12">
+
+                                    <editor id="tinyID_editCP" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'
@@ -342,7 +553,7 @@
             </div>
             <div class="modal-footer">
 
-
+                <button type="submit" class="btn btn-primary" (click)="openEditUpdate()">Update</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
@@ -350,4 +561,408 @@
         </div>
     </div>
 </div>
-<!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>
+<!----------Modal Pop Up (BEGIN)  for edit attachment in customer Contract------------------>
+<div class="modal fade" id="CustPjctMgmtsubEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+                    Customer Project Management</h2>
+
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editSubAttachmentForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_cusName" class="col-lg-12 col-form-label">Sub Customer Name</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_cusName">
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="edit_cusNameDropdown" class="col-lg-12 col-form-label">or</label>
+                                </div>
+                                <div class="col-lg-12">
+
+                                    <select name="edit_cusNameDropdown" class="form-control"
+                                        aria-label="Select Sub Customer" formControlName="edit_cusNameDropdown">
+                                        <option value="null">Select Sub Customer</option>
+
+                                        <option *ngFor="let classif of getSubCustomerList" value="{{classif.id}}">
+                                            {{classif.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_projName" class="col-lg-12 col-form-label">Project Name *</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_projName">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_projDate" class="col-lg-12 col-form-label">Project Date *</label>
+                                <div class="col-lg-12">
+                                    <input type="date" class="form-control" formControlName="edit_projDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_subjName" class="col-lg-12 col-form-label">Subject Name *</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_subjName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_date" class="col-lg-12 col-form-label">Select Attachment</label>
+                                <div class="col-lg-12">
+                                    <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
+                                        class="form-control" (change)="onFileChange($event)">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 ">
+                            <div class="form-group row">
+                                <label for="edit_description" class="col-lg-12 col-form-label">Description</label>
+                                <div class="col-lg-12">
+
+                                    <editor id="tinyID_addCP" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" (click)="openEditSubUpdate()">Update</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for edit attachment in customer Contract------------------>
+<div class="modal fade" id="CredentialsEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+                    Credential</h2>
+
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="credentialsForm">
+                    <div class="row">
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="teamviewer" class="col-lg-12 col-form-label">Teamviewer Details</label>
+                                <div class="col-lg-12">
+                                   
+                                    <textarea class="form-control" formControlName="teamviewer" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="edit_projDate" class="col-lg-12 col-form-label">Window Details</label>
+                                <div class="col-lg-12">
+                                    <textarea class="form-control" formControlName="window" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                      
+                       
+
+
+
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" (click)="openCredentialsUpdate()">Update</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>
+
+<!----------Modal Pop Up (BEGIN) add  ------------------>
+<div class="modal fade" id="GoogleAuthenticationGuruFormId" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content addcustomernewallcss">
+
+    <div class="modal-header">
+      <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #262127, #54b7aa);">
+        Google Authenticator </h2>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="GoogleAuthenticationForm">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>
+                  Google Authentication Code
+                </label>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" 
+                (keyup.enter)="GoogleAuthenticationValidation()"
+                formControlName="google_AuthenticationCode" />
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+        Validate
+      </button>
+      <button type="button" class="btn btn-dark" data-dismiss="modal">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<!----------Modal Pop Up (END)  add ------------------>
+
+
+
+ <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+
+ <div class="modal fade" id="emailFormId_cusproj" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       
+       <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+       Email</h2>
+
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <form [formGroup]="emailForm">
+
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+             <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+             <div class="col-lg-10">
+               <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
+                 change="handle__email_from($event)">
+                 <option [ngValue]="null" selected>Select From</option>
+                 <option *ngFor="let from of emailFromList" value="{{ from.email_from_id }}">
+                   {{ from.from_email }}
+                 </option>
+                 <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                 {{ from.from_email }}
+               </option> -->
+               </select>
+               <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                 *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                 Please
+                 enter From Address
+               </div>
+             </div>
+           </div>
+
+         </div>
+
+
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+             <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+             <div class="col-md-9 col-9" style="display: flex;">
+               <div class="form-check" style="margin-right: 10px;">
+                 <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
+                   name="radio_ApprovalBy" id="company" (change)="handle_radioChange_email($event);" />
+
+                 <label class="form-check-label" for="company"> Company
+                 </label>
+               </div>
+
+               <div class="form-check">
+                 <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
+                   name="radio_ApprovalBy" id="finance" [checked]="true"
+                   (change)="handle_radioChange_email($event)" />
+                 <label class="form-check-label" for="finance">Finance
+                 </label>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+             <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+             <div class="col-lg-10">
+               <input type="email" id="emailto" class="form-control" formControlName="email_to">
+               <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                 *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                 Please
+                 enter To Address
+               </div>
+             </div>
+           </div>
+
+         </div>
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+
+             <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+             <div class="col-lg-10 ">
+             
+                 <input class="text" class="form-control" formControlName="email_cc" />
+             
+             </div>
+           </div>
+         </div>
+       
+
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+             <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+             <div class="col-lg-10">
+               <input type="text"  class="form-control" formControlName="Subject_Content">
+               <div
+                 *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                 class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                 Subject is Required
+               </div>
+             </div>
+           </div>
+
+         </div>
+         <div class="col-md-12 col-12" >
+           <div class="form-group row">
+             <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+             <div class="col-lg-10">
+               <select name="templat"  class="form-control" formControlName="email_template"
+                 (change)="templateContentEmailDropdown($event)">
+                 <option [ngValue]="null" selected>Select Template</option>
+                 <option *ngFor="let template of crmTemplateList" value="{{ template.crm_template_id }}">
+                   {{template.crm_template_name}}
+                 </option>
+               </select>
+               <br>
+
+               <div
+                 *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                 class="alert alert-danger alertdangerCustomCSS1 ">
+                 Template is Required
+               </div>
+             </div>
+
+
+           </div>
+         </div>
+         <div class="col-md-12 col-12">
+           <div class="form-group row">
+             <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+             <div class="col-lg-10">
+               <editor id="tinyID1_cuspjct" [init]="{
+                             base_url: '/tinymce', 
+                             branding: false,
+                             suffix: '.min'
+                                 
+                         }"></editor>
+             </div>
+           </div>
+         </div>
+         <!-- <div class="col-md-12 col-12">
+                     <div class="form-group row">
+                         <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                     </div>
+                 </div> -->
+
+       </form>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+         Mail
+
+       </button>
+       <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+         Close
+       </button>
+
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>

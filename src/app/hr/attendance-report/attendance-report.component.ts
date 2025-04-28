@@ -345,8 +345,17 @@ export class AttendanceReportComponent implements OnInit {
     api_postUPd.search_txt = '';
     api_postUPd.current_page = '';
 
-    api_postUPd.fromDate = this.attendanceForm.value.fromDate;
+     api_postUPd.fromDate = this.attendanceForm.value.fromDate;
+    //api_postUPd.fromDate = "2025-03-25";
     api_postUPd.toDate = this.attendanceForm.value.toDate;
+    if (new Date(api_postUPd.toDate) < new Date(api_postUPd.fromDate)) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "To Date is Earlier than From Date",
+        position: 'topRight'
+      });
+      return false;
+    }
     api_postUPd.country = this.attendanceForm.value.country;
     api_postUPd.leave_type = this.attendanceForm.value.leaveType;
     api_postUPd.employeeId = this.attendanceForm.value.employee;
