@@ -667,7 +667,7 @@ console.log("this.tempVariable",this.Purchase_Order);
     }
   }
   pdf(purchaseOrderId: any) {
-    var url = "https://laravelapi.erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
+    var url =this.serverService.urlFinal + "purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
     window.open(url, '_blank');
     console.log("url", url)
 
@@ -787,10 +787,10 @@ console.log("this.tempVariable",this.Purchase_Order);
 
   pdfSalaryEntry(salaryId: any) {
 
-   // var url = "https://erp1.cal4care.com/api/hr/salarySlipDetails?salaryId=" + salaryId + "";
-    var url = "https://laravelapi.erp1.cal4care.com/api/hr/salarySlipDetails?salaryId=" + salaryId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+  
+    var url = this.serverService.urlFinal + "hr/salarySlipDetails?salaryId=" + salaryId + "";
+
     window.open(url, '_blank');
-    console.log("url", url)
+  
   }
 }

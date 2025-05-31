@@ -72,13 +72,15 @@ export class DidStockComponent implements OnInit {
     // this.did_approval_List();
    
   }
+ // currentDate34:any;
+   currentDate34 = new Date().toISOString().substring(0, 10); 
   createRow(): FormGroup {
     return this.fb.group({
       billerName: [''],
       trunkName: [''],
       didNumber: [''],
       nrs: [false],
-      purDate: [''],
+      purDate: [this.currentDate34],
     });
   }
 get rows(): FormArray {

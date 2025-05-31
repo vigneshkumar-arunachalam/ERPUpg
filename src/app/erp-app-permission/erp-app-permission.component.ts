@@ -54,8 +54,8 @@ export class ErpAppPermissionComponent implements OnInit {
     this.getErpAppPermissionList({});
 
     this.http
-      .get<any>(
-        'https://laravelapi.erp1.cal4care.com/api/userAppPermission/getAppPermissions'
+      .get<any>(this.serverService.urlFinal +
+        'userAppPermission/getAppPermissions'
       )
       .subscribe((data: any) => {
         this.editpopupList_header = data.data;
@@ -106,12 +106,16 @@ export class ErpAppPermissionComponent implements OnInit {
       { key: 'dc_ip', description: 'ERP DC IP' },
     ];
 
-    this.editpopUpListCount.forEach((user: { permissionsString: string }) => {
+    if(this.editpopUpListCount){
+       this.editpopUpListCount.forEach((user: { permissionsString: string }) => {
       // Initialize permissionsString if it doesn't exist
       if (!user.permissionsString) {
         user.permissionsString = '';
       }
     });
+
+    }
+   
   }
 
   slectAll() {

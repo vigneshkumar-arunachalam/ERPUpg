@@ -7,7 +7,7 @@
                     <span class="breadcrumb-item active">RMA Issues</span>
                 </h3>
                 <div class="quotation-btn-section">
-                    <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+                    <button type="button" title="Add New" class="btn btn-primary btn-default btn-squared"
                         (click)="AddRmaIssue()" style="margin-right: 10px;">
                         <i class="fas fa-plus" style="margin-right:4px;"></i>
                         Add New RMA Issue
@@ -26,7 +26,7 @@
                                 <td colspan="12" class="search-text-tbl">
                                     <div class="input-group"><input type="text" class="form-control"
                                             (keyup)="getRMAIssueListData({'search_text':call_history_search.value})"
-                                            #call_history_search placeholder="search here">
+                                            #call_history_search placeholder="Search here...">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"
                                                 (click)="getRMAIssueListData({'search_text':call_history_search.value})"><i
@@ -197,9 +197,14 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <h2>New RMA Issues </h2>
-            </div>
-
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+               background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+               background: linear-gradient(to right, #262127, #54b7aa);">
+                  Add New RMA Issues  </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             <div class="modal-body">
                 <div class="userDatatable global-shadow border-0 bg-white w-100">
                     <div class="table-responsive">
@@ -209,7 +214,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="company_name">Company Name</label>
+                                            <label for="company_name">Company Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="company_name" class="form-control"
                                                 formControlName="company_name">
                                                 <option *ngFor="let user of add_company_name_list"
@@ -221,9 +226,9 @@
                                     </div>
 
 
-                                    <div class="col-md-6" style="position: relative;">
+                                    <div class="col-md-6" >
                                         <div class="form-group">
-                                            <label for="customer_name">Customer Name</label>
+                                            <label for="customer_name">Customer Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <input type="text" class="form-control" id="customer_name"
                                                 formControlName="customer_name" (input)="getCustomerList($event)" />
                                             <input type="hidden" formControlName="customer_name_search"
@@ -248,9 +253,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6" style="position: relative;">
+                                    <div class="col-md-6" >
                                         <div class="form-group">
-                                            <label for="product_serial_no">Product Serial Number</label>
+                                            <label for="product_serial_no">Product Serial Number<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <input type="text" class="form-control" id="product_serial_no"
                                                 formControlName="product_serial_no" (input)="getserialNumber($event)" />
                                             <input type="hidden" formControlName="product_serial_no_search"
@@ -267,7 +272,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="product_category">Product Category</label>
+                                            <label for="product_category">Product Category<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="product_category" class="form-control"
                                                 formControlName="product_category"
                                                 (change)="getProductsByCategorylist()">
@@ -281,7 +286,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="product_name">Product Name</label>
+                                            <label for="product_name">Product Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="product_name" class="form-control"
                                                 formControlName="product_name">
                                                 <option [ngValue]="null" selected>Select Product Name</option>
@@ -294,7 +299,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="problem_type">Problem Type</label>
+                                            <label for="problem_type">Problem Type<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="problem_type" class="form-control"
                                                 formControlName="problem_type">
                                                 <option [ngValue]="null" selected>Select Problem Type</option>
@@ -381,10 +386,17 @@
     aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
+          
             <div class="modal-header">
 
-                <h2>New RMA Issues </h2>
-            </div>
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+               background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+               background: linear-gradient(to right, #262127, #54b7aa);">
+                  Edit RMA Issues  </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
 
             <div class="modal-body">
                 <div class="userDatatable global-shadow border-0 bg-white w-100">
@@ -395,7 +407,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="edit_company_name">Company Name</label>
+                                            <label for="edit_company_name">Company Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="edit_company_name" class="form-control"
                                                 formControlName="edit_company_name">
                                                 <option *ngFor="let user of add_company_name_list"
@@ -409,7 +421,7 @@
 
                                     <div class="col-md-6" style="position: relative;">
                                         <div class="form-group">
-                                            <label for="edit_customer_name">Customer Name</label>
+                                            <label for="edit_customer_name">Customer Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <input type="text" class="form-control" id="edit_customer_name"
                                                 formControlName="edit_customer_name"
                                                 (input)="editgetCustomerList($event)" />
@@ -440,7 +452,7 @@
 
                                     <div class="col-md-6" style="position: relative;">
                                         <div class="form-group">
-                                            <label for="edit_product_serial_no">Product Serial Number</label>
+                                            <label for="edit_product_serial_no">Product Serial Number<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <input type="text" class="form-control" id="edit_product_serial_no"
                                                 formControlName="edit_product_serial_no"
                                                 (input)="editgetserialNumber($event)" />
@@ -458,7 +470,7 @@
                                     <!-- Product Category -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="edit_product_category">Product Category</label>
+                                            <label for="edit_product_category">Product Category<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="edit_product_category" class="form-control"
                                                 formControlName="edit_product_category"
                                                 (change)="edit_getProductsByCategorylist()">
@@ -474,7 +486,7 @@
                                     <!-- Product Name -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="edit_product_name">Product Name</label>
+                                            <label for="edit_product_name">Product Name<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="edit_product_name" class="form-control"
                                                 formControlName="edit_product_name">
                                                 <!-- <option [ngValue]="null" >Select Product Name</option> -->
@@ -488,7 +500,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="edit_problem_type">Problem Type</label>
+                                            <label for="edit_problem_type">Problem Type<span style="color:rgb(243, 4, 4)">*</span></label>
                                             <select name="edit_problem_type" class="form-control"
                                                 formControlName="edit_problem_type">
                                                 <option [ngValue]="null" selected>Select Problem Type</option>

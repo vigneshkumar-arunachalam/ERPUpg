@@ -205,6 +205,10 @@ import { CustomerProjectComponent } from './customer-project/customer-project.co
  import { NgApexchartsModule } from 'ng-apexcharts';
 import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
 
+// import { RatecaDeliverychallanComponenttalogComponent} from './ratecatalog/ratecatalog.component';
+//  import {RatecatalogComponent} from './stock/ratecatalog.component';
+
+
 
 @NgModule({
   declarations: [
@@ -382,7 +386,10 @@ import { CurrentStockOneComponent } from './stock/current-stock-one/current-stoc
      CurrentPayslipComponent,
      VendorComponent,
      CustomerProjectComponent,
-     CurrentStockOneComponent
+     CurrentStockOneComponent,
+   
+    
+
      
  
   ],

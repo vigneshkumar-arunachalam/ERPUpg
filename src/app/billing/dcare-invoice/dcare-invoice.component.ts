@@ -3032,17 +3032,17 @@ export class DcareInvoiceComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+ 
     window.open(url, '_blank');
-    console.log("url", url)
+  
   }
   dopdf(do_id: any,i: any) {
     $("#ActionId" + i).modal("hide");
-    // var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
-     var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
+
+     var url = this.serverService.urlFinal +"deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
     window.open(url, '_blank');
-    console.log("url", url)
+
   }
   get_actualcost_details(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
@@ -3237,7 +3237,7 @@ export class DcareInvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url: this.serverService.urlFinal + 'invoice/invoice_attachment_save',
 
 
         cache: false,
@@ -3443,7 +3443,7 @@ export class DcareInvoiceComponent implements OnInit {
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
-    console.log("url", url)
+   
     // $('#pdfFormId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 

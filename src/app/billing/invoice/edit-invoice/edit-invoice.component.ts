@@ -556,24 +556,24 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   finalDiscountCalc() {
-    console.log("-----------------------------------------------------")
+   // console.log("-----------------------------------------------------")
     var enablePercentabeDiscont = $('#enablePerFinal1').val()
-    console.log("enablePercentabeDiscont", enablePercentabeDiscont)
+  //  console.log("enablePercentabeDiscont", enablePercentabeDiscont)
     var enablePriceDiscont = $('#finaldiscountTYpe_amt').val()
-    console.log("enablePriceDiscont", enablePriceDiscont)
+   // console.log("enablePriceDiscont", enablePriceDiscont)
     var tax_amt = $('#tax_amt_id').val()
-    console.log("tax_amt", tax_amt)
+  //  console.log("tax_amt", tax_amt)
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-    console.log("disType", disType)
+  //  console.log("disType", disType)
     var final_tot = this.grossTotal;
-    console.log("final_tot-grosstotal", this.grossTotal)
+   // console.log("final_tot-grosstotal", this.grossTotal)
 
     var price: any;
 
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
-    console.log('disType' + disType + 'final_tot' + final_tot);
+  //  console.log('disType' + disType + 'final_tot' + final_tot);
 
     if (disType == 'per') {
 
@@ -787,7 +787,7 @@ export class EditInvoiceComponent implements OnInit {
   }
   handleChange_SSTax(event:any){
     this.sstCheckbox=event.target.checked;
-    console.log("this.sstCheckbox",this.sstCheckbox);
+  //  console.log("this.sstCheckbox",this.sstCheckbox);
 
   }
 
@@ -932,7 +932,7 @@ export class EditInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
 
 
@@ -1184,117 +1184,129 @@ export class EditInvoiceComponent implements OnInit {
 
       if (response != '') {
         this.spinner.hide();
-        this.shipAdd_Edit = response.billing_pararent_details[0].s_address
-        this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy
-        this.billID_Edit = response.billing_pararent_details[0].billId;
-        this.billerID_Edit = response.billing_pararent_details[0].billerId;
-        this.exportState_value = response.billing_pararent_details[0].export_state;
-        this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
-        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
-        this.customerID_value =response.billing_pararent_details[0].custId
-        this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
-        this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
-        this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-       // console.log(response.billing_pararent_details[0].currency)
-        $('#curren').val(response.billing_pararent_details[0].currency);
-     //   $('#inlineCjjedit').val(response.billing_pararent_details[0].sst_tax);
-        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
-
-
-        this.customerName_Data = response.billing_pararent_details[0].custId;
-        this.customerName_Change = response.billing_pararent_details[0].b_name;
-
-        let cus_address=response.billing_pararent_details[0].b_address;
-        let ship_address=response.billing_pararent_details[0].s_address;
+        if(response.billing_pararent_details[0]){
+          this.shipAdd_Edit = response.billing_pararent_details[0].s_address
+          this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy
+          this.billID_Edit = response.billing_pararent_details[0].billId;
+          this.billerID_Edit = response.billing_pararent_details[0].billerId;
+          this.exportState_value = response.billing_pararent_details[0].export_state;
+          this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
+          this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+          this.customerID_value =response.billing_pararent_details[0].custId
+          this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
+          this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
+          this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
+         // console.log(response.billing_pararent_details[0].currency)
+          $('#curren').val(response.billing_pararent_details[0].currency);
+       //   $('#inlineCjjedit').val(response.billing_pararent_details[0].sst_tax);
+          this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
+  
+  
+          this.customerName_Data = response.billing_pararent_details[0].custId;
+          this.customerName_Change = response.billing_pararent_details[0].b_name;
+  
+          let cus_address=response.billing_pararent_details[0].b_address;
+          let ship_address=response.billing_pararent_details[0].s_address;
+          let cus_address_break = cus_address.split('\n');
+          let ship_address_break = ship_address.split('\n');
+          this.custAdr11=cus_address_break[0];
+          this.custAdr21=cus_address_break[1];
+          this.custAdr31=cus_address_break[2];
+          this.ShipAdr11=ship_address_break[0];
+          this.ShipAdr21=ship_address_break[1];
+          this.ShipAdr31=ship_address_break[2];
+        }
+  
        
-        let cus_address_break = cus_address.split('\n');
-        let ship_address_break = ship_address.split('\n');
+       
       
  
  
-     this.custAdr11=cus_address_break[0];
-      this.custAdr21=cus_address_break[1];
-      this.custAdr31=cus_address_break[2];
-      this.ShipAdr11=ship_address_break[0];
-      this.ShipAdr21=ship_address_break[1];
-      this.ShipAdr31=ship_address_break[2];
+if(response.billing_pararent_details[0]){
+  this.addPI_section1.patchValue({
+    'billId_edit': response.billing_pararent_details[0].billId,
+    'companyName': response.billing_pararent_details[0].billerId,
+    'BillTo': response.billing_pararent_details[0].b_name,
+    'customer_name': response.billing_pararent_details[0].b_name,
+    'customer_id_hd': response.billing_pararent_details[0].custId,
+    'address_1': this.custAdr11,
+    'address_2': this.custAdr21,
+    'address_3': this.custAdr31,
+    'shipTo_1':this.ShipAdr11,
+    'shipTo_2':this.ShipAdr21,
+    'shipTo_3':this.ShipAdr31,
 
-        this.addPI_section1.patchValue({
-          'billId_edit': response.billing_pararent_details[0].billId,
-          'companyName': response.billing_pararent_details[0].billerId,
-          'BillTo': response.billing_pararent_details[0].b_name,
-          'customer_name': response.billing_pararent_details[0].b_name,
-          'customer_id_hd': response.billing_pararent_details[0].custId,
-          'address_1': this.custAdr11,
-          'address_2': this.custAdr21,
-          'address_3': this.custAdr31,
-          'shipTo_1':this.ShipAdr11,
-          'shipTo_2':this.ShipAdr21,
-          'shipTo_3':this.ShipAdr31,
+    'Attn_1': response.billing_pararent_details[0].b_attn,
 
-          'Attn_1': response.billing_pararent_details[0].b_attn,
+    'Attn_2': response.billing_pararent_details[0].s_attn,
+    'Ref': response.billing_pararent_details[0].ref,
 
-          'Attn_2': response.billing_pararent_details[0].s_attn,
-          'Ref': response.billing_pararent_details[0].ref,
+    'invoiceNo': response.billing_pararent_details[0].invoice_no,
+    'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
+    'tin': response.billing_pararent_details[0].tinNo,
+    'cst': response.billing_pararent_details[0].cstNo,
+    'Date': response.billing_pararent_details[0].billDate,
+    'PoNo': response.billing_pararent_details[0].po_no,
+    'PoDate': response.billing_pararent_details[0].po_date,
+    'salesRep': response.billing_pararent_details[0].sales_rep,
+    'ShipBy': response.billing_pararent_details[0].ship_by,
+    'ShipDate': response.billing_pararent_details[0].ship_date,
+    'terms': response.billing_pararent_details[0].terms,
+    'Currency': response.billing_pararent_details[0].currency,
+    'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
+    'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+    'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
+    'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
+    'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
+    'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
+    'sst_Cbk': response.billing_pararent_details[0].sst_tax,
 
-          'invoiceNo': response.billing_pararent_details[0].invoice_no,
-          'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
-          'tin': response.billing_pararent_details[0].tinNo,
-          'cst': response.billing_pararent_details[0].cstNo,
-          'Date': response.billing_pararent_details[0].billDate,
-          'PoNo': response.billing_pararent_details[0].po_no,
-          'PoDate': response.billing_pararent_details[0].po_date,
-          'salesRep': response.billing_pararent_details[0].sales_rep,
-          'ShipBy': response.billing_pararent_details[0].ship_by,
-          'ShipDate': response.billing_pararent_details[0].ship_date,
-          'terms': response.billing_pararent_details[0].terms,
-          'Currency': response.billing_pararent_details[0].currency,
-          'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-          'PaymentVia': response.billing_pararent_details[0].paymentVIA,
-          'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
-          'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
-          'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
-          'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
-          'sst_Cbk': response.billing_pararent_details[0].sst_tax,
+  });
 
-        });
+//  console.log('billchild_details.length' + response.billchild_details.length);
+  this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
 
-      //  console.log('billchild_details.length' + response.billchild_details.length);
-        this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+}
+
+       
 
         this.TaxDropdown();
 
 
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.billchild_details.length; index++) {
+        if(response.billchild_details){
+          for (let index = 0; index < response.billchild_details.length; index++) {
 
-        //  console.log('billchild_details++index' + index);
+            //  console.log('billchild_details++index' + index);
+    
+    
+              formArray.push(this.fb.group({
+                "pd_billchild_id": response.billchild_details[index].billChildid,
+                "pd_nextPage_checkbox": response.billchild_details[index].to_next_page == 1 ? true : false,
+    
+                "pd_productName_txtbox1": response.billchild_details[index].productName,
+                "pd_productName_txtArea": response.billchild_details[index].productDesc,
+                "pd_quantity_txtbox1": response.billchild_details[index].quantity,
+                "pd_current_month_str": response.billchild_details[index].current_month_str,
+                "pd_unit": response.billchild_details[index].unit,
+                "pd_sellingPrice": response.billchild_details[index].rate,
+                "pd_Total": response.billchild_details[index].total_amt,
+                "pd_netPrice": response.billchild_details[index].net_amt,
+                "pd_OutCall": response.billchild_details[index].out_call_state == 1 ? true : false,
+                "sub_dis_amt": response.billchild_details[index].dis_amt,
+                "sub_dis_type": response.billchild_details[index].dis_type,
+                "sub_dis_val": response.billchild_details[index].dis_per,
+                "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
+                "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
+    
+    
+              })
+    
+              );
+            }
 
-
-          formArray.push(this.fb.group({
-            "pd_billchild_id": response.billchild_details[index].billChildid,
-            "pd_nextPage_checkbox": response.billchild_details[index].to_next_page == 1 ? true : false,
-
-            "pd_productName_txtbox1": response.billchild_details[index].productName,
-            "pd_productName_txtArea": response.billchild_details[index].productDesc,
-            "pd_quantity_txtbox1": response.billchild_details[index].quantity,
-            "pd_current_month_str": response.billchild_details[index].current_month_str,
-            "pd_unit": response.billchild_details[index].unit,
-            "pd_sellingPrice": response.billchild_details[index].rate,
-            "pd_Total": response.billchild_details[index].total_amt,
-            "pd_netPrice": response.billchild_details[index].net_amt,
-            "pd_OutCall": response.billchild_details[index].out_call_state == 1 ? true : false,
-            "sub_dis_amt": response.billchild_details[index].dis_amt,
-            "sub_dis_type": response.billchild_details[index].dis_type,
-            "sub_dis_val": response.billchild_details[index].dis_per,
-            "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
-            "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
-
-
-          })
-
-          );
         }
+       
 
 
       //  console.log(formArray)
@@ -1317,49 +1329,53 @@ export class EditInvoiceComponent implements OnInit {
 
         }
 
-        this.addPI_section3.patchValue({
-          //row-1
+        if(response.billing_pararent_details[0]){
+          this.addPI_section3.patchValue({
+            //row-1
+  
+            'section3_gross_total': response.billing_pararent_details[0].grossAmount,
+            //row-2
+  
+            'section3_discount_txtbox': response.billing_pararent_details[0].discountAmount,
+            'final_dis_val': this.finalDiscountVal,
+            'final_dis_type': this.finalDiscountType,
+  
+            //row-3
+            'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
+            'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
+            'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
+            //row-4
+            'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
+            'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
+            'banking_charge_name': response.billing_pararent_details[0].add_name,
+  
+            'banking_charge_amt': response.billing_pararent_details[0].add_amt,
+            //row-5
+            'section3_grand_total': response.billing_pararent_details[0].netPayment,
+            //row-7
+            'section3_remarks': response.billing_pararent_details[0].remarks,
+            'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
+  
+            //row-8
+            'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
+            'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
+            'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
+            'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
+            'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
+            'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
+            //row-9
+            'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+            //row-10
+            'section3_logo': response.billing_pararent_details[0].print_logo,
+            'section3_select_additional_signature': response.quot_signature_show_state,
+          });
+  
+         // console.log('==finalDiscountVal==' + this.finalDiscountVal);
+          this.received_signature_state = response.billing_pararent_details[0].received_signature;
+          this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
-          'section3_gross_total': response.billing_pararent_details[0].grossAmount,
-          //row-2
-
-          'section3_discount_txtbox': response.billing_pararent_details[0].discountAmount,
-          'final_dis_val': this.finalDiscountVal,
-          'final_dis_type': this.finalDiscountType,
-
-          //row-3
-          'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
-          'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
-          'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
-          //row-4
-          'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
-          'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
-          'banking_charge_name': response.billing_pararent_details[0].add_name,
-
-          'banking_charge_amt': response.billing_pararent_details[0].add_amt,
-          //row-5
-          'section3_grand_total': response.billing_pararent_details[0].netPayment,
-          //row-7
-          'section3_remarks': response.billing_pararent_details[0].remarks,
-          'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
-
-          //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
-          'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
-          'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
-          'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
-          'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
-          'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
-          //row-9
-          'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
-          //row-10
-          'section3_logo': response.billing_pararent_details[0].print_logo,
-          'section3_select_additional_signature': response.quot_signature_show_state,
-        });
-
-       // console.log('==finalDiscountVal==' + this.finalDiscountVal);
-        this.received_signature_state = response.billing_pararent_details[0].received_signature;
-        this.print_logo_state = response.billing_pararent_details[0].print_logo;
+        }
+       
 
 
         this.editAddress();
@@ -1414,7 +1430,7 @@ export class EditInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
     this.spinner.hide();
@@ -1524,8 +1540,8 @@ export class EditInvoiceComponent implements OnInit {
   updateInvoice() {
  
   
-    console.log("alert(this.customerName_Change)",this.customerName_Change)
-    console.log("alert(this.customerName_Data)",this.customerName_Data)
+    // console.log("alert(this.customerName_Change)",this.customerName_Change)
+    // console.log("alert(this.customerName_Data)",this.customerName_Data)
     var vv = this.addPI_section1.value.shipTo_3;
     this.spinner.show();
     this.addPI_section1.get("ship_to").enable();
@@ -1561,7 +1577,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.action = "update_proforma_invoice";
     api_updatePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
+  //  console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
     api_updatePI_req.billerId = this.addPI_section1.value.companyName;
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
@@ -1713,7 +1729,7 @@ export class EditInvoiceComponent implements OnInit {
 
     var addr = this.addPI_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-      console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
+     // console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
       addr[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -1739,7 +1755,7 @@ export class EditInvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("add quotation new save", response);
+     // console.log("add quotation new save", response);
       if (response.status == true) {
         this.upd_flagName=response.searchFlag;
         this.upd_search_name=response.search_name;
@@ -1752,7 +1768,7 @@ export class EditInvoiceComponent implements OnInit {
         });
         setTimeout(() => {
          
-          console.log("search_values",this.search_values)
+        //  console.log("search_values",this.search_values)
           this.serverService.invoice_search1.next(this.search_values);
         }, 1000);
 
@@ -1792,15 +1808,15 @@ export class EditInvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
     this.goBack();
   }
 
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+   // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1893,8 +1909,8 @@ export class EditInvoiceComponent implements OnInit {
     }
     for (let j = 0; j <= this.itre; j++) {
 
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
 
     }
 
@@ -1921,17 +1937,17 @@ export class EditInvoiceComponent implements OnInit {
     var enablePriceFinal = $('#enablePriceFinal').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
-    console.log('final_ tot', final_tot);
+   // console.log('final_ tot', final_tot);
 
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
 
       if (enablePerFinal != '') {
-        console.log('3333' + final_tot);
+      //  console.log('3333' + final_tot);
         price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
-        console.log('1...price...', price);
+       // console.log('1...price...', price);
 
 
         $('#sub_discount_' + this.invocePriceKey).val(price);
@@ -1942,14 +1958,14 @@ export class EditInvoiceComponent implements OnInit {
         $('#sub_discount_val_' + this.invocePriceKey).val('');
 
         price = final_tot;
-        console.log('final_tot....', final_tot);
-        console.log('price....', price);
+        // console.log('final_tot....', final_tot);
+        // console.log('price....', price);
       }
 
 
     } else {
       price = final_tot - enablePriceFinal;
-      console.log('price...', price);
+     // console.log('price...', price);
 
       $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
       $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
@@ -1980,7 +1996,7 @@ export class EditInvoiceComponent implements OnInit {
     var row_cnt = val;
     var sub_dis_val = 0;
 
-    console.log('row_cnt' + row_cnt);
+   // console.log('row_cnt' + row_cnt);
     $('#enablePerFinal').val('');
     $('#enablePriceFinal').val('');
 
@@ -2029,20 +2045,20 @@ export class EditInvoiceComponent implements OnInit {
     $('#finaldiscountTYpe_amt').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+   // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal1').val(final_dis_val);
-      console.log('22' + disType);
+    //  console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#finalDiscount_amt').val();
       $('#finaldiscountTYpe_amt').val(final_dis_val);
-      console.log('33' + disType);
+    //  console.log('33' + disType);
     } else {
-      console.log('44' + disType);
+     // console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -2125,7 +2141,7 @@ export class EditInvoiceComponent implements OnInit {
 
   eventCheckSelectReceivedSignature(e: any) {
     this.checkbox_selectReceivedSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+  //  console.log(this.checkbox_selectAdditionalSignature);
   }
 
   eventCheckSelectAdditionalSignature(e: any) {
@@ -2139,7 +2155,7 @@ export class EditInvoiceComponent implements OnInit {
       $('#signature_message_id').css("display", "block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+  //  console.log(this.checkbox_selectAdditionalSignature);
   }
 
   invoiceAddSignatureEdit(sign_val: any) {

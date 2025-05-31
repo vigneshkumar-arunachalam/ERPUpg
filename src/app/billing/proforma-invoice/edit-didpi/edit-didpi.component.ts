@@ -253,30 +253,30 @@ export class EditDidpiComponent implements OnInit {
 
     this.route.queryParams
     .subscribe(params => {
-      console.log("params output value", params);
+     // console.log("params output value", params);
 
       this.editbillerID = params['e_editBillID'];
       this.edit_Duplicate_ID = params['e_editDuplicateID'];
       this.editDIDStateID = params['e_editDIDState'];
       this.searchFlag = params['e_searchFlag'];
       
-      console.log("edit biller id", this.editbillerID);
-      console.log("edit Duplicate id", this.edit_Duplicate_ID);
-      console.log("edit DID state id", this.editDIDStateID);
-      console.log("edit searchFlag id", this.searchFlag);
+      // console.log("edit biller id", this.editbillerID);
+      // console.log("edit Duplicate id", this.edit_Duplicate_ID);
+      // console.log("edit DID state id", this.editDIDStateID);
+      // console.log("edit searchFlag id", this.searchFlag);
       if(this.editbillerID==undefined){
         this.edit_flag=false;
         this.duplicate_flag=true;
-        console.log("if part");
-        console.log("this.edit_flag",this.edit_flag);
-        console.log("this.duplicate_flag",this.duplicate_flag);
+        // console.log("if part");
+        // console.log("this.edit_flag",this.edit_flag);
+        // console.log("this.duplicate_flag",this.duplicate_flag);
         //making duplicate
       }else{
         this.edit_flag=true;
         this.duplicate_flag=false;
-        console.log("else part");
-        console.log("this.edit_flag",this.edit_flag);
-        console.log("this.duplicate_flag",this.duplicate_flag);
+        // console.log("else part");
+        // console.log("this.edit_flag",this.edit_flag);
+        // console.log("this.duplicate_flag",this.duplicate_flag);
         // making edit
       }
    
@@ -512,8 +512,8 @@ export class EditDidpiComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        console.log("i", i)
-        console.log("fixedAddresses", this.addressControls)
+        // console.log("i", i)
+        // console.log("fixedAddresses", this.addressControls)
         this.addressControls.removeAt(i);
         var addr = this.did_Invice_fixed_charges.value.fixedAddresses;
         var list_cnt = addr.length;
@@ -530,7 +530,7 @@ export class EditDidpiComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+         // console.log("response", response);
 
         });
         // $('#enablePerFinal_1').val('');
@@ -625,7 +625,7 @@ export class EditDidpiComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+        //  console.log("response", response);
 
         });
 
@@ -655,7 +655,7 @@ export class EditDidpiComponent implements OnInit {
 
     this.otherAddress = this.did_Invice_other_charges.get('otherAddress') as FormArray;
     this.otherAddress.push(this.otherFormDid());
-    console.log("this.itre",this.itre);
+    // console.log("this.itre",this.itre);
     this.itre = this.itre + 1;
     this.otherAddressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
@@ -667,7 +667,7 @@ export class EditDidpiComponent implements OnInit {
  
     this.otherAddress = this.did_Invice_other_charges.get('otherAddress') as FormArray;
     this.otherAddress.push(this.otherFormDid());
-    console.log("this.itre-other charge1",this.itre);
+    // console.log("this.itre-other charge1",this.itre);
     this.itre = this.itre;
     this.otherAddressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
@@ -730,7 +730,7 @@ export class EditDidpiComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+         // console.log("response", response);
 
         });
 
@@ -754,91 +754,91 @@ export class EditDidpiComponent implements OnInit {
   handleChangeLocal(event: any) {
     this.export_state_Local = event.target.value;
     this.export_state = 'Local';
-    console.log(this.export_state_Local);
+   // console.log(this.export_state_Local);
 
   }
   handleChangeExport(event: any) {
     this.export_state_Export = event.target.value;
     this.export_state = 'Export';
-    console.log(this.export_state_Export);
+   // console.log(this.export_state_Export);
 
   }
   handleChangeZeroValid(event: any) {
     this.export_state_ZeroValid = event.target.value;
     this.export_state = 'Zero Valid';
-    console.log(this.export_state_ZeroValid);
+   // console.log(this.export_state_ZeroValid);
 
   }
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
+    // console.log("radio button value", radioSelectInitial);
+    // console.log("radio button id value", abc);
   }
   handleChange_Jompay(event: any) {
     this.Jompay_Value = false;
     this.Jompay_Value = event.target.checked;
-    console.log(this.Jompay_Value);
+   // console.log(this.Jompay_Value);
   }
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+  //  console.log("radio button value", radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChange_ExportState(data: any, evt: any) {
 
     this.radioID_Export = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_ExportState = evt.target.value;
     this.export_state = evt.target.value;
-    console.log("radio button value", this.radio_Value_ExportState);
+    // console.log("radio button value", this.radio_Value_ExportState);
 
   }
   handleChangeExtraLogo(event: any) {
     this.ExtralogoValue = event.target.value;
     // var xyz = id;
-    console.log("radio button value for Extra logo", this.ExtralogoValue);
+   // console.log("radio button value for Extra logo", this.ExtralogoValue);
 
   }
   eventCheckSelectReceivedSignature(e: any) {
 
     this.checkbox_selectReceivedSignature = e.target.checked;
-    console.log(this.checkbox_selectReceivedSignature);
+   // console.log(this.checkbox_selectReceivedSignature);
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
+  //  console.log(this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.value;
-    console.log(this.MSDisplay_Value);
+  //  console.log(this.MSDisplay_Value);
   }
   cbk_fn_previousDue(event: any) {
     this.cbk_previousDue = event.target.checked;
-    console.log(this.cbk_previousDue)
+  //  console.log(this.cbk_previousDue)
   }
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+  //  console.log(this.chklogoAddressSignature)
   }
   handleChange_SelectExtraLogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_SelectExtraLogo = evt.target.value;
     this.ExtralogoValue = evt.target.value;
 
-    console.log("radio button value", this.radio_Value_SelectExtraLogo);
+  //  console.log("radio button value", this.radio_Value_SelectExtraLogo);
 
   }
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-    console.log(this.chkTermsandcondition)
+    // console.log(this.chkTermsandcondition)
   }
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
@@ -856,7 +856,7 @@ export class EditDidpiComponent implements OnInit {
       $('#signature_message_id').css("display", "block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+   // console.log(this.checkbox_selectAdditionalSignature);
   }
 
   billCodeChange(event: any) {
@@ -870,7 +870,7 @@ export class EditDidpiComponent implements OnInit {
   }
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
-    console.log(this.EditShippingAddress)
+   // console.log(this.EditShippingAddress)
 
     if (this.EditShippingAddress) {
 
@@ -889,7 +889,7 @@ export class EditDidpiComponent implements OnInit {
 
 
     }
-    console.log(this.EditShippingAddress)
+  //  console.log(this.EditShippingAddress)
   }
 
   getCustomerInvoiceDetails(vari: any) {
@@ -941,10 +941,10 @@ export class EditDidpiComponent implements OnInit {
 
   }
   getCustomerInvoiceDetails1(event: any) {
-    console.log("event check vignesh",event)
+   // console.log("event check vignesh",event)
     this.billerID = event.target.value;
     this.BillerID_CompanyName=event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1002,7 +1002,7 @@ export class EditDidpiComponent implements OnInit {
     // add_BillerDetails_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+     // console.log(response);
 
 
       if (response != '') {
@@ -1045,7 +1045,7 @@ export class EditDidpiComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
 
@@ -1054,9 +1054,9 @@ export class EditDidpiComponent implements OnInit {
   }
   getCurrencyValues(event: any) {
     this.spinner.show();
-    console.log("event.target;", event.target);
+  //  console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1152,7 +1152,7 @@ export class EditDidpiComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.usersearchResult = response.reseller_list;
 
       if (response.status = true) {
@@ -1169,15 +1169,15 @@ export class EditDidpiComponent implements OnInit {
     this.resellerName = item.reseller_name;
     this.resellerID = item.reseller_id;
 
-    console.log(item.reseller_name)
-    console.log(item.reseller_id)
+    // console.log(item.reseller_name)
+    // console.log(item.reseller_id)
 
 
   }
 
   selectEventUser(item: any) {
 
-    console.log(item)
+  //  console.log(item)
     // do something with selected item
   }
   onFocusedUser(e: any) {
@@ -1212,7 +1212,7 @@ export class EditDidpiComponent implements OnInit {
         // }, 500);
          $('#billerID').val(response.default_tax_id)
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id', response.default_tax_id);
+       // console.log('response.default_tax_id', response.default_tax_id);
 
 
 
@@ -1248,7 +1248,7 @@ export class EditDidpiComponent implements OnInit {
         // }, 500);
          $('#billerID').val(response.default_tax_id)
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id', response.default_tax_id);
+      //  console.log('response.default_tax_id', response.default_tax_id);
 
 
 
@@ -1284,7 +1284,7 @@ export class EditDidpiComponent implements OnInit {
       success: function (result: any) {
         if (result != '') {
           // self.quotationList({});
-          console.log(result);
+         // console.log(result);
 
 
 
@@ -1297,7 +1297,7 @@ export class EditDidpiComponent implements OnInit {
       },
       error: function (err: any) {
 
-        console.log("err", err)
+       // console.log("err", err)
 
 
       }
@@ -1308,7 +1308,7 @@ export class EditDidpiComponent implements OnInit {
 
   }
   computeUsageCharge(j: any) {
-    console.log($('#billCode'+j).val());
+   // console.log($('#billCode'+j).val());
     this.spinner.show();
     this.spinner.hide();
     let api_req: any = new Object();
@@ -1364,7 +1364,7 @@ export class EditDidpiComponent implements OnInit {
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+   // console.log(item)
 
   }
   onFocusedCustomer(e: any) {
@@ -1385,7 +1385,7 @@ export class EditDidpiComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
 
@@ -1416,13 +1416,13 @@ export class EditDidpiComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
 this.spinner.hide();
 
 
 this.did_bill_code_section15 = response.customer_billcode_arr;
-console.log(this.did_bill_code_section15);
+// console.log(this.did_bill_code_section15);
 
         // this.did_bill_codexx = response.customer_billcode_arr;
         // this.did_bill_code_section1 = response.customer_billcode_arr;
@@ -1464,8 +1464,8 @@ console.log(this.did_bill_code_section15);
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1489,7 +1489,7 @@ console.log(this.did_bill_code_section15);
      
        var cusInvoiceNo= response.customer_invoice_no;    
        this.did_bill_code_section15 = response.customer_billcode_arr;
-       console.log(this.did_bill_code_section15);
+      // console.log(this.did_bill_code_section15);
 
         this.addDid_section1.patchValue({
       
@@ -1576,7 +1576,7 @@ console.log(this.did_bill_code_section15);
         tax = (Number(response.percent_val) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
         $('#Tax_amt_id').val(tax);
         var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+      //  console.log("s value",s);
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
@@ -1588,7 +1588,7 @@ console.log(this.did_bill_code_section15);
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax);
         var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+       // console.log("s value",s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1598,7 +1598,7 @@ console.log(this.did_bill_code_section15);
 
     });
 
-    console.log("this.taxValue", this.taxValue);
+   // console.log("this.taxValue", this.taxValue);
 
     //  this.extraFees();
 
@@ -1635,7 +1635,7 @@ console.log(this.did_bill_code_section15);
         tax = (response.percent_val) * $('#section3_gross_total').val() / 100;
         $('#Tax_amt_id').val(tax.toFixed(2));
         var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+       // console.log("s value",s);
        
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
@@ -1649,7 +1649,7 @@ console.log(this.did_bill_code_section15);
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax.toFixed(2));
         var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+       // console.log("s value",s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1659,7 +1659,7 @@ console.log(this.did_bill_code_section15);
 
     });
 
-    console.log("this.taxValue", this.taxValue);
+   // console.log("this.taxValue", this.taxValue);
 
     //  this.extraFees();
 
@@ -1676,10 +1676,10 @@ console.log(this.did_bill_code_section15);
     var tax_id = $('#billerIDs_didpi').val();
    // var tax_id = this.addDid_section3.value.section3_gst_dropdown;
 
-    console.log("tax_id",tax_id)
+   // console.log("tax_id",tax_id)
     var grossTotal_aftDis=$('#section3_gross_total_afterDiscount').val();
     var taxValue1 = (tax_id/100)*grossTotal_aftDis;
-    console.log("taxValue1",taxValue1)
+  //  console.log("taxValue1",taxValue1)
 
 
 
@@ -1722,51 +1722,35 @@ console.log(this.did_bill_code_section15);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       
       this.spinner.hide();
-      console.log("response-load-pi", response)
+    //  console.log("response-load-pi", response)
       if (response != '') {
-        console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
-        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+      //  console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
+      if(response.billing_pararent_details[0]){
+   this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
-        $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+         $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
         this.exportState_value = response.billing_pararent_details[0].export_state;
-
-
         let cus_address=response.billing_pararent_details[0].b_address;
         let ship_address=response.billing_pararent_details[0].s_address;
        
         let cus_address_break = cus_address.split('\n');
         let ship_address_break = ship_address.split('\n');
-      
- 
- 
        this.custAdr1=cus_address_break[0];
        this.custAdr2=cus_address_break[1];
        this.custAdr3=cus_address_break[2];
        this.ShipAdr1=ship_address_break[0];
        this.ShipAdr2=ship_address_break[1];
        this.ShipAdr3=ship_address_break[2];
-       
-
         this.customer_ID = response.billing_pararent_details[0].custId;
         // this.section1_billcode = response.billing_pararent_details[0].did_bill_code
         this.Jompay_Value = response.billing_pararent_details[0].jom_pay_logo;
         this.export_state = response.billing_pararent_details[0].export_state;
         this.TaxValuEDIt = response.billing_pararent_details[0].taxId;
-        // this.did_bill_codexx= response.bill_code_arr[0].customer_bill_code_id;
-        // this.sub2Total_edit= response.billusagechild_discount[0].usage_subtotal;
-        this.usage_Overall_edit=response.bill_usage_details;
-        this.did_bill_code_section15 = response.customer_billcode_arr;
-        console.log(this.did_bill_code_section15);
-        this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
+          this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
         this.TaxDropdown1(response.billing_pararent_details[0].billerId);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
-       // alert(response.billing_pararent_details[0].did_bill_code)
-        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
-        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
-        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
 
-        
-        this.addDid_section1.patchValue({
+          this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
           'BillTo': response.billing_pararent_details[0].b_name,
@@ -1803,14 +1787,32 @@ console.log(this.did_bill_code_section15);
         });
         this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy;
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
+          this.editCurrencyValue=response.billing_pararent_details[0].currency;
+        this.editpaymentVIAValue=response.billing_pararent_details[0].paymentVIA;
+      }
+     
+       
+       
+
+       
+        // this.did_bill_codexx= response.bill_code_arr[0].customer_bill_code_id;
+        // this.sub2Total_edit= response.billusagechild_discount[0].usage_subtotal;
+        this.usage_Overall_edit=response.bill_usage_details;
+        this.did_bill_code_section15 = response.customer_billcode_arr;
+ 
+        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
+        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
+        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
+
+        
+      
         // $("#attn1").val(response.billing_pararent_details[0].b_attn);
        
        
-        console.log('billchild_details.length' ,response.billing_pararent_details.length);
+       // console.log('billchild_details.length' ,response.billing_pararent_details.length);
         // removed the below single line on 12.4.24 on address change
        // this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
-        this.editCurrencyValue=response.billing_pararent_details[0].currency;
-        this.editpaymentVIAValue=response.billing_pararent_details[0].paymentVIA;
+      
 
         // section-2
 
@@ -1820,7 +1822,7 @@ console.log(this.did_bill_code_section15);
          var bill_fixedDetail_TotalSUBAmount = 0;
          if (response.bill_fixed_details.length == 0) {
            $('#sub_total_1').val(0);
-           console.log("response.bill_fixed_details.length", response.bill_fixed_details.length)
+          // console.log("response.bill_fixed_details.length", response.bill_fixed_details.length)
  
            //this.addInvoice();
          }
@@ -1830,9 +1832,9 @@ console.log(this.did_bill_code_section15);
             bill_fixedDetail_TotalSUBAmount = Number(bill_fixedDetail_TotalSUBAmount) + Number(response.bill_fixed_details[index].total_amt);
   
            // $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
-            console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
+           // console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
   
-            console.log('billchild_details++index' , index);
+           // console.log('billchild_details++index' , index);
   
             formArray1.push(this.fb.group({
               "billChildid1": response.bill_fixed_details[index].billChildid,
@@ -1850,9 +1852,9 @@ console.log(this.did_bill_code_section15);
   
             );
           }
-          console.log(formArray1)
+        //  console.log(formArray1)
           this.did_Invice_fixed_charges.setControl('fixedAddresses', formArray1);
-          console.log(this.fixedAddresses);
+        //  console.log(this.fixedAddresses);
 
          }
         
@@ -1861,12 +1863,12 @@ console.log(this.did_bill_code_section15);
 
 
         // part-2
-        console.log("response.bill_usage_details.length", response.bill_usage_details.length)
+       // console.log("response.bill_usage_details.length", response.bill_usage_details.length)
         const formArray2 = new FormArray([]);
         var bill_usage_TotalSUBAmount = 0;
         if (response.bill_usage_details.length == 0) {
           $('#sub_total_2').val(0);
-          console.log("response.bill_usage_details.length", response.bill_usage_details.length)
+        //  console.log("response.bill_usage_details.length", response.bill_usage_details.length)
          // this.usageCharges();
 
         } else {
@@ -1875,9 +1877,9 @@ console.log(this.did_bill_code_section15);
           bill_usage_TotalSUBAmount = (bill_usage_TotalSUBAmount) + (response.bill_usage_details[index].total_amt);
 
        //   $('#sub_total_2').val(bill_usage_TotalSUBAmount);
-          console.log('#sub_total_2', bill_usage_TotalSUBAmount);
+         // console.log('#sub_total_2', bill_usage_TotalSUBAmount);
 
-          console.log('bill_usage_details++index' , index);
+         // console.log('bill_usage_details++index' , index);
 
           formArray2.push(this.fb.group({
             "billChildid2": response.bill_usage_details[index].billChildid,
@@ -1895,9 +1897,9 @@ console.log(this.did_bill_code_section15);
 
           );
         }
-        console.log(formArray2)
+       // console.log(formArray2)
         this.did_Invice_usage_Charges.setControl('usageAddress', formArray2);
-        console.log(this.usageAddress);
+       // console.log(this.usageAddress);
 
       }
        
@@ -1907,12 +1909,12 @@ console.log(this.did_bill_code_section15);
 
         const formArray3 = new FormArray([]);
         var bill_Other_TotalSUBAmount = 0;
-        console.log("response.bill_other_details.length", response.bill_other_details.length)
+       // console.log("response.bill_other_details.length", response.bill_other_details.length)
         if (response.bill_other_details.length == 0) {
           $('#sub_total_3').val(0);
           this.totalCalculate_3();
         //  this.gross_total();
-          console.log("otherAddressControls",this.otherAddressControls)
+         // console.log("otherAddressControls",this.otherAddressControls)
           // this.otherCharges1();
           // this.addInvoice();
 
@@ -1922,8 +1924,8 @@ console.log(this.did_bill_code_section15);
           bill_Other_TotalSUBAmount = Number(bill_Other_TotalSUBAmount) + Number(response.bill_other_details[index].total_amt);
 
          // $('#sub_total_3').val(bill_Other_TotalSUBAmount);
-          console.log('#sub_total_3', bill_Other_TotalSUBAmount);
-          console.log('bill_other_details++index' , index);
+          // console.log('#sub_total_3', bill_Other_TotalSUBAmount);
+          // console.log('bill_other_details++index' , index);
 
           formArray3.push(this.fb.group({
             "billChildid3": response.bill_other_details[index].billChildid,
@@ -1939,9 +1941,9 @@ console.log(this.did_bill_code_section15);
 
           );
         }
-        console.log(formArray3)
+       // console.log(formArray3)
         this.did_Invice_other_charges.setControl('otherAddress', formArray3);
-        console.log(this.otherAddress);
+        // console.log(this.otherAddress);
         this.grossTotal = bill_Other_TotalSUBAmount + bill_usage_TotalSUBAmount + bill_fixedDetail_TotalSUBAmount;
       }
         
@@ -1992,7 +1994,7 @@ console.log(this.did_bill_code_section15);
           }
 
           if (response.bill_fixed_details.length == 0) {
-            console.log("bill_fixed_details-empty");
+           // console.log("bill_fixed_details-empty");
           } else if(response.bill_fixed_details.length > 0) {
             this.FixedDiscountForm.patchValue({
               'FixedDiscountForm_Percentage': response.billfixedchild_discount[0].dis_per,
@@ -2002,7 +2004,7 @@ console.log(this.did_bill_code_section15);
           }
          
           if(response.bill_usage_details.length ==0){
-            console.log("billusagechild_discount-empty");
+          //  console.log("billusagechild_discount-empty");
           }else if(response.bill_usage_details.length>0){
             this.UsageDiscountForm.patchValue({
               'UsageDiscountForm_Percentage': response.billusagechild_discount[0].dis_per,
@@ -2013,7 +2015,7 @@ console.log(this.did_bill_code_section15);
          
   
           if (response.bill_other_details.length == 0) {
-            console.log("billotherchild_discount-empty");
+           // console.log("billotherchild_discount-empty");
           } else if(response.bill_other_details.length > 0) {
             this.OtherDiscountForm.patchValue({
               'OtherDiscountForm_Percentage': response.billotherchild_discount[0].dis_per,
@@ -2093,7 +2095,7 @@ console.log(this.did_bill_code_section15);
     api_updateDid_req.action = "update_did_proforma_invoice";
     api_updateDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    console.log('this.addPI_section3.value.billId_edit' + this.addDid_section1.value.billId_edit);
+   // console.log('this.addPI_section3.value.billId_edit' + this.addDid_section1.value.billId_edit);
     //section-1
     api_updateDid_req.billId = this.addDid_section1.value.billId_edit;
     // api_updateDid_req.company = this.addDid_section1.value.companyName;
@@ -2180,14 +2182,14 @@ console.log(this.did_bill_code_section15);
 
     //  api_updateDid_req.fixed_value = this.did_Invice_fixed_charges.value.fixedAddresses;
 
-    console.log('response........' + this.did_Invice_fixed_charges.value.particular1);
+   // console.log('response........' + this.did_Invice_fixed_charges.value.particular1);
 
     var addr1 = this.did_Invice_fixed_charges.value.fixedAddresses;
 
 
     for (let i = 0; i < addr1.length; i++) {
 
-      console.log(addr1)
+     // console.log(addr1)
       addr1[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr1[i].particular1 = $('#particular_1_' + i).val();
       addr1[i].fromdt1 = $('#fromdt_1_' + i).val();
@@ -2440,7 +2442,7 @@ console.log(this.did_bill_code_section15);
 
   addButton = 1;
   plus(v: any) {
-    console.log(v)
+  //  console.log(v)
     if (this.addButton != 50) {
       this.addButton++;
       $("#did_diff_date_1_" + v).val(this.addButton)
@@ -2501,14 +2503,14 @@ console.log(this.did_bill_code_section15);
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt_1_' + a).val();
-      console.log('subtotal 1...' + total_amt);
+     // console.log('subtotal 1...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
       }
 
       this.sub_total_glb1 = total_amt_tot;
       $('#sub_total_1').val(total_amt_tot);
-      console.log('sub_total =' + total_amt_tot);
+     // console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -2557,7 +2559,7 @@ console.log(this.did_bill_code_section15);
     var disType = $('input:radio[name=fix_DiscountTYpe]:checked').val();
 
     var final_tot = $('#sub_total_1').val();
-    console.log('final_tot', final_tot);
+   // console.log('final_tot', final_tot);
     $('#sub_discount_type_1').val(disType);
     var price: any;
     var fixedCharge_TotalAmount = 0;
@@ -2570,18 +2572,18 @@ console.log(this.did_bill_code_section15);
 
           fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
-          console.log("dummy inside", fixedCharge_TotalAmount)
+        //  console.log("dummy inside", fixedCharge_TotalAmount)
 
         }
-        console.log("dummy outside", fixedCharge_TotalAmount)
+       // console.log("dummy outside", fixedCharge_TotalAmount)
 
 
         price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100);
-        console.log(price);
+       // console.log(price);
         $('#sub_discount_1').val(price.toFixed(2));
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
-        console.log("sub_total", price);
+       // console.log("sub_total", price);
         $('#sub_total_1').val(price.toFixed(2));
         this.gross_total();
 
@@ -2604,7 +2606,7 @@ console.log(this.did_bill_code_section15);
 
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
-      console.log('price_fin' + price);
+     // console.log('price_fin' + price);
       $('#sub_total_1').val(price.toFixed(2));
       $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1);
@@ -2634,14 +2636,14 @@ console.log(this.did_bill_code_section15);
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt2_' + a).val();
-      console.log('subtotal 2...' + total_amt);
+     // console.log('subtotal 2...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
       }
 
       this.sub_total_glb1 = total_amt_tot;
       $('#sub_total_2').val(total_amt_tot.toFixed(2));
-      console.log('sub_total =' + total_amt_tot);
+     // console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -2655,7 +2657,7 @@ console.log(this.did_bill_code_section15);
     var disType = $('input:radio[name=use_DiscountTYpe]:checked').val();
 
     var final_tot = $('#sub_total_2').val();
-    console.log('final_tot', final_tot);
+   // console.log('final_tot', final_tot);
     $('#sub_discount_type_2').val(disType);
     var usage_price: any;
     var usageCharge_TotalAmount = 0;
@@ -2667,18 +2669,18 @@ console.log(this.did_bill_code_section15);
 
           usageCharge_TotalAmount +=parseFloat($('#amt2_'+a).val());
 
-          console.log("dummy inside", usageCharge_TotalAmount)
+         // console.log("dummy inside", usageCharge_TotalAmount)
 
         }
-        console.log("dummy outside", usageCharge_TotalAmount)
+      //  console.log("dummy outside", usageCharge_TotalAmount)
 
 
         usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100);
-        console.log(usage_price);
+       // console.log(usage_price);
         $('#sub_discount_2').val(usage_price.toFixed(2));
         $('#sub_discount_val_2').val(enablePerFinal_2);
         usage_price = usageCharge_TotalAmount - usage_price;
-        console.log("sub_total", usage_price);
+       // console.log("sub_total", usage_price);
         $('#sub_total_2').val(usage_price);
         this.gross_total();
 
@@ -2698,11 +2700,11 @@ console.log(this.did_bill_code_section15);
 
          usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
-        console.log("dummy inside", usageCharge_TotalAmount)
+       // console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
-      console.log('usage_price_fin' + usage_price);
+     // console.log('usage_price_fin' + usage_price);
       $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
@@ -2735,14 +2737,14 @@ console.log(this.did_bill_code_section15);
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt3_' + a).val();
-      console.log('subtotal 3...' + total_amt);
+     // console.log('subtotal 3...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
       }
 
       this.sub_total_glb1 = total_amt_tot.toFixed(2);
       $('#sub_total_3').val(total_amt_tot);
-      console.log('sub_total =' + total_amt_tot);
+     // console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -2756,7 +2758,7 @@ console.log(this.did_bill_code_section15);
     var disType = $('input:radio[name=oth_DiscountTYpe]:checked').val();
 
     var final_tot = $('#sub_total_3').val();
-    console.log('final_tot', final_tot);
+   // console.log('final_tot', final_tot);
     $('#sub_discount_type_3').val(disType);
     var other_price: any;
     var usageCharge_TotalAmount = 0;
@@ -2769,10 +2771,10 @@ console.log(this.did_bill_code_section15);
 
           usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
-          console.log("dummy inside", usageCharge_TotalAmount)
+       //   console.log("dummy inside", usageCharge_TotalAmount)
 
         }
-        console.log("dummy outside", usageCharge_TotalAmount)
+       // console.log("dummy outside", usageCharge_TotalAmount)
 
 
         other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
@@ -2780,7 +2782,7 @@ console.log(this.did_bill_code_section15);
         $('#sub_discount_3').val(other_price);
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
-        console.log("sub_total", other_price);
+      //  console.log("sub_total", other_price);
         $('#sub_total_3').val(other_price);
         this.gross_total();
 
@@ -2797,11 +2799,11 @@ console.log(this.did_bill_code_section15);
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
-        console.log("dummy inside", usageCharge_TotalAmount)
+       // console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       other_price = usageCharge_TotalAmount - enablePriceFinal_3;
-      console.log('other_price_fin' + other_price);
+     // console.log('other_price_fin' + other_price);
       $('#sub_total_3').val(other_price.toFixed(2));
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
@@ -2826,39 +2828,39 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     var sub_total1, sub_total2, sub_total3: any = 0;
 
     sub_total1 = $('#sub_total_1').val();
-    console.log("sub_total1", sub_total1);
+   // console.log("sub_total1", sub_total1);
     sub_total2 = $('#sub_total_2').val();
-    console.log("sub_total2", sub_total2);
+   // console.log("sub_total2", sub_total2);
     sub_total3 = $('#sub_total_3').val();
-    console.log("sub_total3", sub_total3);
+  //  console.log("sub_total3", sub_total3);
 
     if (sub_total1 == '' && sub_total2 == '' && sub_total3 == '') {
       total_amt = 0;
-      console.log("total amount 000", total_amt);
+     // console.log("total amount 000", total_amt);
     } else if (sub_total1 == '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (Number(sub_total3));
-      console.log("total amount 001", total_amt);
+     // console.log("total amount 001", total_amt);
     } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 == '') {
       total_amt = (Number(sub_total2));
-      console.log("total amount 010", total_amt);
+     // console.log("total amount 010", total_amt);
     } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-      console.log("total amount 011", total_amt);
+     // console.log("total amount 011", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 == '') {
       total_amt = (parseFloat(sub_total1))
-      console.log("total amount 100", total_amt);
+     // console.log("total amount 100", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total3));
-      console.log("total amount 101", total_amt);
+     // console.log("total amount 101", total_amt);
     } else if (sub_total1 !== '' && sub_total2 !== '' && sub_total3 == '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2));
-      console.log("total amount 110", total_amt);
+    //  console.log("total amount 110", total_amt);
     } else {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     }
     // total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     this.grossTotal_BeforeDiscount = total_amt.toFixed(2);
-    console.log("total_amt-gross", total_amt.toFixed(2));
+   // console.log("total_amt-gross", total_amt.toFixed(2));
     gross_tot += parseFloat(total_amt);
     $('#section3_gross_total').val(gross_tot.toFixed(2));
 
@@ -2871,7 +2873,7 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     var enablePriceFinal_4 = $('#enablePriceFinal_4').val()
     var disType = $('input:radio[name=final_DiscountTYpe]:checked').val();
     var final_tot = $('#section3_gross_total').val();
-    console.log('final_tot' + final_tot);
+   // console.log('final_tot' + final_tot);
     $('#final_discount_type').val(disType);
     var price: any;
     var dis_etr: any;
@@ -3027,7 +3029,7 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     api_req.element_data = api_quotationAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+     // console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
@@ -3070,14 +3072,14 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+    //  console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
         this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if (sign_val == 0) {
-          console.log('response.signature_filename' + response.signature_filename);
+         // console.log('response.signature_filename' + response.signature_filename);
           this.invoiceAddSignature_filename = response.signature_filename;
         }else{
           this.invoiceAddSignature_filename = response.signature_filename;

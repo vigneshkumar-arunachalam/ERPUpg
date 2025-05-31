@@ -62,7 +62,7 @@ export class DIDTrunkNameComponent implements OnInit {
     });
    
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/did_trunk_name/getProviderList').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'did_trunk_name/getProviderList').subscribe((data: any) => {
       if (data != '') {
         this.getProviderList = data.data;
       }

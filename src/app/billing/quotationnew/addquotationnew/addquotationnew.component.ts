@@ -549,7 +549,7 @@ export class AddquotationnewComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
 

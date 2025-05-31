@@ -3048,10 +3048,10 @@ export class DupInvoiceComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+ 
     window.open(url, '_blank');
-   // console.log("url", url)
+ 
   }
   get_actualcost_details(id: any, i: any) {
     $("#ActionIdInvDup" + i).modal("hide");
@@ -3088,7 +3088,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -3127,7 +3127,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -3172,7 +3172,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   fileAttachmentEdit(ID: any, i: any) {
@@ -3246,7 +3246,7 @@ export class DupInvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url: this.serverService.urlFinal +'invoice/invoice_attachment_save',
 
 
         cache: false,
@@ -3279,7 +3279,7 @@ export class DupInvoiceComponent implements OnInit {
         },
         error: function (err: any) {
 
-          console.log("err", err)
+         // console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -3346,7 +3346,7 @@ export class DupInvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+          //  console.log(error);
           };
       }
     })
@@ -3396,7 +3396,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -3440,7 +3440,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -3519,7 +3519,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
 
@@ -3555,7 +3555,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -3613,7 +3613,7 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
         this.getInvoice1({});
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -3675,7 +3675,7 @@ export class DupInvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })
@@ -3735,7 +3735,7 @@ export class DupInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error);
+      //  console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -3786,7 +3786,7 @@ export class DupInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error);
+       // console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -3827,7 +3827,7 @@ export class DupInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error)
+      //  console.log("network error", error)
         iziToast.error({
           message: " Check response",
           position: 'topRight'
@@ -3872,7 +3872,7 @@ export class DupInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error)
+       // console.log("network error", error)
         iziToast.error({
           message: "Delivery Order not Updated. Check response",
           position: 'topRight'
@@ -3937,7 +3937,7 @@ export class DupInvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })
@@ -4043,7 +4043,7 @@ export class DupInvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error)
+           // console.log("final error", error)
           };
       }
     })
@@ -4093,7 +4093,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+// console.log("final error", error);
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -4137,7 +4137,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -4247,7 +4247,7 @@ export class DupInvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+          //  console.log(error);
           };
       }
     })
@@ -4333,7 +4333,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -4357,7 +4357,7 @@ export class DupInvoiceComponent implements OnInit {
   }
   onFocusedReseller(e: any) {
     // do something when input is focused
-    console.log(e)
+   // console.log(e)
   }
 
   searchResellerData(data: any) {
@@ -4399,7 +4399,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -4479,7 +4479,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -4557,7 +4557,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -4630,7 +4630,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
     this.spinner.hide();
 
@@ -4644,7 +4644,7 @@ export class DupInvoiceComponent implements OnInit {
     //  console.log(i)
     //  console.log(document.getElementById("CommissionAmount1_WFA_ID_" + i).innerHTML)
       setTimeout(() => {
-        console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
+       // console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
       }, 2000);
 
       // console.log("form array-reseller_name", this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName);
@@ -4729,7 +4729,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -4784,7 +4784,7 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
         $('#ResellerCommissionFormId').modal('hide');
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -4915,7 +4915,7 @@ hideTooltip() {
 }
 handleChange_SSTax(event:any){
   this.sstCheckbox=event.target.checked;
-  console.log("this.sstCheckbox",this.sstCheckbox);
+ // console.log("this.sstCheckbox",this.sstCheckbox);
 
 }
 getsstTaxDetails(id: any, i: any) {
@@ -4952,7 +4952,7 @@ getsstTaxDetails(id: any, i: any) {
       message: "Sorry, some server issue occur. Please contact admin",
       position: 'topRight'
     });
-    console.log("final error", error);
+  //  console.log("final error", error);
   }
 
 }
@@ -4995,7 +4995,7 @@ updateSST() {
       message: "Sorry, some server issue occur. Please contact admin",
       position: 'topRight'
     });
-    console.log("final error", error);
+   // console.log("final error", error);
   }
 
 }

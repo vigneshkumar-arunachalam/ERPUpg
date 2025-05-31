@@ -1,7 +1,7 @@
 <div class="contents-section addquotation-section">
     <div class="col-lg-12 mb-30">
         <div class="card">
-            <div class="card-header color-dark fw-500" style="   background-color: #d9515147">
+            <div class="card-header color-dark fw-500">
                 <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
                     <span class="breadcrumb-item active">Update Transaction Details</span>
                 </h3>
@@ -18,6 +18,8 @@
                         <div class="col-lg-3"><label for="biller_name" class="col-form-label">Biller Name</label></div>
 
                         <div class="col-lg-9">
+                            <!-- <select id="biller_name9" class="form-control" formControlName="billerName"
+                                (change)="this.getPaymentInvoice($event);"> -->
                             <select id="biller_name9" class="form-control" formControlName="billerName"
                                 (change)="BillerChange($event)">
                                 <option [ngValue]="null" selected>Select Biller Name</option>
@@ -59,7 +61,7 @@
             <div class="col-lg-12">
                 <div class="form-group row">
                     <div class="col-lg-3">
-                        <label for="trans_typee" class=" col-form-label ml-3">Type of Transaction</label>
+                        <label for="trans_typee" class=" col-form-label ml-3 trans_typeee">Type of Transaction</label>
                     </div>
 
                     <div class="col-lg-12">
@@ -67,7 +69,7 @@
                         <div class="container mt-3 ml-0">
 
                             <!-- Nav pills -->
-                            <ul class="nav nav-pills" role="tablist">
+                            <!-- <ul class="nav nav-pills" role="tablist">
                                 <li class="nav-item" *ngIf="this.edit_TransactionTpeID == 3">
                                     <a class="nav-link btnn pulse " data-toggle="tab" id="PurchaseEntry_link" href="#PurchaseEntry"
                                         role="tab" aria-controls="PurchaseEntry" (click)="SelectTransactionType_PE()">
@@ -115,18 +117,18 @@
                                         aria-controls="Others" aria-selected="false"
                                         (click)="SelectTransactionType_Others()">Others</a>
                                 </li>
-                            </ul>
+                            </ul> -->
 
                             <!-- Tab panes -->
 
-                           
+
                             <div class="tab-content">
 
-                                 <!-- PurchaseEntry -->
+                                <!-- PurchaseEntry -->
 
                                 <div id="PurchaseEntry" *ngIf="this.edit_TransactionTpeID == 3">
                                     <!-- purchase entry sub menu starts -->
-
+                                    <h3 class="typeHeaderTrans"> Purchase Entry Transaction</h3>
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -136,7 +138,7 @@
 
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
-                                                    formControlName="PE_purchaseEntryNo" />
+                                                    formControlName="PE_purchaseEntryNo" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -189,7 +191,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoiceNo"
-                                                    class=" col-form-label">Invoice No<span style="color: red;">*</span></label></div>
+                                                    class=" col-form-label">Invoice No<span
+                                                        style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
@@ -344,10 +347,10 @@
                                         </div>
                                     </div>
 
-                                   
 
 
-                                    <div class="col-lg-12">
+
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoiceAmount"
                                                     class=" col-form-label">Attached Files</label></div>
@@ -363,7 +366,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
 
@@ -379,10 +382,48 @@
                                             <div class="col-lg-4">
                                                 <input required type="file" name="PE_FileAttachment" multiple
                                                     id="PE_FileAttachment_new" class="form-control"
-                                                    (change)="fileAttachmentEventUpdate($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
+                                                <!-- (change)="fileAttachmentEventUpdate($event)"> -->
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
+
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- purchase entry sub menu ends -->
 
@@ -390,8 +431,9 @@
 
                                 <!-- PettyCash -->
 
-                                <div id="PettyCash" *ngIf="this.edit_TransactionTpeID == 5" ><br>
+                                <div id="PettyCash" *ngIf="this.edit_TransactionTpeID == 5"><br>
                                     <!-- petty cash entry sub menu ends -->
+                                    <h3 class="typeHeaderTrans"> Petty Cash Transaction</h3>
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="refResellerDetails"
@@ -426,7 +468,7 @@
                                                     class=" col-form-label">Amount</label></div>
 
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control" formControlName="PC_Amount" />
+                                                <input type="number" class="form-control" formControlName="PC_Amount" />
                                             </div>
                                         </div>
                                     </div>
@@ -446,7 +488,7 @@
                                         </div>
                                     </div> -->
 
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
                                                     Files</label></div>
@@ -462,7 +504,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-lg-12">
@@ -480,10 +522,48 @@
                                             <div class="col-lg-4">
                                                 <input required type="file" name="PC_FileAttachment" multiple
                                                     id="PC_FileAttachment" class="form-control"
-                                                    (change)="fileAttachmentEventUpdate($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
+
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- petty cash entry sub menu ends -->
 
@@ -493,6 +573,7 @@
                                 <!-- Logistics -->
                                 <div id="Logistics" *ngIf="this.edit_TransactionTpeID == 51"><br>
                                     <!-- Logistics entry sub menu ends -->
+                                    <h3 class="typeHeaderTrans"> Logistics Transaction</h3>
                                     <div class="col-lg-12">
 
                                         <div class="form-group row">
@@ -528,7 +609,8 @@
                                                     class=" col-form-label">Amount</label></div>
 
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control" formControlName="Log_Amount" />
+                                                <input type="number" class="form-control"
+                                                    formControlName="Log_Amount" />
                                             </div>
                                         </div>
                                     </div>
@@ -550,35 +632,104 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
-                                                    Files</label></div>
-
-                                            <div class="col-lg-3">
-                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
-                                                
-
-                                                <!-- <button type="button" class="btn btn-link"
-                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
-                                                        class="bi bi-trash"></span>
-                                                </button> -->
+                                            <div class="col-lg-2">
+                                                <label for="Log_FileAttachment" class="col-form-label">File
+                                                    Attachment</label>
                                             </div>
-                                           
+                                            <div class="col-lg-4">
+                                                <input required type="file" name="Log_FileAttachment" multiple
+                                                    id="Log_FileAttachment" class="form-control"
+                                                    (change)="fileAttachmentEventPE2($event)" />
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="PC_FileAttachment"
-                                                    class=" col-form-label">File
-                                                    Attachment</label></div>
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
 
-                                            <div class="col-lg-4">
-                                                <input required type="file" name="Log_FileAttachment" multiple
-                                                    id="Log_FileAttachment" class="form-control"
-                                                    (change)="fileAttachmentEventPE2($event)">
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                    <!-- <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="deleteAttachmentFile(i)"></i> -->
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
+                                    <!-- <div class="col-lg-12">
+                                        <div class="form-group row">
+                                          <div class="col-lg-2">
+                                            <label for="PC_FileAttachment" class="col-form-label">File Attachment</label>
+                                          </div>
+                                      
+                                          <div class="col-lg-4">
+                                            <input
+                                              required
+                                              type="file"
+                                              name="Log_FileAttachment"
+                                              multiple
+                                              id="Log_FileAttachment"
+                                              class="form-control"
+                                              (change)="fileAttachmentEventPE2($event)"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="col-lg-12">
+                                        <div class="form-group row">
+                                          <div class="col-lg-2">
+                                            <label for="attFi" class="col-form-label">Attached Files</label>
+                                          </div>
+                                          <div class="form-group row" *ngIf="myFiles.length > 0">
+                                            <div class="col-lg-12 offset-lg-2">
+                                              <div class="d-flex flex-wrap">
+                                                <div
+                                                  class="border rounded p-2 m-1 d-flex align-items-center"
+                                                  *ngFor="let file of myFiles; let i = index"
+                                                >
+                                                {{file}}
+                                                  <i
+                                                    class="fas fa-trash-alt text-danger ml-2"
+                                                    style="cursor: pointer;"
+                                                    (click)="removeFile(i)"
+                                                  ></i>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> -->
+
 
 
                                     <!-- Logistics entry sub menu ends -->
@@ -587,7 +738,7 @@
                                 <!-- VendorOrder -->
                                 <div id="VendorOrder" *ngIf="this.edit_TransactionTpeID == 6"><br>
                                     <!-- Vendor Order sub menu starts -->
-
+                                    <h3 class="typeHeaderTrans"> Vendor Order Transaction</h3>
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"><label for="VendorOrder_Description"
@@ -600,23 +751,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
-                                                    Files</label></div>
 
-                                            <div class="col-lg-3">
-                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
-                                                
-
-                                                <!-- <button type="button" class="btn btn-link"
-                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
-                                                        class="bi bi-trash"></span>
-                                                </button> -->
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
 
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -627,10 +762,47 @@
                                                 <input required type="file" name="VendorOrder_FileAttachment"
                                                     id="VendorOrder_FileAttachment" class="form-control"
                                                     formControlName="VendorOrder_FileAttachment"
-                                                    (change)="fileAttachmentEventPE1($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
+
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Vendor Order sub menu ends -->
                                 </div>
 
@@ -638,6 +810,7 @@
 
                                 <div id="InvoicePayment" *ngIf="this.edit_TransactionTpeID == 7"><br>
                                     <!-- Invoice Payment sub menu starts -->
+                                    <h3 class="typeHeaderTrans"> Invoice Payment Transaction</h3>
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"><label for="InvPayment_InvoiceNumber"
@@ -647,6 +820,7 @@
                                                 <select id="InvPayment_InvoiceNumber" class="form-control"
                                                     (change)="InvoiceChangeValue($event)"
                                                     formControlName="InvPayment_InvoiceNumber">
+                                                    <option [ngValue]="null" selected>Select Invoice</option>
                                                     <option *ngFor="let inv of InvoicePaymentList"
                                                         value="{{inv.billId}}">
                                                         {{inv.invoice_no }} {{'| '}}{{inv.b_name }} {{'
@@ -662,9 +836,11 @@
                                                     class=" col-form-label">Biller</label></div>
 
                                             <div class="col-lg-4">
-                                                <!-- <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Biller" /> -->
-                                                {{this.billerName}}
+
+                                                <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Biller" id="InvPayment_Biller"
+                                                    [ngModel]="billerName" readonly />
+                                                <!-- {{this.billerName}} -->
                                             </div>
                                         </div>
                                     </div>
@@ -675,9 +851,10 @@
                                                     class=" col-form-label">Customer</label></div>
 
                                             <div class="col-lg-4">
-                                                <!-- <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Customer" /> -->
-                                                {{this.customerName}}
+                                                <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Customer" id="InvPayment_Customer"
+                                                    [ngModel]="customerName" readonly />
+                                                <!-- {{this.customerName}} -->
                                             </div>
                                         </div>
                                     </div>
@@ -688,9 +865,10 @@
                                                     class=" col-form-label">Total</label></div>
 
                                             <div class="col-lg-4">
-                                                <!-- <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Total" /> -->
-                                                {{this.netPayment}}
+                                                <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Total" id="InvPayment_Total"
+                                                    [ngModel]="netPayment" readonly />
+                                                <!-- {{this.netPayment}} -->
                                             </div>
                                         </div>
                                     </div>
@@ -700,9 +878,10 @@
                                                     class=" col-form-label">Paid</label></div>
 
                                             <div class="col-lg-4">
-                                                <!-- <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Paid" /> -->
-                                                {{this.amountPaid}}
+                                                <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Paid" id="InvPayment_Paid"
+                                                    [ngModel]="amountPaid" readonly />
+                                                <!-- {{this.amountPaid}} -->
                                             </div>
                                         </div>
                                     </div>
@@ -713,9 +892,10 @@
                                             </div>
 
                                             <div class="col-lg-4">
-                                                <!-- <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Owing" /> -->
-                                                {{this.balance}}
+                                                <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Owing" id="InvPayment_Owing"
+                                                    [ngModel]="balance" readonly />
+                                                <!-- {{this.balance}} -->
                                             </div>
                                         </div>
                                     </div>
@@ -726,7 +906,7 @@
                                             </div>
 
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                     formControlName="InvPayment_Amount" />
                                             </div>
                                         </div>
@@ -803,67 +983,72 @@
                                         </div>
                                     </div> -->
 
-                                    <!-- <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="invoiceAmount"
-                                                    class=" col-form-label">Attached Files</label></div>
-  
-                                            <div class="col-lg-3"
-                                                *ngFor="let i =index;let display of  getFileAttachmentResult;">
-  
-                                                {{display.file_name}}
-  
-                                                <button type="button" class="btn btn-link"
-                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
-                                                        class="bi bi-trash"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div> -->
 
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
-                                                    Files</label></div>
 
-                                            <div class="col-lg-3">
-                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
-                                                
 
-                                                <!-- <button type="button" class="btn btn-link"
-                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
-                                                        class="bi bi-trash"></span>
-                                                </button> -->
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="PC_FileAttachment"
                                                     class=" col-form-label">File
                                                     Attachment</label></div>
-  
-                                           
+
+
                                             <div class="col-lg-4">
                                                 <input required type="file" name="InvPayment_FileAttachment" multiple
                                                     id="InvPayment_FileAttachment" class="form-control"
-                                                   
-                                                    (change)="fileAttachmentEventPE1($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
+
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
 
+
                                     <!-- Invoice Payment sub menu ends -->
-                                 </div>
+                                </div>
 
                                 <!-- AddNewStock -->
 
                                 <div id="AddNewStock" *ngIf="this.edit_TransactionTpeID == 15"><br>
 
                                     <!-- Add New Stock sub menu ends -->
-                                  
+                                    <h3 class="typeHeaderTrans"> Add New Stock Transaction</h3>
+
                                     <div class="col-lg-12">
 
                                         <div class="form-group row">
@@ -875,11 +1060,10 @@
                                                     formControlName="AddNewStock_vendorName">
                                                     <option [ngValue]="null" selected>Select Vendor
                                                     </option>
-                                                    <option
-                                                                                        *ngFor="let vendor of vendorDetails"
-                                                                                        value="{{vendor.vendorId}}">
-                                                                                        {{vendor.vendorName}}
-                                                                                    </option>
+                                                    <option *ngFor="let vendor of vendorDetails"
+                                                        value="{{vendor.vendorId}}">
+                                                        {{vendor.vendorName}}
+                                                    </option>
                                                 </select>
                                             </div>
 
@@ -890,8 +1074,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <input type="date" class="form-control"
-                                                formControlName="AddNewStock_PurDate"
-                                                id="AddNewStock_PurDate" />
+                                                    formControlName="AddNewStock_PurDate" id="AddNewStock_PurDate" />
                                             </div>
 
                                         </div>
@@ -900,19 +1083,17 @@
                                                     class="form-label">Category Name</label>
                                             </div>
                                             <div class="col-lg-4">
-                                                <select id="AddNewStock_CategoryName"
-                                                class="form-control"
-                                                (change)="changeCategory($event)"
-                                                formControlName="AddNewStock_CategoryName">
-                                                <option [ngValue]="null" selected>
-                                                    Select Category Name
-                                                </option>
-                                                <option
-                                                *ngFor="let category of categoryDetails"
-                                                value="{{category.product_category_id}}">
-                                                {{category.product_category_name}}
-                                            </option>
-                                            </select>
+                                                <select id="AddNewStock_CategoryName" class="form-control"
+                                                    (change)="changeCategory($event)"
+                                                    formControlName="AddNewStock_CategoryName">
+                                                    <option [ngValue]="null" selected>
+                                                        Select Category Name
+                                                    </option>
+                                                    <option *ngFor="let category of categoryDetails"
+                                                        value="{{category.product_category_id}}">
+                                                        {{category.product_category_name}}
+                                                    </option>
+                                                </select>
                                             </div>
 
                                         </div>
@@ -922,17 +1103,15 @@
                                                     class="form-label">Product Name</label>
                                             </div>
                                             <div class="col-lg-4">
-                                                <select id="AddNewStock_ProductName"
-                                                class="form-control" 
-                                                formControlName="AddNewStock_ProductName">
-                                                <option [ngValue]="null" selected>
-                                                    Product Name</option>
-                                                    <option
-                                                    *ngFor="let product of prodResult"
-                                                    value="{{product.productId}}">
-                                                    {{product.productName}}
-                                                </option>
-                                            </select>
+                                                <select id="AddNewStock_ProductName" class="form-control"
+                                                    formControlName="AddNewStock_ProductName">
+                                                    <option [ngValue]="null" selected>
+                                                        Product Name</option>
+                                                    <option *ngFor="let product of prodResult"
+                                                        value="{{product.productId}}">
+                                                        {{product.productName}}
+                                                    </option>
+                                                </select>
                                             </div>
 
                                         </div>
@@ -943,13 +1122,11 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
-                                               
-        
-                                                formControlName="AddNewStock_Qty" />
+                                                    formControlName="AddNewStock_Qty" />
                                             </div>
 
                                         </div>
-                                        
+
                                     </div>
 
 
@@ -960,6 +1137,7 @@
 
                                 <div id="StockIssued" *ngIf="this.edit_TransactionTpeID == 56"><br>
                                     <!-- Stock Issued  sub menu ends -->
+                                    <h3 class="typeHeaderTrans"> Stock Issued Transaction</h3>
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
                                             <table class="table mb-0 table-borderless">
@@ -1043,6 +1221,7 @@
 
                                 <div id="StockTransfer" *ngIf="this.edit_TransactionTpeID == 58"><br>
                                     <!-- Stock Transfer  sub menu ends -->
+                                    <h3 class="typeHeaderTrans"> Stock Transfer Transaction</h3>
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
                                             <table class="table mb-0 table-borderless">
@@ -1116,10 +1295,10 @@
                                 </div>
 
                                 <!-- Others -->
-                                 
+
                                 <div id="Others" *ngIf="this.edit_TransactionTpeID == 8"><br>
                                     <!-- Others sub menu starts -->
-
+                                    <h3 class="typeHeaderTrans"> Others Transaction</h3>
                                     <div class="col-lg-12 othersCalss">
                                         <div class="form-group">
                                             <label for="others_Description" class="form-label">Description</label>
@@ -1128,23 +1307,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 othersCalss">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="attFi" class=" col-form-label">Attached
-                                                    Files</label></div>
 
-                                            <div class="col-lg-3">
-                                                <a href="{{this.fileAttachment}}" target="_blank">Click here to view file</a>
-                                                
-
-                                                <!-- <button type="button" class="btn btn-link"
-                                                    (click)="fileAttachmentDelete(display.file_id,i) "><span
-                                                        class="bi bi-trash"></span>
-                                                </button> -->
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12 othersCalss">
                                         <div class="form-group row">
                                             <label for="others_FileAttachment" class="col-lg-12 col-form-label">File
@@ -1153,10 +1316,47 @@
                                                 <input required type="file" name="others_FileAttachment"
                                                     id="others_FileAttachment" class="form-control"
                                                     formControlName="others_FileAttachment"
-                                                    (change)="fileAttachmentEventPE1($event)">
+                                                    (change)="fileAttachmentEventPE2($event)">
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2">
+                                                <label class="col-form-label">Attached Files</label>
+                                            </div>
+                                            <div class="form-group row" *ngIf="myFiles.length > 0">
+                                                <div class="col-lg-12 offset-lg-2">
+                                                    <div class="attached-files-list">
+                                                        <div class="file-item"
+                                                            *ngFor="let file of myFiles; let i = index">
+                                                            <ng-container *ngIf="file.name">
+                                                                <div class="file-icon"
+                                                                    [ngClass]="getFileIconClass(file.name)">
+                                                                    <i class="fas fa-file"></i>
+                                                                </div>
+
+                                                                <div class="file-info">
+                                                                    <a [href]="file.url" target="_blank" title="View">
+                                                                        {{ file.name }}
+                                                                    </a>
+                                                                    <small>{{ file.size }}</small>
+                                                                </div>
+
+                                                                <div class="file-actions">
+
+                                                                    <i class="fas fa-trash-alt text-danger"
+                                                                        title="Remove" (click)="removeFile(i)"></i>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- Others sub menu ends -->
                                 </div>

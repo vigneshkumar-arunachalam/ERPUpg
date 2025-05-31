@@ -259,9 +259,12 @@ export class AttendanceReportComponent implements OnInit {
       if (response.status == true) {
 
         this.spinner.hide();
-   
-        this.ExcelReportList = response.data;
-        this.excelExportService.exportAsExcelFile(this.ExcelReportList, 'AttendanceReport');
+        if(response.data!=null){
+          this.ExcelReportList = response.data;
+              this.excelExportService.exportAsExcelFile(this.ExcelReportList, 'AttendanceReport');
+
+        }
+            
 
       } else {
         iziToast.warning({
@@ -366,10 +369,13 @@ export class AttendanceReportComponent implements OnInit {
       if (response.status == true) {
 
         this.spinner.hide();
-        this.attendanceList = response.datas;
+     
         this.listShow=true;
         if(response.datas==null){
           this.listShow=false;
+        }else{
+             this.attendanceList = response.datas;
+
         }
         // this.pettyCashListValue = response.data;
         // this.response_total_cnt = response.count;
@@ -403,7 +409,7 @@ export class AttendanceReportComponent implements OnInit {
   }
   processData() {
     if (!this.attendanceList || !Array.isArray(this.attendanceList)) {
-      console.error('attendanceList is invalid or not an array');
+     // console.error('attendanceList is invalid or not an array');
       return;
     }
 

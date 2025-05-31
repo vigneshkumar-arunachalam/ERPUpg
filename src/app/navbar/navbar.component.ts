@@ -222,7 +222,7 @@ export class NavbarComponent implements OnInit {
   billerIDDisplay: any;
   overdue_Customerlist: any;
   overdue_CustomerIDSearch: any;
-  monthlyRecurInvCount:any;
+  monthlyRecurInvCount: any;
 
   //global search---new
 
@@ -262,8 +262,8 @@ export class NavbarComponent implements OnInit {
   RecurredInvoiceCount: any;
   ResellerInvoiceCount: any;
   recuringApInvCount: any;
-  custIDEmailSingle:any;
- 
+  custIDEmailSingle: any;
+
 
   constructor(private router: Router, private serverService: ServerService,
     private http: HttpClient, private fb: FormBuilder,
@@ -437,14 +437,14 @@ export class NavbarComponent implements OnInit {
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
 
-    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'getCurrencyList').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyList = data.currency_data;
       }
 
       // console.log("this.getCurrencyList", this.getCurrencyList)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'getCurrencyDetails').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyDetails = data.currency_data;
         this.currencyData = data.currency_data;
@@ -454,33 +454,33 @@ export class NavbarComponent implements OnInit {
       // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
     });
 
-    this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoice').subscribe((data: any) => {
 
       if (data != '') {
         this.postalInvoiceDetails = data;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
       if (data != '') {
         this.postalInvoiceCount = data.count;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'base/getTaskList').subscribe((data: any) => {
 
       if (data != '') {
         this.getTaskList = data.taskList;
       }
       // console.log("this.getTaskList", this.getTaskList)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
 
       if (data != '') {
         this.overduePaymentsBillerList = data.dataList;
       }
-     // console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
+      // console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     });
     this.getRecurringCountList();
 
@@ -497,7 +497,7 @@ export class NavbarComponent implements OnInit {
     if (event.target.value == 7 || event.target.value == 8) {
       this.flg = true;
     }
-   // console.log("this.PP_paymentMethod", this.PP_paymentMethod)
+    // console.log("this.PP_paymentMethod", this.PP_paymentMethod)
     this.PP_PaymentMethodDropdown();
   }
   handle_cbk_paymentLink(event: any) {
@@ -509,10 +509,10 @@ export class NavbarComponent implements OnInit {
 
 
   handle_radioChange_email(event: any, id: any) {
-  //  console.log("event", event)
+    //  console.log("event", event)
     this.Select_To_Type_radiobox_Value = id;
-  //  console.log("this.Select_To_Type_radiobox_Value", this.Select_To_Type_radiobox_Value)
-   // console.log(this.Select_To_Type_radiobox_Value);
+    //  console.log("this.Select_To_Type_radiobox_Value", this.Select_To_Type_radiobox_Value)
+    // console.log(this.Select_To_Type_radiobox_Value);
 
 
     if (this.Select_To_Type_radiobox_Value == 'finance') {
@@ -526,10 +526,10 @@ export class NavbarComponent implements OnInit {
     }
   }
   SA_handle_radioChange_email(event: any, id: any) {
-  //  console.log("event", event)
+    //  console.log("event", event)
     this.SA_Select_To_Type_radiobox_Value = id;
-  //  console.log("this.Select_To_Type_radiobox_Value", this.SA_Select_To_Type_radiobox_Value)
-  //  console.log(this.SA_Select_To_Type_radiobox_Value);
+    //  console.log("this.Select_To_Type_radiobox_Value", this.SA_Select_To_Type_radiobox_Value)
+    //  console.log(this.SA_Select_To_Type_radiobox_Value);
 
 
     if (this.SA_Select_To_Type_radiobox_Value == 'finance') {
@@ -639,10 +639,14 @@ export class NavbarComponent implements OnInit {
         // console.log("response.customer_contract.color", response.customer_contract.color)
 
         this.customerContractlist = response.customer_contract;
-        this.resellerList = response.reseller_info;
-        this.resellerList_CurrencyName = response.reseller_info.currency_name;
-        this.resellerList_ResellerDiscount = response.reseller_info.reseller_discount;
-        this.resellerList_ResellerId = response.reseller_info.reseller_id;
+        if (response.reseller_info) {
+          this.resellerList = response.reseller_info;
+          this.resellerList_CurrencyName = response.reseller_info.currency_name;
+          this.resellerList_ResellerDiscount = response.reseller_info.reseller_discount;
+          this.resellerList_ResellerId = response.reseller_info.reseller_id;
+
+        }
+
 
 
 
@@ -673,7 +677,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   CHKAll_BillerNameSelectAll(a: any) {
@@ -730,11 +734,11 @@ export class NavbarComponent implements OnInit {
       if (index > -1) {
         this.addSelectPageListCheckboxID_array.splice(index, 1);
       }
-     // console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
+      // console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
 
     }
     this.addSelectPageListCheckboxID_array.join(',');
-  //  console.log("addSelectPageListCheckboxID_array----after join", this.addSelectPageListCheckboxID_array);
+    //  console.log("addSelectPageListCheckboxID_array----after join", this.addSelectPageListCheckboxID_array);
 
   }
 
@@ -823,14 +827,14 @@ export class NavbarComponent implements OnInit {
         api_req.element_data = api_reqD1;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+            this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoice').subscribe((data: any) => {
 
               if (data != '') {
                 this.postalInvoiceDetails = data;
               }
               //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
             });
-            this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+            this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
               if (data != '') {
                 this.postalInvoiceCount = data.count;
@@ -936,10 +940,15 @@ export class NavbarComponent implements OnInit {
       // console.log(" response--pagelist", response)
       if (response != '') {
         //  console.log("playboy", response.quotation_list)
+        if (response.menuList) {
+          this.SelectPageList = response.menuList;
+        }
+        if (response.selected_menu) {
+          this.componentDynamic = response.selected_menu;
+        }
 
-        this.SelectPageList = response.menuList;
 
-        this.componentDynamic = response.selected_menu;
+
         if (response.quotation_list != 0 || response.quotation_list != '0') {
           this.Quot_UI_Show = response.quotation_list;
           this.Quotation_list_send = response.quotation_list.quotation_details;
@@ -954,15 +963,25 @@ export class NavbarComponent implements OnInit {
           };
           this.serverService.global_search_quotation.next(api_reqs);
         } else {
-          this.Quot_UI_Show = response.quotation_list;
+          if (response.quotation_list) {
+            this.Quot_UI_Show = response.quotation_list;
+          }
+
           //   console.log("Quotation Skipped")
         }
         if (response.proforma_invoice_list != 0 || response.proforma_invoice_list != '0') {
-          this.PI_list = response.proforma_details;
-          this.PI_list_send = response.proforma_invoice_list.proforma_details;
-          this.PI_list_send = response.proforma_invoice_list.proforma_details;
-          this.PI_per_send = response.proforma_invoice_list.biller_details;
-          this.PI_UI_Show = response.proforma_invoice_list;
+          if (response.proforma_details) {
+            this.PI_list = response.proforma_details;
+          }
+
+          if (response.proforma_invoice_list) {
+            this.PI_list_send = response.proforma_invoice_list.proforma_details;
+            this.PI_list_send = response.proforma_invoice_list.proforma_details;
+            this.PI_per_send = response.proforma_invoice_list.biller_details;
+            this.PI_UI_Show = response.proforma_invoice_list;
+
+          }
+
 
           let api_reqs: any = {
             PI_list_send: this.PI_list_send,
@@ -970,34 +989,48 @@ export class NavbarComponent implements OnInit {
           };
           this.serverService.global_search.next(api_reqs);
         } else {
-          this.PI_UI_Show = response.proforma_invoice_list;
+          if (response.proforma_invoice_list) {
+            this.PI_UI_Show = response.proforma_invoice_list;
+          }
+
 
           //  console.log("Performa invoice Skipped")
         }
 
         if (response.customer_list != 0 || response.customer_list != '0') {
-          this.Customer_list_send = response.customer_list.customer_details;
-          this.Customer_revenue_send = response.customer_list.revenue_list;
-          this.Customer_list_send = response.customer_list.customer_details;
-          this.Cust_UI_Show = response.customer_list;
+          if (response.customer_list) {
+            this.Customer_list_send = response.customer_list.customer_details;
+            this.Customer_revenue_send = response.customer_list.revenue_list;
+            this.Customer_list_send = response.customer_list.customer_details;
+            this.Cust_UI_Show = response.customer_list;
+
+          }
+
           let api_reqs: any = {
             Customer_list_send: this.Customer_list_send,
             Customer_revenue_send: this.Customer_revenue_send
           };
           this.serverService.global_search_customer.next(api_reqs);
         } else {
-          this.Cust_UI_Show = response.customer_list;
+          if (response.customer_list) {
+            this.Cust_UI_Show = response.customer_list;
+          }
+
           // console.log("Customer List Skipped")
         }
 
 
         if (response.invoice_list != 0 || response.invoice_list != '0') {
-          this.Invoice_list_send = response.invoice_list.proforma_details;
-          this.Invoice_UI_Show = response.invoice_list;
-          this.Invoice_list_send = response.invoice_list.proforma_details;
-          this.Invoice_per_send = response.invoice_list.invoice_permission_arr;
-          this.Invoice_biller_send = response.invoice_list.biller_details;
-          this.Invoice_revenue_send = response.invoice_list.revenue_list;
+          if (response.invoice_list) {
+            this.Invoice_list_send = response.invoice_list.proforma_details;
+            this.Invoice_UI_Show = response.invoice_list;
+            this.Invoice_list_send = response.invoice_list.proforma_details;
+            this.Invoice_per_send = response.invoice_list.invoice_permission_arr;
+            this.Invoice_biller_send = response.invoice_list.biller_details;
+            this.Invoice_revenue_send = response.invoice_list.revenue_list;
+
+          }
+
           //  console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
           let api_reqs: any = {
             Invoice_list_send: this.Invoice_list_send,
@@ -1007,7 +1040,10 @@ export class NavbarComponent implements OnInit {
           };
           this.serverService.global_search_invoice.next(api_reqs);
         } else {
-          this.Invoice_UI_Show = response.invoice_list;
+          if (response.invoice_list) {
+            this.Invoice_UI_Show = response.invoice_list;
+          }
+
           // console.log("Invoice List Skipped")
         }
         // console.log(this.Quotation_list_send);
@@ -1111,10 +1147,13 @@ export class NavbarComponent implements OnInit {
 
       //  console.log(" response--pagelist", response)
       if (response != '') {
-        this.SelectPageList = response.menuList;
-        this.menuList = response.menuList;
+        if (response.menuList) {
+          this.SelectPageList = response.menuList;
+          this.menuList = response.menuList;
+        }
+
         this.logSelectedCheckboxIds();
-      //  console.log('this.selectedPageIds with customer New only', this.selectedPageIds);
+        //  console.log('this.selectedPageIds with customer New only', this.selectedPageIds);
 
 
       } else {
@@ -1154,12 +1193,15 @@ export class NavbarComponent implements OnInit {
       //  console.log(" response--pagelist", response)
       if (response != '') {
         this.overdueResponse = response;
-        this.overduePaymentsBillerWise = response.overduePayments;
-      //  console.log("this.overdueResponse", this.overdueResponse)
+        if (response.overduePayments) {
+          this.overduePaymentsBillerWise = response.overduePayments;
+        }
+
+        //  console.log("this.overdueResponse", this.overdueResponse)
         if (Array.isArray(this.overdueResponse)) {
-        //  console.log('overdueResponse is an array:', this.overdueResponse);
+          //  console.log('overdueResponse is an array:', this.overdueResponse);
         } else {
-        //  console.log('overdueResponse is not an array');
+          //  console.log('overdueResponse is not an array');
         }
 
       } else {
@@ -1200,7 +1242,10 @@ export class NavbarComponent implements OnInit {
       if (response != '') {
 
         $('#getRevenueDataListFormId').modal('show');
-        this.getRevenueDataList = response.data;
+        if (response.data) {
+          this.getRevenueDataList = response.data;
+        }
+
 
 
       } else {
@@ -1280,10 +1325,10 @@ export class NavbarComponent implements OnInit {
           $('#overduePaymentFormId').modal('show');
 
           if (Array.isArray(this.overduePaymentsBillerWise)) {
-          //  console.log('this.overduePaymentsBillerWise is an array');
+            //  console.log('this.overduePaymentsBillerWise is an array');
           } else {
             this.spinner.hide();
-          //  console.log('this.overduePaymentsBillerWise is not an array');
+            //  console.log('this.overduePaymentsBillerWise is not an array');
           }
 
         } else {
@@ -1311,7 +1356,7 @@ export class NavbarComponent implements OnInit {
 
   }
   multipleMailPostalInvoice() {
-  //  console.log("this.selectedBillIds", this.selectedBillIds)
+    //  console.log("this.selectedBillIds", this.selectedBillIds)
     if (this.selectedBillIds.length === 0) {
       iziToast.error({
         message: "Select atleast 1",
@@ -1343,13 +1388,13 @@ export class NavbarComponent implements OnInit {
             message: "Mail Sent Successfully",
             position: 'topRight'
           });
-          this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+          this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoice').subscribe((data: any) => {
 
             if (data != '') {
               this.postalInvoiceDetails = data;
             }
           });
-          this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+          this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
             if (data != '') {
               this.postalInvoiceCount = data.count;
@@ -1387,7 +1432,7 @@ export class NavbarComponent implements OnInit {
       });
       return false;
     } else {
-      var url = "https://erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
+      var url = this.serverService.urlFinal + "multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
       window.open(url, '_blank');
     }
 
@@ -1401,38 +1446,38 @@ export class NavbarComponent implements OnInit {
       });
       return false;
     } else {
-      var url = "https://erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
+      var url = this.serverService.urlFinal + "multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
       window.open(url, '_blank');
     }
   }
   postalinv_sendPDF(billerID: any) {
-    var url = "https://erp1.cal4care.com/api/postalPrint?billId=" + billerID;
+    var url = this.serverService.urlFinal + "postalPrint?billId=" + billerID;
     window.open(url, '_blank');
   }
   postalinvwithoutLogo_sendPDF(billerID: any) {
-    var url = "https://erp1.cal4care.com/api/postalPrintWithoutLogo?billId=" + billerID;
+    var url = this.serverService.urlFinal + "postalPrintWithoutLogo?billId=" + billerID;
     window.open(url, '_blank');
   }
   demandLetterPDF(billerID: any, customerID: any) {
-   // var url = "https://laravelapi.erp1.cal4care.com/api/soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
-    var url = "https://erp1.cal4care.com/api/soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
+
+    var url = this.serverService.urlFinal + "soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
     window.open(url, '_blank');
   }
   ConsolidatePDF(billId: any, customerID: any) {
 
-     var url = "https://erp1.cal4care.com/api/soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
-    //  var url = "https://laravelapi.erp1.cal4care.com/api/soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
+    var url = this.serverService.urlFinal + "soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
+   
 
     window.open(url, '_blank');
-   // console.log("url", url)
+    // console.log("url", url)
   }
 
   landscapePDF(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-   //  var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+ 
     window.open(url, '_blank');
-  //  console.log("url", url)
+  
   }
   overduePaymentLink(billId: any, customerID: any) {
     this.clickFlag = !this.clickFlag;
@@ -1452,7 +1497,7 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response != '') {
+      if (response.payment_url) {
         this.overdue_PaymentURL_result = response.payment_url;
       } else {
         Swal.close();
@@ -1511,8 +1556,8 @@ export class NavbarComponent implements OnInit {
   }
   searchCustomer_selectDropdownData_OS(item: any) {
     this.OS_searchResult = item.customerName;
-  //  console.log(item.customerId)
-  //  console.log(item.customerName)
+    //  console.log(item.customerId)
+    //  console.log(item.customerName)
     this.OS_search_CustID = item.customerId;
     this.OS_search_CustName = item.customerName;
 
@@ -1538,10 +1583,10 @@ export class NavbarComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
         this.spinner.hide();
-        if (response != '') {
+        if (response.customer_names) {
           this.spinner.hide();
           this.OS_searchResult = response.customer_names;
-         // console.log(" this.OS_searchResult", this.OS_searchResult)
+          // console.log(" this.OS_searchResult", this.OS_searchResult)
         } else {
           Swal.close();
           this.spinner.hide();
@@ -1559,7 +1604,7 @@ export class NavbarComponent implements OnInit {
             message: "Sorry, some server issue occur. Please contact admin",
             position: 'topRight'
           });
-        //  console.log("final error", error);
+          //  console.log("final error", error);
         };
     }
   }
@@ -1605,7 +1650,10 @@ export class NavbarComponent implements OnInit {
         this.selectedBillIds_overdue = {};
         this.overdueResponse = response;
         this.overduePaymentsBillerWise = '';
-        this.overduePaymentsBillerWise = response.overduePayments;
+        if (response.overduePayments) {
+          this.overduePaymentsBillerWise = response.overduePayments;
+        }
+
 
       } else {
         Swal.close();
@@ -1678,7 +1726,7 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response != '') {
+      if (response.customerName) {
         this.searchResult = response.customerName;
         // console.log(" this.searchResult", this.searchResult)
         this.onFocusedCustomer({});
@@ -1713,8 +1761,10 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // console.log("vignesh-customer code_status response", response);
+      if (response.customerCode) {
+        this.searchResult_code = response.customerCode;
+      }
 
-      this.searchResult_code = response.customerCode;
       // console.log("vignesh-advanced search result", this.searchResult_code);
 
     });
@@ -1745,8 +1795,11 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       //  console.log("vignesh-customer code_status response", response);
+      if (response.did_numbers) {
+        this.searchResult_DIDNumber = response.did_numbers;
+      }
 
-      this.searchResult_DIDNumber = response.did_numbers;
+
       // console.log("vignesh-advanced search result", this.searchResult_DIDNumber);
       this.onout_DIDNumber();
     });
@@ -1780,8 +1833,11 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // console.log("vignesh-customer code_status response", response);
+      if (response.license_key) {
+        this.searchResult_LicenseNumber = response.license_key;
+      }
 
-      this.searchResult_LicenseNumber = response.license_key;
+
       // console.log("vignesh-advanced search result", this.searchResult_LicenseNumber);
       this.onout_LicenseNumber();
 
@@ -1805,10 +1861,13 @@ export class NavbarComponent implements OnInit {
     api_LicenCode_req.license_number = this.PG_LicenseNum;
     api_req.element_data = api_LicenCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.PG_customerId = response.customer_id;
-      this.PG_customerName = response.customerName;
-      // console.log(" this.PG_customerName-license number", this.PG_customerName);
-      this.PG_LicenseKey = response.license_key;
+      if (response) {
+        this.PG_customerId = response.customer_id;
+        this.PG_customerName = response.customerName;
+        // console.log(" this.PG_customerName-license number", this.PG_customerName);
+        this.PG_LicenseKey = response.license_key;
+      }
+
 
     });
   }
@@ -1825,10 +1884,14 @@ export class NavbarComponent implements OnInit {
     api_DIDCode_req.did_number = this.PG_DIDNumber;
     api_req.element_data = api_DIDCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.PG_customerId = response.customer_id;
-      this.PG_customerName = response.customerName;
-      // console.log(" this.PG_customerName-DID number", this.PG_customerName);
-      this.PG_DIDNumbers = response.did_numbers;
+      if (response) {
+        this.PG_customerId = response.customer_id;
+        this.PG_customerName = response.customerName;
+        // console.log(" this.PG_customerName-DID number", this.PG_customerName);
+        this.PG_DIDNumbers = response.did_numbers;
+
+      }
+
 
     });
   }
@@ -1868,9 +1931,9 @@ export class NavbarComponent implements OnInit {
 
   }
   currencyConvert() {
-    if (this.convetcurrencyFrom && this.convetcurrencyTo && this.currencyConvertorForm.value.convertValue.length > 3) {
-      this.spinner.show();
-    }
+    // if (this.convetcurrencyFrom && this.convetcurrencyTo && this.currencyConvertorForm.value.convertValue.length > 3) {
+    //   this.spinner.show();
+    // }
     // this.spinner.show();
 
     let api_req: any = new Object();
@@ -1906,11 +1969,12 @@ export class NavbarComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.spinner.hide();
+        if (response.convert_data) {
+          this.currencyConvertorForm.patchValue({
+            'outputValue': response.convert_data.convert_vals,
+          })
 
-
-        this.currencyConvertorForm.patchValue({
-          'outputValue': response.convert_data.convert_vals,
-        })
+        }
 
       } else {
       }
@@ -1927,9 +1991,9 @@ export class NavbarComponent implements OnInit {
 
   }
   check(event: any, item: any, custId: any) {
-   // console.log("event", event);
-  //  console.log("item", item);
-  //  console.log("custId", custId);
+    // console.log("event", event);
+    //  console.log("item", item);
+    //  console.log("custId", custId);
   }
   // toggleSelection_overdue1(event: any, billId: number, balAmount: string, customerId: number): void {
   //   console.log("toggle selection");
@@ -2049,7 +2113,7 @@ export class NavbarComponent implements OnInit {
     selectedBills.forEach(billId => {
       const balance = this.billBalances_overdue[billId];
       if (balance === undefined) {
-       // console.error(`Balance not found for bill ID ${billId}`);
+        // console.error(`Balance not found for bill ID ${billId}`);
       } else {
         total += balance;
 
@@ -2079,13 +2143,13 @@ export class NavbarComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       // console.log(" response", response)
-      if (response != '') {
+      if (response.data) {
         this.spinner.hide();
         this.paymentFollowers_List = response.data.followers;
-       // console.log(" this.paymentFollowers_List", this.paymentFollowers_List);
+        // console.log(" this.paymentFollowers_List", this.paymentFollowers_List);
         let idsArray = response.data.paymentFollowerIds.filter((id: string) => id !== '').map(Number);
         this.CheckBox_DynamicArrayList_invoiceShowPermission = idsArray;
-      //  console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+        //  console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
       } else {
         this.spinner.hide();
@@ -2104,7 +2168,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
@@ -2152,32 +2216,32 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
 
   paymentFollowersCheck(data: any, event: any) {
-  //  console.log("List - Checkbox ID", data);
+    //  console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
     this.Checkbox_value_invoiceShow = event.target.checked;
-  //  console.log(this.Checkbox_value_invoiceShow)
+    //  console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-    //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+      //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
-     // console.log(index)
+      // console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+      // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
 
 
@@ -2205,10 +2269,18 @@ export class NavbarComponent implements OnInit {
 
       this.spinner.hide();
       if (response != '') {
-        this.invoiceDetails_payment = response.invoice_details;
-        this.paymentType_payment = response.payment_type;
-        this.paymentDetails_payment = response.payment_details;
-        this.paymentDetails_paymentLength = response.payment_details.length;
+        if (response.invoice_details) {
+          this.invoiceDetails_payment = response.invoice_details;
+        }
+        if (response.payment_type) {
+          this.paymentType_payment = response.payment_type;
+        }
+        if (response.payment_details) {
+          this.paymentDetails_payment = response.payment_details;
+          this.paymentDetails_paymentLength = response.payment_details.length;
+        }
+
+
 
 
 
@@ -2224,7 +2296,7 @@ export class NavbarComponent implements OnInit {
 
         const date = new Date();
         const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
-       // console.log("current date time", transformDate1)
+        // console.log("current date time", transformDate1)
         this.processPaymentForm.patchValue({
           'date': transformDate1,
           'invoiceID': response.invoice_details[0].invoice_no,
@@ -2257,7 +2329,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   processPaymentEdit_multiple(id: any) {
@@ -2318,7 +2390,7 @@ export class NavbarComponent implements OnInit {
 
         const date = new Date();
         const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
-       // console.log("current date time", transformDate1)
+        // console.log("current date time", transformDate1)
         this.multipleprocessPaymentForm.patchValue({
           'm_date': transformDate1,
           'm_invoiceID': response.invoice_details[0].cus_invoice_no,
@@ -2351,7 +2423,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   changeCreditNote(event: any) {
@@ -2417,7 +2489,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
 
       };
   }
@@ -2438,7 +2510,7 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response != '') {
+      if (response.payment_edit[0]) {
         this.spinner.hide();
         // $('#note').val(response.payment_edit[0].notes);
         // $('#Paid').val(response.payment_edit[0].paidAmount);
@@ -2466,7 +2538,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -2526,7 +2598,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
 
       };
   }
@@ -2559,7 +2631,7 @@ export class NavbarComponent implements OnInit {
 
 
 
-       // console.log("this.creditResponse", this.creditResponse)
+        // console.log("this.creditResponse", this.creditResponse)
         this.spinner.hide();
       }
       else {
@@ -2665,7 +2737,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
 
       };
   }
@@ -2748,13 +2820,13 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
 
       };
   }
-  getEmailDetails(billid: any, billerId: any,custId:any) {
-   console.log("custId",custId);
-   this.custIDEmailSingle=custId;
+  getEmailDetails(billid: any, billerId: any, custId: any) {
+   // console.log("custId", custId);
+    this.custIDEmailSingle = custId;
 
     this.email_TemplateSelection = false;
     $('#temp').val('');
@@ -2764,7 +2836,7 @@ export class NavbarComponent implements OnInit {
     this.spinner.show();
     this.Email_BillId_overdue = billid;
     this.Email_BillerId_overdue = billerId;
-   // console.log("this.Email_BillId_overdue", this.Email_BillId_overdue)
+    // console.log("this.Email_BillId_overdue", this.Email_BillId_overdue)
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
     api_req.moduleType = "soa";
@@ -2772,7 +2844,7 @@ export class NavbarComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_emailDetails.action = "send_invoice_details";
-   // console.log("billid-09",billid)
+    // console.log("billid-09",billid)
     if (billid != undefined) {
       api_emailDetails.billId = billid;
     } else {
@@ -2781,7 +2853,7 @@ export class NavbarComponent implements OnInit {
 
 
     api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
-   
+
     api_req.element_data = api_emailDetails;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2797,10 +2869,10 @@ export class NavbarComponent implements OnInit {
         this.SelectType_company = response.company_email;
         this.types = response.type;
         this.setDefaultRadio();
-        this.mailContent = tinymce.get('tinyID_overdue_in').setContent("<p>" + this.messageContent + "</p>");
+        this.mailContent = tinymce.get('tinyID_overdue_in1').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID_overdue_in': this.mailContent,
+          'tinyID_overdue_in1': this.mailContent,
           'Subject_Content': response.subject,
           'cbk_paymentLink': response.payment_link,
           'cbk_demandLetterPDF': response.demend_letter_pdf,
@@ -2808,13 +2880,13 @@ export class NavbarComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID_overdue_in': this.mailContent,
+            'tinyID_overdue_in1': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID_overdue_in': this.mailContent,
+            'tinyID_overdue_in1': this.mailContent,
           })
         }
 
@@ -2851,47 +2923,47 @@ export class NavbarComponent implements OnInit {
     }
   }
   EditCHK_emailCC(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
   SA_EditCHK_emailCC(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.SA_groupSelect_emailCCId = data;
     this.SA_checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.SA_edit_array_emailCC_Checkbox.push(data);
       this.SA_edit_array_emailCC_Checkbox.join(',');
-    //  console.log("Final Checkbox After checkbox selected list", this.SA_edit_array_emailCC_Checkbox);
+      //  console.log("Final Checkbox After checkbox selected list", this.SA_edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.SA_edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.SA_edit_array_emailCC_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.SA_edit_array_emailCC_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.SA_edit_array_emailCC_Checkbox)
 
     }
   }
   templateContentEmailDropdown_single(event: any) {
-   // alert("double")
+    // alert("double")
     this.spinner.show();
     //alert("hi")
     this.quotation_Emailtemplate_id = event.target.value;
@@ -2905,21 +2977,21 @@ export class NavbarComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-  
+
     // api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
     // api_quotationTemplateDropdown_req.billId = this.Email_BillId_overdue;
     api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
     //api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
-    api_quotationTemplateDropdown_req.billId =this.Email_BillId_overdue;
+    api_quotationTemplateDropdown_req.billId = this.Email_BillId_overdue;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation-template Dropdown response", response)
+      // console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content;
-      this.mailContent = tinymce.get('tinyID_overdue_in').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID_overdue_in1').setContent("<p>" + this.messageContent + "</p>");
       $('#subject').val(response.crm_subject_name);
-      $('#tinyID_overdue_in').val(this.mailContent);
+      $('#tinyID_overdue_in1').val(this.mailContent);
       if (response != '') {
         this.spinner.hide();
         this.emailForm.patchValue({
@@ -2943,9 +3015,9 @@ export class NavbarComponent implements OnInit {
   SA_templateContentEmailDropdown(event: any) {
     this.spinner.show();
     // alert("single")
-   //  alert("hi")
+    //  alert("hi")
     this.SA_quotation_Emailtemplate_id = event.target.value;
-   // console.log("quotation dropdown ID check", this.SA_quotation_Emailtemplate_id);
+    // console.log("quotation dropdown ID check", this.SA_quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "soa";
@@ -2962,12 +3034,12 @@ export class NavbarComponent implements OnInit {
     //   this.spinner.hide();
     //   return false;
     // }
-    if (this.multipleBillIDPaymentP.length === 0){
-   // console.log("check1")
+    if (this.multipleBillIDPaymentP.length === 0) {
+      // console.log("check1")
       api_quotationTemplateDropdown_req.billerId = this.uniqueBillerIds;
       api_quotationTemplateDropdown_req.billId = this.billidArray;
-    }else{
-    //  console.log("check2")
+    } else {
+      //  console.log("check2")
       api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
       // api_quotationTemplateDropdown_req.billId = this.Email_BillId_overdue;
       api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
@@ -2977,9 +3049,9 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("quotation-template Dropdown response", response)
+      //  console.log("quotation-template Dropdown response", response)
       this.SA_messageContent = response.crm_template_content;
-      this.SA_mailContent = tinymce.get('tinyID_overdue_SA').setContent("<p>" + this.SA_messageContent + "</p>");
+      this.SA_mailContent = tinymce.get('tinyID_overdue_SAYY').setContent("<p>" + this.SA_messageContent + "</p>");
 
       /*----------------start------28/08/24----------------------------*/
       this.selectAll_emailForm.controls['SA_Subject_Content'].setValue(response.crm_subject_name || '');
@@ -2988,7 +3060,7 @@ export class NavbarComponent implements OnInit {
       /*------------------end----28/08/24----------------------------*/
 
       $('#SA_Subject_Content').val(response.crm_subject_name);
-      $('#tinyID_overdue_SA').val(this.SA_mailContent);
+      $('#tinyID_overdue_SAYY').val(this.SA_mailContent);
       if (response != '') {
         this.spinner.hide();
         this.selectAll_emailForm.patchValue({
@@ -3020,7 +3092,7 @@ export class NavbarComponent implements OnInit {
     this.emailTo_overdue = this.emailForm.value.email_to;
     // this.subjectValue = $('#subject').val();
     this.subjectValue_overdue = this.emailForm.value.Subject_Content;
-    this.msg_id_overdue = tinymce.get('tinyID_overdue_in').getContent();
+    this.msg_id_overdue = tinymce.get('tinyID_overdue_in1').getContent();
     // console.log("msgid", this.msg_id_overdue)
     // console.log("email to", this.emailTo_overdue)
     // console.log("subject", this.subjectValue_overdue)
@@ -3036,7 +3108,7 @@ export class NavbarComponent implements OnInit {
     api_email_req.billId = this.Email_BillId_overdue;
     api_email_req.payment_link = this.cbk_paymentLink_value;
     api_email_req.demend_letter_pdf = this.cbk_demandLetterPDF_value;
-    api_email_req.custId =  this.custIDEmailSingle;
+    api_email_req.custId = this.custIDEmailSingle;
 
     api_email_req.fromEmailId = this.FromEmailValue;
     if (this.emailForm.value.email_From === null || this.emailForm.value.email_From === '' || this.emailForm.value.email_From === 'undefined' || this.emailForm.value.email_From === undefined) {
@@ -3089,7 +3161,7 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -3127,7 +3199,7 @@ export class NavbarComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
   }
   handle_SAcbkpaymentLink(event: any) {
@@ -3137,7 +3209,7 @@ export class NavbarComponent implements OnInit {
     this.SA_cbkDemandLetter_value = event.target.checked;
   }
   selectAll_getEmail(customerid: any, billerId: any, billId: any, list: any) {
-   
+
     // console.log("customerid", customerid)
     // console.log("list data", list)
     // console.log("billid data", billId)
@@ -3145,19 +3217,19 @@ export class NavbarComponent implements OnInit {
 
     if (this.multipleBillIDPaymentP.length === 0) {
       const customerId = customerid;
-      this.mailCustomerID=customerid;
+      this.mailCustomerID = customerid;
       this.billidArray = list
         .filter((list: { custId: any; }) => list.custId === customerId)
         .map((list: { billId: any; }) => list.billId);
-        
-        this.billeridArray = list
+
+      this.billeridArray = list
         .filter((list: { custId: any; }) => list.custId === customerId)
         .map((list: { billerId: any; }) => list.billerId);
-        this.uniqueBillerIds = [...new Set(list.map((bill: { billerId: any; }) => bill.billerId))];
+      this.uniqueBillerIds = [...new Set(list.map((bill: { billerId: any; }) => bill.billerId))];
 
 
       // console.log(this.billidArray);
-      
+
       // console.log(this.billeridArray);
       // console.log(this.uniqueBillerIds);
 
@@ -3197,12 +3269,12 @@ export class NavbarComponent implements OnInit {
         this.SA_SelectType_company = response.company_email;
         this.SA_types = response.type;
         this.SA_setDefaultRadio();
-        this.SA_mailContent = tinymce.get('tinyID_overdue_SA').setContent("<p>" + this.SA_messageContent + "</p>");
+        this.SA_mailContent = tinymce.get('tinyID_overdue_SAYY').setContent("<p>" + this.SA_messageContent + "</p>");
         // this.billidArray=[];
         // this.multipleBillIDPaymentP=[];
         this.selectAll_emailForm.patchValue({
 
-          'tinyID_overdue_SA': this.mailContent,
+          'tinyID_overdue_SAYY': this.mailContent,
           'SA_Subject_Content': response.subject,
           'SA_cbk_paymentLink': response.payment_link,
           'SA_cbk_demandLetterPDF': response.demend_letter_pdf,
@@ -3210,14 +3282,14 @@ export class NavbarComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.selectAll_emailForm.patchValue({
             'SA_emailto': response.finance_email,
-            'tinyID_overdue_SA': this.mailContent,
+            'tinyID_overdue_SAYY': this.mailContent,
           })
         }
         else {
           this.spinner.hide();
           this.selectAll_emailForm.patchValue({
             'SA_emailto': response.company_email,
-            'tinyID_overdue_SA': this.mailContent,
+            'tinyID_overdue_SAYY': this.mailContent,
           })
         }
       } else {
@@ -3237,7 +3309,7 @@ export class NavbarComponent implements OnInit {
 
   }
   SA_sendMail_overdue() {
-   
+
     Swal.fire('Sending Email');
     Swal.showLoading();
 
@@ -3247,7 +3319,7 @@ export class NavbarComponent implements OnInit {
     this.SA_emailTo_overdue = this.selectAll_emailForm.value.SA_emailto;
     // this.subjectValue = $('#subject').val();
     this.SA_subjectValue_overdue = this.selectAll_emailForm.value.SA_Subject_Content;
-    this.SA_msg_id_overdue = tinymce.get('tinyID_overdue_SA').getContent();
+    this.SA_msg_id_overdue = tinymce.get('tinyID_overdue_SAYY').getContent();
     // console.log("msgid", this.msg_id_overdue)
     // console.log("email to", this.emailTo_overdue)
     // console.log("subject", this.subjectValue_overdue)
@@ -3263,20 +3335,20 @@ export class NavbarComponent implements OnInit {
     // api_email_req.billId = this.SA_Email_BillId_overdue;
     // api_email_req.custId = this.SA_Email_BillId_overdue;
     // api_email_req.billerId = this.SA_Email_BillId_overdue;
-    
+
 
     if (this.multipleBillIDPaymentP.length === 0) {
-  
+
       api_email_req.billId = this.billidArray;
       api_email_req.billerId = this.uniqueBillerIds;
       api_email_req.custId = this.mailCustomerID;
-    
+
 
     } else {
 
       api_email_req.billId = this.multipleBillIDPaymentP;
       api_email_req.billerId = this.SA_Email_BillerId_overdue;
-     
+
       api_email_req.custId = this.SA_Email_customerid_overdue;
     }
     api_email_req.payment_link = this.SA_cbkpaymentLink_value;
@@ -3333,7 +3405,7 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -3355,7 +3427,7 @@ export class NavbarComponent implements OnInit {
 
       }
       else {
-     
+
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
@@ -3376,14 +3448,14 @@ export class NavbarComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
   }
   PIEmailClear() {
 
   }
 
-  
+
 
   getRecurredList() {
     this.spinner.show();
@@ -3403,8 +3475,10 @@ export class NavbarComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.spinner.hide();
+        if (response.data) {
+          this.getRecurredListValue = response.data;
+        }
 
-        this.getRecurredListValue = response.data;
 
 
       } else {
@@ -3442,7 +3516,10 @@ export class NavbarComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.spinner.hide();
-        this.ResellerRecuringApprovalList = response.data;
+        if (response.data) {
+          this.ResellerRecuringApprovalList = response.data;
+        }
+
 
 
       } else {
@@ -3481,11 +3558,14 @@ export class NavbarComponent implements OnInit {
       if (response.status == true) {
         this.spinner.hide();
 
+        if (response.data) {
+          this.combinedData = response.data.map((item: { title: any[]; dataList: any; }) => ({
+            title: item.title[0],  // Assuming only one title per group
+            invoices: item.dataList
+          }));
 
-        this.combinedData = response.data.map((item: { title: any[]; dataList: any; }) => ({
-          title: item.title[0],  // Assuming only one title per group
-          invoices: item.dataList
-        }));
+        }
+
 
       } else {
         this.spinner.hide();
@@ -3559,9 +3639,9 @@ export class NavbarComponent implements OnInit {
   // Log individual checkbox selection/deselection
   logIndividualSelection_RecurringInvoice(item: any) {
     if (item.selected) {
-    //  console.log(`Selected Bill ID: ${item.billId}`);
+      //  console.log(`Selected Bill ID: ${item.billId}`);
     } else {
-    //  console.log(`Deselected Bill ID: ${item.billId}`);
+      //  console.log(`Deselected Bill ID: ${item.billId}`);
     }
     this.updateCheckAllState_RecurringInvoice(); // Update Check All checkbox state
   }
@@ -3615,7 +3695,7 @@ export class NavbarComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-   // console.log("Checkbox-all", this.arrayRecurringReseller);
+    // console.log("Checkbox-all", this.arrayRecurringReseller);
   }
 
 
@@ -3641,7 +3721,7 @@ export class NavbarComponent implements OnInit {
         //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
     }
-   // console.log("Final Checkbox After checkbox selected list", this.arrayRecurringReseller);
+    // console.log("Final Checkbox After checkbox selected list", this.arrayRecurringReseller);
   }
   selectAll_RecurringDemo(event: any) {
 
@@ -3668,7 +3748,7 @@ export class NavbarComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-   // console.log("Checkbox-all-billId", this.arrayRecurringDemo);
+    // console.log("Checkbox-all-billId", this.arrayRecurringDemo);
   }
 
 
@@ -3725,12 +3805,12 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    
-      if (response != '') {
+
+      if (response.data) {
         this.spinner.hide();
-        this.recurringDemoList=response.data;
-        
-       
+        this.recurringDemoList = response.data;
+
+
 
       } else {
         Swal.close();
@@ -3751,7 +3831,7 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
-  getRecurringDemoApproval(value:any) {
+  getRecurringDemoApproval(value: any) {
 
     this.spinner.show();
     let api_req: any = new Object();
@@ -3768,12 +3848,12 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    
-      if (response.status== true) {
+
+      if (response.status == true) {
         this.spinner.hide();
-       // location.reload();
-        
-       
+        // location.reload();
+
+
 
       } else {
         Swal.close();
@@ -3809,15 +3889,15 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    
-      if (response.status== true) {
+
+      if (response.status == true) {
         this.spinner.hide();
-     this.RecurredInvoiceCount=response.RecurredInvoiceCount;
-     this.ResellerInvoiceCount=response.ResellerInvoiceCount;
-     this.monthlyRecurInvCount=response.monthlyRecurringInvoiceCount;
-     this.recuringApInvCount=response.recuringApprovalInvoiceCount;
-        
-       
+        this.RecurredInvoiceCount = response.RecurredInvoiceCount;
+        this.ResellerInvoiceCount = response.ResellerInvoiceCount;
+        this.monthlyRecurInvCount = response.monthlyRecurringInvoiceCount;
+        this.recuringApInvCount = response.recuringApprovalInvoiceCount;
+
+
 
       } else {
         Swal.close();
@@ -3840,7 +3920,7 @@ export class NavbarComponent implements OnInit {
   }
   loadRecurring() {
 
-   // this.spinner.show();
+    // this.spinner.show();
     this.isLoading = true;
     let api_req: any = new Object();
     let api_page_req: any = new Object();
@@ -3854,30 +3934,30 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    
-      if (response.status== true) {
+
+      if (response.status == true) {
         this.isLoading = false;
         iziToast.success({
-          
+
           message: 'Recurring Success!',
           position: 'center', // Centers the toast
           timeout: false,
           progressBar: true,
           close: true,
-         
+
           theme: 'light', // Optional: dark theme
-         
+
           titleSize: '50px', // Increase title size
           messageSize: '100px', // Increase message size
           onOpened: function (instance: any, toast: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; lineHeight: string; }; }; }) {
             // Apply custom line height
             toast.querySelector('.iziToast-message').style.lineHeight = '250px';
-        }
+          }
         });
         this.spinner.hide();
-      //  location.reload();
-        
-       
+        //  location.reload();
+
+
 
       } else {
         // Swal.close();

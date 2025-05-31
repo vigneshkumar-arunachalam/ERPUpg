@@ -587,7 +587,7 @@ console.log(data)
 
   pdf(deliveryId: any) {
 
-    var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
+    var url =this.serverService.urlFinal + "deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }

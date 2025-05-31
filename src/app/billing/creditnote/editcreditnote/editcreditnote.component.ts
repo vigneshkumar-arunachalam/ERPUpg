@@ -240,7 +240,7 @@ export class EditcreditnoteComponent implements OnInit {
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           console.log("response", response);
           // location.reload();
-
+          this.totalCalculate();
 
         });
 
@@ -319,6 +319,7 @@ export class EditcreditnoteComponent implements OnInit {
      this.addDo_section1.patchValue({
        'e_DocNo': response.creditNo,
      });
+     this.totalCalculate();
    });
  }
 

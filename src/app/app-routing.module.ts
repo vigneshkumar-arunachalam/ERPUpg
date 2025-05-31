@@ -154,8 +154,8 @@ import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.compo
 import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permission.component';
 import { LeaveapprovalComponent } from './hr/leaveapproval/leaveapproval.component';
 import { LicenseKeyManagementComponent } from './license-key-management/license-key-management.component';
-import { AddDecarepiComponent } from './billing/dcare-proforma-invoice/add-decarepi/add-decarepi.component'; 
-import { EditDecarepiComponent } from './billing/dcare-proforma-invoice/edit-decarepi/edit-decarepi.component'; 
+import { AddDecarepiComponent } from './billing/dcare-proforma-invoice/add-decarepi/add-decarepi.component';
+import { EditDecarepiComponent } from './billing/dcare-proforma-invoice/edit-decarepi/edit-decarepi.component';
 import { DcareProformaInvoiceComponent } from './billing/dcare-proforma-invoice/dcare-proforma-invoice.component';
 import { DcareInvoiceComponent } from './billing/dcare-invoice/dcare-invoice.component';
 import { DcareAddInvoiceComponent } from './billing/dcare-invoice/dcare-add-invoice/dcare-add-invoice.component';
@@ -168,17 +168,25 @@ import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.co
 import { VendorComponent } from './vendor/vendor.component';
 import { CustomerProjectComponent } from './customer-project/customer-project.component';
 import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
+// import { DeliverychallanComponent } from './billing/deliverychallan.component';
+// import { RatecatalogComponent } from './stock/ratecatalog.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
-  },{
+  },
+   {
+  //   path: 'deliverychallan', component: DeliverychallanComponent
+  // },
+  // {
+  //   path: 'ratecatalog', component: RatecatalogComponent
+  // }, {
     path: 'Currentstock', component: CurrentStockOneComponent
-  },{
+  }, {
     path: 'customerProject', component: CustomerProjectComponent
-  },{
+  }, {
     path: 'vendor', component: VendorComponent
-  },
+  },
   {
     path: 'currentPayslip', component: CurrentPayslipComponent
   },
@@ -212,32 +220,32 @@ const routes: Routes = [
   {
     path: 'edit-dcare-quotation', component: DcareEditQuotationComponent
   },
-{
+  {
     path: 'mconnectlicensekeyMgmt', component: LicenseKeyManagementComponent
-},{
+  }, {
     path: 'leaveapproval', component: LeaveapprovalComponent
-},{
-  path: 'erp-app-permission', component: ErpAppPermissionComponent
-},{
+  }, {
+    path: 'erp-app-permission', component: ErpAppPermissionComponent
+  }, {
     path: 'leaveRequestFinal', component: LeavereqFinalComponent
-},{
+  }, {
     path: 'leaveRequest', component: LeaverequestComponent
-},{
+  }, {
     path: 'editmonthlycontribution', component: EditcontmasterComponent
-},{
+  }, {
     path: 'addmonthlycontribution', component: AddcontmasterComponent
-},{
+  }, {
     path: 'monthlycontribution', component: MonthlycontributionComponent
-},{
-  path: 'staff_permiss_report', component: StaffpermissionreportComponent
-},{
+  }, {
+    path: 'staff_permiss_report', component: StaffpermissionreportComponent
+  }, {
     path: 'attendance_report', component: AttendanceReportComponent
-},
+  },
   {
     path: 'didStock', component: DidStockComponent
-},{
+  }, {
     path: 'addcontributionmaster', component: AddcontributionmasterComponent
-  },{
+  }, {
     path: 'editcontributionmaster', component: EditcontributionmasterComponent
   }, {
     path: 'contributionmaster', component: ContributionmasterComponent
@@ -245,7 +253,7 @@ const routes: Routes = [
     path: 'editSalaryEntry', component: EditsalaryentryComponent
   }, {
     path: 'addSalaryEntry', component: AddsalaryentryComponent
-  },{
+  }, {
     path: 'salaryEntry', component: SalaryentryComponent
   }, {
     path: 'calendarTemplate', component: CalendarTemplateComponent

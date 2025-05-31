@@ -282,6 +282,7 @@ var xft='';
       this.addDo_section1.patchValue({
         'DocNo': response.creditNo,
       });
+      this.totalCalculate();
     });
   }
   billerChangeDetails1(id: any) {

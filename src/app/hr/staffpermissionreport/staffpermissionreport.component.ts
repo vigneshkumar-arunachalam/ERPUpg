@@ -358,7 +358,10 @@ this.spinner.show();
       if (response.status == true) {
 
         this.spinner.hide();
-        this.attendanceList = response.datas;
+        if(response.datas){
+  this.attendanceList = response.datas;
+        }
+      
         if(response.datas==null){
           this.listShow=false;
         }

@@ -146,16 +146,16 @@ export class PurchaseEntryComponent implements OnInit {
     this.addLoad();
     this.yearsAPI();
 
-    this.http.get<any>('https://erp1.cal4care.com/api/purchaseEntry/getMonthValues').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'purchaseEntry/getMonthValues').subscribe((data: any) => {
       this.getMonthValues = data.months;
      // console.log("this.getMonthValues", this.getMonthValues)
     })
 
-    this.http.get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
      // console.log("this.getVendorCode", this.getVendorCode)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'base/getVendorList').subscribe((data: any) => {
       this.getVendorList = data.vendorList;
      // console.log("this.getVendorCode", this.getVendorCode)
     })
@@ -782,16 +782,23 @@ export class PurchaseEntryComponent implements OnInit {
       if (response.status = true) {
         this.selectedGroupIds = [];
         this.resultRecurring = response[0].recuring_activechk;
-        this.recurringGroups = response[0].recurringGroups
-        this.selectedGroupIds = response[0].recuring_group_str.split(',').map(Number);
+        this.recurringGroups = response[0].recurringGroups;
+        if(response[0].recuring_group_str){
+ this.selectedGroupIds = response[0].recuring_group_str.split(',').map(Number);
+        }
+       
        // console.log("this.selectedGroupIds", this.selectedGroupIds)
+       if(response[0].recured_date_show){
         const dateParts = response[0].recured_date_show.split('/');
-        const year = parseInt(dateParts[2], 10);
+           const year = parseInt(dateParts[2], 10);
         const month = parseInt(dateParts[1], 10);
         const day = parseInt(dateParts[0], 10);
         const parsedDate = new Date(year, month - 1, day); // Note: month - 1 becau
 
         this.recurringDate = this.datePipe.transform(parsedDate, 'yyyy-MM-dd');
+       }
+
+     
         this.RecurringForm.patchValue({
           'Rec_date': this.recurringDate,
           'Rec_Duration': response[0].rec_duration,
@@ -1510,7 +1517,7 @@ export class PurchaseEntryComponent implements OnInit {
   addVendorNameGo() {
     // $('#addPurchaseEntryFormId').modal('hide');
     
-    this.http.get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
     //  console.log("this.getVendorCode", this.getVendorCode)
     });

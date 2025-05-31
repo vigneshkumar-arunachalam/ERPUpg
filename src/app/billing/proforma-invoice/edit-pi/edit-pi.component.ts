@@ -636,7 +636,7 @@ export class EditPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
 
 
@@ -1106,7 +1106,7 @@ export class EditPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
 
 
@@ -1746,7 +1746,7 @@ export class EditPIComponent implements OnInit {
     $('#enableFinalDiscount').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-   console.log('final_discount_type' , disType);
+  // console.log('final_discount_type' , disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();

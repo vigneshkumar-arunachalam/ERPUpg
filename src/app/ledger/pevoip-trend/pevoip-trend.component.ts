@@ -858,7 +858,7 @@ export class PEVoipTrendComponent implements OnInit {
     //  console.log("typeof-status",typeof(status));
     switch (status) {
       case 1:
-        return '#4CAF50'; // Green
+        return '#84FD88'; // Green
       case 2:
         return '#FFFF5C'; // Yellow
       case 3:

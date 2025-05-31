@@ -162,7 +162,7 @@ export class EnquirynewComponent implements OnInit {
     );
   }
   pdf(enquiryId: any) {
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + enquiryId + "";
+    var url = this.serverService.urlFinal +"quotation/show_quotation_pdf?id=" + enquiryId + "";
     window.open(url, '_blank');
     console.log("url", url)
     $('#pdfFormId').modal('hide');

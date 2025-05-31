@@ -61,7 +61,7 @@ export class CurrentPayslipComponent implements OnInit {
   }
   showPDF(){
     this.clickStatus=true;
-    const url = `https://laravelapi.erp1.cal4care.com/api/hr/viewSalarySlipDetails?userId=${this.user_ids}&month=${this.CurrentMonth}&year=${this.CurrentYear}`;
+    const url =this.serverService.urlFinal + `hr/viewSalarySlipDetails?userId=${this.user_ids}&month=${this.CurrentMonth}&year=${this.CurrentYear}`;
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
   }

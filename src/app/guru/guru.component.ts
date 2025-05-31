@@ -101,6 +101,7 @@ export class GuruComponent implements OnInit {
   createAddress(): FormGroup {
     return this.fb.group({
       billerId: '',
+
       customer_id: '',
       description: '',
       account_type: '',
@@ -114,6 +115,7 @@ export class GuruComponent implements OnInit {
   editcreateAddress(): FormGroup {
     return this.fb.group({
       billerId: '',
+            customerName:'',
       guru_details_id: '',
       customer_id: '',
       description: '',
@@ -164,7 +166,8 @@ export class GuruComponent implements OnInit {
 
 
           const formArray = new FormArray([]);
-          for (let index = 0; index < response.data.length; index++) {
+          if(response.data){
+             for (let index = 0; index < response.data.length; index++) {
             // this.CustomerIDUpdate = response.edit_contract_details[index].customer_id,
             formArray.push(this.fb.group({
               "guru_details_id": response.data[index].guru_details_id,
@@ -191,6 +194,9 @@ export class GuruComponent implements OnInit {
               console.log("Set value for #pd_e_customername_txtbox_", index, $('#pd_e_customername_txtbox_' + index).val());
             }, 0);
           }
+
+          }
+         
 
           console.log(formArray);
 
@@ -902,7 +908,7 @@ export class GuruComponent implements OnInit {
       // console.log("quotation/product_name_auto response", response);
       this.searchResult_customerName = response.customerName;
 
-      console.log("response.customerName", this.searchResult_customerName)
+      // console.log("response.customerName", this.searchResult_customerName)
 
       if (response.status != '') {
         // this.productNameAutoFill();
@@ -913,18 +919,18 @@ export class GuruComponent implements OnInit {
 
   }
   selectEventCustomer(item: any, i: any) {
-    console.log("item", item)
-    console.log("item.customerName", item.customerName)
-    console.log("item.customerId", item.customerId)
+    // console.log("item", item)
+    // console.log("item.customerName", item.customerName)
+    // console.log("item.customerId", item.customerId)
     //  $('#pd_customername_txtbox_' + i).val(item.customerName)
     $('#pd_customername_txtbox_' + i).val(item.customerId)
     $('#pd_e_customername_txtbox_' + i).val(item.customerId)
 
   }
   selectEventCustomerGuru(item: any) {
-    console.log("item", item)
-    console.log("item.customerName", item.customerName)
-    console.log("item.customerId", item.customerId)
+    // console.log("item", item)
+    // console.log("item.customerName", item.customerName)
+    // console.log("item.customerId", item.customerId)
     //  $('#pd_customername_txtbox_' + i).val(item.customerName)
     this.guruSearchcustomerId = item.customerId;
     this.guruSearchcustomerName = item.customerName;

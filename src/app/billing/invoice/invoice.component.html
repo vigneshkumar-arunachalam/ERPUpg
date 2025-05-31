@@ -217,7 +217,7 @@
                                       </a>
 
                                     </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
+                                    <!-- <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
                                       <a *ngIf="(recurring_Status=='1')" class="hover4" title="Un-Recurring1"
                                         data-toggle="modal" data-target="#RecurringFormIdPE_inv"
                                         (click)="RecurringEditPE(list.billId,i)">
@@ -237,7 +237,7 @@
                                             Recurring</strong></span>
                                       </a>
 
-                                    </li>
+                                    </li> -->
 
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                       <a *ngIf="(reseller_commissionState=='1')" class="hover3"
@@ -1203,17 +1203,18 @@
 
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
-                      (change)="CBF_PDFLink($event)">
+                      (change)="CBF_PDFLink($event)" formControlName="CBF_PDFLink">
                     <label class="form-check-label" for="PDF Link">PDF Link</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                    formControlName="CBF_TemplateSelection"
                       [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
                     <label class="form-check-label" for="Template Selection"> Template Selection</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
-                      (change)="CBF_PaymentLink($event)">
+                      (change)="CBF_PaymentLink($event)"  formControlName="CBF_PaymentLink">
                     <label class="form-check-label" for="Payment Link">Payment Link</label>
                   </div>
 
@@ -1314,8 +1315,10 @@
         </div>
         <div class="modal-body">
           <form [formGroup]="RecurringForm">
+            <div class="row">
+              
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Date</label>
@@ -1327,7 +1330,7 @@
             </div>
 
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Recurring</label>
@@ -1346,7 +1349,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Fixed Charge Dt</label>
@@ -1358,7 +1361,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Fixed Charge Duration</label>
@@ -1376,7 +1379,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Usage Charge Dt</label>
@@ -1388,7 +1391,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6 mt-4">
               <div class="row">
                 <div class="col-lg-4">
                   <label class="form-label">Usage Charges Duration</label>
@@ -1405,6 +1408,98 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                
+                  <label class="form-label">Reseller Commision Enable</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" (change)="resellerChange($event)" formControlName="cbk_RCEnable">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-4" *ngIf="this.resellerEnaChk==1">
+
+            </div>
+            <div class="col-lg-6 mt-4"  *ngIf="this.resellerEnaChk==1">
+              <div class="row">
+                <div class="col-lg-4">
+                
+                  <label class="form-label">Reseller Name </label>
+                </div>
+                <div class="col-lg-8">
+                  <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
+                      formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                      (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                      style="padding: 4px 5px !important;">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6 mt-4"  *ngIf="this.resellerEnaChk==1">
+              <div class="row">
+                <div class="col-lg-4">
+                
+                  <label class="form-label">Commission Type</label>
+                </div>
+                <div class="col-lg-8">
+                  <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                    <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                    <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
+                      checked="{{item.id==this.CommissionType55 ? 'checked':''}}" (change)="radio_commissionType($event)"
+                      value={{item.id}}>
+
+                    <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-4"  *ngIf="this.resellerEnaChk==1">
+              <div class="row">
+                <div class="col-lg-4">
+                
+                  <label class="form-label">Commission Value</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="commission_value"
+                    id="CommissionValue_WFA_ID1_" (keyup)="commissionValueAutoFill()">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-4"  *ngIf="this.resellerEnaChk==1">
+              <div class="row">
+                <div class="col-lg-4">
+                
+                  <label class="form-label">Commission Amount</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="commission_amt" 
+                  id="CommissionAmount1_WFA_ID1_">
+                <input type="hidden" class="form-control" id="reseller_comm_id" formControlName="reseller_comm_id">
+                <input type="hidden" class="form-control" id="commIndex" formControlName="commIndex">
+                <input type="hidden" class="form-control" id="reseller_id" formControlName="reseller_id">
+
+                <input type="hidden" class="form-control" id="billId" formControlName="billId">
+                <input type="hidden" class="form-control" id="grossAmount" formControlName="grossAmount">
+                </div>
+              </div>
+            </div>
+          </div>
 
           </form>
 
@@ -1439,12 +1534,12 @@
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="setResellerRecurringForm">
+          <!-- <form [formGroup]="setResellerRecurringForm">
 
 
 
 
-          </form>
+          </form> -->
 
 
         </div>
@@ -2010,7 +2105,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 " style="display: flex;">
+              <div class="col-lg-6" style="display: flex;">
                 <div class="col-lg-3 ">
                   <label>Commission Value </label>
                 </div>
@@ -2019,7 +2114,7 @@
                     id="CommissionValue_WFA_ID1_" (keyup)="commissionValueAutoFill()">
                 </div>
               </div>
-              <div class="col-lg-6 " style="display: flex;">
+              <div class="col-lg-6" style="display: flex;">
                 <div class="col-lg-3 ">
                   <label>Commission Amount </label>
                 </div>
@@ -2034,7 +2129,7 @@
                   <input type="hidden" class="form-control" id="grossAmount" formControlName="grossAmount">
                 </div>
               </div>
-              <div class="col-lg-6 " style="display: flex;">
+              <div class="col-lg-6 mt-2" style="display: flex;">
                 <div class="col-lg-3 ">
                   <label>PDF Show </label>
                 </div>
@@ -2059,7 +2154,7 @@
               </div>
             </div> -->
 
-              <div class="col-lg-6" style="display: flex;">
+              <div class="col-lg-6 mt-2" style="display: flex;">
 
                 <div class="col-lg-3">
                   <label class="form-label">Date</label>

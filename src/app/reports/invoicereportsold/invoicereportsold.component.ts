@@ -190,8 +190,12 @@ console.log("params",params);
         this.invoice_noList = response.invoice_no;
         this.invoice_statusList = response.invoice_status;
         this.performaTypeList = response.performaType;
-        const date = new Date(response.date.fromdt);
-        this.fromDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+        if(response.date){
+ const date = new Date(response.date.fromdt);
+  this.fromDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+        }
+       
+       
         const date2 = new Date(response.date.todt);
         this.toDate = this.datePipe.transform(date2, 'yyyy-MM-dd');
         this.default_status_id = response.default_status_id;

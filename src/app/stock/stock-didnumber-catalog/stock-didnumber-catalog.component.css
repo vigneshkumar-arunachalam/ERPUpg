@@ -662,4 +662,15 @@ select {
       }
       
       
+
+
+      .release-container {
+        cursor: pointer;
+      }
+      
+      .remove-icon {
+        color: rgb(219, 219, 233);
+        text-decoration: underline;
+        margin-right: 8px;
+      }
       

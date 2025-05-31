@@ -159,18 +159,10 @@ export class DupEditPIComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
-
+      //  console.log("params output value", params);
         this.editbillerID = params['e_editBillID'];
-
-
-
-        console.log("edit biller id", this.editbillerID);
-
-
-
+       // console.log("edit biller id", this.editbillerID);
         this.editPI();
-
       }
       );
     this.loadADD();
@@ -298,11 +290,11 @@ export class DupEditPIComponent implements OnInit {
     this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
-    console.log(this.addresses);
-    console.log(this.itre);
+    // console.log(this.addresses);
+    // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(this.test[index]);
+     // console.log(this.test[index]);
 
 
     });
@@ -333,8 +325,8 @@ export class DupEditPIComponent implements OnInit {
 
   removeAddresstest_test(i: number) {
 
-    console.log(i)
-    console.log(this.addresses)
+    // console.log(i)
+    // console.log(this.addresses)
     this.addresses.removeAt(i);
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
@@ -383,16 +375,16 @@ export class DupEditPIComponent implements OnInit {
 
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-    console.log(this.chkTermsandcondition)
+    // console.log(this.chkTermsandcondition)
   }
   chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
-    console.log(this.chkReceivedAuthorizedSignature)
+    // console.log(this.chkReceivedAuthorizedSignature)
   }
 
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+    // console.log(this.chklogoAddressSignature)
   }
 
 
@@ -401,11 +393,11 @@ export class DupEditPIComponent implements OnInit {
 
   removeParticular(i: number) {
    
-    console.log('iiii--' + i)
-    console.log(this.addresses)
+    // console.log('iiii--' + i)
+    // console.log(this.addresses)
 
     var pd_billchild_id = $('#pd_billchild_id_' + i).val();
-    console.log('pd_billchild_id'+pd_billchild_id);
+    // console.log('pd_billchild_id'+pd_billchild_id);
 
     Swal.fire({
       title: 'Are you sure?',
@@ -435,7 +427,7 @@ export class DupEditPIComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response)
+        //  console.log("response", response)
 
 
         });
@@ -462,7 +454,7 @@ export class DupEditPIComponent implements OnInit {
       $('#signature_message_id').css("display", "block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+    // console.log(this.checkbox_selectAdditionalSignature);
   }
 
 
@@ -475,12 +467,12 @@ export class DupEditPIComponent implements OnInit {
   handleChange_ExportState(data: any, evt: any) {
 
     this.radioID_Export = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_ExportState = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_ExportState);
+  //  console.log("radio button value", this.radio_Value_ExportState);
     // console.log("radio button id value", xyz);
   }
 
@@ -488,24 +480,24 @@ export class DupEditPIComponent implements OnInit {
   handleChange_mileSate_InvoiceType(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_InvoiceType = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_InvoiceType);
+   // console.log("radio button value", this.radio_Value_InvoiceType);
     // console.log("radio button id value", xyz);
   }
 
   handleChange_EXTRALogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_Export_logo = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export_logo);
+   // console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
 
@@ -514,55 +506,55 @@ export class DupEditPIComponent implements OnInit {
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
     // this.MSDisplay_Value = id;
-    console.log(this.MSDisplay_Value);
+  //  console.log(this.MSDisplay_Value);
   }
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+   // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
     // do something when input is focused
   }
   EditCHK_MileDiscount(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_MileDiscount = data;
     this.checkbox_value_MileDiscount = event.target.checked;
-    console.log(this.checkbox_value_MileDiscount)
+   // console.log(this.checkbox_value_MileDiscount)
     if (this.checkbox_value_MileDiscount) {
 
       this.edit_array_MileDiscount.push(data);
       this.edit_array_MileDiscount.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
     }
     else {
       const index = this.edit_array_MileDiscount.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_MileDiscount.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
 
     }
   }
   EditCHK_ExtraLogo(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_ExtraLogo = data;
     this.checkbox_value_ExtraLogo = event.target.checked;
-    console.log(this.checkbox_value_ExtraLogo)
+  //  console.log(this.checkbox_value_ExtraLogo)
     if (this.checkbox_value_ExtraLogo) {
 
       this.edit_array_ExtraLogo.push(data);
       this.edit_array_ExtraLogo.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
+   //   console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
     }
     else {
       const index = this.edit_array_ExtraLogo.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_ExtraLogo.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
+   //   console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
 
     }
   }
@@ -580,7 +572,7 @@ export class DupEditPIComponent implements OnInit {
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log(response);
+     // console.log(response);
 
 
       if (response != '') {
@@ -612,7 +604,7 @@ export class DupEditPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
 
 
@@ -655,7 +647,7 @@ export class DupEditPIComponent implements OnInit {
       
 
       //  this.TaxDropdown();
-      console.log("response-load-pi", response)
+     // console.log("response-load-pi", response)
     });
 
   }
@@ -685,7 +677,7 @@ export class DupEditPIComponent implements OnInit {
 
         }, 1000);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id' + response.default_tax_id);
+      //  console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -709,7 +701,7 @@ export class DupEditPIComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response.customer_list.customerId);
+   //   console.log("vignesh-customer_name response", response.customer_list.customerId);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -726,8 +718,8 @@ export class DupEditPIComponent implements OnInit {
   searchCustomer_selectDropdownData(data: any) {
     this.spinner.show();
 
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -742,7 +734,7 @@ export class DupEditPIComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.spinner.hide();
-      if (response.status == true) {
+      if (response.customer_list) {
 
         this.addPI_section1.patchValue({
           "customer_id_hd": response.customer_list.customerId,
@@ -782,7 +774,7 @@ export class DupEditPIComponent implements OnInit {
   getCustomerInvoiceDetails(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -847,7 +839,7 @@ export class DupEditPIComponent implements OnInit {
         this.spinner.hide();
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
-        console.log(" this.mileDiscountState_value", this.mileDiscountState_value)
+       // console.log(" this.mileDiscountState_value", this.mileDiscountState_value)
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
 
@@ -898,7 +890,7 @@ export class DupEditPIComponent implements OnInit {
         this.addPI_section1.controls['e_export_state'].setValue('response.billing_pararent_details[0].export_state');
         this.TaxDropdown();
 
-        console.log('billchild_details.length' + response.billchild_details.length);
+       // console.log('billchild_details.length' + response.billchild_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
         // this.getProformaBillerDetails();
         const formArray = new FormArray([]);
@@ -934,14 +926,14 @@ export class DupEditPIComponent implements OnInit {
         }
 
 
-        console.log(formArray)
+       // console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
-        console.log(this.addresses)
+       // console.log(this.addresses)
 
         this.finalDiscountType = '';
         this.finalDiscountVal='';
         // this.finalDiscount='';
-        console.log('response.signature_filename'+response.billing_pararent_details[0].signature_filename);
+       // console.log('response.signature_filename'+response.billing_pararent_details[0].signature_filename);
        
         if(response.billing_pararent_details[0].signature_filename!=''){
           this.sign_state=1;
@@ -1045,7 +1037,7 @@ export class DupEditPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
 
 
@@ -1071,7 +1063,7 @@ export class DupEditPIComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -1143,9 +1135,9 @@ export class DupEditPIComponent implements OnInit {
         }
 
 
-        console.log("ship_address_str1---response", ship_address_str1);
-        console.log("ship_address_str2---response", ship_address_str2)
-        console.log("ship_address_str3---response", ship_address_str3)
+        // console.log("ship_address_str1---response", ship_address_str1);
+        // console.log("ship_address_str2---response", ship_address_str2)
+        // console.log("ship_address_str3---response", ship_address_str3)
 
 
         this.addPI_section1.patchValue({
@@ -1200,7 +1192,7 @@ export class DupEditPIComponent implements OnInit {
     api_updatePI_req.action = "update_proforma_invoice";
     api_updatePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
+   // console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
     api_updatePI_req.billerId = this.addPI_section1.value.companyName;
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
@@ -1283,7 +1275,7 @@ export class DupEditPIComponent implements OnInit {
 
     var addr = this.addPI_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-      console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
+     // console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
       addr[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -1308,7 +1300,7 @@ export class DupEditPIComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("add quotation new save", response);
+    //  console.log("add quotation new save", response);
       if (response.status == true) {
 
         iziToast.success({
@@ -1337,14 +1329,14 @@ export class DupEditPIComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
   }
 
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+   // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+  //  console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1406,15 +1398,15 @@ export class DupEditPIComponent implements OnInit {
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+     // console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+      //  console.log('discount_type1111' + this.sub_dis_val);
         if(this.sub_dis_val==''){
           this.sub_dis_val=0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+      //  console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
@@ -1422,7 +1414,7 @@ export class DupEditPIComponent implements OnInit {
         // console.log('discount_type222'+discount_type);
 
         this.sub_dis_val = $('#sub_discount_' + a).val();
-         console.log('sub_discount_valppp'+this.sub_dis_val);
+       //  console.log('sub_discount_valppp'+this.sub_dis_val);
          if(this.sub_dis_val==''){
           this.sub_dis_val=0;
         }
@@ -1436,7 +1428,7 @@ export class DupEditPIComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
-        console.log('-this.finalDiscount---'+netAmt+'===='+this.finalDiscount);
+      //  console.log('-this.finalDiscount---'+netAmt+'===='+this.finalDiscount);
        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
       //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
       //  tax_amt_tot += tax_amt;
@@ -1509,8 +1501,8 @@ export class DupEditPIComponent implements OnInit {
     }
     for (let j = 0; j <= this.itre; j++) {
       // const formArray = new FormArray([]);
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
       // formArray.push(this.fb.group({
       //   "pd_Total": $('#pd_Total_' + j).val(),
       //   "pd_netPrice":$('#pd_netPrice_' + j).val(),
@@ -1545,17 +1537,17 @@ export class DupEditPIComponent implements OnInit {
     //console.log('quotationPriceKey'+this.quotationPriceKey);
     //console.log('disType'+disType);
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
-    console.log('final_ tot',final_tot);
+  //  console.log('final_ tot',final_tot);
     
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePerFinal != '') {
-        console.log('3333' + final_tot);
+     //   console.log('3333' + final_tot);
         price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
-        console.log('1...price...',price);
+      //  console.log('1...price...',price);
         
 
         $('#sub_discount_' + this.invocePriceKey).val(price);
@@ -1566,8 +1558,8 @@ export class DupEditPIComponent implements OnInit {
         $('#sub_discount_val_' + this.invocePriceKey).val('');
        
         price = final_tot;
-        console.log('final_tot....',final_tot);
-        console.log('price....',price);
+        // console.log('final_tot....',final_tot);
+        // console.log('price....',price);
         
 
       }
@@ -1575,7 +1567,7 @@ export class DupEditPIComponent implements OnInit {
 
     } else {
       price = final_tot - enablePriceFinal;
-      console.log('price...',price);
+    //  console.log('price...',price);
       
       $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
       $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
@@ -1621,7 +1613,7 @@ export class DupEditPIComponent implements OnInit {
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-    console.log('row_cnt' + row_cnt);
+  //  console.log('row_cnt' + row_cnt);
     $('#enablePerFinal').val('');
     $('#enablePriceFinal').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -1658,7 +1650,7 @@ export class DupEditPIComponent implements OnInit {
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
-    console.log('disType' + disType+'final_tot'+final_tot);
+  //  console.log('disType' + disType+'final_tot'+final_tot);
 
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
@@ -1686,14 +1678,14 @@ export class DupEditPIComponent implements OnInit {
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
       this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
+     // console.log('999' + price);
     }
 
     if (this.grandTotal > 0) {
       this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
 
-    console.log('grandTotal' + this.grandTotal);
+   // console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
     
     setTimeout(() => {
@@ -1726,20 +1718,20 @@ export class DupEditPIComponent implements OnInit {
     $('#enableFinalDiscount').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+   // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enableFinalPercent').val(final_dis_val);
-      console.log('22' + disType);
+     // console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#finalDiscount_amt').val();
       $('#enableFinalDiscount').val(final_dis_val);
-      console.log('33' + final_dis_val);
+     // console.log('33' + final_dis_val);
     } else {
-      console.log('44' + disType);
+    //  console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -1847,14 +1839,14 @@ export class DupEditPIComponent implements OnInit {
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+     // console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
         this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if (sign_val == 0) {
-          console.log('response.signature_filename' + response.signature_filename);
+         // console.log('response.signature_filename' + response.signature_filename);
           this.invoiceAddSignature_filename = response.signature_filename;
         }
 

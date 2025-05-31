@@ -258,15 +258,17 @@
                                 </thead>
                                 <tbody >
                                   <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
-                                    <tr>
+                                    <tr *ngIf="j === 0 || address.value.mon_val !== addressControls.controls[j - 1].value.mon_val">
                                       <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;    font-weight: 500;
-    color: #801505;">{{months[j]}}</td>
+    color: #801505;">{{ getMonthName(address.value.mon_val) }}</td>
                                     </tr>
                                   
-                                  <tr >
+                                  <tr [style.backgroundColor]="address.get('backgroundColor').value">
                                    
                                     <td>
                                       <input type="hidden" class="form-control" formControlName="purchaseEntryTempId" id="pd_purchaseEntryTempId{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="purchase_type_id"
+                                      id="pd_purchase_type_id{{j}}" />
                                       <input type="hidden" class="form-control" formControlName="vendorId" id="pd_vendorId{{j}}" />
                                       <input type="hidden" class="form-control" formControlName="billerid" id="pd_billerid{{j}}" />
                                       <input type="hidden" class="form-control" formControlName="year_val" id="pd_year_val{{j}}" />
@@ -276,7 +278,7 @@
 
                                       <!-- <input type="text" class="form-control" formControlName="purchaseEntryType"   
                                       [readonly]="isReadOnly" [ngClass]="{'readonly-field': isReadOnly}"  /> -->
-                                      <select id="pd_purchaseEntryType{{j}}" class="form-control" [disabled]="isReadOnly"
+                                      <select id="pd_purchaseEntryType{{j}}" class="form-control" 
                                       [ngClass]="{'readonly-field': isReadOnly}"
                                       style="background-color: aliceblue;" formControlName="purchaseEntryType" >
                                     
@@ -290,7 +292,7 @@
                                     </td>
                                     <!-- Other Input Fields -->
                                     <td>
-                                      <input type="number" [readonly]="isReadOnly" [ngClass]="{'readonly-field': isReadOnly}"  class="form-control" formControlName="invoiceNumber" id="pd_invoiceNumber{{j}}" />
+                                      <input type="text" [readonly]="isReadOnly" [ngClass]="{'readonly-field': isReadOnly}"  class="form-control" formControlName="invoiceNumber" id="pd_invoiceNumber{{j}}" />
 
                                     </td>
                                     <td>
@@ -303,7 +305,7 @@
                                     <td>
                                      
                                       <input 
-                                        type="number" 
+                                        type="text" 
                                         class="form-control" 
                                         formControlName="purchaseContent" 
                                         id="pd_purchaseContent{{j}}" 
@@ -313,7 +315,7 @@
                                     <td>
                                      
                                         <input 
-                                          type="number" 
+                                          type="text" 
                                           class="form-control" 
                                           formControlName="PONumber" 
                                           id="pd_PONumber{{j}}" 
@@ -322,7 +324,7 @@
                                     </td>
                                     <td>
                                      
-                                        <select id="pd_currency{{j}}" class="form-control" [disabled]="isReadOnly"
+                                        <select id="pd_currency{{j}}" class="form-control" 
                                         [ngClass]="{'readonly-field': isReadOnly}"
                                         style="background-color: aliceblue;" formControlName="currency" >
                                       
@@ -371,7 +373,7 @@
                                     </td> -->
                                     <td>
                                      
-                                        <select id="pd_taxProvider{{j}}" class="form-control" [disabled]="isReadOnly"
+                                        <select id="pd_taxProvider{{j}}" class="form-control" 
                                         [ngClass]="{'readonly-field': isReadOnly}"
                                         style="background-color: aliceblue;" formControlName="taxProvider" >
                                       
@@ -402,7 +404,7 @@
                                       formControlName="frieghtProvider" 
                                       id="pd_frieghtProvider{{j}}" 
                                     /> -->
-                                    <select id="pd_frieghtProvider{{j}}" class="form-control" [disabled]="isReadOnly"
+                                    <select id="pd_frieghtProvider{{j}}" class="form-control" 
                                     [ngClass]="{'readonly-field': isReadOnly}"
                                     style="background-color: aliceblue;" formControlName="frieghtProvider" >
                                   

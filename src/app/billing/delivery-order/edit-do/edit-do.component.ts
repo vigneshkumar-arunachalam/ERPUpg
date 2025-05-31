@@ -81,13 +81,13 @@ export class EditDoComponent implements OnInit {
     this.loadADD();
     this.route.queryParams
       .subscribe(params => {
-      //  console.log("params output value", params);
+        //  console.log("params output value", params);
 
         this.editDeliveryID = params['e_editBillID'];
 
 
 
-       // console.log("edit biller id", this.editDeliveryID);
+        // console.log("edit biller id", this.editDeliveryID);
 
 
 
@@ -104,10 +104,10 @@ export class EditDoComponent implements OnInit {
     ];
 
     this.warranty_id_radio = [
-      { name: 'No Warranty', selected: false, id: 1,val:'no' },
-      { name: 'One Warranty ', selected: false, id: 2,val:'one' },
-      { name: 'Two Warranty', selected: false, id: 3,val:'two' },
-      { name: 'None', selected: false, id: 4,val:'none' },
+      { name: 'No Warranty', selected: false, id: 1, val: 'no' },
+      { name: 'One Warranty ', selected: false, id: 2, val: 'one' },
+      { name: 'Two Warranty', selected: false, id: 3, val: 'two' },
+      { name: 'None', selected: false, id: 4, val: 'none' },
 
     ];
 
@@ -142,7 +142,7 @@ export class EditDoComponent implements OnInit {
     // console.log("evt-id", evt.target.id)
     this.radio_Value_Export_logo = evt.target.value;
     // var xyz = id;
-   // console.log("radio button value", this.radio_Value_Export_logo);
+    // console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
 
@@ -158,34 +158,34 @@ export class EditDoComponent implements OnInit {
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
     var Twowarranty = "Above items are Two year warranty from the date of delivery";
-    var Nonewarranty='';
+    var Nonewarranty = '';
 
     this.radioID_Logo = data;
 
     this.radio_Value_warranty = evt.target.value;
     if (this.radio_Value_warranty == 1) {
-      this.radio_Value_warranty="no";
+      this.radio_Value_warranty = "no";
       $('#description_details').val(Nowarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 2) {
-      this.radio_Value_warranty="one";
+      this.radio_Value_warranty = "one";
 
       $('#description_details').val(Onewarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 3) {
-      this.radio_Value_warranty="two";
+      this.radio_Value_warranty = "two";
       $('#description_details').val(Twowarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 4) {
-      this.radio_Value_warranty="none";
+      this.radio_Value_warranty = "none";
       $('#description_details').val(Nonewarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
 
@@ -205,7 +205,7 @@ export class EditDoComponent implements OnInit {
     // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-     // console.log(this.test[index]);
+      // console.log(this.test[index]);
 
 
     });
@@ -262,7 +262,7 @@ export class EditDoComponent implements OnInit {
     api_req.element_data = addAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
-     // console.log("response-load-pi", response)
+      // console.log("response-load-pi", response)
     });
 
   }
@@ -281,7 +281,7 @@ export class EditDoComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-     // console.log("response-load-pi", response)
+      // console.log("response-load-pi", response)
       this.editDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -301,13 +301,13 @@ export class EditDoComponent implements OnInit {
     // console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
     // console.log(" evt.target.value radioSelectFooter", evt.target.value)
 
-   // console.log("radio button value", radioSelectFooter);
+    // console.log("radio button value", radioSelectFooter);
   }
 
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-   // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+    // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
 
 
   }
@@ -421,13 +421,17 @@ export class EditDoComponent implements OnInit {
   // CUSTOMER AUTO COMPLETE
 
   searchCustomer_selectDropdownData(data: any) {
-   // alert(data.customerName)
+    // alert(data.customerName)
     this.spinner.show();
-    this.customer_ID = data.customerId;
-    this.customer_NAME = data.customerName;
-    // console.log("search data in dropdown", data)
-    // console.log("search data-customer Id", data.customerId)
-    this.customerName_Data = data.customerId;
+    if (data) {
+      this.customer_ID = data.customerId;
+      this.customer_NAME = data.customerName;
+      this.customerName_Data = data.customerId;
+
+    }
+
+
+
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -440,90 +444,20 @@ export class EditDoComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     // console.log("customer_address_details---response", response)
+
       if (response.status == true) {
-        // console.log('address'+response.customer_details[0].customerAddress1);
-
-
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
-
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
-        }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
-        } else {
-          address_3 = response.customer_details[0].state;
-        }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
-
-
-
-
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
-
-          ship_to_str = response.customer_details[0].customerName;
-
-        } else {
-          ship_to_str = response.customer_details[0].ship_to;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-        } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
-
-        if (response.customer_details[0].ship_to == '') {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-          ship_address_str3 = address_3;
-        }
-
-
 
         this.editDo_section1.patchValue({
-          'customerAddress1': response.customer_details[0].customerAddress1,
-          'customerAddress2': response.customer_details[0].customerAddress2,
-          'customerAddress3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
-          'terms': response.customer_details[0].terms_condition,
+          'customerAddress1': response.customer_details.customerAddress1,
+          'customerAddress2': response.customer_details.customerAddress2,
+          'customerAddress3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.companyName,
+          'ship_to': response.customer_details.ship_to,
+          'ship_address_1': response.customer_details.ship_customerAddress1,
+          'ship_address_2': response.customer_details.ship_customerAddress2,
+          'ship_address_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.companyName,
+          'terms': response.customer_details.terms_condition,
         });
       }
       else {
@@ -558,7 +492,7 @@ export class EditDoComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer_name response", response);
+      // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -573,12 +507,12 @@ export class EditDoComponent implements OnInit {
     // do something when input is focused
   }
 
-  
+
   dynamicChange_footer(val: any) {
     this.spinner.show();
     this.billerID = val;
-   // console.log("billerID check", this.billerID);
-  
+    // console.log("billerID check", this.billerID);
+
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -605,8 +539,8 @@ export class EditDoComponent implements OnInit {
           this.editDo_section1.patchValue({
             // 'e_quotationNumber': response.quotation_no,
             'e_selectFooter': this.selected_pdf_footer,
-      //      'e_selectCurrency': response.currency_id,
-     //       'e_termConditionContentChange': response.quotation_terms_cond,
+            //      'e_selectCurrency': response.currency_id,
+            //       'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
           });
 
@@ -617,7 +551,7 @@ export class EditDoComponent implements OnInit {
             'e_quotationNumber': '',
             //      'e_selectFooter': '',
             'e_selectCurrency': '',
-      //      'e_termConditionContentChange': '',
+            //      'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
 
           });
@@ -647,13 +581,13 @@ export class EditDoComponent implements OnInit {
     api_req.element_data = edit_DO_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response != '') {
-       
+      if (response.delivery_pararent_details) {
+
         this.dynamicChange_footer(response.delivery_pararent_details[0].billerId);
         this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
         this.warranty_value = response.delivery_pararent_details[0].warranty_type;
         this.customer_ID = response.delivery_pararent_details[0].customer_id;
-        this.customer_NAME =response.delivery_pararent_details[0].customerName;
+        this.customer_NAME = response.delivery_pararent_details[0].customerName;
         this.editDo_section1.patchValue({
 
           'companyName': response.delivery_pararent_details[0].billerId,
@@ -684,10 +618,10 @@ export class EditDoComponent implements OnInit {
 
 
         const formArray = new FormArray([]);
-    
+
         for (let index = 0; index < response.delivery_details.length; index++) {
 
-         // console.log('delivery_details++index' + index);
+          // console.log('delivery_details++index' + index);
 
 
           formArray.push(this.fb.group({
@@ -703,9 +637,9 @@ export class EditDoComponent implements OnInit {
         }
 
 
-       // console.log(formArray)
+        // console.log(formArray)
         this.editDo_section2.setControl('addresses', formArray);
-      //  console.log(this.addresses);
+        //  console.log(this.addresses);
         this.editAddress();
         this.removeAddresstest(response.delivery_details.length);
 
@@ -716,14 +650,14 @@ export class EditDoComponent implements OnInit {
     // console.log(i)
     // console.log(this.addresses)
     this.addresses.removeAt(i);
-   
+
 
   }
 
   descriptionPermission(event: any) {
 
     this.description_details_show_state = event.target.checked;
-   // console.log(this.description_details_show_state);
+    // console.log(this.description_details_show_state);
 
 
     if (this.description_details_show_state = event.target.checked) {
@@ -751,7 +685,7 @@ export class EditDoComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-     // console.log("response-load-pi", response)
+      // console.log("response-load-pi", response)
       this.editDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -790,41 +724,41 @@ export class EditDoComponent implements OnInit {
 
 
     api_updateDO_req.bills_logo_id = this.radio_Value_Export_logo;
-    if(this.radio_Value_warranty==''||this.radio_Value_warranty=='undefined'||this.radio_Value_warranty==undefined){
-       var warranty = $('#warranty_id' ).val();
+    if (this.radio_Value_warranty == '' || this.radio_Value_warranty == 'undefined' || this.radio_Value_warranty == undefined) {
+      var warranty = $('#warranty_id').val();
 
-       if (warranty == 1) {
-        warranty="no";
+      if (warranty == 1) {
+        warranty = "no";
         api_updateDO_req.warranty_type = warranty;
-  
+
       }
       if (warranty == 2) {
-        warranty="one";
+        warranty = "one";
         api_updateDO_req.warranty_type = warranty;
-       
-  
+
+
       }
       if (warranty == 3) {
-        warranty="two";
+        warranty = "two";
         api_updateDO_req.warranty_type = warranty;
-  
+
       }
       if (warranty == 4) {
-        warranty="none";
+        warranty = "none";
         api_updateDO_req.warranty_type = warranty;
-  
+
       }
-    }else{
+    } else {
       api_updateDO_req.warranty_type = this.radio_Value_warranty;
     }
-    
+
 
     api_updateDO_req.description_details = this.editDo_section1.value.description_details;
     api_updateDO_req.description_details_show_state = this.description_details_show_state;
     //section 2
     var addr = this.editDo_section2.value.addresses;
-   // console.log("addr",addr)
-    for (let i = 0; i < addr.length-1; i++) {
+    // console.log("addr",addr)
+    for (let i = 0; i < addr.length - 1; i++) {
 
       addr[i].deliveryChildId = $('#deliveryChildId_' + i).val();
 
@@ -840,7 +774,7 @@ export class EditDoComponent implements OnInit {
     api_req.element_data = api_updateDO_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-     // console.log("add quotation new save", response);
+      // console.log("add quotation new save", response);
       if (response.status == true) {
 
         iziToast.success({
@@ -860,13 +794,13 @@ export class EditDoComponent implements OnInit {
         });
 
       }
-      
+
     }), (error: any) => {
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
     this.goBack();
   }
@@ -875,5 +809,5 @@ export class EditDoComponent implements OnInit {
   goBack() {
     this.router.navigate(['/deliveryorder']);
   }
-  
+
 }

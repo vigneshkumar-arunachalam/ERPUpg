@@ -492,45 +492,51 @@ export class ResellerPaymentComponent implements OnInit {
     this.selectedResellerCommIds2 = [];
     // console.log(event.target.checked)
     if (event.target.checked) {
-      this.resellerList.forEach((reseller: any, index: any) => {
-        if (reseller.checkbox === 1 && reseller.paid_status === 'Paid'
-          && !this.selectedResellerCommIds.includes(reseller.reseller_comm_id)) {
-          reseller.selected = true;
-          this.paidCheck_Unpaid_status = true;
-          this.selectedResellerCommIds.push(reseller.reseller_comm_id);
-          this.selectedResellerCommIds2.push(reseller.refAmount);
-          this.sum_bal = 0;
-          this.paidCheck_Unpaid_value = 0;
-          var xy = 0;
-          $('#RP_multiple_amount').val('');
-          for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
-            xy = this.selectedResellerCommIds2[i];
-            //   console.log("xy",xy)
-            //  console.log(" this.sum_bal-before", this.sum_bal)
-            this.sum_bal = this.sum_bal + xy;
-            //  console.log(" this.sum_bal-last", this.sum_bal)
+      if( this.resellerList){
+        this.resellerList.forEach((reseller: any, index: any) => {
+          if (reseller.checkbox === 1 && reseller.paid_status === 'Paid'
+            && !this.selectedResellerCommIds.includes(reseller.reseller_comm_id)) {
+            reseller.selected = true;
+            this.paidCheck_Unpaid_status = true;
+            this.selectedResellerCommIds.push(reseller.reseller_comm_id);
+            this.selectedResellerCommIds2.push(reseller.refAmount);
+            this.sum_bal = 0;
+            this.paidCheck_Unpaid_value = 0;
+            var xy = 0;
+            $('#RP_multiple_amount').val('');
+            for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
+              xy = this.selectedResellerCommIds2[i];
+              //   console.log("xy",xy)
+              //  console.log(" this.sum_bal-before", this.sum_bal)
+              this.sum_bal = this.sum_bal + xy;
+              //  console.log(" this.sum_bal-last", this.sum_bal)
+            }
+            var toFixval = this.sum_bal;
+            this.paidCheck_Unpaid_value = this.sum_bal;
+            this.sum_bal = '';
+            $('#RP_multiple_amount').val(toFixval.toFixed(2));
+  
           }
-          var toFixval = this.sum_bal;
-          this.paidCheck_Unpaid_value = this.sum_bal;
-          this.sum_bal = '';
-          $('#RP_multiple_amount').val(toFixval.toFixed(2));
-
-        }
-
-
-      });
+  
+  
+        });
+      }
+    
       // console.log("Final Checkbox group all- selected list", this.selectedResellerCommIds)
     } else {
-      this.resellerList.forEach((reseller: any, index: any) => {
-        reseller.selected = false;
-        this.paidCheck_Unpaid_status = true;
-        const indexOfId = this.selectedResellerCommIds.indexOf(reseller.reseller_comm_id);
-        if (indexOfId > -1) {
-          this.selectedResellerCommIds.splice(indexOfId, 1);
-          this.selectedResellerCommIds2.pop();
-        }
-
-      });
+      if(this.resellerList){
+        this.resellerList.forEach((reseller: any, index: any) => {
+          reseller.selected = false;
+          this.paidCheck_Unpaid_status = true;
+          const indexOfId = this.selectedResellerCommIds.indexOf(reseller.reseller_comm_id);
+          if (indexOfId > -1) {
+            this.selectedResellerCommIds.splice(indexOfId, 1);
+            this.selectedResellerCommIds2.pop();
+          }
+  
+        });
+      }
+    
       this.sum_bal = 0;
       this.paidCheck_Unpaid_value = 0;
       $('#RP_multiple_amount').val('');
@@ -1009,7 +1015,7 @@ export class ResellerPaymentComponent implements OnInit {
 
   dropDownYearMonth(){
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/reseller/getYearMonthData')
+    this.http.get<any>(this.serverService.urlFinal +'reseller/getYearMonthData')
       .subscribe((data: any) => {
         this.yearFilter = data.years;
         this.monthFilter = data.months;
@@ -1077,23 +1083,51 @@ export class ResellerPaymentComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
 
-        this.referallAmountDetails = response.referral_amount_details;
+        if(response.referral_amount_details!=null){
+          this.referallAmountDetails = response.referral_amount_details;
+        }
 
-        this.payoutAmountDetails = response.payout_amount_details;
-        this.payCurrencyName = response.currencyName;
-        this.resellerList = response.reseller_list;
-        this.cust_password = response.reseller_base_info.cust_password;
-        this.reseller_email = response.reseller_base_info.reseller_email;
-        this.unpaid_amount = response.reseller_base_info.unpaid_amount;
-        this.CurrencyTotalList = response.reseller_payment_summary.currencyTotal;
-        this.CurrencyTotalAll = response.reseller_payment_summary.currency_total_amt.total_price;
-        this.YearTotalList = response.reseller_payment_summary.yearTotal;
+        if(response.payout_amount_details!=null){
+
+          this.payoutAmountDetails = response.payout_amount_details;
+        }
+
+        if(response.currencyName!=null){
+
+          this.payCurrencyName = response.currencyName;
+        }
+        if(response.reseller_list!=null){
+
+          this.resellerList = response.reseller_list;
+        }
+        if(response.reseller_base_info!=null){
+
+          this.cust_password = response.reseller_base_info.cust_password;
+          this.reseller_email = response.reseller_base_info.reseller_email;
+          this.unpaid_amount = response.reseller_base_info.unpaid_amount;
+        }
+      
+
+      
+        
+       
+        if(response.reseller_payment_summary.currencyTotal!=null){
+          this.CurrencyTotalList = response.reseller_payment_summary.currencyTotal;
+        }
+        // if(response.reseller_payment_summary.currency_total_amt!=null){
+        //   this.CurrencyTotalAll = response.reseller_payment_summary.currency_total_amt.total_price;
+        // }
+       
+        if(response.reseller_payment_summary.yearTotal!=null){
+          this.YearTotalList = response.reseller_payment_summary.yearTotal;
+        }
+       
         // console.log(response)
         this.paginationData = this.serverService.pagination({
           'offset': response.off_set,
           'total': response.total_cnt, 'page_limit': this.pageLimit
         });
-        this.yearmonthForm.reset()
+       // this.yearmonthForm.reset()
         this.spinner.hide();
 
         
@@ -1960,10 +1994,10 @@ export class ResellerPaymentComponent implements OnInit {
 
   pdf(billId: any, i: any) {
     $("#faqhead" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+  
     window.open(url, '_blank');
-    // console.log("url", url)
+
   }
   get_WFA_ResellerCommission(id: any, i: any) {
     this.CommissionType1 = [];

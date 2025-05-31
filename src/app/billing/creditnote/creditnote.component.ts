@@ -712,7 +712,8 @@ export class CreditnoteComponent implements OnInit {
     });
   }
   PDF(id:any){
-    var url = "https://laravelapi.erp1.cal4care.com/api/creditNote/generateCreditNote/" + btoa(id)  + "";
+    var url =this.serverService.urlFinal + "creditNote/generateCreditNote/" + btoa(id)  + "";
+     //   var url = "https://erp1.cal4care.com/api/creditNote/generateCreditNote/" + btoa(id)  + "";
     window.open(url, '_blank');
   }
 

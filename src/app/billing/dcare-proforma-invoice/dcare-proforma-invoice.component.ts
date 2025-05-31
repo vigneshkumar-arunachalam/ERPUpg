@@ -1257,10 +1257,7 @@ export class DcareProformaInvoiceComponent implements OnInit {
         billId +
         '';
 
-      //    if (did_invoice_state == 1) {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
-      // } else {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      
     }
 
     window.open(url, '_blank');

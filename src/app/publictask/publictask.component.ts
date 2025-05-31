@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormGroup, FormControl, FormBuilder,FormArray, AbstractControl  } from '@angular/forms';
+import { ServerService } from 'src/app/services/server.service';
 
 @Component({
   selector: 'app-publictask',
@@ -40,7 +41,7 @@ export class PublictaskComponent implements OnInit {
   nextDate: string = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
   generatereport: any;
 
-  constructor(private http: HttpClient,private fb: FormBuilder,) {
+  constructor(private http: HttpClient,private fb: FormBuilder,private serverService: ServerService) {
     this.eventDetailsForm = this.fb.group({
       calendar_entries: this.fb.array([]) 
     });
@@ -59,7 +60,7 @@ export class PublictaskComponent implements OnInit {
   }
 
   loadEvents() {
-    const apiUrl = 'https://laravelapi.erp1.cal4care.com/api/publicTask/getPublicTaskList';
+    const apiUrl = this.serverService.urlFinal + 'publicTask/getPublicTaskList';
     const payload = {
       moduleType: 'publicTask',
       api_url: 'publicTask/getPublicTaskList',
@@ -122,7 +123,7 @@ export class PublictaskComponent implements OnInit {
     const entryMonth = eventDate.getMonth() + 1;
     const entryYear = eventDate.getFullYear();
     this.dateVal = entryDate;
-    const apiUrl = 'https://laravelapi.erp1.cal4care.com/api/publicTask/getCalendarEntryDetails';
+    const apiUrl =this.serverService.urlFinal + 'publicTask/getCalendarEntryDetails';
     const payload = {
       moduleType: 'publicTask',
       api_url: 'publicTask/getCalendarEntryDetails',
@@ -257,7 +258,7 @@ saveModal() {
   
     console.log('Payload as form data:', params);
   
-    const apiUrl = 'https://laravelapi.erp1.cal4care.com/api/publicTask/addCalendarEntrys';
+    const apiUrl = this.serverService.urlFinal + 'publicTask/addCalendarEntrys';
     
     // Make the HTTP POST request with form data (HttpParams)
     this.http.post(apiUrl, params).subscribe(
@@ -280,7 +281,7 @@ saveModal() {
     );
 }
   generateEmailApprovalReport(calendarTemplateId: number, entryDate: number, entryMonth: number, entryYear: number) {
-    const apiUrl = 'https://laravelapi.erp1.cal4care.com/api/publicTask/generateEmailApprovalReport';
+    const apiUrl = this.serverService.urlFinal + 'publicTask/generateEmailApprovalReport';
     const payload = {
       moduleType: 'publicTask',
       api_url: 'publicTask/generateEmailApprovalReport',

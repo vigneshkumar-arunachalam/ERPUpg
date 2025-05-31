@@ -227,8 +227,11 @@ export class AdddebitnoteComponent implements OnInit {
       });
       this.tax_per_mod = response.percent_val;
     });
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1000)
 
-    this.totalCalculate();
+    
   }
   billerChangeDetails_initial() {
    var xft='';
@@ -282,7 +285,11 @@ export class AdddebitnoteComponent implements OnInit {
       this.addDo_section1.patchValue({
         'DocNo': response.creditNo,
       });
+      
     });
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1000)
   }
   billerChangeDetails1(id: any) {
     

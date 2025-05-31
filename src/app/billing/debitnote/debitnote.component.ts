@@ -314,7 +314,8 @@ export class DebitnoteComponent implements OnInit {
 
   }
   PDF(id:any){
-    var url = "https://laravelapi.erp1.cal4care.com/api/debitNote/generateDebitNote/" + btoa(id)  + "";
+    var url =this.serverService.urlFinal + "debitNote/generateDebitNote/" + btoa(id)  + "";
+     //   var url = "https://erp1.cal4care.com/api/debitNote/generateDebitNote/" + btoa(id)  + "";
     window.open(url, '_blank');
   }
 

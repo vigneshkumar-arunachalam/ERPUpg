@@ -416,7 +416,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     $.ajax({
       type: 'POST',
      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
-      url: 'https://laravelapi.erp1.cal4care.com/api/hr/createLeave',
+      url:this.serverService.urlFinal + 'hr/createLeave',
 
       cache: false,
       contentType: false,
@@ -464,7 +464,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   handleDateSelect(selectInfo: any) {
     console.log("selectInfo",selectInfo);
     
-    alert("hi")
+   // alert("hi")
     this.startLeave = selectInfo.startStr;
     // const end = selectInfo.endStr;
     console.log("start-drag", this.startLeave);
@@ -529,10 +529,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {
@@ -589,10 +589,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {
@@ -653,10 +653,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {
@@ -732,10 +732,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {
@@ -806,10 +806,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {
@@ -853,10 +853,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       }
       else {
 
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
+        // iziToast.error({
+        //   message: "Data Not Found",
+        //   position: 'topRight'
+        // });
 
       }
     }), (error: any) => {

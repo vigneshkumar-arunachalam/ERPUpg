@@ -1,122 +1,715 @@
-
 <div class="contents-section">
 
-    <div class="row no-gutters">
-      <div class="col-lg-12 mb-30">
-        <div class="card">
-  
-          <div class="card-header color-dark fw-500">
-            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-              <span class="breadcrumb-item active"> Product Inventory Entry Management</span>
-            </h3>
-  
-            <div class="quotation-btn-section">
-             
-  
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                data-target="#searchCreditFormId">
-                <i class="fas fa-search" style="margin-right:10;"></i>Search
-              </button>
-  
-            </div>
-  
-  
-  
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active"> Product Inventory Entry Management</span>
+          </h3>
+
+          <div class="quotation-btn-section">
+
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              data-target="#searchCreditFormId">
+              <i class="fas fa-search" style="margin-right:10;"></i>Search
+            </button>
+
           </div>
-  
-  
-            <!-- Nav pills -->
-            <ul class="nav nav-pills" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#AvailableProducts" role="tab" 
-                aria-controls="AvailableProducts" aria-selected="true" >Available Products(A)</a>
-              </li>
-          
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Approval" role="tab" 
-                aria-controls="Approval" aria-selected="false"
-                  >Approval(P)</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#IssueProducts" role="tab" 
-                aria-controls="IssueProducts" aria-selected="false"
-                  >Issue Products(I)</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#DemoIssueProducts" role="tab" 
-                aria-controls="DemoIssueProducts" aria-selected="false"
-                  >Demo Issue Products(D)</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#RMAReIssueProducts" role="tab" 
-                aria-controls="RMAReIssueProducts" aria-selected="false"
-                  >RMA Re-Issue Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#ProductEntryHistory" role="tab" 
-                aria-controls="ProductEntryHistory" aria-selected="false"
-                  >Product Entry History</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#IssHis" role="tab" 
-                aria-controls="IssHis" aria-selected="false"
-                  >Iss His</a>
-              </li>
-  
-            </ul>
-  
-            <!-- Tab panes -->
-            <div class="tab-content" id="myTabContent">
-              <div id="AvailableProducts" class="tab-pane fade show active" role="tabpanel" aria-labelledby="AvailableProducts-tab"><br>
-            
-                  <div class="userDatatable global-shadow border-0 bg-white w-100">
-                    <div class="table-responsive">
-                      <table class="table mb-0 table-borderless">
-                        <thead>
-                          <tr class="userDatatable-header">
-                            <th>
-                              <span class="userDatatable-title">S No</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Biller</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Product Category</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Product Name</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Pur Price</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Stk Qty</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">RMA Qty</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Tot Qty</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Demo Qty</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Action</span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody *ngFor="let list of availableProdList;let i = index">
-                          <td>
-                            {{ list.qty }}
-                          </td>
-              
-                          <td>
-        
-                            <span><button type="button" class="buttonClass {{
+
+
+
+        </div>
+
+
+        <!-- Nav pills -->
+        <ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#AvailableProducts" role="tab"
+              (click)="availableProductList({})" aria-controls="AvailableProducts" aria-selected="true">Available
+              Products(A)</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Approval" role="tab" (click)="productApprovalList({})"
+              aria-controls="Approval" aria-selected="false">Approval(P)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#IssueProducts" role="tab" (click)="issueProductList({})"
+              aria-controls="IssueProducts" aria-selected="false">Issue Products(I)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#DemoIssueProducts" role="tab" (click)="demoIssueProduct({})"
+              aria-controls="DemoIssueProducts" aria-selected="false">Demo Issue Products(D)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#RMAReIssueProducts" role="tab" (click)="rmaReissueProd({})"
+              aria-controls="RMAReIssueProducts" aria-selected="false">RMA Re-Issue Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#ProductEntryHistory" role="tab" (click)="prodEntrHis({})"
+              aria-controls="ProductEntryHistory" aria-selected="false">Product Entry History</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#IssHis" role="tab" (click)="issueHistory({})"
+              aria-controls="IssHis" aria-selected="false">Issue History</a>
+          </li>
+
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" id="myTabContent">
+          <div id="AvailableProducts" class="tab-pane fade show active" role="tabpanel"
+            aria-labelledby="AvailableProducts-tab"><br>
+
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Pur Price</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Stk Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">RMA Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Tot Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Demo Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of availableProdList;let i = index">
+                    <tr>
+                      <td>
+                        {{ i+1}}
+                      </td>
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
                                 list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.purchase_rate }} </span>
+                      </td>
+
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.rma_qty }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.demo_qty }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.demo_qty }} </span>
+                      </td>
+
+                      <td>
+                        <div class="page">
+
+                          <div class="dropdown">
+                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                            <ul class="dropdown__list">
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Product Inventory Issue">
+                                  <img class="show" src="assets/img/icon2/delivery-blue.png">
+                                  <img class="hide" src="assets/img/icon2/delivery-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item" >
+                                <a class="hover4" title="Product Inventory Transfer"
+                                (click)="ProductEntryTransfer(list.product_stock_id)">
+
+                                  <img class="show" src="assets/img/icon2/duplicate-blue.png">
+                                  <img class="hide" src="assets/img/icon2/duplicate-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Product Qty Reset"
+                                  (click)="ProductQtyReset(list.product_stock_id)">
+
+                                  <img class="show" src="assets/img/icon2/recurring-bluee.png">
+                                  <img class="hide" src="assets/img/icon2/recurring-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover4" title="RMA Re-issue" data-toggle="modal"
+                                  data-target="#RMAReissueFormId" (click)="rmaIssueEdit(list.product_stock_id)">
+                                  <img class="show" src="assets/img/icon2/due-date-black.png">
+                                  <img class="hide" src="assets/img/icon2/due-date-blue.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Product Price Update"
+                                  (click)="getProductNamePrice(list.product_stock_id)">
+
+                                  <img class="show" src="assets/img/icon2/dollar-symbol-blue.png">
+                                  <img class="hide" src="assets/img/icon2/dollar-symbol-black.png">
+                                </a>
+                              </li>
+
+
+
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? availableProductList({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="availableProductList({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? availableProductList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="availableProductList({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? availableProductList({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+
+          </div>
+          <div id="Approval" class="tab-pane fade" role="tabpanel" aria-labelledby="Approval-tab"><br>
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Customer</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Transaction Type</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of productApprovallist;let i = index">
+                    <tr>
+                      <td>
+                        {{i+1 }}
+                      </td>
+
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
+                              list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+
+                      <td>
+                        <span> {{ list.customerName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.trans_type_name }} </span>
+                      </td>
+
+
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+
+                    </tr>
+
+                  </tbody>
+
+                </table>
+              </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? productApprovalList({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="productApprovalList({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? productApprovalList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="productApprovalList({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? productApprovalList({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+          </div>
+
+          <div id="IssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="IssueProducts-tab"><br>
+
+
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issue Code</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Customer</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Entry Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issued Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of issueProductListt;let i = index">
+                    <tr>
+                      <td>
+                        {{ i+1 }}
+                      </td>
+                      <td>
+                        <span> {{ list.product_stock_movement_id }} </span>
+                      </td>
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
+                                  list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+
+                      <td>
+                        <span> {{ list.customerName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.entry_dt_show }} </span>
+                      </td>
+
+                      <td>
+                        <span> {{ list.issued_dt_show }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+
+                      <td>
+                        <div class="page">
+
+                          <div class="dropdown">
+                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                            <ul class="dropdown__list">
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Edit">
+                                  <img class="show" src="assets/img/icon2/edit-blue.png">
+                                  <img class="hide" src="assets/img/icon2/edit-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover4" title="Duplicate">
+
+                                  <img class="show" src="assets/img/icon2/duplicate-blue.png">
+                                  <img class="hide" src="assets/img/icon2/duplicate-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Landscape PDF">
+                                  <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                  <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover4" title="Email-Landscape">
+                                  <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                  <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Delete">
+                                  <img class="show" src="assets/img/icon2/delete-blue.png">
+                                  <img class="hide" src="assets/img/icon2/delete-black.png">
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover4" title="Share permission">
+                                  <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                  <img class="hide" src="assets/img/icon2/share-square-black.png">
+
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Share permission">
+                                  <img class="show" src="assets/img/icon2/share-square-red.png">
+                                  <img class="hide" src="assets/img/icon2/share-square-black.png">
+
+                                </a>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? productApprovalList({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="productApprovalList({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? productApprovalList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="productApprovalList({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? productApprovalList({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+
+
+          </div>
+
+
+          <div id="RMAReIssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="RMAReIssueProducts-tab">
+            <br>
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Vendor</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Entry Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+
+
+
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of rmaReissuedProductList;let i = index">
+                    <tr>
+                      <td>
+                        {{ i+1 }}
+                      </td>
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
+                              list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+                      <td>
+                        <span> {{ list.vendorName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.entry_dt }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+
+                    </tr>
+
+
+
+                  </tbody>
+                </table>
+              </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? rmaReissueProd({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="rmaReissueProd({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? rmaReissueProd({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="rmaReissueProd({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? rmaReissueProd({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+          </div>
+          <div id="DemoIssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="DemoIssueProducts-tab"><br>
+
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issue Code</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Customer</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Entry Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issued Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of demoIssProdlist; let j = index">
+                      <tr>
+                        <td colspan="10" style="background-color: bisque;">{{item.customer_name}}</td>
+                      </tr>
+                      <ng-container *ngFor="let list of item.datas; let i = index">
+                        <tr>
+                          <td>
+                            {{ i+1}}
+                          </td>
+                          <td>
+                            <span> {{ list.product_stock_movement_id }} </span>
+                          </td>
+
+                          <td>
+
+                            <span><button type="button" class="buttonClass {{
+                              list.billerCode}}">{{
                                 list.billerCode}}</button></span>
-                          
+
+                          </td>
+
+                          <td>
+                            <span> {{ list.customerName }} </span>
+                          </td>
+                          <td>
+                            <span> {{ list.entry_dt_show }} </span>
+                          </td>
+
+                          <td>
+                            <span> {{ list.issued_dt_show }} </span>
                           </td>
                           <td>
                             <span> {{ list.product_category_name }} </span>
@@ -125,272 +718,840 @@
                             <span> {{ list.productName }} </span>
                           </td>
                           <td>
-                            <span> {{ list.purchase_rate }} </span>
+                            <span> {{ list.qty }} </span>
                           </td>
 
                           <td>
-                            <span> {{ list.qty }} </span>
-                          </td>
-                          <td>
-                            <span> {{ list.rma_qty }} </span>
-                          </td>
-                          <td>
-                            <span> {{ list.demo_qty }} </span>
-                          </td>
-                          <td>
-                            <span> {{ list.demo_qty }} </span>
-                          </td>
-        
-                          <td>
                             <div class="page">
-        
+
                               <div class="dropdown">
                                 <button class="btn1"><i class="fa fa-bars"></i></button>
                                 <ul class="dropdown__list">
-        
+
                                   <li class="dropdown__item">
-                                    <a class="hover3" title="Edit" >
+                                    <a class="hover3" title="Edit">
                                       <img class="show" src="assets/img/icon2/edit-blue.png">
                                       <img class="hide" src="assets/img/icon2/edit-black.png">
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
-                                    <a class="hover4" title="Duplicate" >
-                                     
+                                    <a class="hover4" title="Duplicate">
+
                                       <img class="show" src="assets/img/icon2/duplicate-blue.png">
                                       <img class="hide" src="assets/img/icon2/duplicate-black.png">
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
                                     <a class="hover3" title="Landscape PDF">
                                       <img class="show" src="assets/img/icon2/pdf-blue.png">
                                       <img class="hide" src="assets/img/icon2/pdf-black.png">
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Email-Landscape">
                                       <img class="show" src="assets/img/icon2/gmail-blue.png">
                                       <img class="hide" src="assets/img/icon2/gmail-black.png">
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
                                     <a class="hover3" title="Delete">
                                       <img class="show" src="assets/img/icon2/delete-blue.png">
                                       <img class="hide" src="assets/img/icon2/delete-black.png">
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Share permission">
                                       <img class="show" src="assets/img/icon2/share-square-blue.png">
                                       <img class="hide" src="assets/img/icon2/share-square-black.png">
-        
+
                                     </a>
                                   </li>
-        
+
                                   <li class="dropdown__item">
-                                    <a class="hover3" title="Share permission" >
+                                    <a class="hover3" title="Share permission">
                                       <img class="show" src="assets/img/icon2/share-square-red.png">
                                       <img class="hide" src="assets/img/icon2/share-square-black.png">
-        
+
                                     </a>
                                   </li>
-        
+
                                 </ul>
                               </div>
                             </div>
                           </td>
-        
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </tbody>
+                </table>
               </div>
-              <div id="Approval" class="tab-pane fade" role="tabpanel" aria-labelledby="Approval-tab"><br>
-                <div class="card-body" id="delivery-order-section">
-                    <p>Approval</p>
-                </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? demoIssueProduct({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="demoIssueProduct({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? demoIssueProduct({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="demoIssueProduct({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? demoIssueProduct({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+          </div>
+
+          <div id="ProductEntryHistory" class="tab-pane fade" role="tabpanel" aria-labelledby="ProductEntryHistory-tab">
+            <br>
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Vendor</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Entry Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Rate</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Currency</span>
+                      </th>
+
+
+
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of prodEntrHisList;let i = index">
+                    <tr>
+                      <td>
+                        {{ i+1 }}
+                      </td>
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
+                              list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+                      <td>
+                        <span> {{ list.vendorName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.entry_dt }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+
+                    </tr>
+
+
+
+                  </tbody>
+                </table>
               </div>
-  
-              <div id="IssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="IssueProducts-tab"><br>
-              
-                
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                      <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                          <thead>
-                            <tr class="userDatatable-header">
-                              <th>
-                                <span class="userDatatable-title">S No</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Issue Code</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Biller</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Customer</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Entry Date</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Issued Date</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Product Category</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Product Name</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title"> Qty</span>
-                              </th>
-                              <th>
-                                <span class="userDatatable-title">Action</span>
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody *ngFor="let list of issueProductListt;let i = index">
-                            <td>
-                              {{ list.serial_numbers }}
-                            </td>
-                            <td>
-                              <span> {{ list.product_stock_movement_id }} </span>
-                            </td>
-                
-                            <td>
-          
-                              <span><button type="button" class="buttonClass {{
-                                  list.billerCode}}">{{
-                                  list.billerCode}}</button></span>
-                            
-                            </td>
-                            
-                            <td>
-                              <span> {{ list.customerName }} </span>
-                            </td>
-                            <td>
-                              <span> {{ list.entry_dt_show }} </span>
-                            </td>
-  
-                            <td>
-                              <span> {{ list.issued_dt_show }} </span>
-                            </td>
-                            <td>
-                              <span> {{ list.product_category_name }} </span>
-                            </td>
-                            <td>
-                              <span> {{ list.productName }} </span>
-                            </td>
-                            <td>
-                              <span> {{ list.qty }} </span>
-                            </td>
-          
-                            <td>
-                              <div class="page">
-          
-                                <div class="dropdown">
-                                  <button class="btn1"><i class="fa fa-bars"></i></button>
-                                  <ul class="dropdown__list">
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover3" title="Edit" >
-                                        <img class="show" src="assets/img/icon2/edit-blue.png">
-                                        <img class="hide" src="assets/img/icon2/edit-black.png">
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover4" title="Duplicate" >
-                                       
-                                        <img class="show" src="assets/img/icon2/duplicate-blue.png">
-                                        <img class="hide" src="assets/img/icon2/duplicate-black.png">
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover3" title="Landscape PDF">
-                                        <img class="show" src="assets/img/icon2/pdf-blue.png">
-                                        <img class="hide" src="assets/img/icon2/pdf-black.png">
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover4" title="Email-Landscape">
-                                        <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                        <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover3" title="Delete">
-                                        <img class="show" src="assets/img/icon2/delete-blue.png">
-                                        <img class="hide" src="assets/img/icon2/delete-black.png">
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover4" title="Share permission">
-                                        <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
-          
-                                      </a>
-                                    </li>
-          
-                                    <li class="dropdown__item">
-                                      <a class="hover3" title="Share permission" >
-                                        <img class="show" src="assets/img/icon2/share-square-red.png">
-                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
-          
-                                      </a>
-                                    </li>
-          
-                                  </ul>
-                                </div>
-                              </div>
-                            </td>
-          
-                          </tbody>
-                        </table>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? prodEntrHis({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="prodEntrHis({'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? prodEntrHis({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="prodEntrHis({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? prodEntrHis({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+          </div>
+          <div id="IssHis" class="tab-pane fade" role="tabpanel" aria-labelledby="IssHis-tab"><br>
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>
+                        <span class="userDatatable-title">S No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Product Entry Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Issued Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Customer Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Product Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title"> Qty</span>
+                      </th>
+
+
+
+
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of issueHistoryList;let i = index">
+                    <tr>
+
+
+                      <td>
+                        {{ i+1 }}
+                      </td>
+
+                      <td>
+
+                        <span><button type="button" class="buttonClass {{
+                              list.billerCode}}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+                      <td>
+                        <span> {{ list.entry_dt }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.issued_dt }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.customerName }} </span>
+                      </td>
+
+                      <td>
+                        <span> {{ list.product_category_name }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.productName }} </span>
+                      </td>
+                      <td>
+                        <span> {{ list.qty }} </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? issueHistory({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="issueHistory({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? issueHistory({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="issueHistory({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? issueHistory({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
+
+              </nav>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+
+<div class="modal fade" id="transferProductDetailsID" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          Transfered Product Details</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="userDatatable global-shadow border-0 bg-white w-100" id="jiu">
+          <div class="table-responsive">
+            <table class="table mb-0 table-borderless">
+              <thead>
+                <tr class="userDatatable-header">
+                  <th>
+                    <span class="userDatatable-title">S No</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Transfer Date</span>
+                  </th>
+
+                  <th>
+                    <span class="userDatatable-title">Biller From</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Biller To</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Sender</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title"> Product Details</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title"> Qty</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title"> Action</span>
+                  </th>
+
+
+
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let list of transferProdList;let i = index">
+                <tr>
+
+
+                  <td>
+                    {{ i+1 }}
+                  </td>
+
+                  <td>
+
+                    <span>{{ list.transaction_entry_dt }} </span>
+
+                  </td>
+                  <td>
+                    <span> {{ list.billerName }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.customerName }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.requester_name }} </span>
+                  </td>
+
+                  <td>
+                    <span> {{ list.description }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.qty }} </span>
+                  </td>
+                  <td>
+                    <div class="page">
+
+                      <div class="dropdown">
+                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                        <ul class="dropdown__list">
+
+
+                          <li class="dropdown__item">
+                            <a class="hover1" title="Approve"
+                              (click)="transferProductApproval(list.transaction_approval_id)">
+                              <img class="show" src="assets/img/icon2/tick-blue.png">
+                              <img class="hide" src="assets/img/icon2/tick-black.png">
+                            </a>
+
+                          </li>
+
+                          <!-- <li class="dropdown__item">
+                            <a class="hover1" title="Delete" (click)="transferProductDelete(list.transaction_approval_id)">
+                              <img class="show" src="assets/img/icon/remove-b.png">
+                              <img class="hide" src="assets/img/icon/remove.png">
+                            </a>
+                          </li> -->
+
+                          <li class="dropdown__item">
+                            <a class="hover1" title="Reject"
+                              (click)="transferProductReject(list.transaction_approval_id)">
+                              <img class="show" src="assets/img/icon2/delete-blue.png">
+                              <img class="hide" src="assets/img/icon2/delete-black.png">
+                            </a>
+                          </li>
+
+
+                        </ul>
                       </div>
                     </div>
-              
-             
-              </div>
+                  </td>
+                </tr>
 
 
-              <div id="RMAReIssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="RMAReIssueProducts-tab"><br>
-                <div class="card-body" id="delivery-order-section">
-                  <p>RMA ReIssue Products</p>
-                </div>
-              </div>
-              <div id="DemoIssueProducts" class="tab-pane fade" role="tabpanel" aria-labelledby="DemoIssueProducts-tab"><br>
-                <div class="card-body" id="delivery-order-section">
-                    <p>Demo Issue Products</p>
-                </div>
-              </div>
-  
-              <div id="ProductEntryHistory" class="tab-pane fade" role="tabpanel" aria-labelledby="ProductEntryHistory-tab"><br>
-                <div class="card-body" id="delivery-order-section">
-                    <p>Product Entry History</p>
-                </div>
-              </div>
-              <div id="IssHis" class="tab-pane fade" role="tabpanel" aria-labelledby="IssHis-tab"><br>
-                <div class="card-body" id="delivery-order-section">
-                    <p>Iss His</p>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for add product category ------------------>
+<div class="modal fade" id="ProductInventoryIssueFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #262127, #54b7aa);">
+          Product Inventory Issue </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ProductInventoryIssueForm">
+          <div class="row">
+
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_IssueDate" class="col-lg-12 col-form-label">Issue Date</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="PIE_IssueDate">
                 </div>
               </div>
             </div>
-  
-        </div>
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_IssueCustomer" class="col-lg-12 col-form-label">Issue Customer</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="PIE_IssueCustomer">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_NumberType" class="col-lg-12 col-form-label">Number Type</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PIE_NumberType">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_InvoiceNumber" class="col-lg-12 col-form-label">Invoice Number</label>
+                <div class="col-lg-12">
+                  <!-- <input type="number" class="form-control" formControlName="PIE_InvoiceNumber"> -->
+                  <select class="form-control" formControlName="PIE_InvoiceNumber" name="PIE_InvoiceNumber">
+                    <option value="" disabled selected>Select Invoice Number
+                    </option>
+                    <!-- <option *ngFor="let classif of productCategoryNameList"
+                                                                value="{{classif.product_category_id}}">
+                                                                {{classif.product_category_name}}
+                                                            </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_Demo" class="col-lg-12 col-form-label">Demo</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PIE_Demo">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIE_Quantity" class="col-lg-12 col-form-label">Quantity</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PIE_Quantity">
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary" (click)="PIE_Add()">Add</button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
-  
   </div>
+</div>
+<!----------Modal Pop Up (END)  for add product category ------------------>
+
+<!----------Modal Pop Up (BEGIN)  for add product category ------------------>
+<div class="modal fade" id="ProductPriceUpdateFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #262127, #54b7aa);">
+          Product Inventory Issue </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ProductPriceUpdateForm">
+          <div class="row">
+
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PPU_ProductName" class="col-lg-12 col-form-label">Product Name</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="PPU_ProductName" [readonly]="isReadonly">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PPU_Category" class="form-control" class="col-lg-12 col-form-label">Category %</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="PPU_Category" [readonly]="isReadonly">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PPU_SalesPrice" class="col-lg-12 col-form-label">Sales Price</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PPU_SalesPrice" [readonly]="isReadonly">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PPU_EntryPrice" class="col-lg-12 col-form-label">Entry Price</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PPU_EntryPrice">
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary" (click)="productPriceUpdate()">Save</button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for add product category ------------------>
+
+<!----------Modal Pop Up (BEGIN)  for add product category ------------------>
+<div class="modal fade" id="RMAReissueFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #262127, #54b7aa);">
+          RMA Re-Issue </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="RMAReissueForm">
+          <div class="row">
+
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="RMA_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                <div class="col-lg-12">
+
+                  <select class="form-control" formControlName="RMA_VendorName">
+
+                    <option [ngValue]="null" selected>Select Vendor</option>
+
+                    <option *ngFor="let term of vendorLList" value="{{term.vendorId}}">
+                      {{term.vendorName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="RMA_Quantity" class="form-control" class="col-lg-12 col-form-label">Quantity</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="RMA_Quantity">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary" (click)="RMAReissue()">Save</button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for add product category ------------------>
+
+<!----------Modal Pop Up (BEGIN)  for add product category ------------------>
+<div class="modal fade" id="ProductQtyResetFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #262127, #54b7aa);">
+          Product Qty Reset </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ProductQtyResetForm">
+          <div class="row">
+
+            <div class="col-lg-12 ">
+              <div class="form-group row">
+                <div class="col-lg-6 ">
+                  <label for="RMA_Quantity" class="form-control" class="col-lg-12 col-form-label">Quantity</label>
+                </div>
+
+                <div class="col-lg-6">
+                  <input type="number" class="form-control" formControlName="PQR_Quantity">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary" (click)="RMAReissue()">Save</button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for add product category ------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for add product category ------------------>
+<div class="modal fade" id="ProductInventoryTransferFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #262127, #54b7aa);">
+          Product Inventory Transfer </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ProductInventoryTransferForm">
+          <div class="row">
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIT_issueDate" class="form-control" class="col-lg-12 col-form-label">Issue Date</label>
+                <div class="col-lg-12">
+                  <input type="date" class="form-control" formControlName="PIT_issueDate">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIT_TransferBiller" class="col-lg-12 col-form-label">Transfer Biller</label>
+                <div class="col-lg-12">
+
+                  <select class="form-control" formControlName="PIT_TransferBiller">
+
+                    <option [ngValue]="null" selected>Select Biller</option>
+
+                    <option *ngFor="let term of billerList" value="{{term.billerId}}">
+                      {{term.billerName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 ">
+              <div class="form-group row">
+                <label for="PIT_Quantity" class="form-control" class="col-lg-12 col-form-label">Quantity</label>
+                <div class="col-lg-12">
+                  <input type="number" class="form-control" formControlName="PIT_Quantity">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button " class="btn btn-primary" (click)="ProductEntryTransferUpdate()">Save</button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for add product category ------------------>

@@ -181,8 +181,10 @@ i.fa.fa-bars {
     box-shadow: none;
 }
 
-#pettycashEditFormId label,
-#searchPettyCashFormId label {
+#ProductPriceUpdateFormId label,
+#RMAReissueFormId label,
+#ProductQtyResetFormId label,
+#ProductInventoryTransferFormId label {
     font-weight: 500;
     color: #051b5a !important;
 }
@@ -269,7 +271,7 @@ select {
 
 }
 
-#searchPettyCashFormId .modal-content button.close {
+ .modal-content button.close {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -329,4 +331,22 @@ tr:nth-child(even):hover {
 
 
 
+#transferProductDetailsID .modal-dialog {
+    max-width: 85%;
+}
 
+
+
+#jiu tbody td:nth-child(even):hover {
+    background: linear-gradient(to right, #c9f1a2, #df97b4);
+  }
+ #jiu   tbody td:nth-child(odd):hover {
+    background: linear-gradient(to right, #f5fb97, #fcb35f);
+  }
+
+   .form-control:disabled,
+  .form-control[readonly] {
+      background-color: #f3d2f0 !important;
+      opacity: 0.6;
+      color: black!important;
+  }

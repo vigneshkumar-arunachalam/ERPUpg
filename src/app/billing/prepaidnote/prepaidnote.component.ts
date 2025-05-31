@@ -674,7 +674,7 @@ export class PrepaidnoteComponent implements OnInit {
     }
   }
   PDF(id:any){
-    var url = "https://laravelapi.erp1.cal4care.com/api/prepaidNote/generatePrepaidNote/" + btoa(id)  + "";
+    var url =this.serverService.urlFinal + "prepaidNote/generatePrepaidNote/" + btoa(id)  + "";
     window.open(url, '_blank');
   }
 

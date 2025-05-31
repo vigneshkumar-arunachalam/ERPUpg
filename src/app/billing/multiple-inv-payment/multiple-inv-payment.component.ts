@@ -273,7 +273,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   }
   editMulInvPayGroup() {
     this.spinner.show();
-    console.log("this.edit_array", this.edit_array)
+   // console.log("this.edit_array", this.edit_array)
 
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
@@ -358,7 +358,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -366,7 +366,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   editMulInvPayGroup1() {
     const paymentIdsStrings = this.edit_array;
     const paymentIdsNumbers = paymentIdsStrings.map((id: string) => parseInt(id));
-    console.log("this.edit_array---length", this.edit_array.length)
+   // console.log("this.edit_array---length", this.edit_array.length)
     if (this.edit_array.length > 0) {
       this.router.navigate(['/editMulInvPay'], {
         queryParams: {
@@ -441,7 +441,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -450,8 +450,8 @@ export class MultipleInvPaymentComponent implements OnInit {
     // console.log(item)
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
-     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
-     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
+    //  console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
+    //  console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.cusID[i] = item.customerId;
     //  console.log("this.cusID[i]", this.cusID[i])
     this.payment_pending_inv_list(i);
@@ -529,7 +529,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     // if (i > -1) {
     //   this.edit_array.splice(i, 1);
     // }
-    console.log("this.edit_array---after slice", this.edit_array)
+   // console.log("this.edit_array---after slice", this.edit_array)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -642,7 +642,7 @@ export class MultipleInvPaymentComponent implements OnInit {
                 message: "Sorry, some server issue occur. Please contact admin",
                 position: 'topRight'
               });
-              console.log("final error", error);
+             // console.log("final error", error);
             };
         }
       })
@@ -700,7 +700,7 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })
@@ -744,7 +744,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.edit_array.splice(index, 1);
         }
       }
-      console.log("selected id-array",this.edit_array)
+    //  console.log("selected id-array",this.edit_array)
     });
 
     // Update the state of all checkboxes in the DOM
@@ -753,7 +753,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-    console.log("Checkbox-all", this.edit_array);
+   // console.log("Checkbox-all", this.edit_array);
   }
 
 
@@ -780,7 +780,7 @@ export class MultipleInvPaymentComponent implements OnInit {
         //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
     }
-    console.log("Final Checkbox After checkbox selected list", this.edit_array);
+   // console.log("Final Checkbox After checkbox selected list", this.edit_array);
   }
 
   selectAll_pending(event: any, i: any) {
@@ -934,7 +934,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   mulInvPaymentList123(data: any) {
@@ -981,7 +981,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   mulInvPaymentList(data: any) {
@@ -1027,7 +1027,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   listDataInfo(list_data: any) {
@@ -1040,7 +1040,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   InvoicetoProforma(id: any, k: any) {
 
-    console.log("k", k);
+   // console.log("k", k);
 
     Swal.fire({
       title: 'Are you sure to convert Proforma to Invoice?',
@@ -1095,7 +1095,7 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -1171,7 +1171,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     // Ensure non-null values before sending
     if (!api_mulInvpay.paymentDate || !api_mulInvpay.invoice_amt || !api_mulInvpay.paid_amt) {
-      console.error('Missing required values for address at index', i);
+   //   console.error('Missing required values for address at index', i);
       return; // Skip sending if essential values are missing
     }
 
@@ -1354,7 +1354,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   addPaymentEntry(i: any) {
@@ -1496,7 +1496,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
 

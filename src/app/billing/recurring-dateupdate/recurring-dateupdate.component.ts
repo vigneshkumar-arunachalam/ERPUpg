@@ -269,10 +269,12 @@ export class RecurringDateupdateComponent implements OnInit {
       if (response != '') {
       //  console.log("response", response.sending_type)
         this.spinner.hide();
-
-        this.InvoiceSendingMethodForm.patchValue({
-          InvoiceSendingInput: response.sending_type
-        });
+          // if(response.sending_type){
+          //   this.InvoiceSendingMethodForm.patchValue({
+          //     InvoiceSendingInput: response.sending_type
+          //   });
+          // }
+        
         // $('#RC_invoiceSendtoPost').modal('hide');
 
       } else {
@@ -294,10 +296,10 @@ export class RecurringDateupdateComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+
     window.open(url, '_blank');
-   // console.log("url", url)
+  
   }
   RecurringEdit(id: any) {
 

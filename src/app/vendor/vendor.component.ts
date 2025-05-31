@@ -173,6 +173,10 @@ export class VendorComponent implements OnInit {
     this.serverService.sendServerpath(api_req).subscribe((response: any) => {
       if (response != '') {
         this.countryCode = response.companycode;
+        this.addVendorForm.patchValue({
+          'company_code':response.companycode
+
+        })
       } else {
       }
     });

@@ -168,9 +168,9 @@ export class DupQuotationNewComponent implements OnInit {
   user_ids: any;
   Global_search_filter = false;
   quotDelay: any;
-  searchdatavalue =false;
+  searchdatavalue = false;
   quotation_list1: any;
-  quotation_list2: any =[];
+  quotation_list2: any = [];
   response_total_cnt: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
@@ -192,7 +192,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.global_search_quotation.subscribe((val: any) => {
       this.datavalue = val;
       this.quotationList2(this.datavalue);
-     // console.log("received data from Global search-after parse-Quotation", this.quotation_list);
+      // console.log("received data from Global search-after parse-Quotation", this.quotation_list);
       if (this.quotation_list != '') {
         this.Global_search_filter = true;
       } else {
@@ -201,7 +201,7 @@ export class DupQuotationNewComponent implements OnInit {
     });
   }
   keywordCompanyName = 'customerName';
-  
+
   // Function to call the subscription after ngOnInit
   ngOnInit(): void {
     this.quotationList({});
@@ -289,16 +289,16 @@ export class DupQuotationNewComponent implements OnInit {
     // setTimeout(() => {
     //   this.globaldata1();
     // }, 500);
-    let api_reqs:any = {type: "quotation_list"};
+    let api_reqs: any = { type: "quotation_list" };
     this.serverService.callbackfun.next(api_reqs);
   }
   // globaldata1(){
   //   alert('hai');
-    
-    
+
+
   // }
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
@@ -471,7 +471,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.checkbox_value = event.target.checked;
     // console.log(this.checkbox_value)
     for (let i = 0; i <= this.getFileAttachmentResult.length; i++) {
-     // console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
+      // console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
       // console.log(this.checkboxAdding)
       if (this.getFileAttachmentResult[i].quotation_pdf_add == '1') {
         this.checkboxAdding = this.getFileAttachmentResult[i].common_attachmentId;
@@ -483,63 +483,63 @@ export class DupQuotationNewComponent implements OnInit {
     // console.log(this.checkboxAdding)
     if (this.checkbox_value) {
       this.checkboxAdding.push(data);
-     // console.log(this.checkboxAdding)
+      // console.log(this.checkboxAdding)
       this.edit_array.push(data);
       // this.edit_array.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
       const index = this.edit_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
 
-  closeModal(){
-    let api_reqs:any = {type: "quotation_list"};
+  closeModal() {
+    let api_reqs: any = { type: "quotation_list" };
     this.serverService.closemodal.next(api_reqs);
   }
 
   EditCHK_emailCC(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-    //  console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+      //  console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
   QuotationSearchCHK(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_searchId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.quotationSearchCheckboxID_array.push(data);
       this.quotationSearchCheckboxID_array.join(',');
-    //  console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
+      //  console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
     }
     else {
       const index = this.quotationSearchCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.quotationSearchCheckboxID_array.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
+      // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
 
     }
   }
@@ -561,7 +561,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_SearchBiller_req.user_id = this.user_ids;
     api_req.element_data = api_SearchBiller_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer_status response", response);
+      // console.log("vignesh-customer_status response", response);
 
       this.searchBillerResult = response.biller_list;
 
@@ -582,11 +582,11 @@ export class DupQuotationNewComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_status response", response);
+      //  console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
 
-     // console.log("vignesh-advanced search result", this.searchResult);
+      // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -628,13 +628,13 @@ export class DupQuotationNewComponent implements OnInit {
   quotationList(data: any) {
     // Swal.fire('Loading');
     // Swal.showLoading();
-  //  console.log(data);
+    //  console.log(data);
     this.spinner.show();
     $("#searchQuotationFormIdDQ ").modal("hide");
 
-  //  console.log("Quotation List UI Display Data after OnInit ")
+    //  console.log("Quotation List UI Display Data after OnInit ")
     var list_data = this.listDataInfo(data);
-  //  console.log("data console", list_data)
+    //  console.log("data console", list_data)
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
     api_req.moduleType = "quotation";
@@ -642,7 +642,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = this.user_ids;
+    api_quotationList.user_id = localStorage.getItem('erp_c4c_user_id');
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -654,24 +654,31 @@ export class DupQuotationNewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     // console.log("qoutation list", response);
+      // console.log("qoutation list", response);
       if (response) {
         // Swal.close();
         this.spinner.hide();
-        this.quotation_list = response.quotation_details;
-        this.response_total_cnt=response.total_cnt;
-        this.quotationPermission_Edit = response.quotation_permission_arr.edit;
-        this.quotationPermission_Edit = response.quotation_permission_arr.edit
-        this.quotationPermission_ActualPrice = response.quotation_permission_arr.actual_price
-        this.quotationPermission_Add = response.quotation_permission_arr.add
-        this.quotationPermission_Delete = response.quotation_permission_arr.delete
-        this.quotationPermission_List = response.quotation_permission_arr.list
-        this.quotationPermission_Mail = response.quotation_permission_arr.mail
-        this.quotationPermission_Search = response.quotation_permission_arr.search
-        this.quotationPermission_View = response.quotation_permission_arr.view
-        this.quotationPermission_Share = response.quotation_permission_arr.share
+        if (response.quotation_details) {
+          this.quotation_list = response.quotation_details;
+        }
 
-       // console.log(response)
+        this.response_total_cnt = response.total_cnt;
+        if (response.quotation_permission_arr) {
+          this.quotationPermission_Edit = response.quotation_permission_arr.edit;
+          this.quotationPermission_Edit = response.quotation_permission_arr.edit
+          this.quotationPermission_ActualPrice = response.quotation_permission_arr.actual_price
+          this.quotationPermission_Add = response.quotation_permission_arr.add
+          this.quotationPermission_Delete = response.quotation_permission_arr.delete
+          this.quotationPermission_List = response.quotation_permission_arr.list
+          this.quotationPermission_Mail = response.quotation_permission_arr.mail
+          this.quotationPermission_Search = response.quotation_permission_arr.search
+          this.quotationPermission_View = response.quotation_permission_arr.view
+          this.quotationPermission_Share = response.quotation_permission_arr.share
+
+        }
+
+
+        // console.log(response)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {
@@ -691,28 +698,28 @@ export class DupQuotationNewComponent implements OnInit {
   quotationList2(data: any) {
     // Swal.fire('Loading');
     // Swal.showLoading();
-   // console.log("samson",data);
-    if(data){
+    // console.log("samson",data);
+    if (data) {
       this.quotation_list = data.Quotation_list_send;
-    
-        if(data.Quotation_per_send){
-          this.quotationPermission_Edit = data.Quotation_per_send.edit;
-          this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
-          this.quotationPermission_Add = data.Quotation_per_send.add
-          this.quotationPermission_Delete = data.Quotation_per_send.delete
-          this.quotationPermission_List = data.Quotation_per_send.list
-          this.quotationPermission_Mail = data.Quotation_per_send.mail
-          this.quotationPermission_Search = data.Quotation_per_send.search
-          this.quotationPermission_View = data.Quotation_per_send.view
-          this.quotationPermission_Share = data.Quotation_per_send.share
-        
-        }
+
+      if (data.Quotation_per_send) {
+        this.quotationPermission_Edit = data.Quotation_per_send.edit;
+        this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
+        this.quotationPermission_Add = data.Quotation_per_send.add
+        this.quotationPermission_Delete = data.Quotation_per_send.delete
+        this.quotationPermission_List = data.Quotation_per_send.list
+        this.quotationPermission_Mail = data.Quotation_per_send.mail
+        this.quotationPermission_Search = data.Quotation_per_send.search
+        this.quotationPermission_View = data.Quotation_per_send.view
+        this.quotationPermission_Share = data.Quotation_per_send.share
+
+      }
     }
-  
+
 
   }
   listDataInfo(list_data: any) {
-   // console.log(list_data)
+    // console.log(list_data)
     // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
     // list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
@@ -757,14 +764,14 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       $("#addNewQuotationFormIdDQ").removeAttr("disabled");
-    //  console.log(response);
+      //  console.log(response);
 
-     // console.log("pop up for add quotation", response);
+      // console.log("pop up for add quotation", response);
       if (response != '') {
         this.enquiryFromList = response.enquiry_from;
         this.quotationValidityList = response.quot_validity;
         this.templateNameList = response.template_name_arr;
-      //  console.log("EnquiryFormList", this.enquiryFromList)
+        //  console.log("EnquiryFormList", this.enquiryFromList)
 
         // $('#addNewQuotationFormIdDQ').modal('hide');
         //this.contactsList({});
@@ -788,9 +795,9 @@ export class DupQuotationNewComponent implements OnInit {
     edit_popup_req.quotation_id = this.edit_quotationID;
     api_req.element_data = edit_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
-     // console.log("pop up for edit quotation", response);
+      // console.log("pop up for edit quotation", response);
       if (response != '') {
         this.edit_enquiryFromList = response.enquiry_from;
         this.edit_quotationValidityList = response.quot_validity;
@@ -829,9 +836,9 @@ export class DupQuotationNewComponent implements OnInit {
     duplicate_popup_req.quotation_id = this.duplicate_quotationID;
     api_req.element_data = duplicate_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
-     // console.log("pop up for edit quotation", response);
+      // console.log("pop up for edit quotation", response);
       if (response != '') {
         this.duplicate_enquiryFromList = response.enquiry_from;
         this.duplicate_quotationValidityList = response.quot_validity;
@@ -881,7 +888,7 @@ export class DupQuotationNewComponent implements OnInit {
         this.quotationSharedPerson_List1 = response.access_userid;
         this.quotationSharedResult = response.user_list;
         this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',').map(Number);
-       // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+        // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
       }
       else {
@@ -895,13 +902,13 @@ export class DupQuotationNewComponent implements OnInit {
     }), (error: HttpErrorResponse) => {
       if (error.status == 500) {
         // alert("wrong")
-      //  console.log("vignesh", error)
+        //  console.log("vignesh", error)
       }
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
 
     }
   }
@@ -943,7 +950,7 @@ export class DupQuotationNewComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
 
@@ -1042,10 +1049,10 @@ export class DupQuotationNewComponent implements OnInit {
 
 
     this.values = event.target.value;
-   // console.log("this.values", this.values)
+    // console.log("this.values", this.values)
 
 
-   // console.log("You entered: ", event.target.value);
+    // console.log("You entered: ", event.target.value);
     this.search_SharedPersonName = event.target.value;
 
     let api_req: any = new Object();
@@ -1060,7 +1067,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = quot_share_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("search username ", response)
+      //  console.log("search username ", response)
       if (response.status == true) {
 
         // this.quotationSharedResult = response.user_list;
@@ -1075,31 +1082,31 @@ export class DupQuotationNewComponent implements OnInit {
 
   }
   QuotationSharedCHK(data: any, event: any) {
-   // console.log("List - Checkbox ID", data);
+    // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_quotationShare_Value = data;
     this.Checkbox_value_quotationShare = event.target.checked;
-   // console.log(this.Checkbox_value_quotationShare)
+    // console.log(this.Checkbox_value_quotationShare)
     if (this.Checkbox_value_quotationShare) {
 
       this.CheckBox_DynamicArrayList_quotationSharedPerson.push(Number(data));
       this.CheckBox_DynamicArrayList_quotationSharedPerson.join(',');
       this.CheckBox_DynamicArrayList_quotationSharedPerson.sort();
-    //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
+      //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
-    //  console.log(index)
+      //  console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       }
-     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
     this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
 
-  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+    //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
   QuotationSharedCHK1(data: any, event: any) {
@@ -1123,12 +1130,12 @@ export class DupQuotationNewComponent implements OnInit {
         var k = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
         var a = k.split(',');
         let filteredArr = a.filter((item: any) => item === data);
-       // console.log(filteredArr);
+        // console.log(filteredArr);
       }
       else {
         //type something
       }
-     // console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      // console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
     } else {
       // for(var i=0;i<=k.length;i++){
@@ -1144,13 +1151,13 @@ export class DupQuotationNewComponent implements OnInit {
       // }
       // console.log(k)
       const index = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
-     // console.log(this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      // console.log(this.CheckBox_DynamicArrayList_quotationSharedPerson)
       if (index == 1) {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       }
-     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
     // this.quotationSharedPerson_List1 = k.toString();
     // console.log(this.quotationSharedPerson_List1)
@@ -1176,7 +1183,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("response status", response.status);
+      //  console.log("response status", response.status);
       if (response.status == true) {
 
         this.quotationApprovalResult = response.user_list;
@@ -1198,7 +1205,7 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
 
   }
@@ -1220,7 +1227,7 @@ export class DupQuotationNewComponent implements OnInit {
     quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
-   // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+    // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
     if (this.Approval_Type_radiobox_Value == "double" && this.quotationApprovedBy == '') {
 
       iziToast.warning({
@@ -1238,7 +1245,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       $("#quotationApprovalIdDQ").removeAttr("disabled");
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
 
         iziToast.success({
@@ -1262,7 +1269,7 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
 
 
@@ -1309,7 +1316,7 @@ export class DupQuotationNewComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+          //  console.log(error);
           };
       }
     })
@@ -1335,9 +1342,9 @@ export class DupQuotationNewComponent implements OnInit {
     templateName_req.quotationId = this.template_quotationID;
     api_req.element_data = templateName_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
-     // console.log("set template name", response);
+      // console.log("set template name", response);
       if (response.status = true) {
         this.TemplateNameList = response.template_name;
 
@@ -1366,7 +1373,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
 
-      console.log("set template name update", response);
+     // console.log("set template name update", response);
       if (response != '') {
         $("#setTemplateNameIdDQ").modal("hide");
       }
@@ -1388,9 +1395,9 @@ export class DupQuotationNewComponent implements OnInit {
     actualCost_req.quotationId = this.actualCost_quotationID;
     api_req.element_data = actualCost_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
-     // console.log("set actual cost response", response);
+      // console.log("set actual cost response", response);
       if (response.status = true) {
         this.actualCost_ProductList = response.product_details;
         this.quotationChildId_count = this.actualCost_ProductList.length + 1;
@@ -1404,7 +1411,7 @@ export class DupQuotationNewComponent implements OnInit {
   setActualCostSave() {
     this.spinner.show();
 
-   // console.log(this.actualCost_ProductList);
+    // console.log(this.actualCost_ProductList);
     for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
       this.actualCost_ProductList[k].act_diff_amt = $('#act_diff_amt_' + i).val();
       this.actualCost_ProductList[k].actual_cost = $('#actual_cost_' + i).val();
@@ -1479,7 +1486,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("check  file attachment", response)
+      // console.log("check  file attachment", response)
       this.getFileAttachmentResult = response.attachment_list
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
@@ -1548,7 +1555,7 @@ export class DupQuotationNewComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+          //  console.log(error);
           };
       }
     })
@@ -1646,7 +1653,7 @@ export class DupQuotationNewComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
+        url:this.serverService.urlFinal + 'quotation/quotation_attachment_save',
         cache: false,
         contentType: false,
         processData: false,
@@ -1654,7 +1661,7 @@ export class DupQuotationNewComponent implements OnInit {
         success: function (result: any) {
           if (result.status == true) {
             self.quotationList({});
-           // console.log(result);
+            // console.log(result);
             Swal.close();
             $("#fileAttachmentFormIdDQ").modal("hide");
             this.edit_array = [];
@@ -1676,7 +1683,7 @@ export class DupQuotationNewComponent implements OnInit {
         },
         error: function (err: any) {
 
-          console.log("err", err)
+        //  console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -1708,10 +1715,10 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = emailPage_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("emailpagecontent", response)
+      //  console.log("emailpagecontent", response)
       if (response != true) {
         // this.myForm.reset();
-     //   console.log("emailpagecontent", response)
+        //   console.log("emailpagecontent", response)
         // $("#fileAttachmentFormIdDQ").modal("hide");
         this.email_fromList = response.email_from;
         this.email_crmTemplateList = response.crm_template;
@@ -1732,7 +1739,7 @@ export class DupQuotationNewComponent implements OnInit {
 
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1746,7 +1753,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation-template Dropdown response", response)
+      // console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -1835,7 +1842,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_email_req.quotation_id = this.EmailQuotationID;
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -1869,7 +1876,7 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
   }
   initTiny() {
@@ -1927,7 +1934,7 @@ export class DupQuotationNewComponent implements OnInit {
 
   quotationCommentsEdit(quotationID: any, transactionID: any, i: any) {
     $("#ActionIdquotdup" + i).modal("hide");
-   // console.log("transactionid", transactionID)
+    // console.log("transactionid", transactionID)
     if (transactionID != null) {
 
       this.comment_QuotationID = quotationID;
@@ -2020,7 +2027,7 @@ export class DupQuotationNewComponent implements OnInit {
     piEdit_req.userId = "2";
     api_req.element_data = piEdit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
 
         this.PIResult = response.user_list;
@@ -2048,7 +2055,7 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
   }
   quotationConvertPI($event: MouseEvent) {
@@ -2071,7 +2078,7 @@ export class DupQuotationNewComponent implements OnInit {
       this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
       $("#PIIdDQ").removeAttr("disabled");
-    //  console.log("response-quotation convert pi", response)
+      //  console.log("response-quotation convert pi", response)
       if (response.status == true) {
         iziToast.success({
           message: "PI Conversion Successfull. Go to Old ERP PI List",
@@ -2094,15 +2101,15 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+   //   console.log("final error", error);
     }
   }
   pdf(quotationId: any, i: any) {
     $("#ActionIdquotdup" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
-    //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+    var url = this.serverService.urlFinal + "quotation/show_quotation_pdf?id=" + quotationId + "";
+    
     window.open(url, '_blank');
-   // console.log("url", url)
+    // console.log("url", url)
     $('#pdfFormIdDQ').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -2147,7 +2154,7 @@ export class DupQuotationNewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
 
   }
@@ -2277,7 +2284,7 @@ export class DupQuotationNewComponent implements OnInit {
     api_req.element_data = api_dup_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("response-quotation convert pi", response);
+      // console.log("response-quotation convert pi", response);
       // console.log("quotationId_new", response.quotationId_new)
       //  this.quotationId_new = response.quotationId_new;
       var editQuotID = response.quotationId_new;

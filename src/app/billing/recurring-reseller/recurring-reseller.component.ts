@@ -430,47 +430,50 @@ export class RecurringResellerComponent implements OnInit {
     this.selectedResellerCommIds_unpaid_all = [];
     this.unpaid_status = !this.unpaid_status;
     $('#RP_multiple_amount').val('');
-    this.resellerList.forEach((reseller: any) => {
-     // console.log("reseller response", reseller)
-      // Check both conditions: checkbox === 1 and selectAllCheckbox is true
-      if (reseller.checkbox == 1 && this.selectAllCheckbox) {
-        reseller.selected = true;
-        this.selectedResellerCommIds_unpaid.push(reseller.reseller_comm_id);
-        this.selectedResellerCommIds_unpaid_all.push(reseller.refAmount);
-        // console.log("checkbox-all-unpaid", this.selectedResellerCommIds_unpaid)
-        // console.log("checkbox-selectedResellerCommIds_unpaid_all", this.selectedResellerCommIds_unpaid_all)
-        this.sum_bal = 0;
-        $('#RP_multiple_amount').val('');
-        for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
-          var xy = this.selectedResellerCommIds_unpaid_all[i];
-          this.sum_bal = this.sum_bal + xy;
-        }
-        var toFixval = this.sum_bal;
-        $('#RP_multiple_amount').val(toFixval.toFixed(2));
-       // console.log("If part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-
-      }
-
-      else {
-        reseller.selected = false;
-        const indexOfId = this.selectedResellerCommIds_unpaid.indexOf(reseller.reseller_comm_id);
-        if (indexOfId > -1) {
-          this.selectedResellerCommIds_unpaid.splice(indexOfId, 1);
-          this.selectedResellerCommIds_unpaid_all.pop();
-        }
-        this.sum_bal = 0;
-        $('#RP_multiple_amount').val('');
-        for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
-          var xy = this.selectedResellerCommIds_unpaid_all[i];
-          this.sum_bal = this.sum_bal + xy;
-        }
-        var toFixval = this.sum_bal;
-        $('#RP_multiple_amount').val(toFixval.toFixed(2));
-       // console.log("Else part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-
-
-      }
-    });
+    if(this.resellerList){
+      this.resellerList.forEach((reseller: any) => {
+        // console.log("reseller response", reseller)
+         // Check both conditions: checkbox === 1 and selectAllCheckbox is true
+         if (reseller.checkbox == 1 && this.selectAllCheckbox) {
+           reseller.selected = true;
+           this.selectedResellerCommIds_unpaid.push(reseller.reseller_comm_id);
+           this.selectedResellerCommIds_unpaid_all.push(reseller.refAmount);
+           // console.log("checkbox-all-unpaid", this.selectedResellerCommIds_unpaid)
+           // console.log("checkbox-selectedResellerCommIds_unpaid_all", this.selectedResellerCommIds_unpaid_all)
+           this.sum_bal = 0;
+           $('#RP_multiple_amount').val('');
+           for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
+             var xy = this.selectedResellerCommIds_unpaid_all[i];
+             this.sum_bal = this.sum_bal + xy;
+           }
+           var toFixval = this.sum_bal;
+           $('#RP_multiple_amount').val(toFixval.toFixed(2));
+          // console.log("If part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
+   
+         }
+   
+         else {
+           reseller.selected = false;
+           const indexOfId = this.selectedResellerCommIds_unpaid.indexOf(reseller.reseller_comm_id);
+           if (indexOfId > -1) {
+             this.selectedResellerCommIds_unpaid.splice(indexOfId, 1);
+             this.selectedResellerCommIds_unpaid_all.pop();
+           }
+           this.sum_bal = 0;
+           $('#RP_multiple_amount').val('');
+           for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
+             var xy = this.selectedResellerCommIds_unpaid_all[i];
+             this.sum_bal = this.sum_bal + xy;
+           }
+           var toFixval = this.sum_bal;
+           $('#RP_multiple_amount').val(toFixval.toFixed(2));
+          // console.log("Else part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
+   
+   
+         }
+       });
+    }
+   
    // console.log("this.selectedResellerCommIds_unpaid", this.selectedResellerCommIds_unpaid);
   }
 
@@ -1041,17 +1044,36 @@ export class RecurringResellerComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
 
-        this.referallAmountDetails = response.referral_amount_details;
+        if(response.referral_amount_details!=null){
+          this.referallAmountDetails = response.referral_amount_details;
+        }
 
-        this.payoutAmountDetails = response.payout_amount_details;
-        this.payCurrencyName = response.currencyName;
-        this.resellerList = response.reseller_list;
-        this.cust_password = response.reseller_base_info.cust_password;
-        this.reseller_email = response.reseller_base_info.reseller_email;
-        this.unpaid_amount = response.reseller_base_info.unpaid_amount;
-        this.CurrencyTotalList = response.reseller_payment_summary.currencyTotal;
-        this.CurrencyTotalAll = response.reseller_payment_summary.currency_total_amt.total_price;
-        this.YearTotalList = response.reseller_payment_summary.yearTotal;
+        if(response.payout_amount_details!=null){
+          this.payoutAmountDetails = response.payout_amount_details;
+        }
+        if(response.currencyName!=null){
+          this.payCurrencyName = response.currencyName;
+        }
+        if(response.reseller_list!=null){
+          this.resellerList = response.reseller_list;
+        }
+        if(response.reseller_base_info!=null){
+          this.cust_password = response.reseller_base_info.cust_password;
+          this.reseller_email = response.reseller_base_info.reseller_email;
+          this.unpaid_amount = response.reseller_base_info.unpaid_amount;
+        }
+        if(response.reseller_payment_summary!=null){
+          this.CurrencyTotalList = response.reseller_payment_summary.currencyTotal;
+         // this.CurrencyTotalAll = response.reseller_payment_summary.currency_total_amt.total_price;
+          this.YearTotalList = response.reseller_payment_summary.yearTotal;
+        }
+   
+
+      
+  
+      
+  
+    
        // console.log(response)
         this.paginationData = this.serverService.pagination({
           'offset': response.off_set,
@@ -1922,9 +1944,8 @@ this.spinner.show();
 
   pdf(billId: any, i: any) {
     $("#faqheaduu" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    window.open(url, '_blank');
+    var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+    
    // console.log("url", url)
   }
   get_WFA_ResellerCommission(id: any, i: any) {

@@ -193,6 +193,7 @@ export class InvoiceComponent implements OnInit {
   revenueChildListDetails: any;
   reseller_commissionState: any;
   //reseller commission
+  resellerEnaChk: any;
   // searchResult: any;
   ResellerName_Customer: any;
   resellerCommissionList: any;
@@ -330,6 +331,7 @@ export class InvoiceComponent implements OnInit {
   resellercommissiontype1: any = [];
   resellercommissiontype2: any;
   CommissionType1: any = [];
+  CommissionType55: any = [];
   data_value: any;
   addr: any = []
   // new reseller commission details
@@ -354,8 +356,8 @@ export class InvoiceComponent implements OnInit {
   recurring_State_value1: any;
   recunxt: any;
   sstTaxForm: FormGroup;
-  sstCheckbox: boolean=false;
-  getsstTaxEditID:any;
+  sstCheckbox: boolean = false;
+  getsstTaxEditID: any;
 
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
@@ -368,7 +370,7 @@ export class InvoiceComponent implements OnInit {
       addresses_rc: this.fb.array([this.createAddress_rc()])
     });
     this.serverService.invoice_search1.subscribe((val: any) => {
-     // console.log(val)
+      // console.log(val)
       // alert(val.type)
       // if (val.type == "search girlfriend") {
       //   this.search_values1 == 1;
@@ -403,21 +405,21 @@ export class InvoiceComponent implements OnInit {
 
     // });
     this.serverService.global_search_invoice.subscribe((val: any) => {
-      console.log("before parse-global_search_invoice", val);
+     // console.log("before parse-global_search_invoice", val);
       try {
         let jsonString: string;
         if (typeof val === 'object') {
           jsonString = JSON.stringify(val);
-        //  console.log("stringify", k);
+          //  console.log("stringify", k);
         } else if (typeof val === 'string') {
           jsonString = val;
-         // console.log("string", k);
+          // console.log("string", k);
         } else {
-        //  console.error("Invalid type received:", typeof val);
+          //  console.error("Invalid type received:", typeof val);
           return; // Exit early if the type is not recognized
         }
         var k = JSON.parse(jsonString);
-       // console.log("after parse-global_search_invoice", k);
+        // console.log("after parse-global_search_invoice", k);
         if (!k) {
           this.PI_list = k;
         }
@@ -427,7 +429,7 @@ export class InvoiceComponent implements OnInit {
         //   this.Global_search_filter = false;
         // }
       } catch (error) {
-        console.error("Error parsing JSON:", error);
+     //   console.error("Error parsing JSON:", error);
         // Handle parsing error if needed
       }
     });
@@ -536,7 +538,11 @@ export class InvoiceComponent implements OnInit {
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
       'email_cc': new FormControl(null, Validators.required),
-      'formControlName="radio_ApprovalBy': new FormControl(null),
+    
+          'CBF_PDFLink': new FormControl(null),
+          'CBF_TemplateSelection': new FormControl(null),
+              'CBF_PaymentLink': new FormControl(null),
+
 
     });
     // this.setResellerRecurringForm = new FormGroup({
@@ -558,6 +564,19 @@ export class InvoiceComponent implements OnInit {
       'fixedChargeDt_value': new FormControl(null),
       'usageChargeDtCBX': new FormControl(null),
       'usageChargeDt_value': new FormControl(null),
+
+
+      'reseller_name': new FormControl(null),
+      'commission_value': new FormControl(null),
+      'commission_amt': new FormControl(null),
+      'reseller_comm_id': new FormControl(null),
+
+      'commIndex': new FormControl(null),
+      'reseller_id': new FormControl(null),
+      'billId': new FormControl(null),
+      'grossAmount': new FormControl(null),
+      'cbk_RCEnable': new FormControl(null),
+
 
     });
     this.couponAssignForm = new FormGroup({
@@ -601,7 +620,7 @@ export class InvoiceComponent implements OnInit {
       'pdf_show': new FormControl(null),
       // 'rs_fromDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       // 'to_fromDate': new FormControl((new Date()).toISOString().substring(0, 10)),
-     'date': new FormControl(null),
+      'date': new FormControl(null),
       'recurring_state': new FormControl(null),
       'recurringDtCBX': new FormControl(null),
       'recurringDate': new FormControl(null),
@@ -617,7 +636,7 @@ export class InvoiceComponent implements OnInit {
       'version_enqForm_addPopUP': new FormControl(null, [Validators.required]),
       'templateName_addPopUP': new FormControl(null),
     });
-    this.sstTaxForm=new  FormGroup({
+    this.sstTaxForm = new FormGroup({
       'sstTax': new FormControl(null),
     });
     var date = new Date();
@@ -742,7 +761,7 @@ export class InvoiceComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+        //  console.log("response", response);
           this.get_WFA_ResellerCommission({}, {});
 
         });
@@ -797,7 +816,7 @@ export class InvoiceComponent implements OnInit {
     for (var i = 0; i <= this.resellerCommissionList.length; i++) {
       for (var k = 0; k <= this.resellercommissiontype.length; k++) {
 
-        console.log(this.resellerCommissionList);
+     //   console.log(this.resellerCommissionList);
         if (this.resellerCommissionList.commission_type == this.resellercommissiontype.id) {
           $("#CommissionType_" + i + "_" + k).val(this.resellerCommissionList.commission_type);
         }
@@ -806,31 +825,41 @@ export class InvoiceComponent implements OnInit {
     // }
 
   }
+  resellerChange(event: any) {
+   // console.log("event.target.checked", event.target.checked);
+    // this.resellerEnaChk = event.target.checked;
+    if (event.target.checked == true) {
+      this.resellerEnaChk = 1;
+    } else {
+      this.resellerEnaChk = 0;
+    }
+    // this.resellerEnaChk = !this.resellerEnaChk
+  }
 
   onItemChange() {
     this.radioSel = this.resellercommissiontype.find((Item: { id: any; }) => Item.id === this.radioSelected);
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
-    console.log(this.InvoiceSendingValue)
+  //  console.log(this.InvoiceSendingValue)
   }
   radio_recurring(event: any) {
     this.recurring_State_value = event.target.id;
-    console.log(this.recurring_State_value)
+  //  console.log(this.recurring_State_value)
 
   }
   radio_commissionType(event: any) {
 
     this.commissionType_value = event.target.value;
 
-    console.log("this.commissionType_value", this.commissionType_value);
+    // console.log("this.commissionType_value", this.commissionType_value);
 
     if (this.commissionType_value == 1) {
 
       var commvalue = $('#CommissionValue_WFA_ID1_').val();
-      console.log("commvalue", commvalue)
+     // console.log("commvalue", commvalue)
       $('#CommissionAmount1_WFA_ID1_').val(commvalue);
-      console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_').val())
+     // console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_').val())
 
     }
     if (this.commissionType_value == 2) {
@@ -854,29 +883,29 @@ export class InvoiceComponent implements OnInit {
     if (this.commissionType_value == 1) {
 
       var commvalue = $('#CommissionValue_WFA_ID1_').val();
-      console.log("commvalue", commvalue)
+     // console.log("commvalue", commvalue)
       $('#CommissionAmount1_WFA_ID1_').val(commvalue);
 
     }
     if (this.commissionType_value == 2) {
-      var com1 = this.resellerCommissionForm.value.commission_value;
+      var com1 = this.RecurringForm.value.commission_value;
 
       // alert(this.commissionType_value)
       var commvalue = $('#CommissionValue_WFA_ID1_').val();
       // alert(commvalue)
 
 
-      var k = this.commlistall1[0].grossAmount;
+      // var k = this.commlistall1[0].grossAmount;
 
-      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
+      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
       // alert(commvalue_Percentage)
-      console.log("this.commvalue_Percentage", commvalue_Percentage);
+    //  console.log("this.commvalue_Percentage", commvalue_Percentage);
       $('#CommissionAmount1_WFA_ID1_').val(commvalue_Percentage);
 
     }
     if (this.commissionType_value == 4) {
       var commvalue_Percentage = '';
-      console.log("this.commvalue_Percentage", commvalue_Percentage);
+     // console.log("this.commvalue_Percentage", commvalue_Percentage);
       $('#CommissionAmount1_WFA_ID1_').val(commvalue_Percentage);
 
     }
@@ -886,21 +915,21 @@ export class InvoiceComponent implements OnInit {
 
     this.commissionType_value = event.target.value;
     const indexToUpdate = index; // Change this index according to your needs
-    console.log(indexToUpdate);
-    console.log("this.commissionType_value", this.commissionType_value);
+    // console.log(indexToUpdate);
+    // console.log("this.commissionType_value", this.commissionType_value);
     this.resellerCommissionForm.value.addresses_rc[indexToUpdate].commission_type = this.commissionType_value;
     this.addr = this.resellerCommissionForm.value.addresses_rc;
-    console.log("this.commissionType_value", this.addr);
+  //  console.log("this.commissionType_value", this.addr);
     for (let i = 0; i <= index; i++) {
-      console.log("this.commissionType_value", this.commissionType_value)
+     // console.log("this.commissionType_value", this.commissionType_value)
       if (this.commissionType_value == 1) {
-        console.log("index", index)
+      //  console.log("index", index)
         var commvalue = $('#CommissionValue_WFA_ID1_' + index).val();
-        console.log("commvalue", commvalue)
+      //  console.log("commvalue", commvalue)
         $('#CommissionAmount1_WFA_ID1_' + index).val(commvalue);
-        console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + index).val())
+      //  console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + index).val())
         this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue;
-        console.log(this.resellerCommissionForm.value.addresses_rc[index].commvalue)
+      //  console.log(this.resellerCommissionForm.value.addresses_rc[index].commvalue)
       }
       if (this.commissionType_value == 2) {
         var commvalue = $('#CommissionValue_WFA_ID1_' + index).val();
@@ -909,7 +938,7 @@ export class InvoiceComponent implements OnInit {
         $('#CommissionAmount1_WFA_ID1_' + index).val(commvalue_Percentage);
         this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID1_' + index).val();
         this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue_Percentage;
-        console.log(this.resellerCommissionForm.value.addresses_rc[index].commission_amt)
+      //  console.log(this.resellerCommissionForm.value.addresses_rc[index].commission_amt)
       }
       if (this.commissionType_value == 4) {
         $('#CommissionValue_WFA_ID1_' + index).val('');
@@ -918,24 +947,24 @@ export class InvoiceComponent implements OnInit {
       }
     }
 
-    console.log($('#CommissionValue_WFA_ID1_' + index).val())
+  //  console.log($('#CommissionValue_WFA_ID1_' + index).val())
 
   }
   commissionValueAutoFill_formArray(h: any) {
-    console.log(this.commlistall1)
+  //  console.log(this.commlistall1)
     for (let i = 0; i <= this.commlistall1.length; i++) {
-      console.log(i)
-      console.log(h)
-      console.log("commlistall1[i].commission_typ", this.commlistall1[i].commission_type)
+      // console.log(i)
+      // console.log(h)
+      // console.log("commlistall1[i].commission_typ", this.commlistall1[i].commission_type)
       // if (this.commissionType_value == 1) {
       if (this.commlistall1[i].commission_type == 1) {
-        console.log("index-autofill", h)
+       // console.log("index-autofill", h)
         var commvalue = $('#CommissionValue_WFA_ID1_' + h).val();
-        console.log("commvalue", commvalue)
+       // console.log("commvalue", commvalue)
         $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue);
-        console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + h).val())
+       // console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + h).val())
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue;
-        console.log(this.resellerCommissionForm.value.addresses_rc[h].commvalue)
+      //  console.log(this.resellerCommissionForm.value.addresses_rc[h].commvalue)
       }
       if (this.commlistall1[i].commission_type == 2) {
         var com1 = this.resellerCommissionForm.value.commission_value;
@@ -949,10 +978,10 @@ export class InvoiceComponent implements OnInit {
 
         var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
         // alert(commvalue_Percentage)
-        console.log("this.commvalue_Percentage", commvalue_Percentage);
+      //  console.log("this.commvalue_Percentage", commvalue_Percentage);
         $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue_Percentage);
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
-        console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
+       // console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
       }
       if (this.commlistall1[i].commission_type == 4) {
 
@@ -961,21 +990,21 @@ export class InvoiceComponent implements OnInit {
 
         var commvalue_Percentage = '';
 
-        console.log("this.commvalue_Percentage", commvalue_Percentage);
+       // console.log("this.commvalue_Percentage", commvalue_Percentage);
         $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue_Percentage);
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
-        console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
+      //  console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
       }
 
     }
 
-    console.log($("#CommissionAmount1_WFA_ID1_0").val())
+   // console.log($("#CommissionAmount1_WFA_ID1_0").val())
 
   }
 
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-    console.log(this.Select_To_Type_radiobox_Value);
+  //  console.log(this.Select_To_Type_radiobox_Value);
 
 
     if (this.Select_To_Type_radiobox_Value == 'finance') {
@@ -990,30 +1019,30 @@ export class InvoiceComponent implements OnInit {
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
-    console.log(this.CBV_PDFLink);
+   // console.log(this.CBV_PDFLink);
   }
   CBF_TemplateSelection(event: any) {
     this.CBV_TemplateSelection = event.target.checked;
-    console.log(this.CBV_TemplateSelection);
+  //  console.log(this.CBV_TemplateSelection);
   }
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
-    console.log(this.CBV_PaymentLink);
+  //  console.log(this.CBV_PaymentLink);
 
   }
   CBF_FixedChargeDtFn(event: any) {
     this.CBV_FixedChargeDt = event.target.checked;
-    console.log(this.CBV_FixedChargeDt);
+  //  console.log(this.CBV_FixedChargeDt);
 
   }
   CBF_UsageChargeDtFn(event: any) {
     this.CBV_UsageChargeDt = event.target.checked;
-    console.log(this.CBV_UsageChargeDt);
+  //  console.log(this.CBV_UsageChargeDt);
 
   }
   CBF_RevenueStateFn(event: any) {
     this.CBV_RevenueState = event.target.checked;
-    console.log(this.CBV_RevenueState)
+   // console.log(this.CBV_RevenueState)
 
   }
   CBF_PdfShow(event: any) {
@@ -1034,28 +1063,28 @@ export class InvoiceComponent implements OnInit {
   }
   RevenueTypeWiseShowCHK(event: any) {
     this.CBV_RevenueTypeWiseShow = event.target.checked;
-    console.log(" this.CBV_RevenueTypeWiseShow", this.CBV_RevenueTypeWiseShow)
+  //  console.log(" this.CBV_RevenueTypeWiseShow", this.CBV_RevenueTypeWiseShow)
   }
   handleChange_RevenueTypeWiseShow(event: any) {
     this.revenueTypeWiseDropDownValue = event.target.value;
-    console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
+   // console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
 
   }
   clearSelection(event: any) {
-    console.log("clear selection", event)
+   // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
     this.searchResult_CustomerName = '';
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   searchCustomerData(data: any) {
@@ -1074,10 +1103,10 @@ export class InvoiceComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-        console.log("vignesh-customer_status response", response);
+     //   console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult = response.customer_names;
-        console.log("vignesh-advanced search result", this.searchResult);
+      //  console.log("vignesh-advanced search result", this.searchResult);
         if (response! = null) {
           this.searchResult = response.customer_names;
           this.spinner.hide();
@@ -1100,8 +1129,8 @@ export class InvoiceComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
-    console.log("this.searchBILLERID", this.searchBILLERID);
+    // console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
+    // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
@@ -1111,7 +1140,7 @@ export class InvoiceComponent implements OnInit {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
@@ -1122,7 +1151,7 @@ export class InvoiceComponent implements OnInit {
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
@@ -1130,15 +1159,15 @@ export class InvoiceComponent implements OnInit {
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
     this.yearsID = data;
-    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
-    console.log("this.CBV_Years_All", this.CBV_Years_All)
+    // console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    // console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
       if (!this.edit_array_Years_Checkbox) {
         this.edit_array_Years_Checkbox = [];
       }
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+   //   console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_Years_Checkbox)) {
@@ -1148,7 +1177,7 @@ export class InvoiceComponent implements OnInit {
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
 
     }
 
@@ -1199,60 +1228,60 @@ export class InvoiceComponent implements OnInit {
     this.searchResult_CustomerName = event.target.value
   }
   InvoiceShowCHK(data: any, event: any) {
-    console.log("List - Checkbox ID", data);
+  //  console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
     this.Checkbox_value_invoiceShow = event.target.checked;
-    console.log(this.Checkbox_value_invoiceShow)
+   // console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+   //   console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
-      console.log(index)
+   //   console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+   //   console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   EditCHK_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+  //  console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value_file = event.target.checked;
     // console.log(this.checkbox_value_file)
     for (let i = 0; i <= this.getFileAttachmentResult.length; i++) {
-      console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
+    //  console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
       // console.log(this.checkboxAdding)
       if (this.getFileAttachmentResult[i].quotation_pdf_add == '1') {
         this.checkboxAdding = this.getFileAttachmentResult[i].common_attachmentId;
@@ -1261,30 +1290,30 @@ export class InvoiceComponent implements OnInit {
 
     }
 
-    console.log(this.checkboxAdding)
+    // console.log(this.checkboxAdding)
     if (this.checkbox_value_file) {
       this.checkboxAdding.push(data);
-      console.log(this.checkboxAdding)
+    //  console.log(this.checkboxAdding)
       this.edit_array.push(data);
       // this.edit_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
       const index = this.edit_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+   //   console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
 
   dynamicChange(event: any) {
 
-    console.log("event", event)
+  //  console.log("event", event)
 
     this.invType_Search = event.target.value;
-    console.log("invoice type search", this.invType_Search);
+   // console.log("invoice type search", this.invType_Search);
   }
   getSearch1() {
 
@@ -1299,7 +1328,7 @@ export class InvoiceComponent implements OnInit {
     // console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
     if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
       this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
-      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    //  console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
     }
     //  alert("getInvoice-1")
     this.spinner.show();
@@ -1417,9 +1446,9 @@ export class InvoiceComponent implements OnInit {
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
           this.edit_array_SearchBiller_Checkbox = this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',').map((str: any) => parseInt(str, 10));
-          console.log("changed value doubt", this.edit_array_SearchBiller_Checkbox);
+        //  console.log("changed value doubt", this.edit_array_SearchBiller_Checkbox);
           var check = this.isArray(this.edit_array_SearchBiller_Checkbox);
-          console.log("check doubt", check)
+        //  console.log("check doubt", check)
 
 
         }
@@ -1483,18 +1512,18 @@ export class InvoiceComponent implements OnInit {
 
   getInvoice(data: any) {
     // alert(1)
-    console.log("getinvoice")
+  //  console.log("getinvoice")
     this.spinner.show();
-    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+  //  console.log("billerid", this.edit_array_SearchBiller_Checkbox);
     var da = this.edit_array_SearchBiller_Checkbox;
-    console.log(this.isArray(this.edit_array_SearchBiller_Checkbox));
+  //  console.log(this.isArray(this.edit_array_SearchBiller_Checkbox));
 
     if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
       this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
-      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+     // console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
     }
     var list_data = this.listDataInfo(data);
-    console.log("getdata", this.edit_array_SearchBiller_Checkbox);
+   // console.log("getdata", this.edit_array_SearchBiller_Checkbox);
 
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
@@ -1523,7 +1552,7 @@ export class InvoiceComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("PI list", response);
+     // console.log("PI list", response);
       this.response_total_cnt = response.total_cnt;
 
       if (response.total_cnt == 0) {
@@ -1604,7 +1633,7 @@ export class InvoiceComponent implements OnInit {
 
         this.selected_billerId = response.selected_billerId;
 
-        console.log("this.edit_array_SearchBiller_Checkbox-getInvoice-list complete", this.edit_array_SearchBiller_Checkbox);
+      //  console.log("this.edit_array_SearchBiller_Checkbox-getInvoice-list complete", this.edit_array_SearchBiller_Checkbox);
 
         if (response.proforma_details != null) {
           for (var j = 0; j < response.proforma_details.length; j++) {
@@ -1616,7 +1645,7 @@ export class InvoiceComponent implements OnInit {
         }
 
 
-        console.log("proforma_details list", this.PI_list)
+       // console.log("proforma_details list", this.PI_list)
         // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
@@ -1653,7 +1682,7 @@ export class InvoiceComponent implements OnInit {
     };
     // api_reqs_invoice = JSON.stringify(api_reqs_invoice)
     this.serverService.invoice_search.next(api_reqs_invoice);
-    console.log("sending api_reqs_invoice", api_reqs_invoice)
+  //  console.log("sending api_reqs_invoice", api_reqs_invoice)
 
 
   }
@@ -1774,7 +1803,7 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+   //   console.log("final error", error);
     }
 
   }
@@ -1804,7 +1833,7 @@ export class InvoiceComponent implements OnInit {
         this.invoiceShowPermission_List1 = response.access_userid;
         this.invoiceShowResult = response.user_list;
         this.CheckBox_DynamicArrayList_invoiceShowPermission = response.access_userid.split(',').map(Number);
-        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+      //  console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
 
       }
       else {
@@ -1820,7 +1849,7 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
   }
   invoiceSharPermissionUpdate() {
@@ -1856,7 +1885,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   deleteInvoice(billId: any, i: any) {
@@ -1909,7 +1938,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -1964,7 +1993,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -2026,7 +2055,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })
@@ -2047,22 +2076,22 @@ export class InvoiceComponent implements OnInit {
 
   }
   EditCHKAllSuspend(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_suspend = data;
     this.checkbox_value_suspend = event.target.checked;
-    console.log(this.checkbox_value_suspend)
+  //  console.log(this.checkbox_value_suspend)
     if (this.checkbox_value_suspend) {
 
       this.suspend_array.push(data);
       this.suspend_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.suspend_array);
+    //  console.log("Final Checkbox After checkbox selected list", this.suspend_array);
     }
     else {
       const index = this.suspend_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.suspend_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.suspend_array)
+    //  console.log("Final Checkbox After Deselected selected list", this.suspend_array)
 
     }
   }
@@ -2104,7 +2133,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+     //   console.log("final error", error);
       };
 
   }
@@ -2148,7 +2177,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -2190,7 +2219,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -2231,7 +2260,7 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
 
   }
@@ -2327,7 +2356,7 @@ export class InvoiceComponent implements OnInit {
         // this.myFormattedDate1 = this.pipe.transform(this.PaymentProcessDatee, 'short');
         const date = new Date();
         const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
-        console.log("current date time", transformDate1)
+      //  console.log("current date time", transformDate1)
         this.processPaymentForm.patchValue({
           'date': transformDate1,
           'invoiceID': response.invoice_details[0].invoice_no,
@@ -2359,7 +2388,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
 
@@ -2439,7 +2468,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+     //   console.log("final error", error);
       };
   }
   getsstTaxDetails(id: any, i: any) {
@@ -2476,13 +2505,13 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
- 
+
   }
   updateSST() {
     this.spinner.show();
-  
+
     let api_req: any = new Object();
     let sendMet_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -2519,9 +2548,9 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
- 
+
   }
   PIEmailClear() {
     this.emailForm.reset();
@@ -2534,7 +2563,7 @@ export class InvoiceComponent implements OnInit {
     if (event.target.value == 7 || event.target.value == 8) {
       this.flg = true;
     }
-    console.log("this.PP_paymentMethod", this.PP_paymentMethod)
+  //  console.log("this.PP_paymentMethod", this.PP_paymentMethod)
     this.PP_PaymentMethodDropdown();
   }
   PP_PaymentMethodDropdown() {
@@ -2566,8 +2595,14 @@ export class InvoiceComponent implements OnInit {
 
 
 
-        console.log("this.creditResponse", this.creditResponse)
+      //  console.log("this.creditResponse", this.creditResponse)
         this.spinner.hide();
+      }
+      else if (response.status == false) {
+        this.processPaymentForm.patchValue({
+          'amount': response.owing_amount,
+
+        })
       }
       else {
         var bal_amt = $('#Owing').val()
@@ -2579,10 +2614,7 @@ export class InvoiceComponent implements OnInit {
         //   'amount': $('#Owing').val(),
 
         // })
-        this.processPaymentForm.patchValue({
-          'amount': this.processPaymentForm.value.amount,
 
-        })
 
 
       }
@@ -2594,6 +2626,7 @@ export class InvoiceComponent implements OnInit {
   }
   changeCreditNote(event: any) {
     this.changeCreditNoteValue = event.target.value;
+  //  console.log(" this.changeCreditNoteValue", this.changeCreditNoteValue)
     this.creditShowFlag = true;
 
     this.spinner.show();
@@ -2609,32 +2642,38 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = credit_changeApi;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response != '') {
-        var res = response;
-        var ow = $('#Owing').val();
-        if (parseFloat(ow) < parseFloat(res)) {
-          // console.log("this.owingAmt",ow);
-          // console.log("res",res);
-          // console.log("if this.owingAmt < res=amount value=this.owingAmt",ow)
+      if (response !== undefined && response !== null && response !== '') {
+        // $('#amount').val(response.c_amt);
+        // var che11= $('#amount').val(response.c_amt);
+        // console.log("che11",che11);
 
-          this.processPaymentForm.patchValue({
+        this.processPaymentForm.patchValue({
 
-            'amount': ow,
+          'amount': response.c_amt,
 
-          });
-          // $('#amount').val(this.owingAmt);
-        } else {
-          // console.log("this.owingAmt",ow);
-          // console.log("res",res);
-          // console.log("if this.owingAmt >= res=amount value=res",res)
-          this.processPaymentForm.patchValue({
+        });
 
-            'amount': $('#Owing').val(),
+        // var res = response;
+        // var ow = $('#Owing').val();
+        // if (parseFloat(ow) < parseFloat(res)) {
 
 
-          });
-          // $('#amount').val(res);
-        }
+        //   this.processPaymentForm.patchValue({
+
+        //     'amount': ow,
+
+        //   });
+
+        // } else {
+
+        //   this.processPaymentForm.patchValue({
+
+        //     'amount': $('#Owing').val(),
+
+
+        //   });
+
+        // }
         this.spinner.hide();
 
 
@@ -2654,12 +2693,13 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+     //   console.log("final error", error);
 
       };
   }
   changePrepaidNote(event: any) {
     this.changePrepaidNoteValue = event.target.value;
+  //  console.log("this.changePrepaidNoteValue", this.changePrepaidNoteValue);
     this.prepaidShowFlag = true;
     this.spinner.show();
     let api_req: any = new Object();
@@ -2675,32 +2715,25 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        var res = response;
-        var ow = $('#Owing').val();
-        if (parseFloat(ow) < parseFloat(res)) {
 
+        this.processPaymentForm.patchValue({
+          'amount': response.p_amt,
+        });
 
+        // var res = response;
+        // var ow = $('#Owing').val();
+        // if (parseFloat(ow) < parseFloat(res)) {
+        //   this.processPaymentForm.patchValue({
+        //     'amount': ow,
+        //   });
 
+        // } else {
 
-          this.processPaymentForm.patchValue({
+        //   this.processPaymentForm.patchValue({
+        //     'amount': res,
+        //   });
 
-            'amount': ow,
-
-
-          });
-          // $('#amount').val(this.owingAmt);
-        } else {
-          // console.log("this.owingAmt",ow);
-          // console.log("res",res);
-          // console.log("if this.owingAmt >= res=amount value=res",res)
-          this.processPaymentForm.patchValue({
-
-            'amount': res,
-
-
-          });
-          // $('#amount').val(res);
-        }
+        // }
         this.spinner.hide();
 
       } else {
@@ -2714,7 +2747,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
 
       };
   }
@@ -2814,7 +2847,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
 
       };
   }
@@ -2864,7 +2897,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -2873,7 +2906,7 @@ export class InvoiceComponent implements OnInit {
 
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -2887,7 +2920,7 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+     // console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content;
       this.mailContent = tinymce.get('tinyID1_inv').setContent("<p>" + this.messageContent + "</p>");
       $('#subject').val(response.crm_subject_name);
@@ -2928,17 +2961,17 @@ export class InvoiceComponent implements OnInit {
     // this.subjectValue = $('#subject').val();
     this.subjectValue = this.emailForm.value.Subject_Content;
     this.msg_id = tinymce.get('tinyID1_inv').getContent();
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
+    // console.log("msgid", this.msg_id)
+    // console.log("email to", this.emailTo)
+    // console.log("subject", this.subjectValue)
     var pdf_state = 0
     if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
       var pdf_state = 1;
-      console.log("if condition if any checkbox selects", pdf_state)
+     // console.log("if condition if any checkbox selects", pdf_state)
     }
     else {
       var pdf_state = 0;
-      console.log("if condition if none of checkbox selects", pdf_state)
+     // console.log("if condition if none of checkbox selects", pdf_state)
     }
 
 
@@ -3005,7 +3038,7 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-      console.log("response status", response.status);
+    //  console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -3043,7 +3076,7 @@ export class InvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
   }
   initTiny() {
@@ -3100,17 +3133,17 @@ export class InvoiceComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+
     window.open(url, '_blank');
-    console.log("url", url)
+  //  console.log("url", url)
   }
-  dopdf(do_id: any,i: any) {
+  dopdf(do_id: any, i: any) {
     $("#ActionId" + i).modal("hide");
-    // var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
-     var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
+
+    var url = this.serverService.urlFinal + "deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
   }
   get_actualcost_details(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
@@ -3147,7 +3180,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -3186,7 +3219,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -3231,7 +3264,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   fileAttachmentEdit(ID: any, i: any) {
@@ -3255,16 +3288,20 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check  file attachment", response)
+     // console.log("check  file attachment", response)
       this.getFileAttachmentResult = response.inv_attachment_details;
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
       if (response.status == true) {
-        this.FileAttachmentForm.patchValue({
-          // 'file': response.attachment_list.uploadFileName,
-          'file': response.inv_attachment_details[0].uploadFileName,
+        if (response.inv_attachment_details[0]) {
+          this.FileAttachmentForm.patchValue({
+            // 'file': response.attachment_list.uploadFileName,
+            'file': response.inv_attachment_details[0].uploadFileName,
 
-        });
+          });
+
+        }
+
       }
     });
 
@@ -3305,7 +3342,7 @@ export class InvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url: this.serverService.urlFinal + 'invoice/invoice_attachment_save',
 
 
         cache: false,
@@ -3316,7 +3353,7 @@ export class InvoiceComponent implements OnInit {
           if (result.status == true) {
 
             self.getInvoice1({});
-            console.log(result);
+           // console.log(result);
             Swal.close();
             $("#fileAttachmentFormId_inv").modal("hide");
             this.edit_array = [];
@@ -3338,7 +3375,7 @@ export class InvoiceComponent implements OnInit {
         },
         error: function (err: any) {
 
-          console.log("err", err)
+        //  console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -3405,7 +3442,7 @@ export class InvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+           // console.log(error);
           };
       }
     })
@@ -3455,7 +3492,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -3499,7 +3536,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -3511,7 +3548,7 @@ export class InvoiceComponent implements OnInit {
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
-    console.log("url", url)
+    // console.log("url", url)
     // $('#pdfFormId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -3519,6 +3556,7 @@ export class InvoiceComponent implements OnInit {
   RecurringEdit(id: any, i: any) {
 
     $("#ActionId" + i).modal("hide");
+    this.CommissionType55 = []
     this.spinner.show();
     this.recurring_BillerID = id;
     this.getInvoice1({});
@@ -3539,7 +3577,7 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-        console.log("date check", date)
+        // console.log("date check", date)
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
@@ -3549,16 +3587,36 @@ export class InvoiceComponent implements OnInit {
 
         this.reccuringDuration = response.reccuring_duration;
         this.TermDetailsList = response.terms_details;
-        this.RecurringForm.patchValue({
+        this.commissionGrossAmount = response.reccuring_details.grossAmount;
+        this.resellerEnaChk = response.reccuring_details.reseller_com_status;
+        if (response.resellerComm != null) {
+          var k = response.resellerComm.commission_type;
+          this.commissionType_value = response.resellerComm.commission_type;
+        }
 
-          'date': response.reccuring_details.recured_date_show,
-          'fixedChargeDuration': response.reccuring_details.fixed_duration,
-          'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
+        this.CommissionType55.push(k);
+        //  console.log(this.CommissionType1);
 
-          'usageChargeDuration': response.reccuring_details.usage_duration,
-          'usageChargeDt_value': response.reccuring_details.usage_next_dt,
 
-        })
+        const patchData: any = {
+          date: response.reccuring_details.recured_date_show,
+          fixedChargeDuration: response.reccuring_details.fixed_duration,
+          // fixedChargeDt_value: response.reccuring_details.fixed_next_dt,
+          usageChargeDuration: response.reccuring_details.usage_duration,
+          // usageChargeDt_value: response.reccuring_details.usage_next_dt,
+          grossAmount: response.reccuring_details.grossAmount,
+        };
+
+        if (response.resellerComm != null) {
+          patchData.reseller_name = response.resellerComm.reseller_name;
+          patchData.commission_value = response.resellerComm.commission_value;
+          patchData.commission_amt = response.resellerComm.commission_amt;
+          patchData.reseller_comm_id = response.resellerComm.reseller_comm_id;
+          patchData.reseller_id = response.resellerComm.reseller_id;
+          patchData.cbk_RCEnable = response.reccuring_details.reseller_com_status === 1;
+        }
+
+        this.RecurringForm.patchValue(patchData);
 
         // $('#RecurringFormId_inv').modal("hide");
         this.getInvoice1({});
@@ -3578,7 +3636,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //  console.log("final error", error);
       };
 
 
@@ -3607,7 +3665,7 @@ export class InvoiceComponent implements OnInit {
       if (response.status == true) {
         this.spinner.hide();
         var date = response.reccuring_details.recured_date_show;
-        console.log("date check", date)
+        //   console.log("date check", date)
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recunxt = response.reccuring_details.next_recurring_date
@@ -3645,7 +3703,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //  console.log("final error", error);
       };
 
 
@@ -3681,7 +3739,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //   console.log("final error", error);
       };
 
 
@@ -3706,10 +3764,23 @@ export class InvoiceComponent implements OnInit {
     api_recurringUpd.recuring_new_rdo = this.recurring_State_value;
     api_recurringUpd.fixed_charge_chk = this.CBV_FixedChargeDt;
     api_recurringUpd.fixed_charge_dt = this.RecurringForm.value.fixedChargeDt_value;
+    api_recurringUpd.usage_charge_dt = this.RecurringForm.value.usageChargeDt_value;
     api_recurringUpd.rec_duration_fixed = this.RecurringForm.value.fixedChargeDuration;
     api_recurringUpd.usage_charge_chk = this.CBV_UsageChargeDt;
     api_recurringUpd.usage_charge_dt = this.RecurringForm.value.usageChargeDt_value;
     api_recurringUpd.rec_duration_monthly = this.RecurringForm.value.usageChargeDuration;
+
+
+    api_recurringUpd.reseller_com_status = this.RecurringForm.value.cbk_RCEnable;
+
+    api_recurringUpd.reseller_name = this.RecurringForm.value.reseller_name;
+    api_recurringUpd.reseller_id = this.RecurringForm.value.reseller_id;
+
+    api_recurringUpd.commission_type = this.commissionType_value;
+
+    api_recurringUpd.commission_value = this.RecurringForm.value.commission_value;
+    api_recurringUpd.commission_amt = $('#CommissionAmount1_WFA_ID1_').val();
+    $('#CommissionAmount1_WFA_ID1_').val();
 
     api_req.element_data = api_recurringUpd;
 
@@ -3724,7 +3795,7 @@ export class InvoiceComponent implements OnInit {
         });
         this.getInvoice({});//added now
         this.getInvoice1({});
-        window.location.reload();
+        // window.location.reload();
       } else {
         iziToast.warning({
           message: "Check Response",
@@ -3732,7 +3803,7 @@ export class InvoiceComponent implements OnInit {
         });
         this.getInvoice({});
         this.getInvoice1({});
-        window.location.reload();
+        //  window.location.reload();
 
       }
     }),
@@ -3745,7 +3816,7 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice({});
         this.getInvoice1({});
         window.location.reload();
-        console.log("final error", error);
+        // console.log("final error", error);
       };
 
 
@@ -3807,7 +3878,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+            //  console.log("final error", error);
           };
       }
     })
@@ -3827,7 +3898,7 @@ export class InvoiceComponent implements OnInit {
     api_reqInvRe.billId = id;
     api_req.element_data = api_reqInvRe;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response)
+      // console.log(response)
       if (response.status == true) {
         // alert(response.bill_details[0].revenue_type_id)
         this.RevenuebillDetails = response.bill_details;
@@ -3855,7 +3926,7 @@ export class InvoiceComponent implements OnInit {
 
           );
         }
-        console.log(formArray)
+        //  console.log(formArray)
         this.revenueaddressForm.setControl('revenueaddresses', formArray);
 
       }
@@ -3867,7 +3938,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error);
+        // console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -3918,7 +3989,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error);
+        //  console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -3959,7 +4030,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error)
+        // console.log("network error", error)
         iziToast.error({
           message: " Check response",
           position: 'topRight'
@@ -4004,7 +4075,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error", error)
+        // console.log("network error", error)
         iziToast.error({
           message: "Delivery Order not Updated. Check response",
           position: 'topRight'
@@ -4069,7 +4140,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+            //  console.log("final error", error);
           };
       }
     })
@@ -4175,7 +4246,7 @@ export class InvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error)
+            //  console.log("final error", error)
           };
       }
     })
@@ -4204,7 +4275,7 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-        console.log("response.selected_invoice_type", response.selected_invoice_type)
+        //  console.log("response.selected_invoice_type", response.selected_invoice_type)
         this.setInvoiceType.patchValue({
           'setInvoice': response.selected_invoice_type
         })
@@ -4225,7 +4296,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -4269,7 +4340,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -4379,7 +4450,7 @@ export class InvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+            //  console.log(error);
           };
       }
     })
@@ -4406,14 +4477,14 @@ export class InvoiceComponent implements OnInit {
     $("#InvoicetoQuotationFormId_inv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#InvoicetoQuotationFormId_inv").removeAttr("disabled");
-      console.log(response);
+      //  console.log(response);
 
-      console.log("pop up for add quotation", response);
+      //  console.log("pop up for add quotation", response);
       if (response != '') {
         this.enquiryFromList = response.enquiry_from;
         this.quotationValidityList = response.quot_validity;
         this.templateNameList = response.template_name_arr;
-        console.log("EnquiryFormList", this.enquiryFromList)
+        //   console.log("EnquiryFormList", this.enquiryFromList)
 
         // $('#InvoicetoQuotationFormId_inv').modal('hide');
         //this.contactsList({});
@@ -4465,7 +4536,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -4479,17 +4550,21 @@ export class InvoiceComponent implements OnInit {
   }
 
   selectEventReseller(item: any) {
-    this.ResellerName_Customer = item.customerName;
-    this.ResellerId_Customer = item.customerId
-    console.log(item.customerId)
-    console.log(item.customerName)
+    if (item) {
+      this.ResellerName_Customer = item.customerName;
+      this.ResellerId_Customer = item.customerId;
+
+    }
+
+    // console.log(item.customerId)
+    // console.log(item.customerName)
 
 
     // do something with selected item
   }
   onFocusedReseller(e: any) {
     // do something when input is focused
-    console.log(e)
+    // console.log(e)
   }
 
   searchResellerData(data: any) {
@@ -4531,14 +4606,14 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
 
   get_WFA_ResellerCommission(id: any, i: any) {
 
-   this.RecurringEdit(id,i);
+    this.RecurringEdit(id, i);
     this.CommissionType1 = [];
     this.billId_ResellerCommissionId = id;
     $("#ActionId" + i).modal("hide");
@@ -4554,7 +4629,7 @@ export class InvoiceComponent implements OnInit {
     api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_resCommEdit;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response", response)
+    //  console.log("response", response)
       this.spinner.hide();
       // this.CommissionType = response;
       this.resellercommissiontype = response.commission_type
@@ -4570,16 +4645,16 @@ export class InvoiceComponent implements OnInit {
           var gh = response.editcommList[i].commIndex;
           this.commissionGrossAmount = response.editcommList[i].grossAmount;
           this.resellercommissiontype1.push({ val: gh });
-          console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
+         // console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
         }
-        console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
+      //  console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
 
         const formArray = new FormArray([]);
         for (let i = 0; i < response.editcommList.length; i++) {
 
           var k = response.editcommList[i].commission_type;
           this.CommissionType1.push(k);
-          console.log(this.CommissionType1);
+        //  console.log(this.CommissionType1);
 
           this.inv_resellerCommissionForm.patchValue({
             "billChildid1": response.editcommList[i].reseller_comm_id,
@@ -4594,19 +4669,19 @@ export class InvoiceComponent implements OnInit {
             "billId": response.editcommList[i].billId,
             "grossAmount": response.editcommList[i].grossAmount,
             'date': response.editcommList[i].recured_date_new,
-            'recurring_state': response.editcommList[i].recurring_state== 1 ? true : false,
+            'recurring_state': response.editcommList[i].recurring_state == 1 ? true : false,
             'recurringDtCBX': response.editcommList[i].recurring_date_checkbox,
             'recurringDate': response.editcommList[i].recurring_date,
             'recurringDuration': response.editcommList[i].recurring_duration,
             'nextRecDt': response.editcommList[i].next_recurring_date,
 
-            
+
 
           });
 
 
         }
-        console.log(this.CommissionType);
+       // console.log(this.CommissionType);
 
 
 
@@ -4623,7 +4698,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
 
@@ -4644,7 +4719,7 @@ export class InvoiceComponent implements OnInit {
     api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_resCommEdit;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response", response)
+     // console.log("response", response)
       this.spinner.hide();
       // this.CommissionType = response;
       this.resellercommissiontype = response.commission_type
@@ -4656,16 +4731,16 @@ export class InvoiceComponent implements OnInit {
           var gh = response.editcommList[i].commIndex;
           this.commissionGrossAmount = response.editcommList[i].grossAmount;
           this.resellercommissiontype1.push({ val: gh });
-          console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
+        //  console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
         }
-        console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
+      //  console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
 
         const formArray = new FormArray([]);
         for (let i = 0; i < response.editcommList.length; i++) {
 
           var k = response.editcommList[i].commission_type;
           this.CommissionType1.push(k);
-          console.log(this.CommissionType1);
+       //   console.log(this.CommissionType1);
 
           formArray.push(this.fb.group({
             "billChildid1": response.editcommList[i].reseller_comm_id,
@@ -4683,10 +4758,10 @@ export class InvoiceComponent implements OnInit {
           })
           );
         }
-        console.log(this.CommissionType);
-        console.log(formArray)
+      //  console.log(this.CommissionType);
+      //  console.log(formArray)
         this.resellerCommissionForm.setControl('addresses_rc', formArray);
-        console.log("this.addresses---end of edit", this.resellerCommissionForm.value.addresses_rc)
+       // console.log("this.addresses---end of edit", this.resellerCommissionForm.value.addresses_rc)
         this.data_value = this.resellerCommissionForm.value.addresses_rc;
 
       } else {
@@ -4701,7 +4776,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
@@ -4747,7 +4822,7 @@ export class InvoiceComponent implements OnInit {
 
 
     api_resCommEdit.recured_date_new = this.inv_resellerCommissionForm.value.date;
-    api_resCommEdit.recurring_state = this.recurring_State_value; 
+    api_resCommEdit.recurring_state = this.recurring_State_value;
     api_resCommEdit.recurring_date = this.inv_resellerCommissionForm.value.recurringDate;
     api_resCommEdit.recurring_date_checkbox = this.CBV_setResellerRecurring;
     api_resCommEdit.recurringDuration = this.inv_resellerCommissionForm.value.recurringDuration;
@@ -4761,6 +4836,7 @@ export class InvoiceComponent implements OnInit {
 
       if (response != '') {
         this.spinner.hide();
+        this.getInvoice1({});
         iziToast.success({
           message: "Reseller Payment Updated Successfully ",
           position: 'topRight'
@@ -4781,33 +4857,33 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+     //   console.log("final error", error);
       };
     this.spinner.hide();
 
   }
   update_WFA_ResellerCommission_formArray() {
 
-    console.log("form array values- this.resellerCommissionForm.value.addresses_rc", this.resellerCommissionForm.value.addresses_rc)
+   // console.log("form array values- this.resellerCommissionForm.value.addresses_rc", this.resellerCommissionForm.value.addresses_rc)
     var addr1 = this.resellerCommissionForm.value.addresses_rc;
-    console.log("length", addr1.length)
+   // console.log("length", addr1.length)
     for (let i = 0; i < addr1.length; i++) {
-      console.log(i)
-      console.log(document.getElementById("CommissionAmount1_WFA_ID1_" + i).innerHTML)
+      // console.log(i)
+      // console.log(document.getElementById("CommissionAmount1_WFA_ID1_" + i).innerHTML)
       setTimeout(() => {
-        console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
+        // console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
       }, 2000);
 
-      console.log("form array-reseller_name", this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName);
-      console.log("form array-billChildid1", this.resellerCommissionForm.value.addresses_rc[i].billChildid1);
-      console.log("form array-CommissionType_", this.resellerCommissionForm.value.addresses_rc[i].CommissionType_);
-      console.log("form array-commission_value", this.resellerCommissionForm.value.addresses_rc[i].commission_value);
-      console.log("form array-commission_amt", this.resellerCommissionForm.value.addresses_rc[i].commission_amt);
-      console.log("form array-reseller_comm_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_comm_id);
-      console.log("form array-commIndex", this.resellerCommissionForm.value.addresses_rc[i].commIndex);
-      console.log("form array-reseller_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_id);
-      console.log("form array-billId", this.resellerCommissionForm.value.addresses_rc[i].billId);
-      console.log("form array-grossAmount", this.resellerCommissionForm.value.addresses_rc[i].grossAmount);
+      // console.log("form array-reseller_name", this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName);
+      // console.log("form array-billChildid1", this.resellerCommissionForm.value.addresses_rc[i].billChildid1);
+      // console.log("form array-CommissionType_", this.resellerCommissionForm.value.addresses_rc[i].CommissionType_);
+      // console.log("form array-commission_value", this.resellerCommissionForm.value.addresses_rc[i].commission_value);
+      // console.log("form array-commission_amt", this.resellerCommissionForm.value.addresses_rc[i].commission_amt);
+      // console.log("form array-reseller_comm_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_comm_id);
+      // console.log("form array-commIndex", this.resellerCommissionForm.value.addresses_rc[i].commIndex);
+      // console.log("form array-reseller_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_id);
+      // console.log("form array-billId", this.resellerCommissionForm.value.addresses_rc[i].billId);
+      // console.log("form array-grossAmount", this.resellerCommissionForm.value.addresses_rc[i].grossAmount);
     }
 
 
@@ -4829,13 +4905,13 @@ export class InvoiceComponent implements OnInit {
 
 
     var addr1 = this.resellerCommissionForm.value.addresses_rc;
-    console.log("addr1-test-commission amount", $('#CommissionAmount1_WFA_ID1_0').val());
-    console.log("addr1-test-resellername", $('#reseller_name0').val())
+    // console.log("addr1-test-commission amount", $('#CommissionAmount1_WFA_ID1_0').val());
+    // console.log("addr1-test-resellername", $('#reseller_name0').val());
     // return false;
     for (let i = 0; i < addr1.length - 1; i++) {
 
 
-      console.log("i value", i)
+      // console.log("i value", i);
       addr1[i].billChildid1 = $('#billChildid1' + i).val();
       addr1[i].commIndex = $('#commIndex' + i).val();
       addr1[i].reseller_name = this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName
@@ -4849,7 +4925,7 @@ export class InvoiceComponent implements OnInit {
       addr1[i].billId = $('#billId' + i).val();
       addr1[i].grossAmount = $('#grossAmount' + i).val();
     }
-    console.log("addr1", addr1)
+   // console.log("addr1", addr1);
 
     api_resCommEdit.billchild_values = addr1;
 
@@ -4880,7 +4956,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -4935,14 +5011,14 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
         });
         $('#ResellerCommissionFormId').modal('hide');
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
 
   }
   setActualCostSave() {
 
-    console.log(this.actualCost_ProductList);
+   // console.log(this.actualCost_ProductList);
     for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
       this.actualCost_ProductList[k].act_diff_amt = $('#act_diff_amt_' + i).val();
       this.actualCost_ProductList[k].actual_cost = $('#actual_cost_' + i).val();
@@ -4965,8 +5041,8 @@ export class InvoiceComponent implements OnInit {
       this.actualCost_ProductList[k].unit = $('#product_unit' + i).val();
 
     }
-    console.log(this.actualCost_ProductList);
-    console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
+    // console.log(this.actualCost_ProductList);
+    // console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
     let api_req: any = new Object();
     let actualCostUpdate_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -4979,10 +5055,10 @@ export class InvoiceComponent implements OnInit {
     actualCostUpdate_req.values = this.actualCost_ProductList;
     api_req.element_data = actualCostUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+      // console.log(response);
 
 
-      console.log("set actual cost response", response);
+      // console.log("set actual cost response", response);
       if (response.status == true) {
         iziToast.success({
           message: "Success",
@@ -4999,7 +5075,7 @@ export class InvoiceComponent implements OnInit {
   }
   get_actual_total() {
     var bill_cnt = $('#quotationChildId_count').val();
-    console.log("bill_cnt", bill_cnt)
+    // console.log("bill_cnt", bill_cnt)
     let actual_cost, product_qty, product_rate, actual_net_tot, actual_percentage;
     let product_net_amt, act_diff_amt;
     let actual_cost_tot = 0;
@@ -5008,17 +5084,17 @@ export class InvoiceComponent implements OnInit {
 
     for (let i = 1; i < bill_cnt; i++) {
       if ($('#invisiable_state_' + i).val() == 0) {
-        console.log('test');
+        // console.log('test');
         actual_cost = $('#actual_cost_' + i).val();
         product_qty = $('#product_qty_' + i).val();
         product_rate = $('#product_rate_' + i).val();
         product_net_amt = $('#product_net_amt_' + i).val();
         actual_percentage = $('#actual_percentage_' + i).val();
-        console.log("product_rate", product_rate);
-        console.log("actual_cost", actual_cost);
-        console.log("actual_percentage", actual_percentage);
-        console.log("product_qty", product_qty);
-        console.log("product_net_amt", product_net_amt);
+        // console.log("product_rate", product_rate);
+        // console.log("actual_cost", actual_cost);
+        // console.log("actual_percentage", actual_percentage);
+        // console.log("product_qty", product_qty);
+        // console.log("product_net_amt", product_net_amt);
         if (actual_cost == '') {
           actual_cost = 0;
         }
@@ -5028,9 +5104,9 @@ export class InvoiceComponent implements OnInit {
           $('#actual_cost_' + i).val(actual_cost);
         }
         actual_net_tot = (parseFloat(product_qty) * parseFloat(actual_cost)).toFixed(2);
-        console.log("actual_net_tot", actual_net_tot);
+       // console.log("actual_net_tot", actual_net_tot);
         act_diff_amt = (parseFloat(product_net_amt) - parseFloat(actual_net_tot)).toFixed(2);
-        console.log("act_diff_amt", act_diff_amt);
+       // console.log("act_diff_amt", act_diff_amt);
         $('#act_diff_amt_' + i).val(act_diff_amt);
         $('#actual_net_tot_' + i).val(actual_net_tot);
         actual_cost_tot += parseFloat(actual_cost);
@@ -5121,13 +5197,13 @@ export class InvoiceComponent implements OnInit {
 
         this.getInvoice1({});
 
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
-  handleChange_SSTax(event:any){
-    this.sstCheckbox=event.target.checked;
-    console.log("this.sstCheckbox",this.sstCheckbox);
+  handleChange_SSTax(event: any) {
+    this.sstCheckbox = event.target.checked;
+   // console.log("this.sstCheckbox", this.sstCheckbox);
 
   }
 

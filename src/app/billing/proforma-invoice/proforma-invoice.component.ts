@@ -140,9 +140,22 @@ export class ProformaInvoiceComponent implements OnInit {
   response_total_cnt: any;
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val: any) => {
-      // console.log("before parse", val)
-      var k = JSON.parse(val);
+      //  console.log("before parse", val)
+      // var k = JSON.parse(val);
       // console.log("after parse", k)
+ if (typeof val === 'string') {
+    try {
+       var k= JSON.parse(val);
+      // console.log("Parsed JSON", k);
+    } catch (e) {
+      // console.error("Invalid JSON string:", val);
+    }
+  } else if (typeof val === 'object') {
+    // console.log("Value is already an object", val);
+  } else {
+    // console.warn("Unsupported data type:", typeof val);
+  }
+
       this.PI_list = k;
       // console.log(k.type)
       // console.log(k.proformalist)
@@ -276,7 +289,7 @@ export class ProformaInvoiceComponent implements OnInit {
   }
   email_fromChange(event: any) {
     this.FromEmailValue = event.target.value;
-  console.log(this.FromEmailValue);
+  // console.log(this.FromEmailValue);
 
   }
   searchBillerNameCHK(data: any, event: any) {
@@ -487,7 +500,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   templateContentEmailDropdown(event: any) {
@@ -745,7 +758,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-      console.log("response status", response.status);
+     // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -1246,15 +1259,11 @@ export class ProformaInvoiceComponent implements OnInit {
     $("#ActionId" + i).modal("hide");
 
     if (did_invoice_state == 1) {
-      var url = "https://erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
+      var url = this.serverService.urlFinal + "invoice/getDidBillpdf?billId=" + billId + "";
     } else {
-      var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
 
-      //    if (did_invoice_state == 1) {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
-      // } else {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-
+      
 
     }
 

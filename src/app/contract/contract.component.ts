@@ -549,7 +549,7 @@ export class ContractComponent implements OnInit {
     $.ajax({
       type: 'POST',
      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
-      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      url: this.serverService.urlFinal +'customer_contract/customer_contract_save',
 
       cache: false,
       contentType: false,
@@ -559,6 +559,7 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
         if (result.status === true) {
           this.edit_array = [];
+        
           this.contractList({});
           $("#addCustomerContractId").modal("hide");
           Swal.fire({
@@ -632,25 +633,25 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
 
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.edit_contract_details.length; index++) {
-          this.CustomerIDUpdate = response.edit_contract_details[index].customer_id,
-            formArray.push(this.fb.group({
-              "e_company_Name": response.edit_contract_details[index].customerName,
-              "e_contractName": response.edit_contract_details[index].contract_id,
-              "e_contractID": response.edit_contract_details[index].customer_id,
-              "e_customer_contract_id": response.edit_contract_details[index].customer_contract_id,
-              "e_classificationName": response.edit_contract_details[index].contract_classification_id,
-              "e_fromDate": response.edit_contract_details[index].from_dt,
-              "e_toDate": response.edit_contract_details[index].to_dt,
-              "e_remarks": response.edit_contract_details[index].remark_desc,
-              "e_billerName": response.edit_contract_details[index].biller_id,
-
-
-            })
-            );
-
+        if( response.edit_contract_details){
+          for (let index = 0; index < response.edit_contract_details.length; index++) {
+            this.CustomerIDUpdate = response.edit_contract_details[index].customer_id,
+              formArray.push(this.fb.group({
+                "e_company_Name": response.edit_contract_details[index].customerName,
+                "e_contractName": response.edit_contract_details[index].contract_id,
+                "e_contractID": response.edit_contract_details[index].customer_id,
+                "e_customer_contract_id": response.edit_contract_details[index].customer_contract_id,
+                "e_classificationName": response.edit_contract_details[index].contract_classification_id,
+                "e_fromDate": response.edit_contract_details[index].from_dt,
+                "e_toDate": response.edit_contract_details[index].to_dt,
+                "e_remarks": response.edit_contract_details[index].remark_desc,
+                "e_billerName": response.edit_contract_details[index].biller_id,
+              })
+              );
+          }
 
         }
+       
 
         console.log(formArray);
 
@@ -1087,7 +1088,7 @@ export class ContractComponent implements OnInit {
     $.ajax({
       type: 'POST',
      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
-      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
+      url: this.serverService.urlFinal + 'customer_contract/customer_contract_attachment_file_save',
       cache: false,
       contentType: false,
       processData: false,

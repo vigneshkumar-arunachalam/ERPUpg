@@ -29,7 +29,7 @@ export class EditTransactionNewComponent implements OnInit {
   getResult: any;
   credit_attachment_id: any;
   fileAttachCustomerID: any;
-  myFiles: string[] = [];
+  myFiles: any[] = [];
   myFilesUpdate: string[] = [];
   myForm: FormGroup;
   currencyDetails: any;
@@ -85,6 +85,7 @@ export class EditTransactionNewComponent implements OnInit {
   add_billerNameID: any;
   PC_billerDetails: any;
   fileAttachment: any;
+  uploaded_file: any[];
 
   constructor(
     private serverService: ServerService,
@@ -92,7 +93,7 @@ export class EditTransactionNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -110,8 +111,6 @@ export class EditTransactionNewComponent implements OnInit {
         typeof this.edit_TransactionTpeID
       );
     });
-
-    this.addLoad();
 
     // if(this.edit_TransactionTpeID==5){
     //   $('#PurchaseEntry').removeClass('active');
@@ -149,6 +148,7 @@ export class EditTransactionNewComponent implements OnInit {
 
       case '6':
         $('#VendorOrder_link').addClass('active');
+        this.addLoad();
         this.editVendorOrder();
         break;
 
@@ -158,10 +158,12 @@ export class EditTransactionNewComponent implements OnInit {
         $('#InvoicePayment_link').addClass('active');
         $('#InvoicePayment').removeClass('fade');
         $('#InvoicePayment').addClass('active');
+        this.addLoad();
         this.editInvoicePayment();
         break;
       case '8':
         $('#Others_link').addClass('active');
+        this.addLoad();
         this.editOthers();
         break;
       case '15':
@@ -170,6 +172,7 @@ export class EditTransactionNewComponent implements OnInit {
         $('#AddNewStock_link').addClass('active');
         $('#AddNewStock').removeClass('fade');
         $('#AddNewStock').addClass('active');
+        this.addLoad();
         this.editNewStock();
 
         break;
@@ -179,7 +182,7 @@ export class EditTransactionNewComponent implements OnInit {
         $('#Logistics_link').addClass('active');
         $('#Logistics_link').removeClass('fade');
         $('#Logistics_link').addClass('active');
-
+        this.addLoad();
         this.editlogistics();
 
         break;
@@ -358,9 +361,9 @@ export class EditTransactionNewComponent implements OnInit {
     //   }, 5000)
     // }
   }
-  CB_Fn_PE_AttachMobile(event: any) {}
-  CB_Fn_PC_AttachMobile(event: any) {}
-  CB_Fn_Log_AttachMobile(event: any) {}
+  CB_Fn_PE_AttachMobile(event: any) { }
+  CB_Fn_PC_AttachMobile(event: any) { }
+  CB_Fn_Log_AttachMobile(event: any) { }
   fileAttachmentEvent(event: any) {
     this.PE_FileLength = event.target.files.length;
     // alert(event.target.files.length);
@@ -399,7 +402,7 @@ export class EditTransactionNewComponent implements OnInit {
       });
     }
   }
-  fileAttachmentEventPE2(event: any) {
+  fileAttachmentEventPE21(event: any) {
     if (event.target.files.length < 4) {
       for (var i = 0; i < event.target.files.length; i++) {
         this.myFiles.push(event.target.files[i]);
@@ -412,6 +415,34 @@ export class EditTransactionNewComponent implements OnInit {
       });
     }
   }
+
+
+  fileAttachmentEventPE2(event: any) {
+    const selectedFiles: File[] = Array.from(event.target.files);
+
+    if (this.myFiles.length + selectedFiles.length > 3) {
+      iziToast.error({
+        message:
+          'Sorry, maximum you can choose 3 files only. Please contact admin.',
+        position: 'topRight',
+      });
+      event.target.value = '';
+      return;
+    }
+
+    selectedFiles.forEach((file) => {
+      this.myFiles.push({
+        name: file.name,
+        url: URL.createObjectURL(file),
+        file: file,
+      });
+    });
+
+    // console.log('this.myFiles', this.myFiles);
+
+    event.target.value = '';
+  }
+
   fileAttachmentEventUpdate(event: any) {
     //  console.log(this.getFileAttachmentResult.length)
     this.fileIterationVariable =
@@ -465,22 +496,31 @@ export class EditTransactionNewComponent implements OnInit {
         this.categoryDetails = response.category_det;
         let defaultCurrencyIdString = response.default_currency_id;
         let currencyID: number = parseInt(defaultCurrencyIdString);
-        console.log('currencyID', currencyID);
-        this.getPaymentInvoice();
-        this.addTransaction_section1.patchValue({
-          // 'setInvoice': response.selected_invoice_type
-        });
+        // console.log('currencyID', currencyID);
+        // this.getPaymentInvoice1();
+        // this.addTransaction_section1.patchValue({
+        // 'setInvoice': response.selected_invoice_type
+        // });
         // setTimeout(() => {
         //   $('#biller_name9').val(response.defaults_biller_id);
         //  $('#Currency9').val(currencyID);
         // }, 1000)
-        this.addTransaction_section1.patchValue({
-          billerName: this.DefaultBillerIDValue,
-          PE_purchaseEntryNo: response.purchase_entry_no,
-          PE_Currency: currencyID,
-          PE_currencyConversionRate: response.currency_converstion,
-          PE_vendorName: 815,
-        });
+
+        // this.addTransaction_section1.patchValue({
+        // billerName: this.DefaultBillerIDValue,
+        // PE_purchaseEntryNo: response.purchase_entry_no,
+        // PE_Currency: currencyID,
+        // PE_currencyConversionRate: response.currency_converstion,
+        // PE_vendorName: 815,
+        // });
+
+        // $('#InvPayment_InvoiceNumber').val('');
+        // $('#InvPayment_Biller').val('');
+        // $('#InvPayment_Customer').val('');
+        // $('#InvPayment_Total').val('');
+        // $('#InvPayment_Paid').val('');
+        // $('#InvPayment_Owing').val('');
+        // $('#InvPayment_Details').val('');
       } else {
         iziToast.warning({
           message: 'Invoice Type Details not displayed. Please try again',
@@ -527,7 +567,8 @@ export class EditTransactionNewComponent implements OnInit {
       }
     });
   }
-  getPaymentInvoice() {
+  getPaymentInvoice(biller_id: any) {
+    this.spinner.show();
     let api_req: any = new Object();
     let api_getPaymentDetails_req: any = new Object();
     api_req.moduleType = 'transaction_entry';
@@ -536,7 +577,32 @@ export class EditTransactionNewComponent implements OnInit {
     api_req.access_token =
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
     api_getPaymentDetails_req.action = 'payment_entry_invoice_no';
-    api_getPaymentDetails_req.billerId = this.DefaultBillerIDValue;
+    api_getPaymentDetails_req.billerId = biller_id;
+    api_getPaymentDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_getPaymentDetails_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response != '') {
+        this.InvoicePaymentList = response.invoice_list;
+
+        this.spinner.hide();
+        this.addTransaction_section1.patchValue({
+          // 'PE_currencyConversionRate': response.currency_live_val,
+        });
+      } else {
+      }
+    });
+  }
+  getPaymentInvoice1(biller_id: any) {
+    let api_req: any = new Object();
+    let api_getPaymentDetails_req: any = new Object();
+    api_req.moduleType = 'transaction_entry';
+    api_req.api_url = 'transaction_entry/payment_entry_invoice_no';
+    api_req.api_type = 'web';
+    api_req.access_token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI';
+    api_getPaymentDetails_req.action = 'payment_entry_invoice_no';
+    api_getPaymentDetails_req.billerId = biller_id;
     api_getPaymentDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_getPaymentDetails_req;
 
@@ -571,7 +637,8 @@ export class EditTransactionNewComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.billerID = response.transaction_details[0].billerId;
-        this.PC_billerDetails = response.billerDetails;
+        // this.PC_billerDetails = response.billerDetails;
+        this.billerDetails = response.billerDetails;
         this.currencyDetails = response.currency_det;
         this.vendorDetails = response.vendor_det;
         this.purchaseTypeDetails = response.purchase_type_det;
@@ -606,6 +673,23 @@ export class EditTransactionNewComponent implements OnInit {
           //  'e_ProductName': response.purchaseentry_details[0].billerId,
           //  'e_Quantity': response.purchaseentry_details[0].billerId,
         });
+
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+
+          const filename = response.transaction_details[0][filenameKey];
+          const name = response.transaction_details[0][nameKey];
+
+          if (filename) {
+            this.myFiles.push({
+              name: name,
+              url: filename,
+            });
+          }
+        }
+
+
 
         if (response.trans_file == null) {
           this.spinner.hide();
@@ -691,7 +775,9 @@ export class EditTransactionNewComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         (this.PC_edit_TypeValue = response.pettycash_details[0].type),
-          (this.PC_billerDetails = response.billerDetails);
+          // (this.PC_billerDetails = response.billerDetails);
+
+          (this.billerDetails = response.billerDetails);
 
         this.addTransaction_section1.patchValue({
           billerName: response.transaction_details[0].billerId,
@@ -703,6 +789,23 @@ export class EditTransactionNewComponent implements OnInit {
           PC_Amount: response.pettycash_details[0].amount,
           CB_PC_AttachMobile: response.pettycash_details[0].mobile_type,
         });
+
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+
+          const filename = response.transaction_files[filenameKey];
+          const name = response.transaction_files[nameKey];
+
+          if (filename) {
+            this.myFiles.push({
+              name: name,
+              url: filename,
+            });
+          }
+        }
+
+
 
         if (response.trans_file == null) {
           this.getFileAttachmentResult = [];
@@ -798,6 +901,33 @@ export class EditTransactionNewComponent implements OnInit {
       .join('-');
   }
 
+  removeFile(index: number) {
+    this.myFiles.splice(index, 1);
+  }
+
+  deleteAttachmentFile(id: any) {
+    let api_req: any =
+      '{"moduleType":"transaction_entry","api_url":"transaction_entry/edit_file_atttachment_delete","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"edit_file_atttachment_delete","transaction_approval_id":"' +
+      this.TransactionApprovalID +
+      '","user_id":"39","trans_attachment_filename1":1,"trans_attachment_filename2":"","trans_attachment_filename3":""}}';
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response != '') {
+      } else {
+      }
+    });
+  }
+  getFileIconClass(filename: string) {
+    const ext = filename.split('.').pop()?.toLowerCase();
+    if (ext === 'txt') {
+      return 'text';
+    } else if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') {
+      return 'excel';
+    } else {
+      return 'text';
+    }
+  }
+
   editlogistics() {
     this.spinner.show();
     let api_req: any = new Object();
@@ -814,7 +944,6 @@ export class EditTransactionNewComponent implements OnInit {
     api_req.element_data = api_loadEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
       if (response != '') {
         let transDate = this.formatDate(response.data.Date);
         this.fileAttachment = response.data.attachment_filename1;
@@ -829,6 +958,17 @@ export class EditTransactionNewComponent implements OnInit {
           Log_Amount: response.data.logistics_amount,
           CB_Log_AttachMobile: response.data.attachment_filename1,
         });
+
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+          if (response.data[filenameKey]) {
+            this.myFiles.push({
+              name: response.data[nameKey],
+              url: response.data[filenameKey],
+            });
+          }
+        }
 
         this.spinner.hide();
         if (response.trans_file == null) {
@@ -922,6 +1062,17 @@ export class EditTransactionNewComponent implements OnInit {
           VendorOrder_Description: response.data.other_description,
         });
 
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+          if (response.data[filenameKey]) {
+            this.myFiles.push({
+              name: response.data[nameKey],
+              url: response.data[filenameKey],
+            });
+          }
+        }
+
         this.spinner.hide();
 
         if (response.trans_file == null) {
@@ -1014,6 +1165,18 @@ export class EditTransactionNewComponent implements OnInit {
 
           others_Description: response.data.other_description,
         });
+
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+          if (response.data[filenameKey]) {
+            this.myFiles.push({
+              name: response.data[nameKey],
+              url: response.data[filenameKey],
+            });
+          }
+        }
+
         this.spinner.hide();
         if (response.trans_file == null) {
           this.getFileAttachmentResult = [];
@@ -1126,6 +1289,7 @@ export class EditTransactionNewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
+        this.getPaymentInvoice1(response.data.billerId);
         this.InvoiceChangeValue123(response.data.invoice_no);
         let transDate = this.formatDate(response.data.Date);
         let payment_date = this.formatDate(response.data.processDate);
@@ -1153,6 +1317,17 @@ export class EditTransactionNewComponent implements OnInit {
           // 'PE_FileAttachment': response.data.trans_attachment_filename,
         });
 
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+          if (response.data[filenameKey]) {
+            this.myFiles.push({
+              name: response.data[nameKey],
+              url: response.data[filenameKey],
+            });
+          }
+        }
+
         this.spinner.hide();
         if (response.trans_file == null) {
           this.getFileAttachmentResult = [];
@@ -1162,9 +1337,9 @@ export class EditTransactionNewComponent implements OnInit {
 
         //  switching between tabs
 
-        $('#PurchaseEntry_link').removeClass('active');
-        this.Transaction_Type_Variable =
-          response.transaction_details[0].type_of_trans;
+        // $('#PurchaseEntry_link').removeClass('active');
+        // this.Transaction_Type_Variable =
+        //   response.transaction_details[0].type_of_trans;
 
         // console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
 
@@ -1275,6 +1450,17 @@ export class EditTransactionNewComponent implements OnInit {
 
           // 'PE_FileAttachment': response.transaction_details[0].trans_attachment_filename,
         });
+
+        for (let i = 1; i <= 3; i++) {
+          const filenameKey = `trans_attachment_filename${i}`;
+          const nameKey = `trans_attachment_name${i}`;
+          if (response.data[filenameKey]) {
+            this.myFiles.push({
+              name: response.data[nameKey],
+              url: response.data[filenameKey],
+            });
+          }
+        }
 
         if (response.trans_file == null) {
           this.getFileAttachmentResult = [];
@@ -1553,7 +1739,10 @@ export class EditTransactionNewComponent implements OnInit {
     this.add_billerNameID = event.target.value;
     // this.addLoad();
     this.getPurchaseDetails();
+
+    this.getPaymentInvoice(this.billerID);
   }
+
   getPurchaseDetails() {
     this.spinner.show();
 
@@ -1585,7 +1774,7 @@ export class EditTransactionNewComponent implements OnInit {
     });
   }
 
-  saveVendorManagement() {}
+  saveVendorManagement() { }
 
   UpdateTransaction(event: any) {
     // console.log("mouse event", event.pointerType)
@@ -1742,6 +1931,16 @@ export class EditTransactionNewComponent implements OnInit {
         );
       }
 
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
+      }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
+      }
+
       //data.append('pur_attach_mobile', this.addTransaction_section1.value.CB_PE_AttachMobile);
       // for(let i=0;i<this.PE_FileLength;i++){
       //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
@@ -1847,61 +2046,67 @@ export class EditTransactionNewComponent implements OnInit {
         );
       }
 
-      // console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
-      // console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
-      if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length != 0) {
-        if (this.getFileAttachmentResult.length > 0) {
-          // alert(this.myFilesUpdate.length)
-          // console.log(this.myFilesUpdate)
-          for (var i = 0; i <= this.fileIterationVariable - 1; i++) {
-            if (
-              this.myFilesUpdate[i] != undefined &&
-              this.myFilesUpdate[i] != null
-            ) {
-              // console.log(this.myFilesUpdate[i])
-              data.append('trans_file[]', this.myFilesUpdate[i]);
-            }
-            if (
-              this.getFileAttachmentResult[i] != '' &&
-              this.getFileAttachmentResult[i] != undefined &&
-              this.getFileAttachmentResult[i] != 'undefined' &&
-              this.getFileAttachmentResult[i] != 'null' &&
-              this.getFileAttachmentResult[i] != null
-            ) {
-              data.append(
-                'trans_file[]',
-                this.getFileAttachmentResult[i].file_name
-              );
-            }
-          }
-        } else {
-          if (this.getFileAttachmentResult.length > 0) {
-            for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
-              data.append(
-                'trans_file[]',
-                this.getFileAttachmentResult[i].file_name
-              );
-            }
-          } else {
-            for (var i = 0; i < this.myFilesUpdate.length; i++) {
-              data.append('trans_file[]', this.myFilesUpdate[i]);
-            }
-          }
-        }
-      } else {
-        if (this.getFileAttachmentResult.length > 0) {
-          for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
-            data.append(
-              'trans_file[]',
-              this.getFileAttachmentResult[i].file_name
-            );
-          }
-        } else {
-          for (var i = 0; i < this.myFilesUpdate.length; i++) {
-            data.append('trans_file[]', this.myFilesUpdate[i]);
-          }
-        }
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
       }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
+      }
+
+      // if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length != 0) {
+      //   if (this.getFileAttachmentResult.length > 0) {
+      //     for (var i = 0; i <= this.fileIterationVariable - 1; i++) {
+      //       if (
+      //         this.myFilesUpdate[i] != undefined &&
+      //         this.myFilesUpdate[i] != null
+      //       ) {
+      //         // console.log(this.myFilesUpdate[i])
+      //         data.append('trans_file[]', this.myFilesUpdate[i]);
+      //       }
+      //       if (
+      //         this.getFileAttachmentResult[i] != '' &&
+      //         this.getFileAttachmentResult[i] != undefined &&
+      //         this.getFileAttachmentResult[i] != 'undefined' &&
+      //         this.getFileAttachmentResult[i] != 'null' &&
+      //         this.getFileAttachmentResult[i] != null
+      //       ) {
+      //         data.append(
+      //           'trans_file[]',
+      //           this.getFileAttachmentResult[i].file_name
+      //         );
+      //       }
+      //     }
+      //   } else {
+      //     if (this.getFileAttachmentResult.length > 0) {
+      //       for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+      //         data.append(
+      //           'trans_file[]',
+      //           this.getFileAttachmentResult[i].file_name
+      //         );
+      //       }
+      //     } else {
+      //       for (var i = 0; i < this.myFilesUpdate.length; i++) {
+      //         data.append('trans_file[]', this.myFilesUpdate[i]);
+      //       }
+      //     }
+      //   }
+      // } else {
+      //   if (this.getFileAttachmentResult.length > 0) {
+      //     for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+      //       data.append(
+      //         'trans_file[]',
+      //         this.getFileAttachmentResult[i].file_name
+      //       );
+      //     }
+      //   } else {
+      //     for (var i = 0; i < this.myFilesUpdate.length; i++) {
+      //       data.append('trans_file[]', this.myFilesUpdate[i]);
+      //     }
+      //   }
+      // }
     }
 
     // LOgistics
@@ -1926,10 +2131,24 @@ export class EditTransactionNewComponent implements OnInit {
         'logistics_amount',
         this.addTransaction_section1.value.Log_Amount
       );
-      if (this.myFiles.length < 4) {
-        for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('attachment_filename_1', this.myFiles[i]);
-        }
+      // if (this.myFiles.length < 4) {
+      //   for (var i = 0; i < this.myFiles.length; i++) {
+      //     data.append('attachment_filename_1', this.myFiles[i]);
+      //   }
+      // }
+
+      // for (let i = 0; i <=this.myFiles.length; i++) {
+      //   data.append(`trans_attachment_filename${i+1}`, this.myFiles[i].file ?this.myFiles[i].file : '');
+      // }
+
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
+      }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
       }
     }
 
@@ -1939,14 +2158,46 @@ export class EditTransactionNewComponent implements OnInit {
       this.spinner.show();
       this.updateVariable = 'vendor_update';
       data.append('transaction_approval_id_hd', this.TransactionApprovalID);
-      data.append(
-        'other_description',
-        this.addTransaction_section1.value.VendorOrder_Description
-      );
-      if (this.myFiles.length < 4) {
-        for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('attachment_filename_1', this.myFiles[i]);
-        }
+      let description =
+        this.addTransaction_section1.value.VendorOrder_Description;
+
+      if (
+        description === '' ||
+        description === null ||
+        description === undefined ||
+        description === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Enter Description `,
+          position: 'topRight',
+        });
+
+        this.spinner.hide();
+        return false;
+      } else {
+        data.append(
+          'other_description',
+          this.addTransaction_section1.value.VendorOrder_Description
+        );
+      }
+      // data.append(
+      //   'other_description',
+      //   this.addTransaction_section1.value.VendorOrder_Description
+      // );
+      // if (this.myFiles.length < 4) {
+      //   for (var i = 0; i < this.myFiles.length; i++) {
+      //     data.append('attachment_filename_1', this.myFiles[i]);
+      //   }
+      // }
+
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
+      }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
       }
     }
 
@@ -1955,6 +2206,81 @@ export class EditTransactionNewComponent implements OnInit {
     if (this.edit_TransactionTpeID == 7) {
       this.spinner.show();
       this.updateVariable = 'invoicepayment_update';
+
+      let invoice_no =
+        this.addTransaction_section1.value.InvPayment_InvoiceNumber;
+      let amount = this.addTransaction_section1.value.InvPayment_Amount;
+      let date = this.addTransaction_section1.value.InvPayment_date;
+      let payment_type =
+        this.addTransaction_section1.value.InvPayment_PaymentMethod;
+      let note = this.addTransaction_section1.value.InvPayment_Notes;
+
+      if (
+        invoice_no === '' ||
+        invoice_no === null ||
+        invoice_no === undefined ||
+        invoice_no === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Select Invoice No`,
+          position: 'topRight',
+        });
+        this.spinner.hide();
+        return false;
+      }
+      if (
+        amount === '' ||
+        amount === null ||
+        amount === undefined ||
+        amount === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Enter Amount`,
+          position: 'topRight',
+        });
+        this.spinner.hide();
+        return false;
+      }
+      if (
+        date === '' ||
+        date === null ||
+        date === undefined ||
+        date === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Select Date`,
+          position: 'topRight',
+        });
+        this.spinner.hide();
+        return false;
+      }
+      if (
+        payment_type === '' ||
+        payment_type === null ||
+        payment_type === undefined ||
+        payment_type === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Select Payment Type/Method`,
+          position: 'topRight',
+        });
+        this.spinner.hide();
+        return false;
+      }
+      if (
+        note === '' ||
+        note === null ||
+        note === undefined ||
+        note === 'undefined'
+      ) {
+        iziToast.warning({
+          message: `please Enter Note`,
+          position: 'topRight',
+        });
+        this.spinner.hide();
+        return false;
+      }
+
       data.append('transaction_approval_id_hd', this.TransactionApprovalID);
       data.append(
         'invoice_no',
@@ -1983,10 +2309,20 @@ export class EditTransactionNewComponent implements OnInit {
         this.addTransaction_section1.value.InvPayment_Details
       );
       // data.append('file_attachment_name', this.addTransaction_section1.value.InvPayment_FileAttachment);
-      if (this.myFiles.length < 4) {
-        for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('attachment_filename_1', this.myFiles[i]);
-        }
+      // if (this.myFiles.length < 4) {
+      //   for (var i = 0; i < this.myFiles.length; i++) {
+      //     data.append('attachment_filename_1', this.myFiles[i]);
+      //   }
+      // }
+
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
+      }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
       }
     }
 
@@ -2000,10 +2336,22 @@ export class EditTransactionNewComponent implements OnInit {
         'other_description',
         this.addTransaction_section1.value.others_Description
       );
-      if (this.myFiles.length < 4) {
-        for (var i = 0; i < this.myFiles.length; i++) {
-          data.append('attachment_filename_1', this.myFiles[i]);
-        }
+      // if (this.myFiles.length < 4) {
+      //   for (var i = 0; i < this.myFiles.length; i++) {
+      //     data.append('attachment_filename_1', this.myFiles[i]);
+      //   }
+      // }
+
+      // console.log('this.myFiles',this.myFiles);
+
+      if (this.myFiles[0]) {
+        data.append('trans_attachment_filename1', this.myFiles[0].file);
+      }
+      if (this.myFiles[1]) {
+        data.append('trans_attachment_filename2', this.myFiles[1].file);
+      }
+      if (this.myFiles[2]) {
+        data.append('trans_attachment_filename3', this.myFiles[2].file);
       }
     }
 
@@ -2031,93 +2379,94 @@ export class EditTransactionNewComponent implements OnInit {
       );
     }
 
-   
-
-    if(this.edit_TransactionTpeID == 51 || this.edit_TransactionTpeID == 6 || this.edit_TransactionTpeID == 7 || this.edit_TransactionTpeID == 8){
-   
+    if (
+      this.edit_TransactionTpeID == 51 ||
+      this.edit_TransactionTpeID == 6 ||
+      this.edit_TransactionTpeID == 7 ||
+      this.edit_TransactionTpeID == 8
+    ) {
       data.append('action', `edit/${this.updateVariable}`);
       var self = this;
 
-    
-    $.ajax({
-      type: 'POST',
-      url:
-        'https://erp1.cal4care.com/api/edit/' +
-        this.updateVariable +
-        '',
-      // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (result: any) {
-        if (result.status == true) {
-          self.goBackTransaction();
-          // console.log(result);
-          this.spinner.hide();
-          iziToast.success({
-            message: 'Transaction details Updated successfully',
+      $.ajax({
+        type: 'POST',
+        url:
+          this.serverService.urlFinal + '/edit/' + this.updateVariable + '',
+     
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
+        success: function (result: any) {
+          if (result.status == true) {
+            self.goBackTransaction();
+            // console.log(result);
+
+            iziToast.success({
+              message: 'Transaction details Updated successfully',
+              position: 'topRight',
+            });
+            this.spinner.hide();
+          } else {
+            iziToast.warning({
+              message: 'Transaction details not Saved',
+              position: 'topRight',
+            });
+          }
+        },
+        error: function (err: any) {
+          // console.log("err", err)
+          iziToast.error({
+            message: 'Server Side Error',
             position: 'topRight',
           });
-        } else {
-          iziToast.warning({
-            message: 'Transaction details not Saved',
-            position: 'topRight',
-          });
-        }
-      },
-      error: function (err: any) {
-        // console.log("err", err)
-        iziToast.error({
-          message: 'Server Side Error',
-          position: 'topRight',
-        });
-      },
-    });
-  }
+        },
+      });
+    }
 
-
-    if(this.edit_TransactionTpeID == 3 || this.edit_TransactionTpeID == 5|| this.edit_TransactionTpeID == 15){
+    if (
+      this.edit_TransactionTpeID == 3 ||
+      this.edit_TransactionTpeID == 5 ||
+      this.edit_TransactionTpeID == 15
+    ) {
       data.append('action', this.updateVariable);
-    var self = this;
-    $.ajax({
-      type: 'POST',
-      url:
-        'https://erp1.cal4care.com/api/transaction_entry/' +
-        this.updateVariable +
-        '',
-      // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (result: any) {
-        if (result.status == true) {
-          self.goBackTransaction();
-          // console.log(result);
+      var self = this;
+      $.ajax({
+        type: 'POST',
+        url:
+          this.serverService.urlFinal + '/transaction_entry/' +
+          this.updateVariable +
+          '',
+   
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
+        success: function (result: any) {
+          if (result.status == true) {
+            self.goBackTransaction();
+            // console.log(result);
 
-          iziToast.success({
-            message: 'Transaction details Updated successfully',
+            iziToast.success({
+              message: 'Transaction details Updated successfully',
+              position: 'topRight',
+            });
+          } else {
+            iziToast.warning({
+              message: 'Transaction details not Saved',
+              position: 'topRight',
+            });
+          }
+        },
+        error: function (err: any) {
+          // console.log("err", err)
+          iziToast.error({
+            message: 'Server Side Error',
             position: 'topRight',
           });
-        } else {
-          iziToast.warning({
-            message: 'Transaction details not Saved',
-            position: 'topRight',
-          });
-        }
-      },
-      error: function (err: any) {
-        // console.log("err", err)
-        iziToast.error({
-          message: 'Server Side Error',
-          position: 'topRight',
-        });
-      },
-    });
-  }
-
-
+        },
+      });
+    }
   }
   SelectTransactionType_PE() {
     this.Select_Transaction_Type = 'PurchaseEntry';
@@ -2154,5 +2503,5 @@ export class EditTransactionNewComponent implements OnInit {
     this.router.navigate(['/AddTransactionNew']);
     window.location.reload();
   }
-  Logistics() {}
+  Logistics() { }
 }

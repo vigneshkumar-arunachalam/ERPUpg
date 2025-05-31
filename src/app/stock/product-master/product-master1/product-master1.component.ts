@@ -94,7 +94,7 @@ export class ProductMaster1Component implements OnInit {
     });
     this.productCategoryList({});
     this.ProductCategoryNameList();
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/product_master/getProductCode').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal +'product_master/getProductCode').subscribe((data: any) => {
     
         this.getProductCode = data.pcode;
       
@@ -478,7 +478,7 @@ export class ProductMaster1Component implements OnInit {
         var self = this;
         $.ajax({
           type: 'POST',
-          url: 'https://laravelapi.erp1.cal4care.com/api/product_master/updateProductDetails',
+          url: this.serverService.urlFinal +'product_master/updateProductDetails',
           cache: false,
           contentType: false,
           processData: false,
@@ -835,7 +835,7 @@ export class ProductMaster1Component implements OnInit {
           var self = this;
           $.ajax({
             type: 'POST',
-            url: 'https://laravelapi.erp1.cal4care.com/api/product_master/insertProductDetails',
+            url:this.serverService.urlFinal + 'product_master/insertProductDetails',
             cache: false,
             contentType: false,
             processData: false,

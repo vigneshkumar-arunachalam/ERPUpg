@@ -66,7 +66,7 @@
 
     ],
     "isVisible": true,
-    "value": "/ledger--"
+    "value": "/transactionnew"
 }, {
     "name": "Billing",
     "icon": "airplay",
@@ -363,27 +363,6 @@
     ],
     "isVisible": true,
     "value": "/stock1"
-},{
-    "name": "CRM",
-    "icon":"watch",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Enquiry New",
-            "icon": "box",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/enquirynew"
-        }
-       
-
-    ],
-    "isVisible": true,
-    "value": "/crm--"
 }, {
     "name": "Customer Project",
     "icon":"layers",
@@ -404,7 +383,7 @@
 
     ],
     "isVisible": true,
-    "value": "/crm--"
+    "value": "/customerProject"
 },
 {
     "name": "HR",
@@ -641,7 +620,7 @@
             "isVisible": true,
             "value": "/gstreport"
         },{
-            "name": "SST Report-Cal4Care Pte Ltd",
+            "name": "SST Report-Cal4Care SDN BHD",
             "icon": "gift",
             "IDs": [1135],
             "Type": "Sub Menu",

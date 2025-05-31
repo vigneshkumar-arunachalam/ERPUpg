@@ -239,6 +239,7 @@ export class TransactionnewComponent implements OnInit {
     TNapi_req.off_set = list_data.offset;
     TNapi_req.limit_val = list_data.limit;
     TNapi_req.search_txt = this.searchTransactionForm.value.company_Name6;
+    // TNapi_req.search_txt = list_data.search_text;
     // TNapi_req.search_txt='';
     TNapi_req.transaction_type = this.edit_array_SearchBiller_Checkbox;
     TNapi_req.current_page = '';
@@ -517,7 +518,9 @@ export class TransactionnewComponent implements OnInit {
           this.currencyConversionRate = response.purchase_entry.conversionRate;
           this.taxAmount = response.purchase_entry.taxAmount;
           this.invoiceAmount = response.purchase_entry.invoiceAmount;
+          
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
@@ -527,6 +530,7 @@ export class TransactionnewComponent implements OnInit {
           this.PC_Amount = response.petty_cash.amount;
           this.PC_Comments = response.commands;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
@@ -535,23 +539,27 @@ export class TransactionnewComponent implements OnInit {
           this.Log_Type = response.logistics_type;
           this.Log_Amount = response.logistics_amount;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
         } else if (this.transactionTypeNumber == 6) {
           this.Vendor_Description = response.Description;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
         } else if (this.transactionTypeNumber == 7) {
           this.getPaymentInvoice(response.bill, response.invoice_no);
+          this.invoice_no = response.invoice_no;
           this.amount = response.paidAmount;
           this.inv_date = response.processDate;
           this.payment_type = response.paymentMode;
           this.notes = response.notes;
           this.payment_details = response.paymentnote;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
@@ -562,21 +570,23 @@ export class TransactionnewComponent implements OnInit {
           this.category_id = response.category_id;
           this.productId = response.productId;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
         } else if (this.transactionTypeNumber == 56) {
-         
           this.qty = response.quantity;
           this.category_id = response.customerName;
           this.productId = response.productName;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
         } else if (this.transactionTypeNumber == 8) {
           this.others_Description = response.Description;
           this.comments = response.commands;
+          this.comments = this.comments.replace(/<br\s*\/?>/gi, '');
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
@@ -599,8 +609,7 @@ export class TransactionnewComponent implements OnInit {
 
           $('#TransactionManagementViewId123').modal('show');
           this.spinner.hide();
-        }
-        else{
+        } else {
           this.spinner.hide();
           iziToast.warning({
             message: response.message,

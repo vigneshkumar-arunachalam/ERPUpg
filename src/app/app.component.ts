@@ -171,7 +171,10 @@ export class AppComponent {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status === true) {
         const today = new Date().toISOString().split('T')[0]; 
-        const greetingDates = response.dates;
+        if(response.dates){
+ const greetingDates = response.dates;
+        
+       
         
       //  console.log(response);
         if (greetingDates.includes(today)) {
@@ -189,6 +192,8 @@ export class AppComponent {
         } else {
          // console.log('Today is not a greeting date.');
         }
+}
+
       } else {
       //  console.warn('No greetings found or an error occurred.');
        

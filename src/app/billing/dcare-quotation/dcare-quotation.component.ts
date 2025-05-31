@@ -2023,8 +2023,8 @@ export class DcareQuotationComponent implements OnInit {
 
   PIPDF(pi_convert_status: any, i: any) {
     $("#ActionId" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + pi_convert_status + "";
-    //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+    var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + pi_convert_status + "";
+   
     window.open(url, '_blank');
   //  console.log("url", url)
     $('#PIPDFId').modal('hide');
@@ -2127,8 +2127,8 @@ export class DcareQuotationComponent implements OnInit {
   }
   pdf(quotationId: any, i: any) {
     $("#ActionId" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
-    //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+    var url =this.serverService.urlFinal + "quotation/show_quotation_pdf?id=" + quotationId + "";
+ 
     window.open(url, '_blank');
    // console.log("url", url)
     $('#pdfFormId').modal('hide');

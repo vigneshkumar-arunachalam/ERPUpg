@@ -159,7 +159,7 @@ export class ProfiledetailsComponent implements OnInit {
     formData.append('action', 'update_profile_details');
     $.ajax({
       type: 'POST',
-      url: 'https://laravelapi.erp1.cal4care.com/api/common/update_profile_details',
+      url:this.serverService.urlFinal + 'common/update_profile_details',
       cache: false,
       contentType: false,
       processData: false,
@@ -221,7 +221,7 @@ export class ProfiledetailsComponent implements OnInit {
       // });
       $.ajax({
         type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/common/update_profile_details',
+        url: this.serverService.urlFinal +'common/update_profile_details',
         cache: false,
         contentType: false,
         processData: false,

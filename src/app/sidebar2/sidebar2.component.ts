@@ -39,13 +39,17 @@ export class Sidebar2Component implements OnInit {
   get_permission(){
 
     // console.log("this.roles",this.roles)
-    var k = this.roles.split(',');
-    for(var i=0; i<=k.length;i++)
-    {
-      if(k[i]==1148){
-        this.GlobalSearchPermission = k[i];
-      }
-    }
+     if(this.roles){
+      var k = this.roles.split(',');
+      for(var i=0; i<=k.length;i++)
+        {
+          if(k[i]==1148){
+            this.GlobalSearchPermission = k[i];
+          }
+        }
+     }
+   
+   
  //   console.log(this.GlobalSearchPermission);
   }
   handleSelectedMenu(id: number) {

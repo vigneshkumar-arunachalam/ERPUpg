@@ -471,6 +471,9 @@ label.col-lg-2.col-form-label{text-align: right;}
 #LicenseDetailsFormId_inv .modal-dialog{
   max-width: 95%;
 }
+#RecurringFormId_inv .modal-dialog{
+  max-width: 95%;
+}
 #searchInvoiceFormId .modal-dialog{
   max-width: 95%;
 }

@@ -200,18 +200,18 @@ export class EditDidInvoiceComponent implements OnInit {
   edit_flag: boolean;
   duplicate_flag: boolean;
   userID_Edit: any;
- 
-  fixedCharge_Flag: boolean=true;
-  usageCharge_Flag: boolean=true;
-  otherCharge_Flag: boolean=true;
+
+  fixedCharge_Flag: boolean = true;
+  usageCharge_Flag: boolean = true;
+  otherCharge_Flag: boolean = true;
   editCurrencyValue: any;
   editpaymentVIAValue: any;
   searchFlag: any;
   upd_flagName: any;
   upd_search_name: any;
-    //validation
-    submitted = true;
-    sstCheckbox: boolean=false;
+  //validation
+  submitted = true;
+  sstCheckbox: boolean = false;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -256,15 +256,15 @@ export class EditDidInvoiceComponent implements OnInit {
         this.edit_Duplicate_ID = params['e_editDuplicateID'];
         this.editDIDStateID = params['e_editDIDState'];
         this.searchFlag = params['e_searchFlag'];
-       
+
 
         console.log("edit biller id", this.editbillerID);
         console.log("edit Duplicate id", this.edit_Duplicate_ID);
         console.log("edit DID state id", this.editDIDStateID);
         console.log("edit searchFlag id", this.searchFlag);
-        if(this.editbillerID==undefined){
-          this.edit_flag=false;
-          this.duplicate_flag=true;
+        if (this.editbillerID == undefined) {
+          this.edit_flag = false;
+          this.duplicate_flag = true;
           console.log("if part");
           console.log("this.edit_flag", this.edit_flag);
           console.log("this.duplicate_flag", this.duplicate_flag);
@@ -277,18 +277,18 @@ export class EditDidInvoiceComponent implements OnInit {
           console.log("this.duplicate_flag", this.duplicate_flag);
           // making edit
         }
-       
+
         this.EditShippingAddress = true;
 
       }
       );
-  this.addDidLoad();
-     this.editDidInvice();
-  
+    this.addDidLoad();
+    this.editDidInvice();
+
     // setTimeout(() => {
-    
+
     //       this.editDidInvice();
-          
+
     //     }, 2000)
 
     // this.addDidLoad();
@@ -448,7 +448,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
     // $('#sub_total_2').val(this.sub2Total_edit);
-  
+
 
 
 
@@ -501,7 +501,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
     var pd_billchild_id = $('#billChildid1' + i).val();
-   // alert("pd_billchild_id")
+    // alert("pd_billchild_id")
 
 
     Swal.fire({
@@ -784,9 +784,9 @@ export class EditDidInvoiceComponent implements OnInit {
     this.Jompay_Value = event.target.checked;
     console.log(this.Jompay_Value);
   }
-  handleChange_SSTax(event:any){
-    this.sstCheckbox=event.target.checked;
-    console.log("this.sstCheckbox",this.sstCheckbox);
+  handleChange_SSTax(event: any) {
+    this.sstCheckbox = event.target.checked;
+    console.log("this.sstCheckbox", this.sstCheckbox);
 
   }
   handleChange(evt: any) {
@@ -902,12 +902,12 @@ export class EditDidInvoiceComponent implements OnInit {
   }
 
   getCustomerInvoiceDetails(event: any) {
-    if(event && event.target ){
+    if (event && event.target) {
       this.billerID = event.target.value;
       this.BillerID_CompanyName = event.target.value;
       console.log("billerID check", this.billerID);
     }
-   
+
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -928,15 +928,15 @@ export class EditDidInvoiceComponent implements OnInit {
         this.addDid_section1.patchValue({
           // 'companyName':  this.billerID,
           'invoiceNo': response.invoice_no,
-        //  'Currency': response.currency_id,
+          //  'Currency': response.currency_id,
 
 
         });
 
-      $('#curren_editdid').val(response.currency_id);
-      $('#Payment_editdid').val(response.def_payment_via);
-      $('#ccr_editdid').val(response.conversionRate.currency_live_val);
-    
+        $('#curren_editdid').val(response.currency_id);
+        $('#Payment_editdid').val(response.def_payment_via);
+        $('#ccr_editdid').val(response.conversionRate.currency_live_val);
+
       }
       else {
         this.addDid_section1.patchValue({
@@ -968,10 +968,10 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
       if (response != '') {
-        if(response.biller_details.length==0){
+        if (response.biller_details.length == 0) {
 
         }
-        else if(response.biller_details.length>0){
+        else if (response.biller_details.length > 0) {
           this.getProformaBillerDetails_tinName = response.biller_details[0].tinName;
           this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
           this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
@@ -982,12 +982,12 @@ export class EditDidInvoiceComponent implements OnInit {
             'cst': response.biller_details[0].cstNo,
             // 'Currency': response.def_currency_id,
             // 'PaymentVia': response.def_paymentvia_id,
-  
+
           });
           // $('#curren_editdidpi').val(response.def_currency_id);
           // $('#Payment_editdidpi').val(response.def_paymentvia_id);
-          
-          
+
+
 
         }
 
@@ -1038,7 +1038,7 @@ export class EditDidInvoiceComponent implements OnInit {
         $('#ccr_editdid').val(response.currency_live_val);
         // this.addDid_section1.patchValue({
         //   'CurrencyConversionRate': response.currency_live_val,
-          
+
         // });
         this.spinner.hide();
       }
@@ -1091,7 +1091,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
         //   this.companyNameVal = response.defaults_biller_id;
         this.tax_per_mod = response.percent_val;
-      
+
         this.TaxDropdown();
         // this.getCustomerInvoiceDetails()
         this.getCustomerInvoiceDetails(response.defaults_biller_id);
@@ -1160,18 +1160,18 @@ export class EditDidInvoiceComponent implements OnInit {
     // api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
     // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
-    
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-         this.TaxDropdownList = response.tax_list;
+        this.TaxDropdownList = response.tax_list;
         // setTimeout(() => {
         //   this.addDid_section3.patchValue({
         //     'section3_gst_dropdown': response.default_tax_id,
         //   });
 
         // }, 500);
-         $('#billerID').val(response.default_tax_id)
+        $('#billerID').val(response.default_tax_id)
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id', response.default_tax_id);
 
@@ -1183,7 +1183,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
     });
   }
-  TaxDropdown1(c:any) {
+  TaxDropdown1(c: any) {
 
     let api_req: any = new Object();
     let api_TaxDropdown_req: any = new Object();
@@ -1197,18 +1197,18 @@ export class EditDidInvoiceComponent implements OnInit {
     // api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
     // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
-    
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-         this.TaxDropdownList = response.tax_list;
+        this.TaxDropdownList = response.tax_list;
         // setTimeout(() => {
         //   this.addDid_section3.patchValue({
         //     'section3_gst_dropdown': response.default_tax_id,
         //   });
 
         // }, 500);
-         $('#billerID').val(response.default_tax_id)
+        $('#billerID').val(response.default_tax_id)
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id', response.default_tax_id);
 
@@ -1377,76 +1377,80 @@ export class EditDidInvoiceComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-     // console.log("customer_address_details---response", response)
+      // console.log("customer_address_details---response", response)
       if (response.status == true) {
         this.spinner.hide();
+        if (response.customer_details[0]) {
+          var address_3;
+          var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
 
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
+          if (response.customer_details[0].city != '') {
+            address_3 = response.customer_details[0].city;
+          }
+          if (address_3 != '' && response.customer_details[0].state != '') {
+            address_3 = address_3 + ' ,' + response.customer_details[0].state;
+          } else {
+            address_3 = response.customer_details[0].state;
+          }
+          if (address_3 != '' && response.customer_details[0].country != '') {
+            address_3 = address_3 + ' ,' + response.customer_details[0].country;
+          } else {
+            address_3 = response.customer_details[0].country;
+          }
 
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
+
+
+
+          if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
+
+            ship_to_str = response.customer_details[0].customerName;
+
+          } else {
+            ship_to_str = response.customer_details[0].ship_to;
+          }
+
+          if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
+            ship_address_str1 = response.customer_details[0].customerAddress1;
+          } else {
+            ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+
+          }
+
+          if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
+            ship_address_str2 = response.customer_details[0].customerAddress2;
+          } else {
+            ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+          }
+
+
+          if (response.customer_details[0].ship_city != '') {
+            ship_address_str3 = response.customer_details[0].city;
+          }
+          if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
+            ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+          } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+            ship_address_str3 = ship_address_str3;
+          } else {
+            ship_address_str3 = response.customer_details[0].ship_state;
+          }
+          if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
+            ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+          } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+            ship_address_str3 = ship_address_str3;
+          } else {
+            ship_address_str3 = response.customer_details[0].ship_country;
+          }
+
+          if (response.customer_details[0].ship_to == '') {
+            ship_address_str1 = response.customer_details[0].customerAddress1;
+            ship_address_str2 = response.customer_details[0].customerAddress2;
+            ship_address_str3 = address_3;
+          }
+
+
         }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
-        } else {
-          address_3 = response.customer_details[0].state;
-        }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
 
-
-
-
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
-
-          ship_to_str = response.customer_details[0].customerName;
-
-        } else {
-          ship_to_str = response.customer_details[0].ship_to;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-        } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
-
-        if (response.customer_details[0].ship_to == '') {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-          ship_address_str3 = address_3;
-        }
 
 
 
@@ -1459,7 +1463,7 @@ export class EditDidInvoiceComponent implements OnInit {
           'address_2': response.customer_details.customerAddress2,
           'address_3': response.customer_details.customerAddress3,
           'Attn_1': response.customer_details.kind_Attention,
-          'ship_to':  response.customer_details.ship_to,
+          'ship_to': response.customer_details.ship_to,
           'shipTo_1': response.customer_details.ship_customerAddress1,
           'shipTo_2': response.customer_details.ship_customerAddress2,
           'shipTo_3': response.customer_details.ship_customerAddress3,
@@ -1508,23 +1512,23 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
       if (response.status == true) {
-      
-    
+
+
         this.addDid_section1.patchValue({
           "customer_id_hd": response.customer_details.customerId,
           "b_name": response.customer_details.customerName,
           "customer_name": response.customer_details.customerName,
 
           'address_1': response.customer_details.customerAddress1,
-        'address_2': response.customer_details.customerAddress2,
-        'address_3': response.customer_details.customerAddress3,
-        'Attn_1': response.customer_details.kind_Attention,
-        'ship_to':  response.customer_details.ship_to,
-        'shipTo_1': response.customer_details.ship_customerAddress1,
-        'shipTo_2': response.customer_details.ship_customerAddress2,
-        'shipTo_3': response.customer_details.ship_customerAddress3,
-        'ship_attn': response.customer_details.ship_attn,
-        'cusInvoiceNo': response.customer_invoice_no,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to': response.customer_details.ship_to,
+          'shipTo_1': response.customer_details.ship_customerAddress1,
+          'shipTo_2': response.customer_details.ship_customerAddress2,
+          'shipTo_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+          'cusInvoiceNo': response.customer_invoice_no,
         });
 
         this.spinner.hide();
@@ -1551,7 +1555,7 @@ export class EditDidInvoiceComponent implements OnInit {
     let api_req: any = new Object();
     let api_data_req: any = new Object();
     // this.taxIDGET=this.addDid_section3.value.section3_gst_dropdown;
-    this.taxIDGET=$('#billerIDs_editdid').val();;
+    this.taxIDGET = $('#billerIDs_editdid').val();;
 
 
     api_req.moduleType = "quotation";
@@ -1570,8 +1574,8 @@ export class EditDidInvoiceComponent implements OnInit {
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
         $('#Tax_amt_id').val(tax);
-        var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+        var s = $('#Tax_amt_id').val();
+        console.log("s value", s);
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
@@ -1582,12 +1586,12 @@ export class EditDidInvoiceComponent implements OnInit {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total_afterDiscount').val()) / 100).toFixed(2);
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax);
-        var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+        var s = $('#Tax_amt_id').val();
+        console.log("s value", s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
-       $('#section3_grand_total').val(taxadd.toFixed(2));
+        $('#section3_grand_total').val(taxadd.toFixed(2));
       }
 
 
@@ -1629,9 +1633,9 @@ export class EditDidInvoiceComponent implements OnInit {
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (response.percent_val) * $('#section3_gross_total').val() / 100;
         $('#Tax_amt_id').val(tax.toFixed(2));
-        var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
-       
+        var s = $('#Tax_amt_id').val();
+        console.log("s value", s);
+
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
@@ -1643,8 +1647,8 @@ export class EditDidInvoiceComponent implements OnInit {
 
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax.toFixed(2));
-        var s=$('#Tax_amt_id').val();
-        console.log("s value",s);
+        var s = $('#Tax_amt_id').val();
+        console.log("s value", s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1667,12 +1671,12 @@ export class EditDidInvoiceComponent implements OnInit {
 
     this.taxValue = (8 * Number($('#section3_gross_total').val()) / 100).toFixed(2);
     var tax_id = $('#billerIDs_editdid').val();
-   // var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+    // var tax_id = this.addDid_section3.value.section3_gst_dropdown;
 
-    console.log("tax_id",tax_id)
-    var grossTotal_aftDis=$('#section3_gross_total_afterDiscount').val();
-    var taxValue1 = (tax_id/100)*grossTotal_aftDis;
-    console.log("taxValue1",taxValue1)
+    console.log("tax_id", tax_id)
+    var grossTotal_aftDis = $('#section3_gross_total_afterDiscount').val();
+    var taxValue1 = (tax_id / 100) * grossTotal_aftDis;
+    console.log("taxValue1", taxValue1)
 
 
 
@@ -1715,72 +1719,78 @@ export class EditDidInvoiceComponent implements OnInit {
       this.spinner.hide();
       console.log("response-load-pi", response)
       if (response != '') {
-        console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
-        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
-        this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
-        $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
-        this.exportState_value = response.billing_pararent_details[0].export_state;
 
-        this.customer_ID = response.billing_pararent_details[0].custId;
-        // this.section1_billcode = response.billing_pararent_details[0].did_bill_code
-        this.Jompay_Value = response.billing_pararent_details[0].jom_pay_logo;
-        this.export_state = response.billing_pararent_details[0].export_state;
-        this.TaxValuEDIt = response.billing_pararent_details[0].taxId;
-        // this.did_bill_codexx= response.bill_code_arr[0].customer_bill_code_id;
-        // this.sub2Total_edit= response.billusagechild_discount[0].usage_subtotal;
         this.usage_Overall_edit = response.bill_usage_details;
         this.did_bill_code_section15 = response.customer_billcode_arr;
-        console.log(this.did_bill_code_section15);
-        this.BillerID_CompanyName = response.billing_pararent_details[0].billerId;
-        this.TaxDropdown1(response.billing_pararent_details[0].billerId);
-        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
-       // alert(response.billing_pararent_details[0].did_bill_code)
-        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
-        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
-        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
+        if (response.billing_pararent_details[0]) {
+          this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+          this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
 
-        this.addDid_section1.patchValue({
-          'billId_edit': response.billing_pararent_details[0].billId,
-          'companyName': response.billing_pararent_details[0].billerId,
-          'BillTo': response.billing_pararent_details[0].b_name,
-          'customer_name': response.billing_pararent_details[0].b_name,
-          'customer_id_hd': response.billing_pararent_details[0].custId,
-          'address_1': response.billing_pararent_details[0].b_address,
-          'address_2': response.billing_pararent_details[0].b_address2,
-          'address_3': response.billing_pararent_details[0].b_address3,
-          'Attn_1': response.billing_pararent_details[0].b_attn,
-          'ship_address_1': response.billing_pararent_details[0].s_address1,
-          'ship_address_2': response.billing_pararent_details[0].s_address2,
-          'shpi_address_3': response.billing_pararent_details[0].s_address3,
-          'Attn_2': response.billing_pararent_details[0].s_attn,
-          'Ref': response.billing_pararent_details[0].ref,
-          'invoiceNo': response.billing_pararent_details[0].invoice_no,
-          'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
-          'tin': response.billing_pararent_details[0].tinNo,
-          'cst': response.billing_pararent_details[0].cstNo,
-          'Date': response.billing_pararent_details[0].billDate,
-          'PoNo_edit': response.billing_pararent_details[0].po_no,
-          'PoDate': response.billing_pararent_details[0].po_date,
-          'salesRep': response.billing_pararent_details[0].sales_rep,
-          'ShipBy': response.billing_pararent_details[0].ship_by,
-          // 'billCodev': response.bill_code_arr[0].customer_bill_code_id,
-          'ShipDate': response.billing_pararent_details[0].ship_date,
-          'terms': response.billing_pararent_details[0].terms,
-         // 'Currency': response.billing_pararent_details[0].currency,
-        //  'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-         // 'PaymentVia': response.billing_pararent_details[0].paymentVIA,
-          'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
-          'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
-          'sst_Cbk': response.billing_pararent_details[0].sst_tax,
+          this.exportState_value = response.billing_pararent_details[0].export_state;
 
-        });
-        this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy;
-        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
-        // $("#attn1").val(response.billing_pararent_details[0].b_attn);
-        console.log('billchild_details.length', response.billing_pararent_details.length);
-        this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
-        this.editCurrencyValue=response.billing_pararent_details[0].currency;
-        this.editpaymentVIAValue=response.billing_pararent_details[0].paymentVIA;
+          this.customer_ID = response.billing_pararent_details[0].custId;
+
+          this.Jompay_Value = response.billing_pararent_details[0].jom_pay_logo;
+          this.export_state = response.billing_pararent_details[0].export_state;
+          this.TaxValuEDIt = response.billing_pararent_details[0].taxId;
+
+
+
+          this.BillerID_CompanyName = response.billing_pararent_details[0].billerId;
+          this.TaxDropdown1(response.billing_pararent_details[0].billerId);
+          this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
+
+          $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
+          $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
+          $('#sub_total_3').val(response.other_subtotal.toFixed(2));
+
+        }
+
+        if (response.billing_pararent_details[0]) {
+          this.addDid_section1.patchValue({
+            'billId_edit': response.billing_pararent_details[0].billId,
+            'companyName': response.billing_pararent_details[0].billerId,
+            'BillTo': response.billing_pararent_details[0].b_name,
+            'customer_name': response.billing_pararent_details[0].b_name,
+            'customer_id_hd': response.billing_pararent_details[0].custId,
+            'address_1': response.billing_pararent_details[0].b_address,
+            'address_2': response.billing_pararent_details[0].b_address2,
+            'address_3': response.billing_pararent_details[0].b_address3,
+            'Attn_1': response.billing_pararent_details[0].b_attn,
+            'ship_address_1': response.billing_pararent_details[0].s_address1,
+            'ship_address_2': response.billing_pararent_details[0].s_address2,
+            'shpi_address_3': response.billing_pararent_details[0].s_address3,
+            'Attn_2': response.billing_pararent_details[0].s_attn,
+            'Ref': response.billing_pararent_details[0].ref,
+            'invoiceNo': response.billing_pararent_details[0].invoice_no,
+            'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
+            'tin': response.billing_pararent_details[0].tinNo,
+            'cst': response.billing_pararent_details[0].cstNo,
+            'Date': response.billing_pararent_details[0].billDate,
+            'PoNo_edit': response.billing_pararent_details[0].po_no,
+            'PoDate': response.billing_pararent_details[0].po_date,
+            'salesRep': response.billing_pararent_details[0].sales_rep,
+            'ShipBy': response.billing_pararent_details[0].ship_by,
+
+            'ShipDate': response.billing_pararent_details[0].ship_date,
+            'terms': response.billing_pararent_details[0].terms,
+
+            'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
+            'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
+            'sst_Cbk': response.billing_pararent_details[0].sst_tax,
+
+          });
+          this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy;
+          this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
+
+
+          this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+          this.editCurrencyValue = response.billing_pararent_details[0].currency;
+          this.editpaymentVIAValue = response.billing_pararent_details[0].paymentVIA;
+
+        }
+
+
 
         // section-2
 
@@ -1836,7 +1846,7 @@ export class EditDidInvoiceComponent implements OnInit {
         if (response.bill_usage_details.length == 0) {
           $('#sub_total_2').val(0);
           console.log("response.bill_usage_details.length", response.bill_usage_details.length)
-         // this.usageCharges();
+          // this.usageCharges();
 
         } else {
           for (let index = 0; index < response.bill_usage_details.length; index++) {
@@ -1919,40 +1929,39 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
         // section-3
-        this.addDid_section3.patchValue({
-          //row-1
+        if (response.billing_pararent_details[0]) {
+          this.addDid_section3.patchValue({
 
-          // 'section3_gross_total': response.billing_pararent_details[0].grossAmount,
+            'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
+            'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
 
-          //row-3
-          // 'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
-          'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
-          'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
+            //row-4
+            'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
+            'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
+            'section3_bankingCharge_amt_txtbox': response.billing_pararent_details[0].add_amt,
+            'section3_bankingCharge_amt_name_txtbox': response.billing_pararent_details[0].add_name,
+            //row-5
+            'section3_grand_total': response.billing_pararent_details[0].netPayment,
+            //row-7
+            'section3_remarks': response.billing_pararent_details[0].remarks,
+            'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
 
-          //row-4
-          'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
-          'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
-          'section3_bankingCharge_amt_txtbox': response.billing_pararent_details[0].add_amt,
-          'section3_bankingCharge_amt_name_txtbox': response.billing_pararent_details[0].add_name,
-          //row-5
-          'section3_grand_total': response.billing_pararent_details[0].netPayment,
-          //row-7
-          'section3_remarks': response.billing_pararent_details[0].remarks,
-          'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
+            //row-8
+            'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
+            'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
+            'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
+            'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
+            'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
+            'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
+            //row-9
+            'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+            //row-10
+            'section3_logo': response.billing_pararent_details[0].print_logo,
+            'section3_select_additional_signature': response.quot_signature_show_state,
+          });
 
-          //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
-          'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
-          'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
-          'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
-          'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
-          'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
-          //row-9
-          'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
-          //row-10
-          'section3_logo': response.billing_pararent_details[0].print_logo,
-          'section3_select_additional_signature': response.quot_signature_show_state,
-        });
+        }
+
         if (response.billing_pararent_details[0].terms_condition_optional == 1) {
           this.chkTermsandcondition = true;
         } else {
@@ -1961,28 +1970,28 @@ export class EditDidInvoiceComponent implements OnInit {
 
         if (response.bill_fixed_details.length == 0) {
           console.log("bill_fixed_details-empty");
-        } else if(response.bill_fixed_details.length > 0) {
+        } else if (response.bill_fixed_details.length > 0) {
           this.FixedDiscountForm.patchValue({
             'FixedDiscountForm_Percentage': response.billfixedchild_discount[0].dis_per,
             'FixedDiscountForm_Direct': response.billfixedchild_discount[0].dis_amt,
             'fix_DiscountTYpe': response.billfixedchild_discount[0].dis_type,
           });
         }
-       
-        if(response.bill_usage_details.length ==0){
+
+        if (response.bill_usage_details.length == 0) {
           console.log("billusagechild_discount-empty");
-        }else if(response.bill_usage_details.length>0){
+        } else if (response.bill_usage_details.length > 0) {
           this.UsageDiscountForm.patchValue({
             'UsageDiscountForm_Percentage': response.billusagechild_discount[0].dis_per,
             'UsageDiscountForm_Direct': response.billusagechild_discount[0].dis_amt,
             'use_DiscountTYpe': response.billusagechild_discount[0].dis_type,
           });
         }
-       
+
 
         if (response.bill_other_details.length == 0) {
           console.log("billotherchild_discount-empty");
-        } else if(response.bill_other_details.length > 0) {
+        } else if (response.bill_other_details.length > 0) {
           this.OtherDiscountForm.patchValue({
             'OtherDiscountForm_Percentage': response.billotherchild_discount[0].dis_per,
             'OtherDiscountForm_Direct': response.billotherchild_discount[0].dis_amt,
@@ -2004,40 +2013,46 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
       }
+
+
+
+
+
+
       this.getProformaBillerDetails();
       $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
       $("#finalDiscount_amt").val(response.billing_pararent_details[0].discountAmount);
       $("#section3_gross_total_afterDiscount").val(response.billing_pararent_details[0].grossAfterDiscount);
-     
+
       $("#curren_editdid").val(response.billing_pararent_details[0].currency);
       $("#ccr_editdid").val(response.billing_pararent_details[0].conversionRate);
       $('#Payment_editdid').val(response.billing_pararent_details[0].paymentVIA);
       $("#Tax_amt_id").val(response.billing_pararent_details[0].taxAmt);
       setTimeout(() => {
-    
+
         $("#billerIDs_did").val(response.billing_pararent_details[0].taxId);
         $("#curren_editdid").val(response.billing_pararent_details[0].currency);
         $("#ccr_editdid").val(response.billing_pararent_details[0].conversionRate);
         $('#Payment_editdid').val(response.billing_pararent_details[0].paymentVIA);
-       
-          
-        }, 2000)
 
-    
-     // this.getProformaBillerDetails();
-     // this.finalSaveDiscount();
-    //  this.grossTotalAfterDiscount();
-     // 
-    //  this.quotationAddSignature();
-   //   this.gross_total();
-    //  this.getTaxCals();
+
+      }, 2000)
+
+
+      // this.getProformaBillerDetails();
+      // this.finalSaveDiscount();
+      //  this.grossTotalAfterDiscount();
       // 
-  //    this.fixedSaveDiscount();
+      //  this.quotationAddSignature();
+      //   this.gross_total();
+      //  this.getTaxCals();
+      // 
+      //    this.fixedSaveDiscount();
 
-    //  this.otherSaveDiscount();
+      //  this.otherSaveDiscount();
       // this.totalCalculate_1();
-     // this.totalCalculate_2();
-     // this.usageSaveDiscount();
+      // this.totalCalculate_2();
+      // this.usageSaveDiscount();
       // this.totalCalculate_3();
     });
 
@@ -2045,7 +2060,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
 
-    
+
     // $('#sub_total_2').val(this.sub2Total_edit);
 
     this.spinner.hide();
@@ -2080,7 +2095,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.tinNo = this.addDid_section1.value.tin;
     api_updateDid_req.BillTo_customer_ID = this.customer_ID;
     api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
-    api_updateDid_req.searchFlag =this.searchFlag;
+    api_updateDid_req.searchFlag = this.searchFlag;
 
     // api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
     api_updateDid_req.b_name = this.addDid_section1.value.customer_name;
@@ -2106,7 +2121,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.terms = this.addDid_section1.value.terms;
     // api_updateDid_req.currency = this.addDid_section1.value.Currency;
     api_updateDid_req.currency = $('#curren_editdid').val();
-    
+
     // api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
     api_updateDid_req.conversionRate = $('#ccr_editdid').val();
     // api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
@@ -2117,7 +2132,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.export_state = this.export_state;
     api_updateDid_req.jom_pay_logo = this.Jompay_Value;
     api_updateDid_req.sst_tax = this.sstCheckbox;
-   
+
 
     if (this.addDid_section1.value.BillTo === null) {
 
@@ -2290,7 +2305,7 @@ export class EditDidInvoiceComponent implements OnInit {
     //section-3
     api_updateDid_req.grossTotal = $('#section3_gross_total').val();
     api_updateDid_req.discountAmount = $('#finalDiscount_amt').val();
-    api_updateDid_req.grossAfterDiscount= $('#section3_gross_total_afterDiscount').val();
+    api_updateDid_req.grossAfterDiscount = $('#section3_gross_total_afterDiscount').val();
     // api_updateDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_updateDid_req.taxId = $('#billerIDs_editdid').val();
     api_updateDid_req.taxAmt = $('#Tax_amt_id').val();
@@ -2343,8 +2358,8 @@ export class EditDidInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
-        this.upd_flagName=response.searchFlag;
-        this.upd_search_name=response.search_name;
+        this.upd_flagName = response.searchFlag;
+        this.upd_search_name = response.search_name;
         iziToast.success({
           title: 'Updated',
           message: 'DID Invoice Updated Successfully !',
@@ -2894,7 +2909,7 @@ export class EditDidInvoiceComponent implements OnInit {
       $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
 
 
-    }else{
+    } else {
 
       $('#section3_gross_total_afterDiscount').val(final_tot);
 

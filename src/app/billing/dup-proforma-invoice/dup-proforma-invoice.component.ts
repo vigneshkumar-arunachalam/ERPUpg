@@ -138,7 +138,7 @@ export class DupProformaInvoiceComponent implements OnInit {
        // console.log(this.Global_search_filter)
 
       }catch (error) {
-      console.error("Error parsing JSON:", error);
+     // console.error("Error parsing JSON:", error);
     }
     $("body").removeClass("modal-open");
      });
@@ -441,7 +441,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   templateContentEmailDropdown(event: any) {
@@ -542,7 +542,7 @@ export class DupProformaInvoiceComponent implements OnInit {
               position: 'topRight'
             });
             this.PIList({});
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })
@@ -603,7 +603,7 @@ export class DupProformaInvoiceComponent implements OnInit {
               position: 'topRight'
             });
             this.PIList({});
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -725,7 +725,7 @@ export class DupProformaInvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
   }
   initTiny() {
@@ -1040,7 +1040,7 @@ export class DupProformaInvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -1091,7 +1091,7 @@ export class DupProformaInvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+   //   console.log("final error", error);
     }
   }
   invoiceShowPermissionUpdate() {
@@ -1129,7 +1129,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
 
@@ -1137,14 +1137,11 @@ export class DupProformaInvoiceComponent implements OnInit {
     $("#ActionIdDupDup" + i).modal("hide");
 
     if (did_invoice_state == 1) {
-      var url = "https://erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
+      var url = this.serverService.urlFinal + "invoice/getDidBillpdf?billId=" + billId + "";
     } else {
-      var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
 
-      //    if (did_invoice_state == 1) {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
-      // } else {
-      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      
 
 
     }
@@ -1214,7 +1211,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   processPaymentUpdate() {
@@ -1284,7 +1281,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
 
       };
   }
@@ -1331,7 +1328,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -1373,7 +1370,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -1424,7 +1421,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -1468,7 +1465,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }

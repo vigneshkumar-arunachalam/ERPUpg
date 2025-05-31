@@ -326,7 +326,7 @@ export class AddInvoiceComponent implements OnInit {
   }
   handleChange_SSTax(event:any){
     this.sstCheckbox=event.target.checked;
-    console.log("this.sstCheckbox",this.sstCheckbox);
+   // console.log("this.sstCheckbox",this.sstCheckbox);
 
   }
 
@@ -415,7 +415,7 @@ export class AddInvoiceComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+        //  console.log("response", response);
 
         });
 
@@ -715,7 +715,7 @@ export class AddInvoiceComponent implements OnInit {
     }
 
     this.grossTotal = gtotel;
-    console.log("this.grossTotal", this.grossTotal)
+  //  console.log("this.grossTotal", this.grossTotal)
     this.grandTotal = gtotel;
     if (this.finalDiscount > 0) {
       this.grandTotal = gtotel - this.finalDiscount;
@@ -865,10 +865,10 @@ export class AddInvoiceComponent implements OnInit {
         } else {
           this.ship_to_str_Final = response.customer_details.ship_to;
         }
-        console.log("shipAddress1",this.shipAddress1_Final)
-        console.log("shipAddress2",this.shipAddress2_Final)
-        console.log("shipAddress3", this.shipAddress3_Final)
-        console.log("ship to",  this.ship_to_str_Final)
+        // console.log("shipAddress1",this.shipAddress1_Final)
+        // console.log("shipAddress2",this.shipAddress2_Final)
+        // console.log("shipAddress3", this.shipAddress3_Final)
+        // console.log("ship to",  this.ship_to_str_Final)
       
         this.addInvoice_section1.patchValue({
           'address_1': response.customer_details.customerAddress1,
@@ -1272,7 +1272,7 @@ export class AddInvoiceComponent implements OnInit {
   getEvent(event: any) {
 
     this.billerIdCurrencyConv = event.target.value;
-    console.log("this.billerIdCurrencyConv",this.billerIdCurrencyConv);
+   // console.log("this.billerIdCurrencyConv",this.billerIdCurrencyConv);
   }
   getCurrencyValues(event: any) {
     // console.log("event.target;", event.target);
@@ -1381,7 +1381,7 @@ export class AddInvoiceComponent implements OnInit {
     }
 
     this.grossTotal = grs_amt.toFixed(2);
-    console.log("this.grossTotal", this.grossTotal);
+   // console.log("this.grossTotal", this.grossTotal);
 
     if (tax_amt_tot > 0) {
       tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal) - parseFloat(this.finalDiscount)) / 100);
@@ -1453,7 +1453,7 @@ export class AddInvoiceComponent implements OnInit {
     }
     this.grossTotal = gtotel.toFixed(2);
 
-    console.log("this.grossTotal", this.grossTotal);
+  //  console.log("this.grossTotal", this.grossTotal);
 
 
 

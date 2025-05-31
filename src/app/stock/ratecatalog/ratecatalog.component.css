@@ -1,0 +1,338 @@
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    padding:8px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-header a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+  }
+  
+  .card-header span {
+    color: #555;
+    margin-left: 5px;
+  }
+  
+  .card-header button {
+    margin-left: 8px;
+    font-size: 14px;
+    padding: 1px 10px;
+    border-radius:30px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    
+  }
+
+  .card-body {
+    min-height: 150px;
+    padding: 15px;
+  }
+  
+  .card-footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+  }
+  
+
+ /*css for accordion*/
+
+/* Ensures the accordion container spans the full width */
+.accordion-container {
+    width: 100%;
+    max-width: 100%;
+    background-color: #20b2aa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Centers the Advanced Search heading */
+.accordion-header {
+    background-color: #20b2aa !important;
+    color: white !important;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Expanding the accordion to full width */
+.accordion {
+    width: 100%;
+}
+
+/* Ensure the accordion-item takes full width */
+.accordion-item {
+    width: 100%;
+}
+
+/* Expanding the accordion body fully */
+.accordion-body {
+    width: 100%;
+    max-width: 100%;
+    background-color: white;
+    padding: 20px;
+}
+
+/* Full-width row for content alignment */
+.accordion-body .row {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Each column should take 50% of the space */
+.accordion-body .col-md-6 {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Styling for labels */
+.accordion-body label {
+    font-weight: bold;
+}
+
+/* Inputs and Select dropdowns */
+.accordion-body select,
+.accordion-body input {
+    width: 100%;
+    height: 38px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Centering Buttons */
+.text-center {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Button Styling */
+.text-center .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* "Go" Button */
+.text-center .btn-primary {
+    background-color: #0096ff;
+    border: none;
+    padding: 1px 10px; /* Smaller size */
+    border-radius:25px; /* Oval shape */
+    font-size: 14px; /* Adjust font size */
+}
+
+/* "Cancel" Button */
+.text-center .btn-danger {
+    background-color: #ff5722;
+    border: none;
+    padding: 1px 10px; /* Smaller size */
+    border-radius:25px; /* Oval shape */
+    font-size: 14px; /* Adjust font size */
+}
+
+
+/*table1 styling*/
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.custom-table thead {
+  background-color: #b3b3b3; /* Gray background */
+  color: black; /* Black text */
+  font-weight: bold;
+}
+
+.custom-table th, 
+.custom-table td {
+  padding: 12px;
+  border: 1px solid #888; /* Border between columns */
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+/* Ensuring a clean look */
+.custom-table tbody tr td {
+  background-color: white; /* Keep table body clean */
+  color: black;
+}
+
+.custom-table th:first-child, 
+.custom-table td:first-child {
+    padding-left: 23px; /* Adjust as needed */
+    text-align: left;
+}
+
+
+.card-group {
+  gap:5px; /* Adjust spacing between cards */
+}
+
+
+/*css for styler billerName*/
+
+.biller-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.biller-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Spacing between checkbox and text */
+  margin-bottom: 5px; /* Spacing between items */
+}
+
+.biller-item .form-check-input {
+  width: 15px; /* Small checkbox */
+  height: 15px;
+  margin-top: 0;
+}
+
+.biller-item .form-check-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+
+
+/*css for table 1 yealink*/
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #f4f7fc; /* Light Blue */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Scrollable Table Wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  border-bottom: 3px solid #ddd; /* Subtle separator */
+  padding-bottom: 2px;
+}
+
+/* Table Styling */
+.custom-table {
+  width: max-content;
+  border-collapse: collapse;
+  background: white;
+}
+
+/* Table Header */
+.custom-table th {
+  min-width: 180px; /* Adjust width */
+  padding: 14px;
+  background:rgb(153, 139, 139); /* Dark Blue */
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Light and minimal scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  height: 5px; /* Thin scrollbar */
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Light grey */
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #888; /* Darker grey */
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker on hover */
+}
+
+.table-wrapper {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 #f0f0f0; /* Thumb and track color */
+}
+
+
+/*css styling for tab buttons*/
+
+/* Parent container for buttons (Aligned Left) */
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  justify-content: flex-start; /* Aligns buttons to the left */
+}
+
+/* General button styling */
+.tab-buttons button {
+  padding: 10px 20px;
+  border: 2px solid #444; /* Dark border for a sharp look */
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  color: black; /* Changed text color to black */
+  min-width: 130px;
+  
+}
+
+/* Unique Colors for Each Button */
+.yealink-btn {
+  background-color:rgb(155, 196, 10);
+}
+
+.htek-btn {
+  background-color: #78b6db;  
+}
+
+.beronet-btn {
+  background-color: #c43d7c;  
+}
+ 
+
+
+/* Active Button Effect */
+.active-tab {
+  transform: scale(1.05);
+  border: 2px solid black; /* Black border for active tab */
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}

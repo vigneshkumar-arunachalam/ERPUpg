@@ -780,6 +780,7 @@ export class CustomernewallComponent implements OnInit {
       'e_billingAddress_zipcode': new FormControl(null),
       'Edit_BA_countryname': new FormControl(null),
       'e_edit_ship_address': new FormControl(null),
+        'e_ESA_cbk': new FormControl(null),
       'e_ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_shipto': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_address1': new FormControl({ value: '', disabled: true }, Validators.required),
@@ -3473,12 +3474,12 @@ export class CustomernewallComponent implements OnInit {
           'spedit_3cx_BuySpecial': response[0].licence_buy_override,
           'spedit_C3CXLicencepurchase': response[0].payment_chk,
         });
-        console.log(this.specialEditCustomerForm.value);
-        if (response.customer_details[0].status == 1) {
-          $('#status').prop('checked', true);
-        } else {
-          $('#status').prop('checked', false);
-        }
+       // console.log(this.specialEditCustomerForm.value);
+        // if (response.customer_details[0].status == 1) {
+        //   $('#status').prop('checked', true);
+        // } else {
+        //   $('#status').prop('checked', false);
+        // }
         $('#specialEditCustomerFormId_CM').modal('show');
         this.customerslist({});
 
@@ -3729,7 +3730,7 @@ export class CustomernewallComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/customer/customer_file_attachment_save',
+        url: this.serverService.urlFinal + 'customer/customer_file_attachment_save',
         cache: false,
         contentType: false,
         processData: false,
@@ -3909,7 +3910,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/mconnect_address_save',
+      url: this.serverService.urlFinal +'customer/mconnect_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4027,7 +4028,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/mrvoip_address_save',
+      url: this.serverService.urlFinal +'customer/mrvoip_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4139,7 +4140,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/call4tel_address_save',
+      url: this.serverService.urlFinal +'customer/call4tel_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -5131,7 +5132,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = cms_edit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response != '') {
+      if (response.cuscode) {
 
         this.companyCodeAddCustomer = response.cuscode;
         $('#companyCode1').val(response.cuscode);

@@ -128,11 +128,11 @@ export class DupAddPIComponent implements OnInit {
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
 
-    console.log("this.chkTermsandcondition", this.chkTermsandcondition)
+  //  console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log("this.test[index]", this.test[index]);
+    //  console.log("this.test[index]", this.test[index]);
       this.test_outcall[index] = false;
       this.test_CMon[index] = false;
     });
@@ -268,7 +268,7 @@ export class DupAddPIComponent implements OnInit {
     this.itre = this.itre + 1;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(" this.test[index] ", this.test[index])
+     // console.log(" this.test[index] ", this.test[index])
       this.test_outcall[index] = false;
       this.test_CMon[index] = false;
 
@@ -313,54 +313,54 @@ export class DupAddPIComponent implements OnInit {
   handleChangeLocal(event: any) {
     this.export_state_Local = event.target.value;
     this.export_state = 'Local';
-    console.log(this.export_state_Local);
+   // console.log(this.export_state_Local);
 
   }
   handleChangeExport(event: any) {
     this.export_state_Export = event.target.value;
     this.export_state = 'Export';
-    console.log(this.export_state_Export);
+  //  console.log(this.export_state_Export);
 
   }
   handleChangeZeroValid(event: any) {
     this.export_state_ZeroValid = event.target.value;
     this.export_state = 'Zero Valid';
-    console.log(this.export_state_ZeroValid);
+   // console.log(this.export_state_ZeroValid);
 
   }
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
+    // console.log("radio button value", radioSelectInitial);
+    // console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
     this.export_state = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.export_state);
+  //  console.log("radio button value", this.export_state);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
     this.bills_logo_id = event.target.value;
     // var xyz = id;
-    console.log("radio button value for Extra logo", this.bills_logo_id);
+   // console.log("radio button value for Extra logo", this.bills_logo_id);
 
   }
 
 
   eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+   // console.log(this.checkbox_selectAdditionalSignature);
   }
 
 
   mile(e: any) {
     this.mile_discount_state = e.target.value;
-    console.log(this.mile_discount_state);
+  //  console.log(this.mile_discount_state);
   }
   handleChange_MSDisplay(event: any) {
     this.mile_discount_display_state = event.target.checked;
-    console.log(this.mile_discount_display_state);
+   // console.log(this.mile_discount_display_state);
   }
   // EditCHK_MileDiscount(data: any, event: any) {
   //   console.log("List - CheckBox ID", data);
@@ -404,22 +404,22 @@ export class DupAddPIComponent implements OnInit {
   // }
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-    console.log(this.chkTermsandcondition)
+  //  console.log(this.chkTermsandcondition)
   }
   chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
-    console.log(this.chkReceivedAuthorizedSignature)
+  //  console.log(this.chkReceivedAuthorizedSignature)
   }
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+   // console.log(this.chklogoAddressSignature)
   }
 
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+   // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -514,7 +514,7 @@ export class DupAddPIComponent implements OnInit {
 
         }, 1000);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id' + response.default_tax_id);
+       // console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -553,8 +553,8 @@ export class DupAddPIComponent implements OnInit {
       }
     }
     for (let j = 0; j <= this.itre; j++) {
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
 
     }
 
@@ -582,7 +582,7 @@ export class DupAddPIComponent implements OnInit {
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-    console.log('row_cnt' + row_cnt);
+   // console.log('row_cnt' + row_cnt);
     $('#enablePercentabeDiscont').val('');
     $('#enablePriceDiscont').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -621,7 +621,7 @@ export class DupAddPIComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -633,11 +633,15 @@ export class DupAddPIComponent implements OnInit {
   }
   searchCustomer_selectDropdownData(data: any) {
     this.spinner.show();
+    if(data){
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
-    this.customerName_Data = data.customerId;
+        this.customerName_Data = data.customerId;
+    }
+
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
+
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -650,7 +654,7 @@ export class DupAddPIComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("customer_address_details---response", response)
+    //  console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -855,7 +859,7 @@ export class DupAddPIComponent implements OnInit {
 
       }
 
-      console.log(addr[i].pd_quantity_txtbox1)
+     // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -941,7 +945,7 @@ export class DupAddPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("500", error);
+      //  console.log("500", error);
       }
 
   }
@@ -960,7 +964,7 @@ export class DupAddPIComponent implements OnInit {
     api_req.element_data = api_invoiceAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("invoice_add_signature response", response)
+     // console.log("invoice_add_signature response", response)
 
       if (response.status == true) {
 
@@ -1031,7 +1035,7 @@ export class DupAddPIComponent implements OnInit {
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log(response);
+     // console.log(response);
 
 
       if (response != '') {
@@ -1063,7 +1067,7 @@ export class DupAddPIComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
 
@@ -1071,9 +1075,9 @@ export class DupAddPIComponent implements OnInit {
 
   }
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+   // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1138,16 +1142,16 @@ export class DupAddPIComponent implements OnInit {
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+     // console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+     //   console.log('discount_type1111' + this.sub_dis_val);
         if (this.sub_dis_val == '') {
           this.sub_dis_val = 0;
         }
 
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+      //  console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
@@ -1174,7 +1178,7 @@ export class DupAddPIComponent implements OnInit {
 
 
 
-        console.log('-this.finalDiscount---' + this.finalDiscount);
+      //  console.log('-this.finalDiscount---' + this.finalDiscount);
         //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
         tax_amt_tot += netAmt;
 
@@ -1208,8 +1212,8 @@ export class DupAddPIComponent implements OnInit {
       this.bankingCharge = 0;
     }
     this.finalDiscountCalc();
-    console.log('grs_amt' + grs_amt);
-    console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
+    // console.log('grs_amt' + grs_amt);
+    // console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
 
@@ -1299,7 +1303,7 @@ export class DupAddPIComponent implements OnInit {
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
-    console.log('disType' + disType + 'final_tot' + final_tot);
+  //  console.log('disType' + disType + 'final_tot' + final_tot);
 
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
@@ -1327,14 +1331,14 @@ export class DupAddPIComponent implements OnInit {
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
       this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
+     // console.log('999' + price);
     }
 
     if (this.grandTotal > 0) {
       this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
 
-    console.log('grandTotal' + this.grandTotal);
+   // console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
 
     setTimeout(() => {
@@ -1407,20 +1411,20 @@ export class DupAddPIComponent implements OnInit {
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+   // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountTYpe_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-      console.log('22' + disType);
+     // console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountTYpe_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-      console.log('33' + disType);
+     // console.log('33' + disType);
     } else {
-      console.log('44' + disType);
+    //  console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }

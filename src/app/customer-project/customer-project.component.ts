@@ -87,23 +87,24 @@ export class CustomerProjectComponent implements OnInit {
       'viewDescription': new FormControl(null),
     });
     this.AddAttachmentForm=new FormGroup({
-      'edit_cusName':new FormControl(null),
-      'edit_cusNameDropdown':new FormControl(null),
-      'edit_projName':new FormControl(null),
-      'edit_projDate':new FormControl((new Date()).toISOString().substring(0, 10)),
-      'edit_subjName':new FormControl(null), 
-      'edit_description':new FormControl(null),
-      'file':new FormControl(null),
-      
-
-    });
-    this.editSubAttachmentForm=new FormGroup({
-      'add_cusName':new FormControl(null),
+  'add_cusName':new FormControl(null),
       'add_cusNameDropdown':new FormControl(null),
       'add_projName':new FormControl(null),
       'add_projDate':new FormControl((new Date()).toISOString().substring(0, 10)),
       'add_subjName':new FormControl(null), 
       'add_description':new FormControl(null),
+      'file':new FormControl(null),
+      
+
+    });
+    this.editSubAttachmentForm=new FormGroup({
+    
+            'edit_cusName':new FormControl(null),
+      'edit_cusNameDropdown':new FormControl(null),
+      'edit_projName':new FormControl(null),
+      'edit_projDate':new FormControl((new Date()).toISOString().substring(0, 10)),
+      'edit_subjName':new FormControl(null), 
+      'edit_description':new FormControl(null),
       'file':new FormControl(null),
       
 
@@ -195,7 +196,7 @@ export class CustomerProjectComponent implements OnInit {
         var self = this;
         $.ajax({
           type: 'POST',
-          url: 'https://laravelapi.erp1.cal4care.com/api/customer_projects/customer_projects_update',
+          url:this.serverService.urlFinal + 'customer_projects/customer_projects_update',
   
   
           cache: false,

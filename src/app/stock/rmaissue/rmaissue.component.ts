@@ -85,6 +85,7 @@ export class RMAIssueComponent implements OnInit {
   emailbillerName: any;
   getCustomerEmail: any;
   getCustomerEmailCompany: any;
+  editRMAIssueId: any;
 
   constructor(
     private serverService: ServerService,
@@ -388,6 +389,7 @@ export class RMAIssueComponent implements OnInit {
 
   AddRmaIssue() {
     $('#add_rma_issue_popup').modal('show');
+      this.getRmaDetails();
   }
 
   fileAttachmentEventPE1(event: any) {
@@ -410,6 +412,7 @@ export class RMAIssueComponent implements OnInit {
     let product_serial_no = this.add_ram_issue_form.value.product_serial_no;
     let product_category = this.add_ram_issue_form.value.product_category;
     let product_name = this.add_ram_issue_form.value.product_name;
+   let problem_type = this.add_ram_issue_form.value.problem_type
 
     if (
       company_name === '' ||
@@ -418,7 +421,7 @@ export class RMAIssueComponent implements OnInit {
       company_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Company Name )`,
+        message: `Please Select Company Name `,
         position: 'topRight',
       });
 
@@ -431,21 +434,21 @@ export class RMAIssueComponent implements OnInit {
       customer_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Enter Customer Name )`,
+        message: `Please Enter Customer Name `,
         position: 'topRight',
       });
 
       return false;
     }
-    // if(product_serial_no === '' ||product_serial_no === null || product_serial_no === undefined || product_serial_no==='undefined'){
+    if(product_serial_no === '' ||product_serial_no === null || product_serial_no === undefined || product_serial_no==='undefined'){
 
-    //   iziToast.warning({
-    //     message: `please Enter Product Serial Number )`,
-    //     position: 'topRight',
-    //   });
+      iziToast.warning({
+        message: `Please Enter Product Serial Number `,
+        position: 'topRight',
+      });
 
-    //   return false;
-    // }
+      return false;
+    }
     if (
       product_category === '' ||
       product_category === null ||
@@ -453,7 +456,7 @@ export class RMAIssueComponent implements OnInit {
       product_category === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Product Category )`,
+        message: `Please Select Product Category `,
         position: 'topRight',
       });
 
@@ -466,7 +469,20 @@ export class RMAIssueComponent implements OnInit {
       product_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Product Name )`,
+        message: `Please Select Product Name `,
+        position: 'topRight',
+      });
+
+      return false;
+    }
+     if (
+      problem_type === '' ||
+      problem_type === null ||
+      problem_type === undefined ||
+      problem_type === 'undefined'
+    ) {
+      iziToast.warning({
+        message: `Please Select Problem Type `,
         position: 'topRight',
       });
 
@@ -512,7 +528,8 @@ export class RMAIssueComponent implements OnInit {
     $.ajax({
       type: 'POST',
 
-      url: 'https://laravelapi.erp1.cal4care.com/api/Rma/storeRmaIssue',
+      // url: 'https://erp1.cal4care.com/api/Rma/storeRmaIssue',
+        url: this.serverService.urlFinal +'Rma/storeRmaIssue',
       //  url: "https://" + window.location.hostname + ":4003/api/v1.0/index_new.php",
       cache: false,
       contentType: false,
@@ -541,7 +558,7 @@ export class RMAIssueComponent implements OnInit {
         }
       },
       error: function (err: any) {
-        this.spinner.hide();
+       // this.spinner.hide();
         console.log('err', err);
         iziToast.error({
           message: 'Server Side Error',
@@ -709,6 +726,7 @@ export class RMAIssueComponent implements OnInit {
   }
 
   editRmaIssue(id: any) {
+    this.editRMAIssueId=id;
     this.spinner.show();
 
     let requestObj = {
@@ -754,6 +772,7 @@ export class RMAIssueComponent implements OnInit {
   }
 
   UpdateRmaIssue_new() {
+    
     let company_name = this.edit_ram_issue_form.value.edit_company_name;
     let customer_name = this.edit_ram_issue_form.value.edit_customer_name;
     let product_serial_no =
@@ -768,7 +787,7 @@ export class RMAIssueComponent implements OnInit {
       company_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Company Name )`,
+        message: `Please Select Company Name`,
         position: 'topRight',
       });
 
@@ -781,21 +800,21 @@ export class RMAIssueComponent implements OnInit {
       customer_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Enter Customer Name )`,
+        message: `Please Enter Customer Name`,
         position: 'topRight',
       });
 
       return false;
     }
-    // if(product_serial_no === '' ||product_serial_no === null || product_serial_no === undefined || product_serial_no==='undefined'){
+    if(product_serial_no === '' ||product_serial_no === null || product_serial_no === undefined || product_serial_no==='undefined'){
 
-    //   iziToast.warning({
-    //     message: `please Enter Product Serial Number )`,
-    //     position: 'topRight',
-    //   });
+      iziToast.warning({
+        message: `Please Enter Product Serial Number )`,
+        position: 'topRight',
+      });
 
-    //   return false;
-    // }
+      return false;
+    }
     if (
       product_category === '' ||
       product_category === null ||
@@ -803,7 +822,7 @@ export class RMAIssueComponent implements OnInit {
       product_category === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Product Category )`,
+        message: `Please Select Product Category`,
         position: 'topRight',
       });
 
@@ -816,7 +835,7 @@ export class RMAIssueComponent implements OnInit {
       product_name === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Product Name )`,
+        message: `Please Select Product Name`,
         position: 'topRight',
       });
 
@@ -836,6 +855,7 @@ export class RMAIssueComponent implements OnInit {
     data.append('rma_serial_number', product_serial_no);
     data.append('product_category_id', product_category);
     data.append('product_id', product_name);
+    data.append('rma_issue_id',this.editRMAIssueId);
     data.append(
       'problem_type',
       this.edit_ram_issue_form.value.edit_problem_type
@@ -866,7 +886,8 @@ export class RMAIssueComponent implements OnInit {
     $.ajax({
       type: 'POST',
 
-      url: 'https://laravelapi.erp1.cal4care.com/api/Rma/storeRmaIssue',
+       url:this.serverService.urlFinal + 'Rma/updateRmaIssue',
+      //  url: 'https://erp1.cal4care.com/api/Rma/updateRmaIssue',
       //  url: "https://" + window.location.hostname + ":4003/api/v1.0/index_new.php",
       cache: false,
       contentType: false,
@@ -1060,7 +1081,7 @@ export class RMAIssueComponent implements OnInit {
       email_From === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select From )`,
+        message: `Please Select From )`,
         position: 'topRight',
       });
 
@@ -1073,7 +1094,7 @@ export class RMAIssueComponent implements OnInit {
       email_to_string === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Enter To email )`,
+        message: `Please Enter To email )`,
         position: 'topRight',
       });
 
@@ -1086,7 +1107,7 @@ export class RMAIssueComponent implements OnInit {
       email_template === 'undefined'
     ) {
       iziToast.warning({
-        message: `please Select Template )`,
+        message: `Please Select Template )`,
         position: 'topRight',
       });
 

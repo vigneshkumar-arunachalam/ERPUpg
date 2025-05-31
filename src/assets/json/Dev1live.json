@@ -66,7 +66,7 @@
 
     ],
     "isVisible": true,
-    "value": "/ledger--"
+    "value": "/transactionnew"
 },
     {
     "name": "Billing",
@@ -76,6 +76,14 @@
     "IDs": [1000,7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715, 7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715],
     "Type": "Main Menu",
     "children": [ {
+            "name": "Transaction Approval",
+            "icon": "film",
+            "IDs": [1201, 1202, 1203, 1204, 2018],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/TransactionApproval"
+        },{
             "name": "Quotation New",
             "icon": "message-square",
             "IDs": [9501, 9502, 9503, 9504, 9505],
@@ -167,7 +175,7 @@
       
     ],
     "isVisible": true,
-    "value": "/bing"
+    "value": "/TransactionApproval"
 },{
     "name": "Stock",
     "icon":"database",
@@ -271,7 +279,7 @@
         }
     ],
     "isVisible": true,
-    "value": "/stock1"
+    "value": "/ProductCategory"
 },
 {
     "name": "VOIP Switch",
@@ -293,7 +301,7 @@
 
     ],
     "isVisible": true,
-    "value": "/voipsw--"
+    "value": "/creditmanager"
 },{
     "name": "Call4Tel",
     "icon":"cloud",
@@ -314,7 +322,7 @@
 
     ],
     "isVisible": true,
-    "value": "/cal4tel--"
+    "value": "/nx32"
 },
  {
     "name": "Masters",
@@ -354,7 +362,7 @@
 
     ],
     "isVisible": true,
-    "value": "/custom"
+    "value": "/customernewall"
 }, {
     "name": "Contract",
     "icon": "slack",
@@ -433,7 +441,7 @@
             "isVisible": true,
             "value": "/gstreport"
         },{
-            "name": "SST Report-Cal4Care Pte Ltd",
+            "name": "SST Report-Cal4Care SDN BHD",
             "icon": "gift",
             "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
@@ -446,7 +454,7 @@
 
     ],
     "isVisible": true,
-    "value": "/reports--"
+    "value": "/invoiceReportsOld"
 },{
     "name": "Tools",
     "icon":"tool",
@@ -476,7 +484,7 @@
 
     ],
     "isVisible": true,
-    "value": "/reports--"
+    "value": "/guru"
 },
 {
     "name": "3CX",
@@ -497,7 +505,7 @@
         }
     ],
     "isVisible": true,
-    "value": "/LicenseCreditComponent"
+    "value": "/licenseCredit"
 },
  {
     "name": "Settings",

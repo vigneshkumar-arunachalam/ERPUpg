@@ -241,7 +241,7 @@ export class EditprepaidnoteComponent implements OnInit {
           console.log("response", response);
           // location.reload();
 
-
+          this.totalCalculate();
         });
 
       }
@@ -319,6 +319,7 @@ export class EditprepaidnoteComponent implements OnInit {
      this.addDo_section1.patchValue({
        'DocNo': response.creditNo,
      });
+     this.totalCalculate();
    });
  }
 
@@ -597,7 +598,7 @@ export class EditprepaidnoteComponent implements OnInit {
         // this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
         // this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
         // this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
-        this.vendor_ID=response.data.prepaid_parent.billerId;
+      //  this.vendor_ID=response.data.prepaid_parent.billerId;
 
         this.addDo_section1.patchValue({          
           'e_companyName': response.data.prepaid_parent.billerId,
@@ -613,7 +614,7 @@ export class EditprepaidnoteComponent implements OnInit {
           'e_reference': response.data.prepaid_parent.reference,
          
            
-          'e_vendor_name': response.data.prepaid_parent.customerName,
+          'e_vendor_name': response.data.prepaid_parent.customerCompany,
 
           'e_customer_name': response.data.prepaid_parent.customerName,
                  

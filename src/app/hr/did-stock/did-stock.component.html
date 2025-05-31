@@ -775,6 +775,7 @@
                   <td>{{ i + 1 }}</td>
                   <td>
                     <select class="form-control" formControlName="billerName">
+                      <option [value]="''">Select Biller Name</option>
                       <option *ngFor="let item of biller_data" [value]="item.billerId">
                         {{item.billerCode}}
                       </option>

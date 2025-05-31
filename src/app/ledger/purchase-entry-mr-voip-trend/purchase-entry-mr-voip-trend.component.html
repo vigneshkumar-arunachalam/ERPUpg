@@ -262,12 +262,12 @@
                                 </thead>
                                 <tbody >
                                   <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
-                                    <tr>
+                                    <tr *ngIf="j === 0 || address.value.mon_val !== addressControls.controls[j - 1].value.mon_val">
                                       <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;    font-weight: 500;
-    color: #801505;">{{months[j]}}</td>
+    color: #801505;">  {{ getMonthName(address.value.mon_val) }}</td>
                                     </tr>
                                   
-                                  <tr >
+                                  <tr [style.backgroundColor]="address.get('backgroundColor').value">
                                    
                                     <td>
                                       <input type="hidden" class="form-control" formControlName="purchase_trend_id" id="pd_purchase_trend_id{{j}}" />

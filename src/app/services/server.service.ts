@@ -5,8 +5,16 @@ import { Subject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServerService {
-   baseUrl = 'https://laravelapi.erp1.cal4care.com/api/'; 
+
+
+   public urlFinal = "https://laravelapi.erp1.cal4care.com/api/";
+  // public urlFinal = "https://erp1.cal4care.com/api/";
+
+
+
+ baseUrl = 'https://laravelapi.erp1.cal4care.com/api/';
   reload_profile: Subject<any> = new Subject();
   global_search: Subject<any> = new Subject();
   global_search_invoice: Subject<any> = new Subject();
@@ -16,6 +24,7 @@ export class ServerService {
   closemodal: Subject<any> = new Subject();
   invoice_search: Subject<any> = new Subject();
   invoice_search1: Subject<any> = new Subject();
+ 
 
 
   constructor(private http: HttpClient) {
@@ -23,16 +32,17 @@ export class ServerService {
   }
   sendServer(postData: any) {
 
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-     let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
+    let url = this.urlFinal + postData.api_url;
+    //  let url = "https://erp1.cal4care.com/api/"+postData.api_url;
 
- // let url = "https://erp1.cal4care.com/api/"+postData.api_url;
-   // let url="http://127.0.0.1:8000/api/"+postData.api_url;
-  
+    // let url="http://127.0.0.1:8000/api/"+postData.api_url;
+
     let posting: any[] = postData;
     return this.http.post(url, posting, httpOptions);
   }
@@ -44,18 +54,19 @@ export class ServerService {
     });
 
     return this.http.post(`${this.baseUrl}${api_req.api_url}`, api_req, { headers });
-    
-  }
-sendServergetdata(getData: any) {
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
 
-  };
-  let url = "https://laravelapi.erp1.cal4care.com/api/" + getData.api_url;
-  return this.http.get(url, httpOptions);
-  }
+  }
+  sendServergetdata(getData: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+
+    };
+    let url = this.urlFinal + getData.api_url;
+    // let url = "https://erp1.cal4care.com/api/" + getData.api_url;
+    return this.http.get(url, httpOptions);
+  }
 
   // sendServerpath(postData: any[]) {
   //   const httpOptions = {
@@ -67,29 +78,29 @@ sendServergetdata(getData: any) {
   // }
   sendServerpath(postData: any) {
     try {
-        // Convert JSON string to object if needed
-        if (typeof postData === "string") {
-            postData = JSON.parse(postData);
-        }
+      // Convert JSON string to object if needed
+      if (typeof postData === "string") {
+        postData = JSON.parse(postData);
+      }
 
-        if (!postData.api_url) {
-            console.error("Error: api_url is missing in postData!");
-            return;
-        }
+      if (!postData.api_url) {
+        console.error("Error: api_url is missing in postData!");
+        return;
+      }
 
-        let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
-        
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            })
-        };
+      let url = this.urlFinal + postData.api_url;
+      //   let url = "https://erp1.cal4care.com/api/" + postData.api_url;
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
 
-        return this.http.post(url, postData, httpOptions); // Ensure postData is sent as body
+      return this.http.post(url, postData, httpOptions); // Ensure postData is sent as body
     } catch (error) {
-        console.error("Error processing postData:", error);
+      console.error("Error processing postData:", error);
     }
-}
+  }
 
   postFile(postData: any) {
     const httpOptions = {
@@ -98,7 +109,8 @@ sendServergetdata(getData: any) {
       })
     };
 
-    let url = "https://erp1.cal4care.com/api/" + postData.api_url;
+    let url = this.urlFinal + postData.api_url;
+    // let url = "https://erp1.cal4care.com/api/" + postData.api_url;
 
 
     const formData: FormData = new FormData();

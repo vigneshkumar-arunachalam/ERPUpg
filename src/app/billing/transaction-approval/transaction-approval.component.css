@@ -30,14 +30,15 @@ p {
 
 .specific {
   padding: 5px !important;
-  background-color: #272b41 !important;
+  /* background-color: #272b41 !important; */
+  background-color: #20c997 !important;
   height: 140px;
 }
 
 .btn.btn-white {
   /* change this for backgroundlist displayu */
   background: #e3e0d1;
-  color: rebeccapurple;
+  color: #0b1b62;
   box-shadow: 0 3px 5px rgb(146 153 184 / 5%);
 }
 
@@ -48,7 +49,7 @@ p {
   width: 38px;
   height: 30px;
   position: absolute;
-  top: -44px;
+  top: -34px;
   border-radius: 50% 50% 0 0;
   display: flex;
   align-items: center;
@@ -440,12 +441,13 @@ th {
 }
 
 .transaction-approval-panel .check-box-table td:nth-child(9) span:first-child {
-  width: 140px;
+  width: 260px;
+  /* white-space: break-spaces; */
 }
 
 .transaction-approval-panel .check-box-table td:nth-child(9) span:last-child {
   width: 160px;
-  white-space: break-spaces;
+  /* white-space: break-spaces; */
 }
 
 .transaction-approval-panel .check-box-table td:nth-child(7) span {
@@ -638,16 +640,27 @@ tbody:nth-child(odd) {
 
 
 
-#BeforeApprovaltransactionApprovalViewId .modal-dialog {
+#ViewFormID .modal-dialog,
+#BeforeApprovaOthersViewId .modal-dialog{
   min-width: 75%;
 
 }
 
-#BeforeApprovaltransactionApprovalViewId label {
+#sharePermission_Main .modal-dialog{
+  min-width: 55%;
+
+}
+
+#BeforeApprovaltransactionApprovalCommentsIdMain .modal-dialog{
+  min-width: 75%;
+
+}
+
+#viewFormID label {
   font-family: cursive;
 }
 
-#BeforeApprovaltransactionApprovalViewId .form-control {
+#viewFormID .form-control {
   /* border: 1px solid #e1e1e1; */
   /* background: transparent; */
   border: 1px solid;
@@ -656,12 +669,12 @@ tbody:nth-child(odd) {
   background: linear-gradient(90deg, rgb(238 238 251) 0%, rgb(240 240 249) 35%, rgb(230 248 252) 100%);
 }
 
-#BeforeApprovaltransactionApprovalViewId .modal-content {
+#viewFormID .modal-content {
   background: #f7faff;
 
 }
 
-#BeforeApprovaltransactionApprovalViewId .modal-content label,
+#viewFormID .modal-content label,
 #BeforeApprovaltransactionApprovalCommentsIdMain .modal-content label {
   /* color: #4b0082	!important; */
   font-weight: 560;
@@ -669,14 +682,14 @@ tbody:nth-child(odd) {
 
 }
 
-#BeforeApprovaltransactionApprovalViewId .modal-content .form-control,
+#viewFormID .modal-content .form-control,
 #BeforeApprovaltransactionApprovalCommentsIdMain .modal-content .form-control {
   background: linear-gradient(to right, #eaf5ae, #b0f2b1);
   color: rgb(41, 42, 28);
   box-shadow: none;
 }
 
-#BeforeApprovaltransactionApprovalViewId .modal-content .form-control:focus,
+#viewFormID .modal-content .form-control:focus,
 #BeforeApprovaltransactionApprovalCommentsIdMain .modal-content .form-control:focus {
   outline: none;
   border: 2px solid transparent;
@@ -688,7 +701,7 @@ tbody:nth-child(odd) {
   color: rgb(41, 42, 28);
 }
 
-#BeforeApprovaltransactionApprovalViewId .modal-content button.close {
+#viewFormID .modal-content button.close {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -701,7 +714,7 @@ tbody:nth-child(odd) {
   transition: all 0.5s ease;
 }
 
-#BeforeApprovaltransactionApprovalViewId .btn-primary,
+#viewFormID .btn-primary,
 #BeforeApprovaltransactionApprovalCommentsIdMain .btn-primary {
   background: linear-gradient(to right, #200122, #6f0000);
   color: rgb(240 241 219);
@@ -710,10 +723,18 @@ tbody:nth-child(odd) {
 
 .pdfview {
   background-color: crimson;
+   white-space: nowrap!important;
   color: white;
-  padding: 10px;
+  padding: 2px;
   font-size: 12px;
   margin-bottom: 5px;
   display: inline-block;
   border-radius: 5px;
+}
+
+.section-title {
+  background-color: #e0f7fa;
+  font-weight: bold;
+  color: #00796b;
+  padding: 10px;
 }

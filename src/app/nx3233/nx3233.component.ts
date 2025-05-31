@@ -308,7 +308,7 @@ export class Nx3233Component implements OnInit {
         position: 'topRight'
       });
     }
-
+console.log("this.myFiles",this.myFiles);
     if (this.myFiles.length > 0) {
 
       const data = new FormData();
@@ -330,7 +330,7 @@ export class Nx3233Component implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/nx32/uploadCSV',
+        url: this.serverService.urlFinal + 'nx32/uploadCSV',
         cache: false,
         contentType: false,
         processData: false,
@@ -380,7 +380,7 @@ export class Nx3233Component implements OnInit {
         },
         error: function (err: any) {
           this.myFiles = [];
-          this.FileAttachmentForm.reset();
+        //  this.FileAttachmentForm.reset();
           console.log("err", err)
           iziToast.error({
             message: "Server Side Error",

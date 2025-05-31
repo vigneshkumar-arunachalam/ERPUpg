@@ -122,6 +122,9 @@ export class PurchaseEntryYearlyComponent implements OnInit {
  
   createAddress(): FormGroup {
     return this.fb.group({
+      status: [''],
+      backgroundColor: [''],
+         purchase_type_id: [''],
       purchaseEntryType: [''],
       invoiceNumber: [''],
       invoiceDate: [''],
@@ -276,6 +279,24 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       };
 
   }
+   getMonthName(monthVal: number): string {
+    const months = [
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    return months[monthVal] || '';
+  }
   fetchVendorDetails(vendorID:any) {
     this.vendorID_selected=vendorID;
     this.spinner.show();
@@ -305,45 +326,52 @@ export class PurchaseEntryYearlyComponent implements OnInit {
         this.currencyList=response.currencyList;
         this.vendorlistall=response.vendors;
         const vendorData = response.vendorTrendDetails;
+      
+       
         const formArray = new FormArray([]);
-  
 
-        for (let index = 0; index < response.vendorTrendDetails.length; index++) {
-     
+        // Loop through each month
+        Object.keys(response.vendorTrendDetails.months).forEach((month) => {
+          response.vendorTrendDetails.months[month].forEach((record: any) => {
+            formArray.push(
+              this.fb.group({
+                status: [record.status], // Store the approval status
+                backgroundColor: [this.getBackgroundColor(record.status)],
 
-          formArray.push(this.fb.group({
-            "purchaseEntryType": response.vendorTrendDetails[index].purchase_type_id,
-            "invoiceNumber": response.vendorTrendDetails[index].invoiceNo,
-            "invoiceDate": response.vendorTrendDetails[index].invoiceDate_show,
+                invoiceNumber: record.invoiceNo,
+                purchaseEntryType: record.purchase_type_id,
+                invoiceDate: record.invoiceDate_show,
+                purchaseContent: record.content_purchase,
 
-            "purchaseContent": response.vendorTrendDetails[index].content_purchase,
-            "PONumber": response.vendorTrendDetails[index].poNo,
+                PONumber: record.poNo,
+                currency: record.currency_id,
+                curConvRate: record.conversionRate,
+                taxAmount: record.taxAmount,
 
-            "currency": response.vendorTrendDetails[index].currency_id,
-            "curConvRate": response.vendorTrendDetails[index].conversionRate,
-            "taxAmount": response.vendorTrendDetails[index].taxAmount,
-            "taxProvider": response.vendorTrendDetails[index].tax_provider,
-            "frieghtAmount": response.vendorTrendDetails[index].freight_amt,
-            "frieghtProvider": response.vendorTrendDetails[index].freight_provider,
-            "invoiceAmount": response.vendorTrendDetails[index].invoiceAmount,
+                taxProvider: record.tax_provider,
+                frieghtAmount: record.freight_amt,
+                frieghtProvider: record.freight_provider,
+                invoiceAmount: record.invoiceAmount,
 
-            "purchaseEntryTempId": response.vendorTrendDetails[index].purchaseEntryTempId,
-            "vendorId": response.vendorTrendDetails[index].vendor_id,
-           
-            "year_val": response.vendorTrendDetails[index].year,
-            "ven_id": response.vendorTrendDetails[index].vendor_id,
-            "mon_val": response.vendorTrendDetails[index].month,
-            "entry_row": response.vendorTrendDetails[index].entryRow,
-            "billerid": this.OverallBillerValue,
+                purchaseEntryTempId: record.purchaseEntryTempId,
+                 purchase_type_id: record.purchase_type_id,
+                vendorId: record.vendor_id,
+                year_val: record.year,
+                ven_id: record.vendor_id,
+                mon_val: record.month,
+                entry_row: record.entryRow,
+                billerid: record.billerid,
+               
+              })
+            );
+          });
+        });
 
-          })
-          );
-        }
+ 
         
+  
         this.addPI_section2.setControl('addresses', formArray);
-        // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
-       
-       
+        console.log('this.addPI_section2', this.addPI_section2);
 
       } else {
         this.spinner.hide();
@@ -364,6 +392,20 @@ export class PurchaseEntryYearlyComponent implements OnInit {
 
       };
 
+  }
+  getBackgroundColor(status: any): any {
+    //  console.log("status",status);
+    //  console.log("typeof-status",typeof(status));
+    switch (status) {
+      case 1:
+        return '#84FD88'; // Green
+      case 2:
+        return '#FFFF5C'; // Yellow
+      case 3:
+        return '#FFFFFF'; // Red
+      default:
+        return '#FFFFFF'; //
+    }
   }
   getEntriesForMonthAndVendor(data: any[], month: number): any[] {
     return data.filter(entry => entry.month === month);

@@ -238,7 +238,8 @@ export class EditdebitnoteComponent implements OnInit {
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           console.log("response", response);
-          location.reload();
+          this.totalCalculate();
+         // location.reload();
 
 
         });
@@ -318,6 +319,7 @@ export class EditdebitnoteComponent implements OnInit {
      this.addDo_section1.patchValue({
        'DocNo': response.creditNo,
      });
+     this.totalCalculate();
    });
  }
 
@@ -327,6 +329,8 @@ export class EditdebitnoteComponent implements OnInit {
     console.log(e);
   }
   searchVendor_selectDropdownData(data: any) {
+    alert("check")
+    console.log("av",data);
     this.spinner.show();
 
 
@@ -594,8 +598,10 @@ export class EditdebitnoteComponent implements OnInit {
         // this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
         // this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
         // this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
-        this.vendor_ID=response.data.debit_note_parent.billerId;
 
+       // this.vendor_ID=response.data.debit_note_parent.billerId; changed now=av
+
+       if(response.data.debit_note_parent){
         this.addDo_section1.patchValue({          
           'e_companyName': response.data.debit_note_parent.billerId,
           'e_DocNo': response.data.debit_note_parent.debit_note_no,
@@ -609,8 +615,9 @@ export class EditdebitnoteComponent implements OnInit {
           'e_currency': response.data.debit_note_parent.currency_id,
           'e_reference': response.data.debit_note_parent.reference,
          
-           
-          'e_vendor_name': response.data.debit_note_parent.customerName,
+          'e_vendor_name': response.data.debit_note_parent.customerCompany,
+
+         // 'e_vendor_name': response.data.debit_note_parent.customerName,
 
           'e_customer_name': response.data.debit_note_parent.customerName,
                  
@@ -624,28 +631,36 @@ export class EditdebitnoteComponent implements OnInit {
           'section3_taxAmt_txtbox': response.data.debit_note_parent.taxAmt,
           'section3_grand_total': response.data.debit_note_parent.net_total_amt,
         });
+
+       }
+       
+    
       //  this.vendor_Name = response.purchaseorderparent_details[0].vendorName;
         
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.data.debit_note_child.length; index++) {
+        if(response.data.debit_note_child){
+          for (let index = 0; index < response.data.debit_note_child.length; index++) {
 
        
 
 
-          formArray.push(this.fb.group({
-
-            "pd_PurchaseOrderChildId": response.data.debit_note_child[index].debit_note_child_id,
-            "prodName": response.data.debit_note_child[index].description,
-            "quantity": response.data.debit_note_child[index].qty,
-            "desc": response.data.debit_note_child[index].description,
-            "price": response.data.debit_note_child[index].price,
-            "total": response.data.debit_note_child[index].total_price,
-
-
-          })
-            
-          );
+            formArray.push(this.fb.group({
+  
+              "pd_PurchaseOrderChildId": response.data.debit_note_child[index].debit_note_child_id,
+              "prodName": response.data.debit_note_child[index].description,
+              "quantity": response.data.debit_note_child[index].qty,
+              "desc": response.data.debit_note_child[index].description,
+              "price": response.data.debit_note_child[index].price,
+              "total": response.data.debit_note_child[index].total_price,
+  
+  
+            })
+              
+            );
+          }
         }
+
+        
         console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
         console.log(this.addresses)

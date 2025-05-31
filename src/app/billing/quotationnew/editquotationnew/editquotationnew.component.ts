@@ -39,15 +39,15 @@ export class EditquotationnewComponent implements OnInit {
   TaxDropdownList: any;
   billerIDUpdate: any;
   ExtraLogoList: any;
-  sub_dis_type:any;
-  sub_dis_val:any;
-  selected_pdf_footer:any;
-  descriptionDetails_DontShow:boolean=true;
-  grantTotalShow:boolean=true;
-  radioSelectFooterChecked:boolean=false;
-  checkbox_descriptionDetails_DontShow:boolean=true;
-  checkbox_termsCondition_DontShow:boolean=false;
-  sign_state:any;
+  sub_dis_type: any;
+  sub_dis_val: any;
+  selected_pdf_footer: any;
+  descriptionDetails_DontShow: boolean = true;
+  grantTotalShow: boolean = true;
+  radioSelectFooterChecked: boolean = false;
+  checkbox_descriptionDetails_DontShow: boolean = true;
+  checkbox_termsCondition_DontShow: boolean = false;
+  sign_state: any;
   searchResult: any;
   customerName_Data: any;
   billerList: any;
@@ -80,11 +80,11 @@ export class EditquotationnewComponent implements OnInit {
   //auto-complete product details
   searchResult_productName: any;
   product_name_AutoComplete: any;
-//radio button dynamic change
-currencyOld_RadioValue: any;
-currencyNew_RadioValue: any;
-CurrencyChangeFieldValue:any;
-dynamicTermsConditions_Currency:any;
+  //radio button dynamic change
+  currencyOld_RadioValue: any;
+  currencyNew_RadioValue: any;
+  CurrencyChangeFieldValue: any;
+  dynamicTermsConditions_Currency: any;
 
   //enquiry from details pop up
   FormID_enquiryFromDetails: any;
@@ -94,59 +94,59 @@ dynamicTermsConditions_Currency:any;
   tax_amt_tot: number;
   grs_amt: number;
   //quotation add signature for edit
-quotationAddSignature_state:any;
-quotationAddSignature_filename:any;
-quotationAddSignatureCHKShowState:any;
-selectAdditionalSign:boolean=true;
-selectAdditionalSignUnchecked:boolean=false;
-//check box in form array
-groupSelectCommonId: any;
-checkbox_value: any;
-edit_array: any = [];
-datavalue:any;
+  quotationAddSignature_state: any;
+  quotationAddSignature_filename: any;
+  quotationAddSignatureCHKShowState: any;
+  selectAdditionalSign: boolean = true;
+  selectAdditionalSignUnchecked: boolean = false;
+  //check box in form array
+  groupSelectCommonId: any;
+  checkbox_value: any;
+  edit_array: any = [];
+  datavalue: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
       addresses: this.fb.array([this.EditAddress_FormControl()])
     });
     this.route.queryParams
-    .subscribe(params => {
-     // console.log("params output value", params);
+      .subscribe(params => {
+        // console.log("params output value", params);
 
-      this.editQuotationID = params['e_quotID'];
-      this.FormID_enquiryFromDetails = params['e_formID'];
-      this.subject_enquiryFromDetails = params['e_subject'];
-      this.validity_enquiryFromDetails = params['e_validity'];
-      this.version_enquiryFromDetails = params['e_version'];
+        this.editQuotationID = params['e_quotID'];
+        this.FormID_enquiryFromDetails = params['e_formID'];
+        this.subject_enquiryFromDetails = params['e_subject'];
+        this.validity_enquiryFromDetails = params['e_validity'];
+        this.version_enquiryFromDetails = params['e_version'];
 
-      // console.log("quotationId for edit", this.editQuotationID);
-      // console.log("formid", this.FormID_enquiryFromDetails);
-      // console.log("subject", this.subject_enquiryFromDetails);
-      // console.log("validity", this.validity_enquiryFromDetails);
-      // console.log("version", this.version_enquiryFromDetails);
+        // console.log("quotationId for edit", this.editQuotationID);
+        // console.log("formid", this.FormID_enquiryFromDetails);
+        // console.log("subject", this.subject_enquiryFromDetails);
+        // console.log("validity", this.validity_enquiryFromDetails);
+        // console.log("version", this.version_enquiryFromDetails);
 
-      // console.log(this.editQuotationID);
-      // console.log(this.FormID_enquiryFromDetails);
-      // console.log(this.subject_enquiryFromDetails);
-      // console.log(this.validity_enquiryFromDetails);
-      // console.log(this.version_enquiryFromDetails);
-      this.testVariable = this.editQuotationID;
-    
-      // this.editQuotation();
-      // this.totalCalculate();
-    }
-    );
+        // console.log(this.editQuotationID);
+        // console.log(this.FormID_enquiryFromDetails);
+        // console.log(this.subject_enquiryFromDetails);
+        // console.log(this.validity_enquiryFromDetails);
+        // console.log(this.version_enquiryFromDetails);
+        this.testVariable = this.editQuotationID;
+
+        // this.editQuotation();
+        // this.totalCalculate();
+      }
+      );
   }
   keywordpd_productName_autocomplete = 'partNo';
   ngOnInit(): void {
     // this.editQuotation();
-   // this.TaxDropdown();
+    // this.TaxDropdown();
     this.ExtraLogoList = ["IT Care", "Calncall", "DID Sg", "Callcloud", "Mrvoip"];
-    
+
     this.editQuotationInvoice_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
       'e_quotationNumber': new FormControl(null),
-      'e_selectFooter':new FormControl(null, [Validators.required]),
+      'e_selectFooter': new FormControl(null, [Validators.required]),
       'e_quotationDate': new FormControl(null),
       'e_customer_id': new FormControl(null),
       'e_customerName': new FormControl(null, [Validators.required]),
@@ -159,11 +159,11 @@ datavalue:any;
       'e_salesRep': new FormControl(null),
       'salesRep_id': new FormControl(null),
 
-      'e_selectTemplate':  new FormControl(null, [Validators.required]),
+      'e_selectTemplate': new FormControl(null, [Validators.required]),
       'e_selectReseller': new FormControl(null),
       'e_selectCurrency': new FormControl(null),
       'e_extraLogo': new FormControl(null),
-      'e_selectPDFTemplate':  new FormControl(null, [Validators.required]),
+      'e_selectPDFTemplate': new FormControl(null, [Validators.required]),
       'e_selectTermsConditions': new FormControl(null, [Validators.required]),
       'e_termsCondition_DontShow': new FormControl(null),
       'e_DescriptionText': new FormControl(null),
@@ -200,93 +200,92 @@ datavalue:any;
       this.test[index] = true;
 
     });
-    if(this.editQuotationID!='')
-    {
+    if (this.editQuotationID != '') {
       this.editQuotation();
       setTimeout(() => {
         this.totalCalculate();
       }, 2000);
-      
+
     }
   }
   onDrop(event: CdkDragDrop<string[]>) {
-   // console.log("event drag drop", event)
+    // console.log("event drag drop", event)
     moveItemInArray(this.addressControls.controls, event.previousIndex, event.currentIndex);
-   // console.log(this.addressControls.controls, event.previousIndex, event.currentIndex)
+    // console.log(this.addressControls.controls, event.previousIndex, event.currentIndex)
 
   }
-  
+
   termsCondition_DontShow_eventCheck(e: any) {
     this.checkbox_termsCondition_DontShow = e.target.checked;
-  //  console.log(this.checkbox_termsCondition_DontShow);
+    //  console.log(this.checkbox_termsCondition_DontShow);
   }
 
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
-  //  console.log(this.checkbox_descriptionDetails_DontShow);
+    //  console.log(this.checkbox_descriptionDetails_DontShow);
   }
   checkbox_productDetails_Split: any;
   productDetails_Split_eventCheck(e: any) {
     this.checkbox_productDetails_Split = e.target.checked
-   // console.log(this.checkbox_productDetails_Split);
+    // console.log(this.checkbox_productDetails_Split);
   }
   checkbox_productDetails_GPTotal: any;
   productDetails_GPTotal_eventCheck(e: any) {
     this.checkbox_productDetails_GPTotal = e.target.checked
-   // console.log(this.checkbox_productDetails_GPTotal);
+    // console.log(this.checkbox_productDetails_GPTotal);
   }
   checkbox_productDetails_selectTax: any;
   checkbox_GrantTotalShow: any;
   eventCheckGrantTotalShows(e: any) {
     this.checkbox_GrantTotalShow = e.target.checked
-  //  console.log(this.checkbox_GrantTotalShow);
+    //  console.log(this.checkbox_GrantTotalShow);
   }
-  checkbox_selectAdditionalSignature:any;
-  eventCheckSelectAdditionalSignature(e:any){
-    if(this.quotationAddSignature_state==1){
-      if(e.target.checked==true){
-        $('#signature_img_id').css("display","block");
-      }else{
-        $('#signature_img_id').css("display","none");
+  checkbox_selectAdditionalSignature: any;
+  eventCheckSelectAdditionalSignature(e: any) {
+    if (this.quotationAddSignature_state == 1) {
+      if (e.target.checked == true) {
+        $('#signature_img_id').css("display", "block");
+      } else {
+        $('#signature_img_id').css("display", "none");
       }
-    }else{
-      $('#signature_message_id').css("display","block");
+    } else {
+      $('#signature_message_id').css("display", "block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-  //  console.log(this.checkbox_selectAdditionalSignature );
+    //  console.log(this.checkbox_selectAdditionalSignature );
   }
 
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-   // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+    // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
     this.currencyQuotationTermChange();
 
   }
   handleChange(evt: any) {
     this.selectFooter("any");
     var radioSelectFooter = evt.target.value;
-    this.radioSelectFooterChecked=evt.target.checked;
+    this.radioSelectFooterChecked = evt.target.checked;
     // console.log("evt.target.checked global variable",this.radioSelectFooterChecked)
     // console.log("radio button value", radioSelectFooter);
   }
 
   selectEventProduct(item: any, i: any) {
 
-   // console.log("product item selected", item)
+    // console.log("product item selected", item)
     this.product_name_AutoComplete = item.partNo;
-   // console.log("product item.partNo selected", item.partNo)
+    // console.log("product item.partNo selected", item.partNo)
     if (this.product_name_AutoComplete != '') {
       this.productNameAutoFill(i)
     }
   }
   onFocusedProduct(e: any) {
-   // console.log("onFocusedProduct ", e)
+    // console.log("onFocusedProduct ", e)
     // do something when input is focused
   }
 
   changeProductName_partNO(e: any) {
-   // console.log(e.target.value);
+    // console.log(e.target.value);
   }
 
 
@@ -294,7 +293,7 @@ datavalue:any;
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -314,13 +313,13 @@ datavalue:any;
     // console.log(this.itre)
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-     // console.log(this.test[index])
+      // console.log(this.test[index])
     });
   }
-  
+
   EditAddress_FormControl(): FormGroup {
     return this.fb.group({
-      
+
       pd_productName_txtbox1: '',
       pd_productName_autocomplete: '',
       pd_productName_txtArea: '',
@@ -347,31 +346,31 @@ datavalue:any;
 
   dynamicChange(event: any) {
     this.billerID = event.target.value;
-   // console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
     // this.TaxDropdown();
-     let api_req: any = new Object();
-     let api_dynamicDropdown_req: any = new Object();
-     api_req.moduleType = "quotation";
-         api_req.api_url = "quotation/get_customercbo_quat_no";
-	     api_req.api_type = "web";
-	         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-		     api_dynamicDropdown_req.action = "get_customercbo_quat_no";
-		         api_dynamicDropdown_req.user_id = this.editQuotationInvoice_section1.value.e_salesRep;
-			     api_dynamicDropdown_req.billerId = this.billerID;
-			         api_req.element_data = api_dynamicDropdown_req;
-				   this.serverService.sendServer(api_req).subscribe((response: any) => {
-		//		   this.FooterDetails = response.footer_details;
-				//   console.log("dynamic Dropdown change response", response)
-				   
-				 //  console.log("dynamic term condition change response", response.quotation_terms_cond)
-          //  alert("dynamic change")
-				  //     alert(response.quotation_terms_cond);  
-					 for (let index = 0; index < response.footer_details.length; index++) {
-					  this.billerIDUpdate = response.footer_details[index].billerId;
+    let api_req: any = new Object();
+    let api_dynamicDropdown_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_customercbo_quat_no";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_dynamicDropdown_req.action = "get_customercbo_quat_no";
+    api_dynamicDropdown_req.user_id = this.editQuotationInvoice_section1.value.e_salesRep;
+    api_dynamicDropdown_req.billerId = this.billerID;
+    api_req.element_data = api_dynamicDropdown_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      //		   this.FooterDetails = response.footer_details;
+      //   console.log("dynamic Dropdown change response", response)
+
+      //  console.log("dynamic term condition change response", response.quotation_terms_cond)
+      //  alert("dynamic change")
+      //     alert(response.quotation_terms_cond);  
+      for (let index = 0; index < response.footer_details.length; index++) {
+        this.billerIDUpdate = response.footer_details[index].billerId;
         if (response.status == true) {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': response.quotation_no,
-   //         'e_selectFooter': response.footer_details[index].pdf_footer_id,
+            //         'e_selectFooter': response.footer_details[index].pdf_footer_id,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
@@ -382,7 +381,7 @@ datavalue:any;
         else {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': '',
-     //       'e_selectFooter': '',
+            //       'e_selectFooter': '',
             'e_selectCurrency': '',
             'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
@@ -396,7 +395,7 @@ datavalue:any;
   }
   dynamicChange_edit(val: any) {
     this.billerID = val;
-   // console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
     this.TaxDropdown();
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
@@ -411,57 +410,61 @@ datavalue:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.FooterDetails = response.footer_details;
+
       // console.log("dynamic Dropdown change response", response)
       // console.log("dynamic term condition change response", response.quotation_terms_cond)
       // alert("dynamic change-edit")
       // alert(response.quotation_terms_cond)
-     // this.FooterDetails = response.footer_details;
+      // this.FooterDetails = response.footer_details;
       this.currencyOld_RadioValue = response.currency_id;
-      this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
-      for (let index = 0; index < response.footer_details.length; index++) {
-        this.billerIDUpdate = response.footer_details[index].billerId;
-        if (response.status == true) {
-          this.editQuotationInvoice_section1.patchValue({
-            // 'e_quotationNumber': response.quotation_no,
-             // 'e_DescriptionText': response.quotation_desp_det,
+      this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
+      if (response.footer_details) {
+        this.FooterDetails = response.footer_details;
+        for (let index = 0; index < response.footer_details.length; index++) {
+          this.billerIDUpdate = response.footer_details[index].billerId;
+          if (response.status == true) {
+            this.editQuotationInvoice_section1.patchValue({
+              // 'e_quotationNumber': response.quotation_no,
+              // 'e_DescriptionText': response.quotation_desp_det,
 
 
-            'e_selectFooter': this.selected_pdf_footer,
-            // 'e_selectCurrency': response.currency_id,
-            // 'e_termConditionContentChange': response.quotation_terms_cond,
-           
-          });
+              'e_selectFooter': this.selected_pdf_footer,
+              // 'e_selectCurrency': response.currency_id,
+              // 'e_termConditionContentChange': response.quotation_terms_cond,
+
+            });
 
 
-        }
-        else {
-          this.editQuotationInvoice_section1.patchValue({
-            'e_quotationNumber': '',
+          }
+          else {
+            this.editQuotationInvoice_section1.patchValue({
+              'e_quotationNumber': '',
               // 'e_DescriptionText': '',
 
-           'e_selectFooter': '',
-            // 'e_selectCurrency': '',
-            // 'e_termConditionContentChange': '',
-          
-          });
+              'e_selectFooter': '',
+              // 'e_selectCurrency': '',
+              // 'e_termConditionContentChange': '',
+
+            });
+          }
         }
       }
-    
-    setTimeout(() => {
-      this.selectFooter(this.selected_pdf_footer);
-    }, 1000)
+
+
+      setTimeout(() => {
+        this.selectFooter(this.selected_pdf_footer);
+      }, 1000)
 
     });
   }
-  selectFooter(selval:any){
-     $('#footer_'+selval).prop('checked', true);
+  selectFooter(selval: any) {
+    $('#footer_' + selval).prop('checked', true);
   }
   editQuotation() {
-    
+
     // window.location.reload();
-  //  console.log("quotation id check for edit", this.editQuotationID)
-   
+    //  console.log("quotation id check for edit", this.editQuotationID)
+
     let api_req: any = new Object();
     let edit_Quotation_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -473,14 +476,14 @@ datavalue:any;
     edit_Quotation_req.quotation_id = this.editQuotationID;
     api_req.element_data = edit_Quotation_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
-    //  console.log("edit quotation response", response);
+      //  console.log("edit quotation response", response);
       if (response != '') {
         // alert(response.quotation_details[0].terms_conditions);
         this.dynamicChange_edit(response.quotation_details[0].billerId);
         this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
-      //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
+        //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;
         this.SelectTemplateList = response.quotation_template;
@@ -492,7 +495,7 @@ datavalue:any;
         this.additionalSignatureList = response.additional_signature_list;
 
         if (response.sales_rep_status.dropdown_status == 0) {
-         // console.log("response.sales_rep.name", response.sales_rep.name);
+          // console.log("response.sales_rep.name", response.sales_rep.name);
 
           this.editQuotationInvoice_section1.patchValue({
             'salesRep_id': response.sales_rep.name,
@@ -500,13 +503,13 @@ datavalue:any;
           });
 
         }
-        this.finalTax=response.quotation_details[0].tax_amt1
-     // console.log("this.finalTax on edit",this.finalTax)
+        this.finalTax = response.quotation_details[0].tax_amt1
+        // console.log("this.finalTax on edit",this.finalTax)
         this.editQuotationInvoice_section1.patchValue({
 
           'e_companyName': response.quotation_details[0].billerId,
           'e_quotationNumber': response.quotation_details[0].quotation_no,
-   //       'e_selectFooter': response.quotation_details[0].pdf_footer_id,
+          //       'e_selectFooter': response.quotation_details[0].pdf_footer_id,
           'e_quotationDate': response.quotation_details[0].quotation_date,
           'e_customer_id': response.quotation_details[0].customer_id,
           'e_customerName': response.quotation_details[0].customerName,
@@ -530,28 +533,28 @@ datavalue:any;
 
 
         });
-        
+
         //$('#test_'+response.quotation_details[0].pdf_footer_id).prop('checked', true);
-       this.selected_pdf_footer = response.quotation_details[0].pdf_footer_id;
-        
-       // console.log("testing123456", response.quotation_details[0].pdf_footer_id);
+        this.selected_pdf_footer = response.quotation_details[0].pdf_footer_id;
+
+        // console.log("testing123456", response.quotation_details[0].pdf_footer_id);
 
         const formArray = new FormArray([]);
         for (let index = 0; index < response.quotation_child_det.length; index++) {
-          this.sub_dis_type='';
-          this.sub_dis_val='';
-          if(response.quotation_child_det[index].dis_per!=''){
-            this.sub_dis_type='per';
-            this.sub_dis_val=response.quotation_child_det[index].dis_per;
-          }else if(response.quotation_child_det[index].dis_amt!=''){
-            this.sub_dis_type='amt';
-            this.sub_dis_val=response.quotation_child_det[index].dis_amt;
+          this.sub_dis_type = '';
+          this.sub_dis_val = '';
+          if (response.quotation_child_det[index].dis_per != '') {
+            this.sub_dis_type = 'per';
+            this.sub_dis_val = response.quotation_child_det[index].dis_per;
+          } else if (response.quotation_child_det[index].dis_amt != '') {
+            this.sub_dis_type = 'amt';
+            this.sub_dis_val = response.quotation_child_det[index].dis_amt;
           }
-           // alert('ttt'+response.quotation_child_det[index].header_split);
-        
+          // alert('ttt'+response.quotation_child_det[index].header_split);
+
           formArray.push(this.fb.group({
-             "pd_productName_autocomplete": response.quotation_child_det[index].productName_desc,
-          //  "pd_split": response.quotation_child_det[index].header_split,
+            "pd_productName_autocomplete": response.quotation_child_det[index].productName_desc,
+            //  "pd_split": response.quotation_child_det[index].header_split,
             "pd_productName_txtbox1": response.quotation_child_det[index].productName,
             "pd_productName_txtArea": response.quotation_child_det[index].productDesc,
             "pd_quantity_txtbox1": response.quotation_child_det[index].qty,
@@ -562,7 +565,7 @@ datavalue:any;
             "pd_netPrice": response.quotation_child_det[index].totat_amt,
             "sub_dis_amt": response.quotation_child_det[index].dis_amt,
             "sub_dis_type": this.sub_dis_type,
-            "sub_dis_val":  this.sub_dis_val,
+            "sub_dis_val": this.sub_dis_val,
             "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
             "pd_GPTotal": response.quotation_child_det[index].group_total_display_status == 1 ? true : false,
             "pd_selectTax": response.quotation_child_det[index].tax_state == 1 ? true : false,
@@ -571,38 +574,38 @@ datavalue:any;
 
           })
 
-          
-          
-          );  
-          this.set_display_none(index); 
 
-          
+
+          );
+          this.set_display_none(index);
+
+
         }
 
-       // console.log(formArray)
+        // console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
         // this.addresses.push(this.addQuotationInvoice_section2);
         // console.log(this.addresses)
-      //  console.log('response.quotation_details[0].grand_total'+response.quotation_details[0].grand_total);
+        //  console.log('response.quotation_details[0].grand_total'+response.quotation_details[0].grand_total);
 
-      this.finalDiscountType = '';
-      this.finalDiscountVal='';
-      this.finalDiscount='';
-     // console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
-     
-      if(response.quotation_details[0].signature_filename!=''){
-        this.sign_state=1;
-      }
-      this.quotationAddSignature_filename=response.quotation_details[0].signature_filename;
+        this.finalDiscountType = '';
+        this.finalDiscountVal = '';
+        this.finalDiscount = '';
+        // console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
 
-      if(response.quotation_details[0].par_dis_per!=''){
-        this.finalDiscountType = 'per';
-        this.finalDiscountVal=response.quotation_details[0].par_dis_per;
-        this.finalDiscount=response.quotation_details[0].par_dis_amt;
-      }else if(response.quotation_details[0].par_dis_amt!=''){
-        this.finalDiscountType = 'amt';
-        this.finalDiscount=response.quotation_details[0].par_dis_amt;
-      }
+        if (response.quotation_details[0].signature_filename != '') {
+          this.sign_state = 1;
+        }
+        this.quotationAddSignature_filename = response.quotation_details[0].signature_filename;
+
+        if (response.quotation_details[0].par_dis_per != '') {
+          this.finalDiscountType = 'per';
+          this.finalDiscountVal = response.quotation_details[0].par_dis_per;
+          this.finalDiscount = response.quotation_details[0].par_dis_amt;
+        } else if (response.quotation_details[0].par_dis_amt != '') {
+          this.finalDiscountType = 'amt';
+          this.finalDiscount = response.quotation_details[0].par_dis_amt;
+        }
 
 
 
@@ -639,41 +642,41 @@ datavalue:any;
         this.quotationAddSignatureEdit(this.sign_state);
         //this.tax_per_mod = response.quotation_details[0].tax_id1;
         this.editAddress();
-       // console.log(response.quotation_child_det.length);
+        // console.log(response.quotation_child_det.length);
         this.removeAddresstest(response.quotation_child_det.length);
-        
-        
-
-          // for (let index = 0; index < response.quotation_child_det.length; index++) {
-      
-          //    if(response.quotation_child_det[index].header_split == 1){
-
-          //     $('#pd_split_'+[index]).prop('checked',false);
-          //     setTimeout(()=>{
-          //       $('#pd_split_'+[index]).click();
-          //     },1000);
-
-          
-          //     }else{
-          //     $('#pd_split_'+[index]).prop('checked',false);
 
 
-          //     }          
-          //  }
-        
-          for(let index = 0; index < response.quotation_child_det.length; index++){
-            setTimeout(()=>{
-              this.set_display_none(index);
-                  },1000);
 
-          }
+        // for (let index = 0; index < response.quotation_child_det.length; index++) {
+
+        //    if(response.quotation_child_det[index].header_split == 1){
+
+        //     $('#pd_split_'+[index]).prop('checked',false);
+        //     setTimeout(()=>{
+        //       $('#pd_split_'+[index]).click();
+        //     },1000);
 
 
-      //         setTimeout(()=>{
-      //   // this.set_display_none(1);
-      //  // $('#pd_split_'+2).prop('checked',false);
-      //   $('#pd_split_'+index).click();
-      // },1000)
+        //     }else{
+        //     $('#pd_split_'+[index]).prop('checked',false);
+
+
+        //     }          
+        //  }
+
+        for (let index = 0; index < response.quotation_child_det.length; index++) {
+          setTimeout(() => {
+            this.set_display_none(index);
+          }, 1000);
+
+        }
+
+
+        //         setTimeout(()=>{
+        //   // this.set_display_none(1);
+        //  // $('#pd_split_'+2).prop('checked',false);
+        //   $('#pd_split_'+index).click();
+        // },1000)
 
       }
       else {
@@ -691,17 +694,17 @@ datavalue:any;
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log(error);
+        // console.log(error);
       }
-    
 
-       
-      
+
+
+
 
   }
   templateContentDropdown(event: any) {
     this.quotation_template_id = event.target.value;
-   // console.log("quotation dropdown ID check", this.quotation_template_id);
+    // console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -714,7 +717,7 @@ datavalue:any;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation-template Dropdown response", response)
+      // console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         this.editQuotationInvoice_section1.patchValue({
@@ -736,7 +739,7 @@ datavalue:any;
 
     });
   }
-  quotationAddSignatureEdit(sign_val:any){
+  quotationAddSignatureEdit(sign_val: any) {
     //alert('sign_state'+sign_state);
     let api_req: any = new Object();
     let api_quotationAddSignatureEdit_req: any = new Object();
@@ -747,35 +750,35 @@ datavalue:any;
     api_quotationAddSignatureEdit_req.action = "quotation_add_signature_edit";
     //api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_quotationAddSignatureEdit_req.user_id = this.editQuotationInvoice_section1.value.e_salesRep;
-   // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
     api_quotationAddSignatureEdit_req.billerId = this.editQuotationInvoice_section1.value.e_companyName;
-    api_quotationAddSignatureEdit_req.quotationId= this.editQuotationID ;
+    api_quotationAddSignatureEdit_req.quotationId = this.editQuotationID;
     api_req.element_data = api_quotationAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-// console.log("quotation-quotation_add_signature response", response)
+      // console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
-      
-        this.quotationAddSignature_state=response.signature_state;
+
+        this.quotationAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
-        if(sign_val==0){
-        //  console.log('response.signature_filename'+response.signature_filename);
-          this.quotationAddSignature_filename=response.signature_filename;
+        if (sign_val == 0) {
+          //  console.log('response.signature_filename'+response.signature_filename);
+          this.quotationAddSignature_filename = response.signature_filename;
         }
-       
-        this.quotationAddSignatureCHKShowState=response.quot_signature_show_state;
+
+        this.quotationAddSignatureCHKShowState = response.quot_signature_show_state;
 
         this.addQuotationInvoice_section3.patchValue({
           //section-3
 
           //row-9
-     //     'section3_select_additional_signature': response.quot_signature_show_state,
+          //     'section3_select_additional_signature': response.quot_signature_show_state,
 
         });
       }
       else {
-       
+
       }
 
 
@@ -785,7 +788,7 @@ datavalue:any;
   }
   TermsConditionsContentDropdown(event: any) {
     this.terms_condition_id = event.target.value;
-   // console.log("template terms_condition ID check", this.terms_condition_id);
+    // console.log("template terms_condition ID check", this.terms_condition_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -799,7 +802,7 @@ datavalue:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation-template Dropdown response", response)
+      // console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         // alert("term condition content dropdown")
@@ -838,7 +841,7 @@ datavalue:any;
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation-template Tax Dropdown response", response)
+      // console.log("quotation-template Tax Dropdown response", response)
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
@@ -866,7 +869,7 @@ datavalue:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation/currency_change", response)
+      // console.log("quotation/currency_change", response)
       this.CurrencyChangeFieldValue = response.terms
       if (response.status == true) {
         // alert("currencyQuotationTermChange")
@@ -888,7 +891,7 @@ datavalue:any;
 
   }
   updateQuotationEnquiry($event: MouseEvent) {
-    
+
     let api_req: any = new Object();
     let api_UpdateEnquiry_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -907,7 +910,7 @@ datavalue:any;
     api_UpdateEnquiry_req.billerId = this.editQuotationInvoice_section1.value.e_companyName;
     api_UpdateEnquiry_req.quotation_no = this.editQuotationInvoice_section1.value.e_quotationNumber;
     api_UpdateEnquiry_req.pdf_footer_id = this.editQuotationInvoice_section1.value.e_selectFooter;
-   // api_UpdateEnquiry_req.pdf_footer_id = $('input:radio[name=selectFooter_name]:checked').val();
+    // api_UpdateEnquiry_req.pdf_footer_id = $('input:radio[name=selectFooter_name]:checked').val();
     api_UpdateEnquiry_req.quotation_date = this.editQuotationInvoice_section1.value.e_quotationDate;
     api_UpdateEnquiry_req.customer_id = this.editQuotationInvoice_section1.value.e_customer_id;
     api_UpdateEnquiry_req.customerName = this.editQuotationInvoice_section1.value.e_customerName;
@@ -936,12 +939,12 @@ datavalue:any;
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
       const addressesArray = this.addQuotationInvoice_section2.get('addresses') as FormArray;
-     // console.log(addr[i].pd_quantity_txtbox1)
+      // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_quotationChildId = $('#pd_quotationChildId_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       // addr[i].pd_productName_autocomplete = $('#productName_autoCompl_' + i).val();
       addr[i].pd_productName_autocomplete = addressesArray.at(i).get('pd_productName_autocomplete')?.value;
-      console.log("autocomplete quot",addr[i].pd_productName_autocomplete)
+     // console.log("autocomplete quot", addr[i].pd_productName_autocomplete)
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
       addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
@@ -950,10 +953,10 @@ datavalue:any;
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
-      addr[i].pd_split = $('#pd_split_'+i).prop('checked');
-      addr[i].to_next_page = $('#to_next_page_'+i).prop('checked');
-      addr[i].pd_selectTax = $('#pd_selectTax_'+i).prop('checked');
-      addr[i].pd_GPTotal = $('#pd_GPTotal_'+i).prop('checked');
+      addr[i].pd_split = $('#pd_split_' + i).prop('checked');
+      addr[i].to_next_page = $('#to_next_page_' + i).prop('checked');
+      addr[i].pd_selectTax = $('#pd_selectTax_' + i).prop('checked');
+      addr[i].pd_GPTotal = $('#pd_GPTotal_' + i).prop('checked');
     }
     api_UpdateEnquiry_req.values = addr;
 
@@ -965,7 +968,7 @@ datavalue:any;
     //row-2
     api_UpdateEnquiry_req.discount_amt_tot = this.addQuotationInvoice_section3.value.section3_discount_txtbox;
     api_UpdateEnquiry_req.final_dis_type = this.addQuotationInvoice_section3.value.final_dis_type;
-    api_UpdateEnquiry_req.final_dis_val = this.addQuotationInvoice_section3.value.final_dis_val;    
+    api_UpdateEnquiry_req.final_dis_val = this.addQuotationInvoice_section3.value.final_dis_val;
     //row-3
     api_UpdateEnquiry_req.taxId = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
     api_UpdateEnquiry_req.taxPer = this.addQuotationInvoice_section3.value.section3_tax_per_hd;
@@ -991,7 +994,7 @@ datavalue:any;
     //section-2
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-     // console.log(addr[i].pd_quantity_txtbox1)
+      // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -1002,13 +1005,13 @@ datavalue:any;
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
     }
-   api_UpdateEnquiry_req.values = addr;
-	// console.log(api_req);
-  ($event.target as HTMLButtonElement).disabled = true;
+    api_UpdateEnquiry_req.values = addr;
+    // console.log(api_req);
+    ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       ($event.target as HTMLButtonElement).disabled = false;
 
-    //  console.log("add quotation new save", response);
+      //  console.log("add quotation new save", response);
       if (response.status == true) {
         iziToast.success({
           title: 'Updated',
@@ -1034,9 +1037,9 @@ datavalue:any;
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
-      }
+  }
 
   searchCustomer_selectDropdownData(data: any) {
 
@@ -1055,11 +1058,11 @@ datavalue:any;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    //  console.log('response'+response);
+      //  console.log('response'+response);
       if (response.status == true) {
         // this.autocomplete_CustomerID = response.customer_list[0].customerId;
-       //  this.autocomplete_CustomerName = response.customer_list[0].customerName;
-       //console.log('response.customer_list'+ response.customer_list);
+        //  this.autocomplete_CustomerName = response.customer_list[0].customerName;
+        //console.log('response.customer_list'+ response.customer_list);
         this.editQuotationInvoice_section1.patchValue({
           'e_customer_id': response.customer_list.customerId,
           'e_customerName': response.customer_list.customerName,
@@ -1068,15 +1071,15 @@ datavalue:any;
           'e_cust_address3': response.customer_list.customerAddress3,
           'e_attention': response.customer_list.kind_Attention,
 
-        //   'e_customer_id': response.customer_list[0].customerId,
-        // //  'e_cust_address1': response.customer_list[0].customerAddress1,
-        //   'e_cust_address2': response.customer_list[0].customerAddress2,
-        //   'e_cust_address3': response.customer_list[0].customerAddress3,
-        //   'e_customerName': response.customer_list[0].customerName,
-        //   'e_attention': response.customer_list[0].kind_Attention,
+          //   'e_customer_id': response.customer_list[0].customerId,
+          // //  'e_cust_address1': response.customer_list[0].customerAddress1,
+          //   'e_cust_address2': response.customer_list[0].customerAddress2,
+          //   'e_cust_address3': response.customer_list[0].customerAddress3,
+          //   'e_customerName': response.customer_list[0].customerName,
+          //   'e_attention': response.customer_list[0].kind_Attention,
         });
 
-      //  alert('test');
+        //  alert('test');
       }
       else {
         this.editQuotationInvoice_section1.patchValue({
@@ -1106,7 +1109,7 @@ datavalue:any;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer_name response", response);
+      // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1116,7 +1119,7 @@ datavalue:any;
 
   }
   searchCustomerDataMouse(data: any) {
-   // console.log("search data afer mouse click", data)
+    // console.log("search data afer mouse click", data)
   }
   searchProductName(data: any) {
 
@@ -1132,13 +1135,13 @@ datavalue:any;
     api_SearchProd_req.part_no = data;
     api_req.element_data = api_SearchProd_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("quotation/product_name_auto response", response);
+      // console.log("quotation/product_name_auto response", response);
       this.searchResult_productName = response.products_list;
-      console.log("response.partNo", response.products_list)
+    //  console.log("response.partNo", response.products_list)
       // console.log("response.partNo",response.partNo)
 
       if (response.status != '') {
- // this.productNameAutoFill();
+        // this.productNameAutoFill();
 
       }
 
@@ -1171,13 +1174,13 @@ datavalue:any;
       $('#pd_productName_txtbox_' + i).val(response[0].productName)
       $('#pd_productName_txtArea_' + i).val(response[0].productDesc)
       $('#pd_SP_' + i).val(response[0].rate)
- //   this.fb.group({pd_sellingPrice:response[0].rate});
+      //   this.fb.group({pd_sellingPrice:response[0].rate});
 
     });
   }
   clearAddress() {
     var t = this.addQuotationInvoice_section2.value;
-   // console.log(t)
+    // console.log(t)
   }
   totalCalculate() {
 
@@ -1188,11 +1191,11 @@ datavalue:any;
     var grs_amt = 0;
     var sub_total_amt = 0;
 
-    let discount_type :any;
-    var total_amt:any;
-    var dis_amt_val:any;
+    let discount_type: any;
+    var total_amt: any;
+    var dis_amt_val: any;
 
-    var total_amt:any;
+    var total_amt: any;
     var addr = this.addQuotationInvoice_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
@@ -1210,44 +1213,44 @@ datavalue:any;
 
       discount_type = $('#sub_discount_type_' + a).val();
       // console.log('discount_type'+discount_type);
-      if(discount_type=='per'){
+      if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-       // console.log('discount_type1111'+this.sub_dis_val);
+        // console.log('discount_type1111'+this.sub_dis_val);
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-       // console.log('dis_amt_val'+dis_amt_val);
-        sub_total_amt = parseFloat(total_amt)-parseFloat(dis_amt_val)
+        // console.log('dis_amt_val'+dis_amt_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
-      }else if(discount_type=='amt'){
-       // console.log('discount_type222'+discount_type);
-       
+      } else if (discount_type == 'amt') {
+        // console.log('discount_type222'+discount_type);
+
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-       // console.log('sub_discount_valppp'+this.sub_dis_val);
-       sub_total_amt =parseFloat(total_amt)-parseFloat( this.sub_dis_val);
+        // console.log('sub_discount_valppp'+this.sub_dis_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
         $('#pd_netPrice_' + a).val(sub_total_amt);
-      }else{
+      } else {
         $('#pd_netPrice_' + a).val(total_amt);
-        sub_total_amt=total_amt;
+        sub_total_amt = total_amt;
       }
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod!=null)  {
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
-        
+
 
         tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
         tax_amt_tot += tax_amt;
 
       }
 
-      
 
-      
-     // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
-     // $('#pd_netPrice_' + a).val(sub_total_amt);
+
+
+      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
+      // $('#pd_netPrice_' + a).val(sub_total_amt);
       //  alert('total_amt'+total_amt);
       grs_amt += sub_total_amt;
 
-    
+
       //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
       //   alert(grs_amt);
     }
@@ -1311,7 +1314,7 @@ datavalue:any;
     }
   }
 
-  assignRowVal(val: any){
+  assignRowVal(val: any) {
     this.quotationPriceKey = val;
 
   }
@@ -1319,14 +1322,14 @@ datavalue:any;
     var enablePercentabeDiscont = $('#enablePercentabeDiscont').val()
     var enablePriceDiscont = $('#enablePriceDiscont').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
-   //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
-   //console.log('quotationPriceKey'+this.quotationPriceKey);
-   //console.log('disType'+disType);
+    //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
+    //console.log('quotationPriceKey'+this.quotationPriceKey);
+    //console.log('disType'+disType);
     var final_tot = $('#pd_Total_' + this.quotationPriceKey).val();
     $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
-   // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
         //   console.log('3333'+final_tot);
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
@@ -1338,7 +1341,7 @@ datavalue:any;
       } else {
         $('#sub_discount_' + this.quotationPriceKey).val('');
         $('#sub_discount_val_' + this.quotationPriceKey).val('');
-          // console.log('222'+final_tot);
+        // console.log('222'+final_tot);
         price = final_tot;
 
       }
@@ -1350,7 +1353,7 @@ datavalue:any;
       $('#sub_discount_val_' + this.quotationPriceKey).val(enablePriceDiscont);
 
       // console.log(price);
-          }
+    }
 
     $('#pd_netPrice_' + this.quotationPriceKey).val(price)
 
@@ -1376,7 +1379,7 @@ datavalue:any;
       this.grandTotal = this.grandTotal + this.extraCharge;
     }
     $('#discountFormId').modal('hide');
-this.DiscountForm.reset();
+    this.DiscountForm.reset();
     this.totalCalculate();
 
   }
@@ -1386,7 +1389,7 @@ this.DiscountForm.reset();
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-   // console.log('row_cnt' + row_cnt);
+    // console.log('row_cnt' + row_cnt);
     $('#enablePercentabeDiscont').val('');
     $('#enablePriceDiscont').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -1412,27 +1415,27 @@ this.DiscountForm.reset();
   saveGrossDiscount() {
     var enablePercentabeDiscont = $('#enablePerFinal').val()
     var enablePriceDiscont = $('#enablePriceFinal').val()
-  var tax_amt = $('#tax_amt_id').val()
+    var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
     var price: any;
-// console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
     $('#final_discount_type').val(disType);
-    this.finalDiscountType=disType;
+    this.finalDiscountType = disType;
 
     if (disType == 'per') {
- // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
         //  console.log('3333'+final_tot);
-      price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
- $('#final_discount').val(price);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
         $('#final_discount_val').val(enablePercentabeDiscont);
-        this.finalDiscountVal=enablePercentabeDiscont;
+        this.finalDiscountVal = enablePercentabeDiscont;
         //     price = final_tot - price;
       } else {
         $('#final_discount').val('');
         $('#final_discount_val').val('');
-        this.finalDiscountVal='';
+        this.finalDiscountVal = '';
         //   console.log('222'+final_tot);
         price = 0;
 
@@ -1446,8 +1449,8 @@ this.DiscountForm.reset();
 
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
-      this.finalDiscountVal=enablePercentabeDiscont;
-     // console.log('999' + price);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      // console.log('999' + price);
 
     }
     if (this.grandTotal > 0) {
@@ -1455,27 +1458,27 @@ this.DiscountForm.reset();
     }
     this.finalDiscount = price
     $('#discountFormFinal').modal('hide');
-      }
-  
+  }
+
   calFinalDiscount() {
     $('#enablePerFinal').val('');
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-  //  console.log('111' + disType);
+    //  console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-    //  console.log('22' + disType);
+      //  console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-    //  console.log('33' + disType);
+      //  console.log('33' + disType);
     } else {
-     // console.log('44' + disType);
+      // console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -1504,7 +1507,7 @@ this.DiscountForm.reset();
       $('#tax_per_hd_id').val(response.percent_val);
 
       tax = response.percent_val;
-    tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
+      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
 
       this.finalTax = parseFloat(tax);
       // if (this.grossTotal > 0) {
@@ -1526,120 +1529,120 @@ this.DiscountForm.reset();
     this.extraCharge = parseFloat(fee);
     this.totalCalculate();
   }
-  set_display_none(cnt:any){
+  set_display_none(cnt: any) {
     //PN
-    if($('#pd_split_'+cnt).prop('checked')==true) {
-      $('#pd_productName_txtArea_'+cnt).fadeOut(1000);
-      $('#pd_qty_'+cnt).fadeOut(1000);
-      $('#pd_unit_'+cnt).fadeOut(1000);
-      $('#pd_SP_'+cnt).fadeOut(1000);
-      $('#discount_btn_'+cnt).fadeOut(1000);
-      $('#pd_Total_'+cnt).fadeOut(1000);
-      $('#sub_discount_'+cnt).fadeOut(1000);
-      $('#pd_netPrice_'+cnt).fadeOut(1000);
+    if ($('#pd_split_' + cnt).prop('checked') == true) {
+      $('#pd_productName_txtArea_' + cnt).fadeOut(1000);
+      $('#pd_qty_' + cnt).fadeOut(1000);
+      $('#pd_unit_' + cnt).fadeOut(1000);
+      $('#pd_SP_' + cnt).fadeOut(1000);
+      $('#discount_btn_' + cnt).fadeOut(1000);
+      $('#pd_Total_' + cnt).fadeOut(1000);
+      $('#sub_discount_' + cnt).fadeOut(1000);
+      $('#pd_netPrice_' + cnt).fadeOut(1000);
 
-      $('#pd_productName_txtArea_'+cnt).val('');
-      $('#pd_qty_'+cnt).val('');
-      $('#pd_unit_'+cnt).val('');
-      $('#pd_SP_'+cnt).val('');
-      $('#discount_btn_'+cnt).val('');
-      $('#pd_Total_'+cnt).val('');
-      $('#sub_discount_'+cnt).val('');
-      $('#pd_netPrice_'+cnt).val('');
+      $('#pd_productName_txtArea_' + cnt).val('');
+      $('#pd_qty_' + cnt).val('');
+      $('#pd_unit_' + cnt).val('');
+      $('#pd_SP_' + cnt).val('');
+      $('#discount_btn_' + cnt).val('');
+      $('#pd_Total_' + cnt).val('');
+      $('#sub_discount_' + cnt).val('');
+      $('#pd_netPrice_' + cnt).val('');
 
-    }else{
-      $('#pd_productName_txtArea_'+cnt).fadeIn(1000);
-      $('#pd_qty_'+cnt).fadeIn(1000);
-      $('#pd_unit_'+cnt).fadeIn(1000);
-      $('#pd_SP_'+cnt).fadeIn(1000);
-      $('#discount_btn_'+cnt).fadeIn(1000);
-      $('#pd_Total_'+cnt).fadeIn(1000);
-      $('#sub_discount_'+cnt).fadeIn(1000);
-      $('#pd_netPrice_'+cnt).fadeIn(1000);
+    } else {
+      $('#pd_productName_txtArea_' + cnt).fadeIn(1000);
+      $('#pd_qty_' + cnt).fadeIn(1000);
+      $('#pd_unit_' + cnt).fadeIn(1000);
+      $('#pd_SP_' + cnt).fadeIn(1000);
+      $('#discount_btn_' + cnt).fadeIn(1000);
+      $('#pd_Total_' + cnt).fadeIn(1000);
+      $('#sub_discount_' + cnt).fadeIn(1000);
+      $('#pd_netPrice_' + cnt).fadeIn(1000);
     }
-}
+  }
 
-removeAddress(i: number) {
-  // console.log(i)
-  // console.log(this.addresses)
-  
-  var quotationChildId = $('#pd_quotationChildId_' + i).val();
-  //console.log('quotationChildId'+quotationChildId);
+  removeAddress(i: number) {
+    // console.log(i)
+    // console.log(this.addresses)
 
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.value) {
-      this.addresses.removeAt(i);
-      var addr = this.addQuotationInvoice_section2.value.addresses;
-      var list_cnt = addr.length;
-      this.totalCalculate();
+    var quotationChildId = $('#pd_quotationChildId_' + i).val();
+    //console.log('quotationChildId'+quotationChildId);
 
-
-      let api_req: any = new Object();
-    let api_ProdAutoFill_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/delete_quotation_child";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_ProdAutoFill_req.action = "delete_quotation_child";
-    api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_ProdAutoFill_req.quotationChildId = quotationChildId;
-    api_req.element_data = api_ProdAutoFill_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-    // console.log("response", response)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.addresses.removeAt(i);
+        var addr = this.addQuotationInvoice_section2.value.addresses;
+        var list_cnt = addr.length;
+        this.totalCalculate();
 
 
-    });
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "quotation";
+        api_req.api_url = "quotation/delete_quotation_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.quotationChildId = quotationChildId;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          // console.log("response", response)
+
+
+        });
 
 
 
-     
-     
-    }
-  })
 
 
-}
-removeAddresstest(i: number) {
-  // console.log(i)
-  // console.log(this.addresses)
-      this.addresses.removeAt(i);
-      var addr = this.addQuotationInvoice_section2.value.addresses;
-      var list_cnt = addr.length;
-      this.totalCalculate();
-    
-}
+      }
+    })
 
-// removeAddress(i: number) {
-//     this.addresses.removeAt(i);
-// var addr = this.addQuotationInvoice_section2.value.addresses;
-//     var list_cnt = addr.length;
 
-//     this.totalCalculate();
-//   }
+  }
+  removeAddresstest(i: number) {
+    // console.log(i)
+    // console.log(this.addresses)
+    this.addresses.removeAt(i);
+    var addr = this.addQuotationInvoice_section2.value.addresses;
+    var list_cnt = addr.length;
+    this.totalCalculate();
+
+  }
+
+  // removeAddress(i: number) {
+  //     this.addresses.removeAt(i);
+  // var addr = this.addQuotationInvoice_section2.value.addresses;
+  //     var list_cnt = addr.length;
+
+  //     this.totalCalculate();
+  //   }
   // productDetails_selectTax_eventCheck(e: any, i: any) {
-    // this.checkbox_productDetails_selectTax = e.target.checked
-    // console.log(this.checkbox_productDetails_selectTax);
-    // var actualPrice = $('#pd_netPrice_' + i).val();
-    // if (this.addQuotationInvoice_section3.value.section3_gst_dropdown) {
-     //  var tax = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
-      // tax = (parseFloat(tax) * parseFloat(actualPrice) / 100).toFixed(2);
-      // if (this.checkbox_productDetails_selectTax == true) {
-        // this.grandTotal = this.grandTotal + parseFloat(tax);
-        // this.finalTax = this.finalTax + parseFloat(tax)
-      // } else {
-        // this.grandTotal = this.grandTotal - tax;
-        // this.finalTax = this.finalTax - parseFloat(tax)
-      // }
-    // }
+  // this.checkbox_productDetails_selectTax = e.target.checked
+  // console.log(this.checkbox_productDetails_selectTax);
+  // var actualPrice = $('#pd_netPrice_' + i).val();
+  // if (this.addQuotationInvoice_section3.value.section3_gst_dropdown) {
+  //  var tax = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
+  // tax = (parseFloat(tax) * parseFloat(actualPrice) / 100).toFixed(2);
+  // if (this.checkbox_productDetails_selectTax == true) {
+  // this.grandTotal = this.grandTotal + parseFloat(tax);
+  // this.finalTax = this.finalTax + parseFloat(tax)
+  // } else {
+  // this.grandTotal = this.grandTotal - tax;
+  // this.finalTax = this.finalTax - parseFloat(tax)
+  // }
+  // }
   // }
   redirecttoQuotation() {
 
@@ -1648,7 +1651,7 @@ removeAddresstest(i: number) {
 
   goBack() {
     this.router.navigate(['/quotationnew']);
-    
+
   }
 
 }

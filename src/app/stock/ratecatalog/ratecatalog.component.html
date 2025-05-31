@@ -1,0 +1,246 @@
+<div class="card">
+    <!-- Card Header -->
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <h3 class="card-header-section">
+                <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active">Product Rate Catalog</span>
+            </h3>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" (click)="toggleAccordion()">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div> 
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+        <div class="container-fluid">
+            <!-- Accordion Inside Card Body -->
+            <div *ngIf="isAccordionOpen" class="accordion-container">
+                <div class="accordion-header">Advanced Search</div>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6" *ngIf="billerCurrencyDetails && billerCurrencyDetails.length > 0">
+                                    <label class="biller-title"><strong>Biller Name</strong></label>
+                                    <div *ngFor="let item of billerCurrencyDetails" class="biller-item">
+                                      <input class="form-check-input" id="biller_id" type="checkbox" (change)="selectbiller($event,item.billerId)" [value]="item.billerId">
+                                      <label class="form-check-label">{{ item.billerName }}</label>
+                                    </div>
+                                </div>
+                                  
+                                <div class="col-md-6">
+                                    <label>Currency Name</label>
+                                    <select class="form-control" id="currency_id">
+                                        <option>Select Currency</option>
+                                        <option *ngFor="let currency of currencyList" [value]="currency.currencyId">
+                                            {{ currency.currency_name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Search Text</label>
+                                    <input type="text" class="form-control" id="search_data" placeholder="Enter search text">
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <button class="btn btn-primary" (click)="getRateCatalogDetails({})" style=" border: none; padding: 5px 15px; border-radius: 20px; font-size: 14px;"  (click)="isAccordionOpen = false"   >
+                                    Go >>
+                                </button>
+                                <button class="btn btn-danger" (click)="cancelAccordion()" style=" border: none; padding: 5px 15px; border-radius: 20px; font-size: 14px;">
+                                    Cancel
+                                </button>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="tab-buttons">
+            <button class="yealink-btn" (click)="setActiveTab('Yealink')" [ngClass]="{'active-tab': activeTab === 'Yealink'}">Yealink</button>
+            <button class="htek-btn" (click)="setActiveTab('Htek')" [ngClass]="{'active-tab': activeTab === 'Htek'}">Htek</button>
+            <button class="beronet-btn" (click)="setActiveTab('Beronet')" [ngClass]="{'active-tab': activeTab === 'Beronet'}">Beronet</button>
+        </div> -->
+        
+         
+
+
+
+        <div class="card">
+            <!-- Common Header -->
+            <div class="card-header text-center" style="background-color: #035a67; color: white;font-size: 18px; font-weight: bold; padding: 10px;">
+                List of Records
+            </div>
+        
+            <!--buttons-->
+            <div class="tab-buttons" style="margin-top: 10px;margin-left: 15px; ">
+                <button class="yealink-btn" (click)="setActiveTab('Yealink')" [ngClass]="{'active-tab': activeTab === 'Yealink'}">CISCO</button>
+                <button class="htek-btn" (click)="setActiveTab('Htek')" [ngClass]="{'active-tab': activeTab === 'Htek'}">Microsoft</button>
+                <button class="beronet-btn" (click)="setActiveTab('Beronet')" [ngClass]="{'active-tab': activeTab === 'Beronet'}">HP</button>
+            </div>
+
+            
+            <div *ngIf="activeTab === 'Yealink'" class="card-group">
+                <div class="card shadow-lg" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);">
+
+                     
+
+                    <!-- 🔍 Search Bar -->
+                    <div style="display: flex; justify-content: flex-end; align-items: center; margin: 13px; padding-right: 10px; ">
+                        <label for="searchInput1" style="font-weight: bold; margin-right: 5px; white-space: nowrap; display: flex; align-items: center;">
+                            Quick Search:
+                        </label>
+                        <input type="text"  class="form-control" 
+                            style="width: 180px; border: 1px solid #000; padding: 4px;" 
+                            (keyup)="getRateCatalogDetails({})" id="search_val">
+                    </div>
+            
+                    <!-- 📊 Table Container -->
+                    <div style="overflow-x: auto;">
+                        <div style="max-width: 100%; overflow: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: lightslategray; color: black; text-align: left;">
+                                        <th style="padding: 8px; border: 1px solid black;">Yealink</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Purchase Price (Act Curr)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Purchase Price (SGD)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Price 10% (SGD)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Price 20% (SGD)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Price 30% (SGD)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Price 40% (SGD)</th>
+                                        <th style="padding: 8px; border: 1px solid black;">Price 50% (SGD)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of productList1">
+                                        <td style="background-color: #FFE747; padding: 8px; border: 1px solid black;">{{ item.productName }}</td>
+                                        <td style="background-color: #B07141; padding: 8px; border: 1px solid black;">{{ item.act_price }}</td>
+                                        <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price }}</td>
+                                        <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_10 }}</td>
+                                        <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_20 }}</td>
+                                        <td style="background-color: #FFC670; padding: 8px; border: 1px solid black;">{{ item.conver_price_30 }}</td>
+                                        <td style="background-color: #B1FF99; padding: 8px; border: 1px solid black;">{{ item.conver_price_40 }}</td>
+                                        <td style="background-color: #47FF19; padding: 8px; border: 1px solid black;">{{ item.conver_price_50 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                <!-- Tab 2: Htek -->
+<div *ngIf="activeTab === 'Htek'" class="card shadow-lg" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+
+   
+    <div style="display: flex; justify-content: flex-end; margin: 13px;">
+        <label style="font-weight: bold; margin-right: 5px; ">Quick Search:</label>
+        <input type="text"  class="form-control" 
+            style="width: 180px; border: 1px solid #000; padding: 4px;" 
+            (keyup)="getRateCatalogDetails({})" id="search_val2">
+    </div>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: lightslategray; color: black;">
+                    <th style="padding: 8px; border: 1px solid black;">Htek</th>
+                    <th style="padding: 8px; border: 1px solid black;">Purchase Price (Act Curr)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Purchase Price (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 10% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 20% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 30% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 40% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 50% (SGD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of productList2">
+                    <td style="background-color: #FFE747; padding: 8px; border: 1px solid black;">{{ item.productName }}</td>
+                    <td style="background-color: #B07141; padding: 8px; border: 1px solid black;">{{ item.act_price }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_10 }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_20 }}</td>
+                    <td style="background-color: #FFC670; padding: 8px; border: 1px solid black;">{{ item.conver_price_30 }}</td>
+                    <td style="background-color: #B1FF99; padding: 8px; border: 1px solid black;">{{ item.conver_price_40 }}</td>
+                    <td style="background-color: #47FF19; padding: 8px; border: 1px solid black;">{{ item.conver_price_50 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+                <!-- Tab 3: Beronet -->
+<div *ngIf="activeTab === 'Beronet'" class="card shadow-lg" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+
+    
+
+    <div style="display: flex; justify-content: flex-end; margin: 13px;">
+        <label style="font-weight: bold; margin-right: 5px;">Quick Search:</label>
+        <input type="text"   class="form-control" 
+            style="width: 180px; border: 1px solid #000; padding: 4px;" 
+            (keyup)="getRateCatalogDetails({})" id="search_val3">
+    </div>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color:lightslategray; color: black;">
+                    <th style="padding: 8px; border: 1px solid black;">Beronet</th>
+                    <th style="padding: 8px; border: 1px solid black;">Purchase Price (Act Curr)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Purchase Price (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 10% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 20% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 30% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 40% (SGD)</th>
+                    <th style="padding: 8px; border: 1px solid black;">Price 50% (SGD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of productList3">
+                    <td style="background-color: #FFE747; padding: 8px; border: 1px solid black;">{{ item.productName }}</td>
+                    <td style="background-color: #B07141; padding: 8px; border: 1px solid black;">{{ item.act_price }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_10 }}</td>
+                    <td style="background-color: #FF7D19; padding: 8px; border: 1px solid black;">{{ item.conver_price_20 }}</td>
+                    <td style="background-color: #FFC670; padding: 8px; border: 1px solid black;">{{ item.conver_price_30 }}</td>
+                    <td style="background-color: #B1FF99; padding: 8px; border: 1px solid black;">{{ item.conver_price_40 }}</td>
+                    <td style="background-color: #47FF19; padding: 8px; border: 1px solid black;">{{ item.conver_price_50 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- Card Footer -->
+    <div class="card-footer"></div>
+</div>

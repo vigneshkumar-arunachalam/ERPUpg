@@ -1668,7 +1668,7 @@ export class VsprovisionComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/vsprovision/provision_attachment',
+        url: this.serverService.urlFinal + 'vsprovision/provision_attachment',
 
 
         cache: false,

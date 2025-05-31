@@ -98,6 +98,8 @@ export class DesgTypeMgmtComponent implements OnInit {
   private createDesignationControl(): FormGroup {
     return this.fb.group({
       name: ['', [Validators.required]],
+      designation_type_name:'',
+      designation_type_id:'',
     });
   }
 

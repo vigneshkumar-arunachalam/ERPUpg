@@ -10,7 +10,7 @@
 
 
           <div class="quotation-btn-section">
-            <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+            <button type="button" title="Add New Transaction" class="btn btn-primary btn-default btn-squared"
               (click)="addtransactionGo()" style="margin-right: 10px;">
               <i class="fas fa-plus" style="margin-right:4px;"></i>
               Add
@@ -25,22 +25,31 @@
           <div class="userDatatable global-shadow border-0 bg-white w-100">
             <div class="table-responsive">
               <table class="table mb-0 table-borderless">
-                 <thead>
+                <!-- <tr>
+                  <td colspan="4" class="search-text-tbl">
+                      <div class="input-group"><input type="text" class="form-control"
+                              (keyup)="getTransactionNewList({'search_text':call_history_search.value})"
+                              #call_history_search placeholder="search here">
+                          <div class="input-group-append">
+                              <button class="btn btn-primary"
+                                  (click)="getTransactionNewList({'search_text':call_history_search.value})"><i
+                                      class="fas fa-search"></i></button>
+                          </div>
+                      </div>
+                  </td>
+              </tr> -->
+                <thead>
                   <tr class="userDatatable-header">
 
-                   <th>Tic No</th>
-
+                    <th>Tic No</th>
                     <th>Date</th>
                     <th>Biller</th>
                     <th>Customer/Vendor</th>
-
                     <th>Transaction Type</th>
                     <th>Priority</th>
                     <th>Requestor Name</th>
                     <th>Description</th>
-
                     <th>Amt/Qty</th>
-
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -80,8 +89,15 @@
                     </td>
                     <td>
                       <span [innerHTML]="list.description">{{ list.description}}</span>
-                      <span><a *ngIf="list.attachment_name" class="pdfview" title="{{list.attachments}}"
-                          [href]="list.attachments" target="_blank">{{ list.attachment_name }}</a></span>
+                      <span><a *ngIf="list.trans_attachment_name1" class="pdfview"
+                          title="{{list.trans_attachment_name1}}" [href]="list.trans_attachment_filename1"
+                          target="_blank">{{ list.trans_attachment_name1 }}</a></span>
+                      <span><a *ngIf="list.trans_attachment_name2" class="pdfview"
+                          title="{{list.trans_attachment_name2}}" [href]="list.trans_attachment_filename2"
+                          target="_blank">{{ list.trans_attachment_name2 }}</a></span>
+                      <span><a *ngIf="list.trans_attachment_name3" class="pdfview"
+                          title="{{list.trans_attachment_name3}}" [href]="list.trans_attachment_filename3"
+                          target="_blank">{{ list.trans_attachment_name3 }}</a></span>
                     </td>
                     <td [innerHTML]="list.amount">
 
@@ -106,7 +122,7 @@
                             </li>
 
                             <li class="dropdown__item"
-                              *ngIf="list.type_of_trans != 15 && list.type_of_trans != 56 && list.type_of_trans != 57 && list.type_of_trans != 58">
+                              *ngIf="list.type_of_trans != 15 && list.type_of_trans != 56 && list.type_of_trans != 57 && list.type_of_trans != 58 && list.approval_staus != 1 && list.approval_staus != 3"  >
                               <a class="hover1" title="Edit"
                                 (click)=" edittransactionGo(list.transaction_approval_id,list.type_of_trans)">
                                 <img class="show" src="assets/img/icon/nfc-pen-b.png">
@@ -115,7 +131,8 @@
 
                             </li>
 
-                            <li class="dropdown__item" *ngIf="list.type_of_trans != 15 && list.type_of_trans != 57 && list.type_of_trans != 57 && list.type_of_trans != 58">
+                            <li class="dropdown__item"
+                              *ngIf="list.type_of_trans != 15 && list.type_of_trans != 57 && list.type_of_trans != 57 && list.type_of_trans != 58 && list.approval_staus != 1">
                               <a class="hover1" title="Delete" data-toggle="modal"
                                 (click)="deleteTransaction(list.transaction_approval_id)">
                                 <img class="show" src="assets/img/icon/remove-b.png">
@@ -709,10 +726,14 @@
 
 <!-- css  -->
 
+
+
 <div class="modal fade bd-example-modal-lg" id="TransactionManagementViewId123" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content modal-custom">
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- <div class="modal-content modal-custom">
+      <div class="modal-header custom-header"> -->
+    <div class="modal-content">
       <div class="modal-header custom-header">
         <h2 class="modal-title">View Transaction Approval Management</h2>
         <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close" aria-hidden="true">
@@ -823,7 +844,7 @@
 
               <label class="labels" for="view_Comments" class="col-form-label">Comments</label>
 
-              <textarea class="form-control" [value]="comments" readonly id="view_Comments"></textarea>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
@@ -856,7 +877,7 @@
             <div class="transaction-form-group">
               <label class="labels" for="view_ContentofPurchase" class="col-form-label">Comments</label>
               <!-- <input type="text" class="form-control" [value]="'-'" readonly id="PC_Comments" /> -->
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
@@ -883,7 +904,7 @@
             <div class="transaction-form-group">
               <label class="labels" for="view_ContentofPurchase" class="col-form-label">Comments</label>
               <!-- <input type="text" class="form-control" [value]="'-'" readonly id="PC_Comments" /> -->
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
@@ -898,7 +919,7 @@
             <div class="transaction-form-group">
               <label class="labels" for="view_ContentofPurchase" class="col-form-label">Comments</label>
               <!-- <input type="text" class="form-control" [value]="'-'" readonly id="PC_Comments" /> -->
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
@@ -913,14 +934,14 @@
             <div class="transaction-form-group">
               <label class="labels" for="view_ContentofPurchase" class="col-form-label">Comments</label>
               <!-- <input type="text" class="form-control" [value]="'-'" readonly id="PC_Comments" /> -->
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
           <div *ngIf="transactionTypeNumber==7" class="transaction-panel">
             <div class="transaction-form-group">
               <label class="labels">Invoice No</label>
-              <span class="spans">{{bName}}</span>
+              <span class="spans">{{invoice_no}}</span>
             </div>
             <div class="transaction-form-group">
               <label class="labels">Biller</label>
@@ -964,7 +985,7 @@
             </div>
             <div class="transaction-form-group">
               <label class="labels">Comments</label>
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 
@@ -989,14 +1010,14 @@
               <label class="labels">Quantity</label>
               <span class="spans">{{qty}}</span>
             </div>
-           
+
             <div class="transaction-form-group">
               <label class="labels">Comments</label>
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
           <div *ngIf="transactionTypeNumber==56" class="transaction-panel">
-           
+
             <div class="transaction-form-group">
               <label class="labels">Customer</label>
               <span class="spans">{{category_id}}</span>
@@ -1009,10 +1030,10 @@
               <label class="labels">Quantity</label>
               <span class="spans">{{qty}}</span>
             </div>
-           
+
             <div class="transaction-form-group">
               <label class="labels">Comments</label>
-              <span class="spans">{{comments}}</span>
+              <textarea class="form-control spans" [value]="comments" readonly id="view_Comments"></textarea>
             </div>
           </div>
 

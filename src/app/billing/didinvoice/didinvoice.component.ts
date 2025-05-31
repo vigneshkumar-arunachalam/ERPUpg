@@ -333,7 +333,11 @@ export class DidinvoiceComponent implements OnInit {
       'InvoiceSendingInput': new FormControl(null),
     });
 
-    this.SharePermission = new FormGroup({
+    this.sstTaxForm = new FormGroup({
+      'sstTax': new FormControl(null),
+
+    });
+     this.SharePermission = new FormGroup({
       'share_permission': new FormControl(null),
 
     });
@@ -592,10 +596,10 @@ export class DidinvoiceComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-    //  var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+   
     window.open(url, '_blank');
-    // console.log("url", url)
+  
   }
   yearsAPI() {
 
@@ -719,9 +723,12 @@ export class DidinvoiceComponent implements OnInit {
 
         this.biller_list = response.biller_details;
         this.revenueTypeList = response.revenue_list;
+        if(response.proforma_details){
+          this.post_send_status = response.proforma_details[0].post_send_status;
+          this.share_access_state = response.proforma_details[0].share_access_state;
+        }
 
-        this.post_send_status = response.proforma_details[0].post_send_status;
-        this.share_access_state = response.proforma_details[0].share_access_state;
+     
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
         this.invoicePermissionList_Search = response.invoice_permission_arr.search;
@@ -779,15 +786,18 @@ export class DidinvoiceComponent implements OnInit {
           console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
 
+if(response.proforma_details){
+  for (var j = 0; j < response.proforma_details.length; j++) {
 
-        for (var j = 0; j < response.proforma_details.length; j++) {
-
-          this.reseller_commissionState = response.proforma_details[j].commission_state;
-          this.recurring_state_all = response.proforma_details[j].recuring_status;
+    this.reseller_commissionState = response.proforma_details[j].commission_state;
+    this.recurring_state_all = response.proforma_details[j].recuring_status;
 
 
-          this.suspend_state = response.proforma_details[j].suspend;
-        }
+    this.suspend_state = response.proforma_details[j].suspend;
+  }
+
+}
+       
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
@@ -2453,7 +2463,7 @@ export class DidinvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url:this.serverService.urlFinal + 'invoice/invoice_attachment_save',
 
 
         cache: false,

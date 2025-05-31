@@ -153,10 +153,10 @@ export class RecurringCheckerComponent implements OnInit {
 
   }
   multipleAddressPrint(){
-    var url = " https://erp1.cal4care.com/api/recurring_date_update/getaddresspdfShow?billId=" +  btoa(this.ckbx_array) + "";
-    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "recurring_date_update/getaddresspdfShow?billId=" +  btoa(this.ckbx_array) + "";
+ 
     window.open(url, '_blank');
-   // console.log("url", url)
+
 
 
    
@@ -352,10 +352,10 @@ export class RecurringCheckerComponent implements OnInit {
  
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
-   // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url =this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
+
     window.open(url, '_blank');
-   // console.log("url", url)
+ 
   }
 
 }

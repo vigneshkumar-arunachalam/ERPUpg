@@ -480,52 +480,52 @@ export class AddDidpiComponent implements OnInit {
   handleChangeLocal(event: any) {
     this.export_state_Local = event.target.value;
     this.export_state = 'Local';
-    console.log(this.export_state_Local);
+  //  console.log(this.export_state_Local);
 
   }
   handleChangeExport(event: any) {
     this.export_state_Export = event.target.value;
     this.export_state = 'Export';
-    console.log(this.export_state_Export);
+  //  console.log(this.export_state_Export);
 
   }
   handleChangeZeroValid(event: any) {
     this.export_state_ZeroValid = event.target.value;
     this.export_state = 'Zero Valid';
-    console.log(this.export_state_ZeroValid);
+   // console.log(this.export_state_ZeroValid);
 
   }
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
+    // console.log("radio button value", radioSelectInitial);
+    // console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
     this.radioSelectFooter = evt.target.value;
     var radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radioSelectFooter);
+   // console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
     this.ExtralogoValue = event.target.value;
     // var xyz = id;
-    console.log("radio button value for Extra logo", this.ExtralogoValue);
+   // console.log("radio button value for Extra logo", this.ExtralogoValue);
 
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
+   // console.log(this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.value;
-    console.log(this.MSDisplay_Value);
+  //  console.log(this.MSDisplay_Value);
   }
   handleChange_Jompay(event: any) {
     this.Jompay_Value = false;
     this.Jompay_Value = event.target.checked;
-    console.log(this.Jompay_Value);
+   // console.log(this.Jompay_Value);
   }
 
   radioSelectCommissionType(event: any) {
@@ -534,13 +534,13 @@ export class AddDidpiComponent implements OnInit {
   }
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+   // console.log(this.chklogoAddressSignature)
   }
 
   checkbox_selectAdditionalSignature: any;
   eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+  //  console.log(this.checkbox_selectAdditionalSignature);
   }
 
   chkTermsandconditionEvent(event: any) {
@@ -599,7 +599,7 @@ export class AddDidpiComponent implements OnInit {
 
         });
         this.tax_per_mod = response.percent_val;
-        console.log('petrcentage.......' + this.tax_per_mod);
+       // console.log('petrcentage.......' + this.tax_per_mod);
         this.quotationAddSignature();
         this.getProformaBillerDetails();
         this.TaxDropdown();
@@ -655,7 +655,7 @@ export class AddDidpiComponent implements OnInit {
     add_BillerDetails_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+    //  console.log(response);
 
 
       if (response != '') {
@@ -688,7 +688,7 @@ export class AddDidpiComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
 
@@ -696,9 +696,9 @@ export class AddDidpiComponent implements OnInit {
 
   }
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+    // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -744,7 +744,7 @@ export class AddDidpiComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.usersearchResult = response.reseller_list;
 
       if (response.status = true) {
@@ -761,15 +761,15 @@ export class AddDidpiComponent implements OnInit {
     this.resellerName = item.reseller_name;
     this.resellerID = item.reseller_id;
 
-    console.log(item.reseller_name)
-    console.log(item.reseller_id)
+    // console.log(item.reseller_name)
+    // console.log(item.reseller_id)
 
 
   }
 
   selectEventUser(item: any) {
 
-    console.log(item)
+   // console.log(item)
     // do something with selected item
   }
   onFocusedUser(e: any) {
@@ -805,7 +805,7 @@ export class AddDidpiComponent implements OnInit {
 
         }, 500);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id', response.default_tax_id);
+      //  console.log('response.default_tax_id', response.default_tax_id);
 
 
 
@@ -858,7 +858,7 @@ export class AddDidpiComponent implements OnInit {
 
     });
 
-    console.log("this.taxValue", this.taxValue);
+  //  console.log("this.taxValue", this.taxValue);
 
     //  this.extraFees();
 
@@ -880,7 +880,7 @@ export class AddDidpiComponent implements OnInit {
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+   // console.log(item)
 
   }
   onFocusedCustomer(e: any) {
@@ -900,7 +900,7 @@ export class AddDidpiComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -913,12 +913,16 @@ export class AddDidpiComponent implements OnInit {
   searchCustomer_selectDropdownData(data: any) {
     this.spinner.show;
 
-
-    this.customer_ID = data.customerId;
+if(data){
+      this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
-    this.customerName_Data = data.customerId;
+       this.customerName_Data = data.customerId;
+
+}
+
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
+ 
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -931,7 +935,7 @@ export class AddDidpiComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
         this.spinner.hide;
         var address_3;
@@ -1135,13 +1139,13 @@ export class AddDidpiComponent implements OnInit {
 
     // fixed charge
 
-    console.log('response........' + this.did_Invice_fixed_charges.value.particular1);
+   // console.log('response........' + this.did_Invice_fixed_charges.value.particular1);
 
     var addr1 = this.did_Invice_fixed_charges.value.fixedAddresses;
 
 
     for (let i = 0; i < addr1.length; i++) {
-      console.log(addr1)
+     // console.log(addr1)
       addr1[i].particular1 = $('#particular_1_' + i).val();
       addr1[i].fromdt1 = $('#fromdt_1_' + i).val();
       addr1[i].todt1 = $('#todt_1_' + i).val();
@@ -1212,7 +1216,7 @@ export class AddDidpiComponent implements OnInit {
 
     }
 
-    console.log('addr2' + addr2);
+   // console.log('addr2' + addr2);
 
 
     // if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
@@ -1237,7 +1241,7 @@ export class AddDidpiComponent implements OnInit {
 
     for (let i = 0; i < addr3.length; i++) {
 
-      console.log(addr3[i].amt3)
+    //  console.log(addr3[i].amt3)
       addr3[i].particular3 = $('#particular3_' + i).val();
       addr3[i].fromdt3 = $('#fromdt3_' + i).val();
       addr3[i].todt3 = $('#todt3_' + i).val();
@@ -1359,7 +1363,7 @@ export class AddDidpiComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+      //  console.log(error);
       }
 
   }
@@ -1378,7 +1382,7 @@ export class AddDidpiComponent implements OnInit {
   addButton: any = 0;
   plus(v: any) {
 
-    console.log(v)
+   // console.log(v)
     if (this.addButton != 50) {
       this.addButton++;
       $("#did_diff_date_1_" + v).val(this.addButton)
@@ -1441,17 +1445,17 @@ export class AddDidpiComponent implements OnInit {
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt_1_' + a).val();
-      console.log('subtotal 1...' + total_amt);
+    //  console.log('subtotal 1...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
 
       }
 
       this.sub_total_glb1 = total_amt_tot;
-      console.log("before assigning to subtotal 1", total_amt_tot.toFixed(2))
+     // console.log("before assigning to subtotal 1", total_amt_tot.toFixed(2))
       $('#sub_total_1').val((total_amt_tot).toFixed(2));
-      console.log("$('#sub_total_1')---now", $('#sub_total_1').val());
-      console.log('sub_total =' + total_amt_tot);
+     // console.log("$('#sub_total_1')---now", $('#sub_total_1').val());
+    //  console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -1555,7 +1559,7 @@ export class AddDidpiComponent implements OnInit {
     var disType = $('input:radio[name=fix_DiscountTYpe]:checked').val();
     // alert($('#sub_total_1').val());
     var final_tot = $('#sub_total_1').val();
-    console.log('final_tot', final_tot);
+   // console.log('final_tot', final_tot);
     $('#sub_discount_type_1').val(disType);
     var price: any;
     var fixedCharge_TotalAmount = 0;
@@ -1567,18 +1571,18 @@ export class AddDidpiComponent implements OnInit {
 
           fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
-          console.log("dummy inside", fixedCharge_TotalAmount)
+         // console.log("dummy inside", fixedCharge_TotalAmount)
         }
-        console.log("dummy outside", fixedCharge_TotalAmount)
+      //  console.log("dummy outside", fixedCharge_TotalAmount)
 
 
         price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100);
-        console.log("price", price);
+       // console.log("price", price);
         $('#sub_discount_1').val(price.toFixed(2));
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
 
-        console.log("sub_total after parse float", price);
+      //  console.log("sub_total after parse float", price);
         $('#sub_total_1').val(price.toFixed(2));
         this.gross_total();
 
@@ -1596,12 +1600,12 @@ export class AddDidpiComponent implements OnInit {
 
         fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
-        console.log("dummy inside", fixedCharge_TotalAmount)
+     //   console.log("dummy inside", fixedCharge_TotalAmount)
 
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
 
-      console.log('price_fin' + price);
+     // console.log('price_fin' + price);
       $('#sub_total_1').val(price.toFixed(2));
       $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1);
@@ -1629,14 +1633,14 @@ export class AddDidpiComponent implements OnInit {
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt2_' + a).val();
-      console.log('subtotal 2...' + total_amt);
+     // console.log('subtotal 2...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
       }
 
       this.sub_total_glb1 = total_amt_tot;
       $('#sub_total_2').val(total_amt_tot.toFixed(2));
-      console.log('sub_total =' + total_amt_tot);
+    //  console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -1650,7 +1654,7 @@ export class AddDidpiComponent implements OnInit {
     var disType = $('input:radio[name=use_DiscountTYpe]:checked').val();
 
     var final_tot = $('#sub_total_2').val();
-    console.log('final_tot', final_tot);
+  //  console.log('final_tot', final_tot);
     $('#sub_discount_type_2').val(disType);
     var usage_price: any;
     var usageCharge_TotalAmount = 0;
@@ -1662,17 +1666,17 @@ export class AddDidpiComponent implements OnInit {
 
           usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
-          console.log("dummy inside", usageCharge_TotalAmount)
+        //  console.log("dummy inside", usageCharge_TotalAmount)
 
         }
-        console.log("dummy outside", usageCharge_TotalAmount)
+      //  console.log("dummy outside", usageCharge_TotalAmount)
 
         usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100);
-        console.log(usage_price);
+      //  console.log(usage_price);
         $('#sub_discount_2').val(usage_price.toFixed(2));
         $('#sub_discount_val_2').val(enablePerFinal_2);
         usage_price = usageCharge_TotalAmount - usage_price;
-        console.log("sub_total", usage_price);
+      //  console.log("sub_total", usage_price);
         $('#sub_total_2').val(usage_price);
         this.gross_total();
 
@@ -1690,11 +1694,11 @@ export class AddDidpiComponent implements OnInit {
 
         usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
-        console.log("dummy inside", usageCharge_TotalAmount)
+      //  console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
-      console.log('usage_price_fin-----tst-II' + usage_price);
+     // console.log('usage_price_fin-----tst-II' + usage_price);
 
       $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
@@ -1726,14 +1730,14 @@ export class AddDidpiComponent implements OnInit {
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt3_' + a).val();
-      console.log('subtotal 3...' + total_amt);
+    //  console.log('subtotal 3...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
       }
 
       this.sub_total_glb1 = total_amt_tot.toFixed(2);
       $('#sub_total_3').val(total_amt_tot);
-      console.log('sub_total =' + total_amt_tot);
+    //  console.log('sub_total =' + total_amt_tot);
 
     }
 
@@ -1747,7 +1751,7 @@ export class AddDidpiComponent implements OnInit {
     var disType = $('input:radio[name=oth_DiscountTYpe]:checked').val();
 
     var final_tot = $('#sub_total_3').val();
-    console.log('final_tot', final_tot);
+  //  console.log('final_tot', final_tot);
     $('#sub_discount_type_3').val(disType);
     var other_price: any;
     var usageCharge_TotalAmount = 0;
@@ -1760,17 +1764,17 @@ export class AddDidpiComponent implements OnInit {
 
           usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
-          console.log("dummy inside", usageCharge_TotalAmount)
+       //   console.log("dummy inside", usageCharge_TotalAmount)
 
         }
-        console.log("dummy outside", usageCharge_TotalAmount)
+       // console.log("dummy outside", usageCharge_TotalAmount)
 
 
         other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
         $('#sub_discount_3').val(other_price.toFixed(2));
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
-        console.log("sub_total", other_price);
+      //  console.log("sub_total", other_price);
         $('#sub_total_3').val(other_price.toFixed(2));
         this.gross_total();
 
@@ -1788,11 +1792,11 @@ export class AddDidpiComponent implements OnInit {
 
         usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
-        console.log("dummy inside", usageCharge_TotalAmount)
+      //  console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       other_price = usageCharge_TotalAmount - enablePriceFinal_3;
-      console.log('other_price_fin' + other_price);
+    //  console.log('other_price_fin' + other_price);
       $('#sub_total_3').val(other_price.toFixed(2));
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
@@ -1818,41 +1822,41 @@ export class AddDidpiComponent implements OnInit {
 
     sub_total1 = $('#sub_total_1').val();
 
-    console.log("sub_total1", sub_total1);
+   // console.log("sub_total1", sub_total1);
     sub_total2 = $('#sub_total_2').val();
 
-    console.log("sub_total2", sub_total2);
+   // console.log("sub_total2", sub_total2);
     sub_total3 = $('#sub_total_3').val();
 
-    console.log("sub_total3", sub_total3);
+  //  console.log("sub_total3", sub_total3);
 
     if (sub_total1 == '' && sub_total2 == '' && sub_total3 == '') {
       total_amt = 0;
-      console.log("total amount 000", total_amt);
+    //  console.log("total amount 000", total_amt);
     } else if (sub_total1 == '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (Number(sub_total3));
-      console.log("total amount 001", total_amt);
+    //  console.log("total amount 001", total_amt);
     } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 == '') {
       total_amt = (Number(sub_total2));
-      console.log("total amount 010", total_amt);
+    //  console.log("total amount 010", total_amt);
     } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-      console.log("total amount 011", total_amt);
+    //  console.log("total amount 011", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 == '') {
       total_amt = (parseFloat(sub_total1))
-      console.log("total amount 100", total_amt);
+    //  console.log("total amount 100", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total3));
-      console.log("total amount 101", total_amt);
+     // console.log("total amount 101", total_amt);
     } else if (sub_total1 !== '' && sub_total2 !== '' && sub_total3 == '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2));
-      console.log("total amount 110", total_amt);
+    //  console.log("total amount 110", total_amt);
     } else {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     }
     // total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     this.grossTotal_BeforeDiscount = total_amt.toFixed(2);
-    console.log("total_amt-gross", total_amt.toFixed(2));
+   // console.log("total_amt-gross", total_amt.toFixed(2));
     gross_tot += parseFloat(total_amt);
 
     $('#section3_gross_total').val(gross_tot.toFixed(2));
@@ -1866,7 +1870,7 @@ export class AddDidpiComponent implements OnInit {
     var enablePriceFinal_4 = $('#enablePriceFinal_4').val()
     var disType = $('input:radio[name=final_DiscountTYpe]:checked').val();
     var final_tot = $('#section3_gross_total').val();
-    console.log('final_tot' + final_tot);
+  //  console.log('final_tot' + final_tot);
     $('#final_discount_type').val(disType);
     var price: any;
     var dis_etr: any;
@@ -2033,7 +2037,7 @@ export class AddDidpiComponent implements OnInit {
     api_req.element_data = api_quotationAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+     // console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
@@ -2070,11 +2074,11 @@ export class AddDidpiComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("response", response)
-      console.log("response!=''", response)
+      // console.log("response", response)
+      // console.log("response!=''", response)
 
       $('#amt2_' + j).val(response);
-      console.log("'#amt2_'+a", $('#amt2_' + j).val(response))
+     // console.log("'#amt2_'+a", $('#amt2_' + j).val(response))
 
       this.totalCalculate_2();
       this.usageSaveDiscount();

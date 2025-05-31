@@ -3473,11 +3473,11 @@ export class ResellerManagementComponent implements OnInit {
           'spedit_C3CXLicencepurchase': response[0].payment_chk,
         });
         console.log(this.specialEditCustomerForm.value);
-        if (response.customer_details[0].status == 1) {
-          $('#status').prop('checked', true);
-        } else {
-          $('#status').prop('checked', false);
-        }
+        // if (response.customer_details[0].status == 1) {
+        //   $('#status').prop('checked', true);
+        // } else {
+        //   $('#status').prop('checked', false);
+        // }
         $('#specialEditCustomerFormId_CM').modal('show');
         this.customerslist({});
 
@@ -3728,7 +3728,7 @@ export class ResellerManagementComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://erp1.cal4care.com/api/customer/customer_file_attachment_save',
+        url:this.serverService.urlFinal + 'customer/customer_file_attachment_save',
         cache: false,
         contentType: false,
         processData: false,
@@ -3908,7 +3908,7 @@ export class ResellerManagementComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/mconnect_address_save',
+      url: this.serverService.urlFinal +'customer/mconnect_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4026,7 +4026,7 @@ export class ResellerManagementComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/mrvoip_address_save',
+      url: this.serverService.urlFinal +'customer/mrvoip_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4138,7 +4138,7 @@ export class ResellerManagementComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer/call4tel_address_save',
+      url: this.serverService.urlFinal + 'customer/call4tel_address_save',
       cache: false,
       contentType: false,
       processData: false,

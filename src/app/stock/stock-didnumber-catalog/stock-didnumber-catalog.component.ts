@@ -29,23 +29,26 @@ export class StockDIDNumberCatalogComponent implements OnInit {
   didNameCount: any;
   didNumberCounts: any;
   nrsList: any;
-  blocked_list:any;
+  blocked_list: any;
   selectedIds_blocked: number[] = [];
   DIDDetailList: any;
   //DIDInvReserveForm
-  DIDInvReserveForm:FormGroup;
+  DIDInvReserveForm: FormGroup;
   ResellerName_Customer: any;
   ResellerId_Customer: any;
   searchResult: any;
   DIDEntryID: any;
   constructor(private serverService: ServerService, private router: Router,
     private http: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
-    keywordResellerName = 'customerName';
+  keywordResellerName = 'customerName';
   ngOnInit(): void {
     this.getDidCatalogDetailsList({});
-    this.activeSection ='nrs1';
+    this.activeSection = 'nrs1';
     this.releaseBlockedDidNumbers();
     this.getDidDetails();
+    this.DIDInvReserveForm=new FormGroup({
+      'reseller_name': new FormControl(null),
+    });
 
   }
   toggleCollapse(section: string) {
@@ -84,7 +87,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
         this.didNameCount = response.didNameCount;
         this.didNumberCounts = response.didNumberCounts;
         this.nrsList = response.nrsList;
-        this.blocked_list=response.blocked_list;
+        this.blocked_list = response.blocked_list;
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
         $('#searchProductCategoryFormId').modal('hide');
@@ -115,23 +118,74 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     return list_data;
   }
 
-  
+
   toggleBlocked(did_entry_id: number, event: any) {
     if (event.target.checked) {
       this.selectedIds_blocked.push(did_entry_id);
     } else {
       this.selectedIds_blocked = this.selectedIds_blocked.filter(id => id !== did_entry_id);
     }
-    console.log("this.selectedIds_blocked",this.selectedIds_blocked);
+    console.log("this.selectedIds_blocked", this.selectedIds_blocked);
   }
-  onRClick(didentryid:any){
-    this.DIDEntryID=didentryid;
+  onRClick(didentryid: any) {
+    this.DIDEntryID = didentryid;
     $('#DIDInvReserve').modal('show');
 
   }
+  onReleaseClick(didentryid: any) {
+    this.DIDEntryID = didentryid;
+    $('#DIDInvReserve').modal('show');
+
+  }
+ 
+  onImageClick(did_entry_id:any) {
+   
+      Swal.fire({
+        title: 'Are you sure to Release?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Release it!'
+      }).then((result: any) => {
+        if (result.value) {
+          this.spinner.show();
+          let api_req: any = new Object();
+          let delete_customer_req: any = new Object();
+          api_req.moduleType = "didCatalogue";
+          api_req.api_url = "didCatalogue/releaseCustomer";
+          api_req.api_type = "web";
+          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+          delete_customer_req.action = "releaseCustomer";
+          delete_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
+          delete_customer_req.did_entry_id = did_entry_id;
+          api_req.element_data = delete_customer_req;
+  
+          this.serverService.sendServer(api_req).subscribe((response: any) => {
+            this.spinner.hide();
+            if (response.status == true) {
+  
+              iziToast.success({
+                message: "Released successfully",
+                position: 'topRight'
+              });
+              this.getDidDetails();
+            } else {
+             
+            }
+          }),
+            (error: any) => {
+              console.log(error);
+            };
+        }
+      })
+  
+  
+    }
   releaseBlockedDidNumbers() {
     this.spinner.show();
- 
+
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
@@ -143,11 +197,11 @@ export class StockDIDNumberCatalogComponent implements OnInit {
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.did_entry_id = this.selectedIds_blocked;
-  
+
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
+
       if (response.status == true) {
 
         this.spinner.hide();
@@ -177,7 +231,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
   }
   getDidDetails() {
     this.spinner.show();
- 
+
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
@@ -192,16 +246,16 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     api_postUPd.billerId = '';
     api_postUPd.search_text = '';
     api_postUPd.customer_id = '';
-  
-  
+
+
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+
       if (response.status == true) {
 
         this.spinner.hide();
-        this.DIDDetailList=response.DidNumbersList;
+        this.DIDDetailList = response.DidNumbersList;
 
 
       } else {
@@ -227,7 +281,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     did.bronze = '';
     did.silver = '';
     did.gold = '';
-  
+
     // Set selected
     switch (selected) {
       case 'none': did.none = 4; break;
@@ -235,7 +289,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
       case 'silver': did.silver = 2; break;
       case 'gold': did.gold = 3; break;
     }
-  
+
     console.log(`DID ${did.did_entry_id} set to ${selected}`);
   }
   selectEventReseller(item: any) {
@@ -258,12 +312,12 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     this.spinner.show();
     let api_req: any = new Object();
     let api_searchReseData: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/reseller_name_details";
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/customer_name_search";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_searchReseData.action = "reseller_name_details";
-    api_searchReseData.reseller_name = data;
+    api_searchReseData.action = "customer_name_search";
+    api_searchReseData.customerName = data;
     api_searchReseData.user_id = localStorage.getItem('erp_c4c_user_id');
 
     // api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
@@ -271,9 +325,9 @@ export class StockDIDNumberCatalogComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      if (response) {
 
-        this.searchResult = response.reseller_list;
+        this.searchResult = response.customer_names;
 
 
       } else {
@@ -306,8 +360,8 @@ export class StockDIDNumberCatalogComponent implements OnInit {
     api_searchReseData.action = "addReserveCustomer";
 
     api_searchReseData.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_searchReseData.did_entry_id =  this.DIDEntryID;
-    api_searchReseData.customer_id = this.ResellerId_Customer ;
+    api_searchReseData.did_entry_id = this.DIDEntryID;
+    api_searchReseData.customer_id = this.ResellerId_Customer;
     // api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
     api_req.element_data = api_searchReseData;
 
@@ -315,12 +369,13 @@ export class StockDIDNumberCatalogComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         $('#DIDInvReserve').modal('hide');
+
         iziToast.success({
           message: "Saved Successfully",
           position: 'topRight'
         });
-        
 
+        this.getDidDetails();
 
       } else {
 
@@ -340,7 +395,7 @@ export class StockDIDNumberCatalogComponent implements OnInit {
       };
 
   }
- 
+
 
 
 }
