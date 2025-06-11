@@ -73,12 +73,12 @@ export class PurchaseentryreportComponent implements OnInit {
       this.invoiceType = params['invoiceType'];
       this.performaType = params['performaType'];
       this.redirect_status =params['redirect_status'];
-      console.log("this.Fromdt inside onInit", this.Fromdt);
-      console.log("this.Todt inside onInit", this.Todt);
-      console.log("this.billerId inside onInit", this.billerId);
-      console.log("this.invoiceType inside onInit", this.invoiceType);
-      console.log("this.performaType inside onInit", this.performaType);
-      console.log("this.redirect_status inside onInit", this.redirect_status);
+      // console.log("this.Fromdt inside onInit", this.Fromdt);
+      // console.log("this.Todt inside onInit", this.Todt);
+      // console.log("this.billerId inside onInit", this.billerId);
+      // console.log("this.invoiceType inside onInit", this.invoiceType);
+      // console.log("this.performaType inside onInit", this.performaType);
+      // console.log("this.redirect_status inside onInit", this.redirect_status);
     //  this.getInvoiceReport();
     }
     );
@@ -174,7 +174,7 @@ export class PurchaseentryreportComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   getPurchaseEntryReportPrint() {
@@ -232,7 +232,7 @@ export class PurchaseentryreportComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
   function1() {
@@ -280,7 +280,7 @@ export class PurchaseentryreportComponent implements OnInit {
      
        
         this.ExcelReportList1=response.reports;
-        console.log("this.ExcelReportList1",this.ExcelReportList1)
+      //  console.log("this.ExcelReportList1",this.ExcelReportList1)
         this.excelExportService.exportAsExcelFile( this.ExcelReportList1, 'PurchaseEntryReport');
 
       } else {
@@ -304,7 +304,7 @@ export class PurchaseentryreportComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
 
@@ -385,19 +385,19 @@ export class PurchaseentryreportComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
-        console.log("response",response)
+        // console.log("response",response)
         this.invoice_noList=response.invoiceNo;
 
         this.billerList=response.reportsData.biller;
         this.vendorsList=response.reportsData.vendors;
-        console.log("this.vendorsList",this.vendorsList)
+        // console.log("this.vendorsList",this.vendorsList)
         this.purchaseTypeList=response.reportsData.purchase_type;
         const date = new Date(response.reportsData.date[0].fromdt);
         this.fromDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-        console.log("this.fromDate",this.fromDate)
+        // console.log("this.fromDate",this.fromDate)
         const date2 = new Date(response.reportsData.date[0].todt);
         this.toDate = this.datePipe.transform(date2, 'yyyy-MM-dd');
-        console.log("this.toDate",this.toDate)
+        // console.log("this.toDate",this.toDate)
         this.purchaseEntryReport.patchValue({
           'IR_From':this.fromDate ,
           'IR_To':  this.toDate,
@@ -424,7 +424,7 @@ export class PurchaseentryreportComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }

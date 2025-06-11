@@ -395,7 +395,7 @@ this.spinner.show();
   // }
   processData() {
     if (!this.attendanceList || !Array.isArray(this.attendanceList)) {
-      console.error('attendanceList is invalid or not an array');
+      console.error('attendanceList is invalid or not an array=====');
       return;
     }
 

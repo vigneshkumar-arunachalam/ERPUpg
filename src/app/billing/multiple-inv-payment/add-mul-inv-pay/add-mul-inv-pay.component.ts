@@ -63,8 +63,8 @@ export class AddMulInvPayComponent implements OnInit {
     return this.addPI_section2.get('addresses') as FormArray
   }
   addAddress(): void {
-  
-   // $('.date-value').val(this.currentDate);
+
+    // $('.date-value').val(this.currentDate);
     this.addresses = this.addPI_section2.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
     this.edit_array_pending = [];
@@ -105,8 +105,8 @@ export class AddMulInvPayComponent implements OnInit {
     this.searchResult_item = item;
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
-     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
-     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.cusID[i] = item.customerId;
     //  console.log("this.cusID[i]", this.cusID[i])
     this.payment_pending_inv_list(i);
@@ -184,7 +184,7 @@ export class AddMulInvPayComponent implements OnInit {
   }
 
 
-  EditCHK_pending(billid: any, netPayment: any,balance_amt: any,event: any, i: any) {
+  EditCHK_pending(billid: any, netPayment: any, balance_amt: any, event: any, i: any) {
 
     // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_pending = billid;
@@ -242,7 +242,7 @@ export class AddMulInvPayComponent implements OnInit {
     }
   }
 
-        
+
   payment_pending_inv_list(index: number) {
     const api_req = {
       moduleType: "multipleInvoicePayment",
@@ -255,7 +255,7 @@ export class AddMulInvPayComponent implements OnInit {
     };
 
     this.serverService.sendServer(api_req).subscribe({
-      next: (response:any) => {
+      next: (response: any) => {
         if (response.status === "true") {
           this.Pay_Pending_list[index] = response.data;
           this.Pay_Pending_list_show[index] = true;
@@ -265,20 +265,33 @@ export class AddMulInvPayComponent implements OnInit {
       },
       error: () => {
         iziToast.error({ message: "Server Error", position: 'topRight' });
-      }
-    });
-  }
+      }
+    });
+  }
 
 
   clearSelection1(event: any, i: any) {
+    console.log("i value", i)
+     const addressesArray7 = this.addPI_section2.get('addresses') as FormArray;
+    const addressFormGroup7 = addressesArray7.at(i) as FormGroup;
+    addressFormGroup7.patchValue({
+      bal_amount: '',
+      net_payment: ''
+    });
     // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID_add = '';
     this.searchResult_CustomerName_add = '';
+
+    this.edit_array_pending = [];
+
+
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('invoice_amt').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('bal_amount').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('paid_amt').reset();
+   
+    this.clearAddMulInvPay();
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     // console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.Pay_Pending_list_show[i] = false;
@@ -287,9 +300,9 @@ export class AddMulInvPayComponent implements OnInit {
     // do something when input is focused
   }
   searchCustomerData_add(data: any) {
-   // alert("hi");
-    console.log("data",data);
-this.customerDATAOverall=data;
+    // alert("hi");
+    console.log("data", data);
+    this.customerDATAOverall = data;
     if (data.length > 0) {
       // this.spinner.show();
       let api_req: any = new Object();
@@ -446,7 +459,7 @@ this.customerDATAOverall=data;
   }
   addPaymentEntry(i: any) {
 
-this.savedI=i;
+    this.savedI = i;
 
     this.spinner.show();
     let api_req: any = new Object();
@@ -510,11 +523,11 @@ this.savedI=i;
     }
 
 
-   // api_mulInvpay.bill_id = addressDataAtIndex.bill_id;
+    // api_mulInvpay.bill_id = addressDataAtIndex.bill_id;
     api_mulInvpay.bill_id = this.edit_array_pending;
     api_mulInvpay.net_payment = this.edit_array_netPayment;
     api_mulInvpay.bal_amount = this.edit_array_balanceAmt;
-  
+
     var check = addressDataAtIndex.payment_method;
 
     if (check == '' || check == 'undefined' || check == undefined) {
@@ -552,15 +565,15 @@ this.savedI=i;
       if (response.status == true) {
         this.spinner.hide();
         // this.mulInvPaymentList({});
-        this.edit_array_pending=[];
-         this.edit_array_netPayment=[];
-        this.edit_array_balanceAmt=[];
+        this.edit_array_pending = [];
+        this.edit_array_netPayment = [];
+        this.edit_array_balanceAmt = [];
         this.spinner.hide();
         iziToast.success({
           message: "Saved Successfully",
           position: 'topRight'
         });
-       // this.payment_pending_inv_list(i);
+        // this.payment_pending_inv_list(i);
         // this.router.navigate(['/multipleInvPayment']);
         // window.location.reload();
 
@@ -623,7 +636,7 @@ this.savedI=i;
         };
 
         this.serverService.sendServer(api_req).subscribe({
-          next: (response:any) => {
+          next: (response: any) => {
             if (response.status == true) {
               iziToast.success({ message: "Converted Successfully", position: 'topRight' });
               this.payment_pending_inv_list(index);
@@ -649,7 +662,7 @@ this.savedI=i;
   selectEventCustomer_add1(item: any, i: any) {
     console.log(item)
     alert("coming1")
-  
+
     this.searchResult_CustomerName_add = item;
 
 
@@ -657,51 +670,51 @@ this.savedI=i;
   searchCustomerData_add1(data: any) {
     // alert("hi");
     alert("coming2")
-     console.log("data",data);
- 
-     if (data.length > 0) {
-       // this.spinner.show();
-       let api_req: any = new Object();
-       let api_Search_req: any = new Object();
-       api_req.moduleType = "customer";
-       api_req.api_url = "customer/customer_name_search";
-       api_req.api_type = "web";
-       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-       api_Search_req.action = "customer_name_search";
-       api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-       api_Search_req.customerName = data;
-       api_req.element_data = api_Search_req;
-       this.serverService.sendServer(api_req).subscribe((response: any) => {
- 
-         // console.log("vignesh-customer_status response", response);
-         // this.searchResult = response[0];
-         this.searchResult_add = response.customer_names;
-         // console.log("vignesh-advanced search result", this.searchResult_add);
-         if (response! = null) {
-           this.searchResult_add = response.customer_names;
-           this.spinner.hide();
-         }
-         else {
-           // iziToast.warning({
-           //   message: "Sorry, No Matching Data",
-           //   position: 'topRight'
-           // });
- 
-         }
-       });
- 
-     }
- 
- 
-   }
-   clearSelection2(event: any, i: any) {
+    console.log("data", data);
+
+    if (data.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/customer_name_search";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "customer_name_search";
+      api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_Search_req.customerName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        // console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchResult_add = response.customer_names;
+        // console.log("vignesh-advanced search result", this.searchResult_add);
+        if (response! = null) {
+          this.searchResult_add = response.customer_names;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
+
+
+  }
+  clearSelection2(event: any, i: any) {
     // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID_add = '';
     this.searchResult_CustomerName_add = '';
-  
-  
+
+
     this.Pay_Pending_list_show[i] = false;
   }
 

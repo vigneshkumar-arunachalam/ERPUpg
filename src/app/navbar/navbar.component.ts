@@ -438,14 +438,14 @@ export class NavbarComponent implements OnInit {
     this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
 
     this.http.get<any>(this.serverService.urlFinal + 'getCurrencyList').subscribe((data: any) => {
-      if (data != '') {
+      if (data.currency_data) {
         this.getCurrencyList = data.currency_data;
       }
 
       // console.log("this.getCurrencyList", this.getCurrencyList)
     });
     this.http.get<any>(this.serverService.urlFinal + 'getCurrencyDetails').subscribe((data: any) => {
-      if (data != '') {
+      if (data.currency_data) {
         this.getCurrencyDetails = data.currency_data;
         this.currencyData = data.currency_data;
       }
@@ -463,21 +463,21 @@ export class NavbarComponent implements OnInit {
     });
     this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
-      if (data != '') {
+      if (data.count) {
         this.postalInvoiceCount = data.count;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
     this.http.get<any>(this.serverService.urlFinal + 'base/getTaskList').subscribe((data: any) => {
 
-      if (data != '') {
+      if (data.taskList) {
         this.getTaskList = data.taskList;
       }
       // console.log("this.getTaskList", this.getTaskList)
     });
     this.http.get<any>(this.serverService.urlFinal + 'soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
 
-      if (data != '') {
+      if (data.dataList) {
         this.overduePaymentsBillerList = data.dataList;
       }
       // console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
@@ -549,15 +549,17 @@ export class NavbarComponent implements OnInit {
   }
   get_permission() {
     // console.log("this.roles", this.roles)
-    var k: any = this.roles.split(',');
-    for (var i = 0; i <= k.length; i++) {
-      if (k[i] == 1148) {
-        this.GlobalSearchPermission = k[i]
-      }
-      if (k[i] == 1129) {
-        this.sendtoPostalPermission = k[i]
-      }
+    if (this.roles) {
+      var k: any = this.roles.split(',');
+      for (var i = 0; i <= k.length; i++) {
+        if (k[i] == 1148) {
+          this.GlobalSearchPermission = k[i]
+        }
+        if (k[i] == 1129) {
+          this.sendtoPostalPermission = k[i]
+        }
 
+      }
     }
     // console.log(this.GlobalSearchPermission);
   }
@@ -636,9 +638,12 @@ export class NavbarComponent implements OnInit {
 
         this.spinner.hide();
         this.contract_filter = true;
-        // console.log("response.customer_contract.color", response.customer_contract.color)
+        // console.log("response.customer_contract.color", response.customer_contract.color);
+        if (response.customer_contract) {
+          this.customerContractlist = response.customer_contract;
+        }
 
-        this.customerContractlist = response.customer_contract;
+
         if (response.reseller_info) {
           this.resellerList = response.reseller_info;
           this.resellerList_CurrencyName = response.reseller_info.currency_name;
@@ -836,7 +841,7 @@ export class NavbarComponent implements OnInit {
             });
             this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
-              if (data != '') {
+              if (data.count) {
                 this.postalInvoiceCount = data.count;
               }
               //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
@@ -1078,37 +1083,39 @@ export class NavbarComponent implements OnInit {
   }
   functionclose() {
     //  console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
-    for (let i = 0; i < this.addSelectPageListCheckboxID_array.length; i++) {
-      //  console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
-      if (this.addSelectPageListCheckboxID_array[i] == "Credit Note") {
-        $("#check-grp-SelectPage-0").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Customer New") {
-        $("#check-grp-SelectPage-1").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Customer Project") {
-        $("#check-grp-SelectPage-2").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "DID Number") {
-        $("#check-grp-SelectPage-3").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Invoice") {
-        $("#check-grp-SelectPage-4").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "License Key New") {
-        $("#check-grp-SelectPage-5").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Prepaid Note") {
-        $("#check-grp-SelectPage-6").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Proforma Invoice") {
-        $("#check-grp-SelectPage-7").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Quotation New") {
-        $("#check-grp-SelectPage-8").prop('checked', true);
-      }
-      else if (this.addSelectPageListCheckboxID_array[i] == "Vs Provisioning") {
-        $("#check-grp-SelectPage-9").prop('checked', true);
+    if (this.addSelectPageListCheckboxID_array) {
+      for (let i = 0; i < this.addSelectPageListCheckboxID_array.length; i++) {
+        //  console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
+        if (this.addSelectPageListCheckboxID_array[i] == "Credit Note") {
+          $("#check-grp-SelectPage-0").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Customer New") {
+          $("#check-grp-SelectPage-1").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Customer Project") {
+          $("#check-grp-SelectPage-2").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "DID Number") {
+          $("#check-grp-SelectPage-3").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Invoice") {
+          $("#check-grp-SelectPage-4").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "License Key New") {
+          $("#check-grp-SelectPage-5").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Prepaid Note") {
+          $("#check-grp-SelectPage-6").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Proforma Invoice") {
+          $("#check-grp-SelectPage-7").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Quotation New") {
+          $("#check-grp-SelectPage-8").prop('checked', true);
+        }
+        else if (this.addSelectPageListCheckboxID_array[i] == "Vs Provisioning") {
+          $("#check-grp-SelectPage-9").prop('checked', true);
+        }
       }
     }
   }
@@ -1396,7 +1403,7 @@ export class NavbarComponent implements OnInit {
           });
           this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
-            if (data != '') {
+            if (data.count) {
               this.postalInvoiceCount = data.count;
             }
             //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
@@ -1466,7 +1473,7 @@ export class NavbarComponent implements OnInit {
   ConsolidatePDF(billId: any, customerID: any) {
 
     var url = this.serverService.urlFinal + "soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
-   
+
 
     window.open(url, '_blank');
     // console.log("url", url)
@@ -1475,9 +1482,9 @@ export class NavbarComponent implements OnInit {
   landscapePDF(billId: any) {
 
     var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
- 
+
     window.open(url, '_blank');
-  
+
   }
   overduePaymentLink(billId: any, customerID: any) {
     this.clickFlag = !this.clickFlag;
@@ -2825,7 +2832,7 @@ export class NavbarComponent implements OnInit {
       };
   }
   getEmailDetails(billid: any, billerId: any, custId: any) {
-   // console.log("custId", custId);
+    // console.log("custId", custId);
     this.custIDEmailSingle = custId;
 
     this.email_TemplateSelection = false;
@@ -2938,7 +2945,7 @@ export class NavbarComponent implements OnInit {
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
@@ -3593,18 +3600,25 @@ export class NavbarComponent implements OnInit {
   selectAll_menuList(event: any) {
     const checked = event.target.checked;
     this.allSelected = checked;
-    this.menuList.forEach(menuItem => menuItem.checked = checked ? 'true' : 'false');
+    if (this.menuList) {
+      this.menuList.forEach(menuItem => menuItem.checked = checked ? 'true' : 'false');
+    }
+
     this.logSelectedCheckboxIds();
   }
 
   logSelectedCheckboxIds() {
-    this.selectedPageIds = this.menuList
-      .filter(menuItem => menuItem.checked === 'true')
-      .map(menuItem => menuItem.pageId);
+    if (this.menuList) {
+      this.selectedPageIds = this.menuList
+        .filter(menuItem => menuItem.checked === 'true')
+        .map(menuItem => menuItem.pageId);
+      this.selectedPageNames = this.menuList
+        .filter(menuItem => menuItem.checked === 'true')
+        .map(menuItem => menuItem.menu_name);
+    }
+
     // console.log('Selected Checkbox IDs:', this.selectedPageIds);
-    this.selectedPageNames = this.menuList
-      .filter(menuItem => menuItem.checked === 'true')
-      .map(menuItem => menuItem.menu_name);
+
     // console.log('Selected Checkbox Names:', this.selectedPageNames);
   }
 

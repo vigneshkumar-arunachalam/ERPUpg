@@ -81,7 +81,8 @@ loadMenus(){
   var childMenus = [];
 
 // First Level Menu Filter
-  for(let i=0; i<this.jsonData.length; i++){
+if(this.jsonData){
+   for(let i=0; i<this.jsonData.length; i++){
     if(this.jsonData[i].IDs.length == 0){
       mainMenus.push(this.jsonData[i]);
     } else if(this.jsonData[i].IDs != undefined){ 
@@ -91,6 +92,10 @@ loadMenus(){
       }
     }
   }
+
+}
+
+ 
 
 // Second and Third Level Menu Filter
 for(let i=0; i<mainMenus.length; i++){

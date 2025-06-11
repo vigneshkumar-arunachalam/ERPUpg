@@ -922,7 +922,7 @@
                     </div>
                 </div>
             </form> -->
-            <form>
+            <form [formGroup]="contactFileForm">
                 <div class="modal-body contractFileAttachmentCSS">
                     <div style="display: flex; align-items: center;">
                         <label for="contr" class=" col-form-label">
@@ -960,7 +960,7 @@
                     </div>
             
                     <div style="padding-left: 30px;">
-                        <input required type="file" name="uploaded-img" id="uploaded-img"  (change)="showPreviewImage($event)">
+                        <input required type="file" name="uploaded-img" formControlName="up" id="uploaded-img"  (change)="showPreviewImage($event)">
                     </div>
                 </div>
             </form>

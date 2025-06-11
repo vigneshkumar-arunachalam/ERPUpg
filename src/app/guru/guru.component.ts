@@ -115,7 +115,7 @@ export class GuruComponent implements OnInit {
   editcreateAddress(): FormGroup {
     return this.fb.group({
       billerId: '',
-            customerName:'',
+          customerName:'',
       guru_details_id: '',
       customer_id: '',
       description: '',
@@ -191,18 +191,18 @@ export class GuruComponent implements OnInit {
             setTimeout(() => {
               $('#pd_e_customername_txtbox_' + index).val(response.data[index].customerName);
               $('#pd_e_customerID_txtbox_' + index).val(response.data[index].customer_id);
-              console.log("Set value for #pd_e_customername_txtbox_", index, $('#pd_e_customername_txtbox_' + index).val());
+             // console.log("Set value for #pd_e_customername_txtbox_", index, $('#pd_e_customername_txtbox_' + index).val());
             }, 0);
           }
 
           }
          
 
-          console.log(formArray);
+         // console.log(formArray);
 
           this.editGuru_FormGroup.setControl('editaddresses', formArray);
 
-          console.log(this.editGuru_FormGroup);
+         // console.log(this.editGuru_FormGroup);
           $('#editGuruDetailsFormId').modal('show');
 
 
@@ -222,7 +222,7 @@ export class GuruComponent implements OnInit {
             message: "Sorry, some server issue occur. Please contact admin",
             position: 'topRight'
           });
-          console.log("final error", error);
+        //  console.log("final error", error);
         };
 
 
@@ -280,7 +280,7 @@ export class GuruComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+          //  console.log("final error", error);
           };
       }
     })
@@ -350,7 +350,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -399,7 +399,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
   }
@@ -427,7 +427,7 @@ export class GuruComponent implements OnInit {
           $("#showhide").show();
         });
         this.googleAuthentication_status = response.status;
-        console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
+       // console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
         if (this.googleAuthentication_status == true) {
           this.guruList();
           this.getGuruBillers();
@@ -456,7 +456,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
 
@@ -466,13 +466,13 @@ export class GuruComponent implements OnInit {
   guruUpdate() {
     this.spinner.show();
     let abc: any = []
-    console.log(this.editGuru_FormGroup.value)
+   // console.log(this.editGuru_FormGroup.value)
     abc = this.editGuru_FormGroup.value
-    console.log("abc", abc)
+   // console.log("abc", abc)
     const index = abc.editaddresses.length;
 
 
-    console.log("index length", index)
+   // console.log("index length", index)
 
     let api_req: any = new Object();
     let update_req: any = new Object();
@@ -555,7 +555,7 @@ export class GuruComponent implements OnInit {
 
     // }
 
-    console.log("this.editGuru_FormGroup.value.editaddresses", this.editGuru_FormGroup.value.editaddresses)
+   // console.log("this.editGuru_FormGroup.value.editaddresses", this.editGuru_FormGroup.value.editaddresses)
 
     for (let i = 0; i < this.editGuru_FormGroup.value.editaddresses.length; i++) {
       if ($('#pd_e_billername_txtbox_' + i).val() == null || $('#pd_e_billername_txtbox_' + i).val() == '') {
@@ -661,7 +661,7 @@ export class GuruComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("update response", response)
+     // console.log("update response", response)
 
       if (response.status == true) {
         this.spinner.hide();
@@ -711,7 +711,7 @@ export class GuruComponent implements OnInit {
 
       this.edit_array_guru.push(gurudetailID);
       this.edit_array_guru.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_guru);
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_array_guru);
     }
     else {
 
@@ -719,7 +719,7 @@ export class GuruComponent implements OnInit {
       if (index > -1) {
         this.edit_array_guru.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_guru)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_guru)
 
     }
   }
@@ -770,7 +770,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
   getGuruBillers() {
@@ -810,7 +810,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
 
   }
@@ -852,7 +852,7 @@ export class GuruComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+     //   console.log("final error", error);
       };
 
   }
@@ -862,31 +862,31 @@ export class GuruComponent implements OnInit {
   }
 
   InvoiceShowCHK(userId: any, event: any) {
-    console.log("List - Checkbox ID", userId);
+  //  console.log("List - Checkbox ID", userId);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = userId;
     this.Checkbox_value_invoiceShow = event.target.checked;
-    console.log(this.Checkbox_value_invoiceShow)
+  //  console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push((userId));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+    //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(userId);
-      console.log(index)
+   //   console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+    //  console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   onFocusedCustomer(event: any) {
@@ -991,7 +991,7 @@ export class GuruComponent implements OnInit {
             }
           }),
             (error: any) => {
-              console.log(error);
+             // console.log(error);
             };
         }
       })
@@ -1043,7 +1043,7 @@ export class GuruComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+           // console.log(error);
           };
       }
     })
@@ -1184,10 +1184,10 @@ export class GuruComponent implements OnInit {
 
   removeAddressedit(i: number) {
 
-    console.log('Attempting to remove address at index', i);
-    console.log('Form array:', this.editGuru_FormGroup);
-    console.log('Form array-customer contract id at particular index:',
-      this.editGuru_FormGroup.value.editaddresses[i].guru_details_id);
+    // console.log('Attempting to remove address at index', i);
+    // console.log('Form array:', this.editGuru_FormGroup);
+    // console.log('Form array-customer contract id at particular index:',
+    //   this.editGuru_FormGroup.value.editaddresses[i].guru_details_id);
     // var pd_billchild_id = $('#pd_billchild_id_' + i).val();
     var guru_details_id = this.editGuru_FormGroup.value.editaddresses[i].guru_details_id;
 

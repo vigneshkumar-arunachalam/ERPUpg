@@ -807,6 +807,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       'e_billingAddress_zipcode': new FormControl(null),
       'Edit_BA_countryname': new FormControl(null),
       'e_edit_ship_address': new FormControl(null),
+      'ESA_dup': new FormControl(null),
       'e_ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_shipto': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_address1': new FormControl({ value: '', disabled: true }, Validators.required),

@@ -211,7 +211,8 @@
                                             </td>
 
                                             <td>
-                                                <span> {{ list.description.trim()}}</span>
+                                             
+                                                <span [innerHTML]="list.description.trim()"></span>
                                                 <!-- <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
                                                         [ngStyle]="{'backgroundColor': 'yellow'}">{{
                                                         list.quotation_no}}</button></span> -->
@@ -6991,6 +6992,8 @@
                                 <div class="transaction-form-group ">
 
                                     <label for="view_PurchaseEntryNo" class="col-form-label">Description</label>
+<!-- <textarea class="form-control" id="view_PurchaseEntryNo" rows="4" readonly>{{ PC_Description }}</textarea> -->
+
 
 
                                     <span>{{PC_Description}}</span>

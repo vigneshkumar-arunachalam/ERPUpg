@@ -184,7 +184,12 @@ i.fa.fa-bars {
 #ProductPriceUpdateFormId label,
 #RMAReissueFormId label,
 #ProductQtyResetFormId label,
-#ProductInventoryTransferFormId label {
+#ProductInventoryTransferFormId label,
+#ProductInventoryIssueFormId label,
+#DIPDempProdRevFormId label,
+#PSDEditFormId label,
+#searchPIEMFormId label,
+#PIEIssueProdAvFormId label{
     font-weight: 500;
     color: #051b5a !important;
 }

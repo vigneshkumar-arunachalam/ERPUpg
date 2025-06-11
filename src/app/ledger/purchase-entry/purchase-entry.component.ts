@@ -138,7 +138,7 @@ export class PurchaseEntryComponent implements OnInit {
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private injector: Injector, private http: HttpClient) { }
   keywordCompanyName = 'companyName';
-  keywordVendorName='vendorName'
+  keywordVendorName = 'vendorName'
   ngOnInit(): void {
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
 
@@ -146,18 +146,18 @@ export class PurchaseEntryComponent implements OnInit {
     this.addLoad();
     this.yearsAPI();
 
-    this.http.get<any>(this.serverService.urlFinal +'purchaseEntry/getMonthValues').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'purchaseEntry/getMonthValues').subscribe((data: any) => {
       this.getMonthValues = data.months;
-     // console.log("this.getMonthValues", this.getMonthValues)
+      // console.log("this.getMonthValues", this.getMonthValues)
     })
 
-    this.http.get<any>(this.serverService.urlFinal +'vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
-     // console.log("this.getVendorCode", this.getVendorCode)
+      // console.log("this.getVendorCode", this.getVendorCode)
     });
-    this.http.get<any>(this.serverService.urlFinal +'base/getVendorList').subscribe((data: any) => {
+    this.http.get<any>(this.serverService.urlFinal + 'base/getVendorList').subscribe((data: any) => {
       this.getVendorList = data.vendorList;
-     // console.log("this.getVendorCode", this.getVendorCode)
+      // console.log("this.getVendorCode", this.getVendorCode)
     })
     this.PurchaseEntryList({});
 
@@ -300,7 +300,7 @@ export class PurchaseEntryComponent implements OnInit {
     this.recurringEditVendorID = event.target.value;
   }
   handle_company(event: any) {
- 
+
     this.recurringEditBillerID = event.target.value;
     this.getPurchaseDetails();
   }
@@ -319,7 +319,7 @@ export class PurchaseEntryComponent implements OnInit {
         this.selectedGroupIds.splice(index, 1);
       }
     }
-  //  console.log(this.selectedGroupIds); // Log the array for testing
+    //  console.log(this.selectedGroupIds); // Log the array for testing
 
   }
   handle_company_add(event: any) {
@@ -337,9 +337,9 @@ export class PurchaseEntryComponent implements OnInit {
     this.add_currencyID = event.target.value;
     this.changeCurrency();
   }
-  changeCurrency(){
+  changeCurrency() {
     this.spinner.show();
-  
+
     let api_req: any = new Object();
     let api_recurring: any = new Object();
     api_req.moduleType = "base";
@@ -348,7 +348,7 @@ export class PurchaseEntryComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_recurring.action = "get_currency_values";
     api_recurring.user_id = localStorage.getItem("erp_c4c_user_id");
-    api_recurring.billerId=$('#add_billerName1').val();
+    api_recurring.billerId = $('#add_billerName1').val();
 
     api_recurring.currency_code = this.add_currencyID;
     api_req.element_data = api_recurring;
@@ -356,7 +356,7 @@ export class PurchaseEntryComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status = true) {
-  
+
         this.addEnquiryForm.patchValue({
           'add_convAmount': response.currency_live_val,
         });
@@ -365,9 +365,9 @@ export class PurchaseEntryComponent implements OnInit {
 
 
   }
-  getPurchaseDetails(){
+  getPurchaseDetails() {
     this.spinner.show();
-  
+
     let api_req: any = new Object();
     let api_recurring: any = new Object();
     api_req.moduleType = "transaction_entry";
@@ -376,14 +376,14 @@ export class PurchaseEntryComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_recurring.action = "getPurchaseDetails";
     api_recurring.user_id = localStorage.getItem("erp_c4c_user_id");
-    api_recurring.biller_id=this.recurringEditBillerID ;
+    api_recurring.biller_id = this.recurringEditBillerID;
     api_req.element_data = api_recurring;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status = true) {
         this.spinner.hide();
-        this.recurringEditCurrencyID= response.default_currency_id;
+        this.recurringEditCurrencyID = response.default_currency_id;
         this.editEnquiryForm.patchValue({
           'edit_billerName': response.defaults_biller_id,
           'edit_Currency': response.default_currency_id,
@@ -412,7 +412,7 @@ export class PurchaseEntryComponent implements OnInit {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
@@ -423,13 +423,13 @@ export class PurchaseEntryComponent implements OnInit {
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
   }
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID = item.vendorId;
     this.searchResult_CustomerName = item.vendorName.trim();;
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
@@ -440,7 +440,7 @@ export class PurchaseEntryComponent implements OnInit {
     this.searchResult_CustomerName = event.target.value;
   }
   clearSelection(event: any) {
-   // console.log("clear selection", event)
+    // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
@@ -465,7 +465,7 @@ export class PurchaseEntryComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-       // console.log("vignesh-customer_status response", response);
+        // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult = response.vendorName;
         // console.log("vignesh-advanced search result", this.searchResult);
@@ -547,7 +547,7 @@ export class PurchaseEntryComponent implements OnInit {
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
-    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+      //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
 
     }
 
@@ -612,12 +612,12 @@ export class PurchaseEntryComponent implements OnInit {
         this.PE_VendorManagementForm.controls['PE_VM_VendorName'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_Address1'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_Address2'].reset();
-    
+
         this.PE_VendorManagementForm.controls['PE_VM_City'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_State'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_Country'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_ZipCode'].reset();
-    
+
         this.PE_VendorManagementForm.controls['PE_VM_Phone'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_MobilePhone'].reset();
         this.PE_VendorManagementForm.controls['PE_VM_Fax'].reset();
@@ -703,8 +703,8 @@ export class PurchaseEntryComponent implements OnInit {
   getCurrencyValues(event: any) {
     this.spinner.show();
     this.getCurrencyCode = event.target.value;
-    this.recurringEditCurrencyID= event.target.value;
-   // alert( this.recurringEditCurrencyID);
+    this.recurringEditCurrencyID = event.target.value;
+    // alert( this.recurringEditCurrencyID);
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "base";
@@ -783,22 +783,22 @@ export class PurchaseEntryComponent implements OnInit {
         this.selectedGroupIds = [];
         this.resultRecurring = response[0].recuring_activechk;
         this.recurringGroups = response[0].recurringGroups;
-        if(response[0].recuring_group_str){
- this.selectedGroupIds = response[0].recuring_group_str.split(',').map(Number);
+        if (response[0].recuring_group_str) {
+          this.selectedGroupIds = response[0].recuring_group_str.split(',').map(Number);
         }
-       
-       // console.log("this.selectedGroupIds", this.selectedGroupIds)
-       if(response[0].recured_date_show){
-        const dateParts = response[0].recured_date_show.split('/');
-           const year = parseInt(dateParts[2], 10);
-        const month = parseInt(dateParts[1], 10);
-        const day = parseInt(dateParts[0], 10);
-        const parsedDate = new Date(year, month - 1, day); // Note: month - 1 becau
 
-        this.recurringDate = this.datePipe.transform(parsedDate, 'yyyy-MM-dd');
-       }
+        // console.log("this.selectedGroupIds", this.selectedGroupIds)
+        if (response[0].recured_date_show) {
+          const dateParts = response[0].recured_date_show.split('/');
+          const year = parseInt(dateParts[2], 10);
+          const month = parseInt(dateParts[1], 10);
+          const day = parseInt(dateParts[0], 10);
+          const parsedDate = new Date(year, month - 1, day); // Note: month - 1 becau
 
-     
+          this.recurringDate = this.datePipe.transform(parsedDate, 'yyyy-MM-dd');
+        }
+
+
         this.RecurringForm.patchValue({
           'Rec_date': this.recurringDate,
           'Rec_Duration': response[0].rec_duration,
@@ -875,97 +875,97 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.action = "savePurchaseEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
- 
-    var billername=this.addEnquiryForm.value.add_billerName1;
-    if (billername=== null || billername=== undefined || billername=== 'undefined') {
+
+    var billername = this.addEnquiryForm.value.add_billerName1;
+    if (billername === null || billername === undefined || billername === 'undefined') {
       iziToast.error({
         message: "Fill Biller Name  ",
         position: 'topRight'
       });
       this.spinner.hide();
       return false;
-    }else{
+    } else {
       api_mulInvpay.company = this.addEnquiryForm.value.add_billerName1;
     }
 
-    var vendorname=this.searchResult_vendorId;
-    if (vendorname=== null || vendorname=== undefined || vendorname=== 'undefined') {
-    
+    var vendorname = this.searchResult_vendorId;
+    if (vendorname === null || vendorname === undefined || vendorname === 'undefined') {
+
       iziToast.error({
         message: "Fill Vendor Name  ",
         position: 'topRight'
       });
-     this.spinner.hide();
+      this.spinner.hide();
       return false;
-    }else{
-      
+    } else {
+
       api_mulInvpay.vendorId = this.searchResult_vendorId;
     }
-   
-    var purchaseentrynumber=this.addEnquiryForm.value.add_PurchaseEntryNo;
-    if (purchaseentrynumber=== null || purchaseentrynumber=== undefined || purchaseentrynumber=== 'undefined') {
+
+    var purchaseentrynumber = this.addEnquiryForm.value.add_PurchaseEntryNo;
+    if (purchaseentrynumber === null || purchaseentrynumber === undefined || purchaseentrynumber === 'undefined') {
       iziToast.error({
         message: "Fill Purchase Entry Number  ",
         position: 'topRight'
       });
       this.spinner.hide();
       return false;
-    }else{
+    } else {
       api_mulInvpay.purchaseEntryNo = this.addEnquiryForm.value.add_PurchaseEntryNo;
     }
-    
+
     api_mulInvpay.purchaseEntryDate = this.addEnquiryForm.value.add_PurchaseEntryDate;
 
 
-    var purchasetype=this.addEnquiryForm.value.add_PurchaseType;
-    if (purchasetype=== null || purchasetype=== undefined || purchasetype=== 'undefined') {
+    var purchasetype = this.addEnquiryForm.value.add_PurchaseType;
+    if (purchasetype === null || purchasetype === undefined || purchasetype === 'undefined') {
       iziToast.error({
         message: "Fill Purchase Type  ",
         position: 'topRight'
       });
       this.spinner.hide();
       return false;
-    }else{
+    } else {
       api_mulInvpay.purchase_type_id = this.addEnquiryForm.value.add_PurchaseType;
     }
 
-    var invoiceNumb=this.addEnquiryForm.value.add_InvoiceNo;
-    if (invoiceNumb=== null || invoiceNumb=== undefined || invoiceNumb=== 'undefined') {
+    var invoiceNumb = this.addEnquiryForm.value.add_InvoiceNo;
+    if (invoiceNumb === null || invoiceNumb === undefined || invoiceNumb === 'undefined') {
       iziToast.error({
         message: "Fill Invoice Number  ",
         position: 'topRight'
       });
       this.spinner.hide();
       return false;
-    }else{
+    } else {
       api_mulInvpay.invoiceNo = this.addEnquiryForm.value.add_InvoiceNo;
     }
- 
- 
+
+
     api_mulInvpay.content_purchase = this.addEnquiryForm.value.add_purchaseContent;
     api_mulInvpay.poNo = this.addEnquiryForm.value.add_PONo;
     api_mulInvpay.currency = this.addEnquiryForm.value.add_Currency;
     api_mulInvpay.conversionRate = this.addEnquiryForm.value.add_convAmount;
     api_mulInvpay.taxAmount = this.addEnquiryForm.value.add_taxAmount;
 
-    
-    var invoiceamount=this.addEnquiryForm.value.add_amount;
-    if (invoiceamount=== null || invoiceamount=== undefined || invoiceamount=== 'undefined') {
+
+    var invoiceamount = this.addEnquiryForm.value.add_amount;
+    if (invoiceamount === null || invoiceamount === undefined || invoiceamount === 'undefined') {
       iziToast.error({
         message: "Fill Invoice Amount  ",
         position: 'topRight'
       });
       this.spinner.hide();
-     return false;
-    }else{
+      return false;
+    } else {
       api_mulInvpay.invoiceAmount = this.addEnquiryForm.value.add_amount;
     }
-   
+
 
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status == "true" || response.status == true ) {
+      if (response.status == "true" || response.status == true) {
         this.spinner.hide();
         $("#addPurchaseEntryFormId").modal("hide");
         iziToast.success({
@@ -975,8 +975,8 @@ export class PurchaseEntryComponent implements OnInit {
         this.addEnquiryForm.reset();
         this.PurchaseEntryList({});
         this.addEnquiryForm.value.reset();
-       
-       
+
+
       } else {
         this.spinner.hide();
         iziToast.warning({
@@ -1039,7 +1039,7 @@ export class PurchaseEntryComponent implements OnInit {
           'view_Currency': response.currency,
         })
 
-      //  $("#viewPurchaseEntryFormId").modal("hide");
+        //  $("#viewPurchaseEntryFormId").modal("hide");
 
       } else {
         this.spinner.hide();
@@ -1130,7 +1130,7 @@ export class PurchaseEntryComponent implements OnInit {
   //   api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
   //   var purchaseentrynumber=this.editEnquiryForm.value.edit_PurchaseEntryNo;
- 
+
   //   if (purchaseentrynumber=== null || purchaseentrynumber=== '' || purchaseentrynumber=== undefined || purchaseentrynumber=== 'undefined') {
   //     iziToast.error({
   //       message: "Fill Purchase Entry Number  ",
@@ -1139,7 +1139,7 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //     return false;
   //   }else{
-      
+
   //     api_mulInvpay.purchaseEntryNo = this.editEnquiryForm.value.edit_PurchaseEntryNo;
   //   }
 
@@ -1152,10 +1152,10 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //     return false;
   //   }else{
-      
+
   //     api_mulInvpay.purchaseEntryDate = this.editEnquiryForm.value.edit_PurchaseEntryDate;
   //   }
- 
+
 
   //   var invoiceNumb=this.editEnquiryForm.value.edit_InvoiceNo;
   //   if (invoiceNumb=== null || invoiceNumb=== ''|| invoiceNumb=== undefined || invoiceNumb=== 'undefined') {
@@ -1166,7 +1166,7 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //     return false;
   //   }else{
-      
+
   //     api_mulInvpay.invoiceNo = this.editEnquiryForm.value.edit_InvoiceNo;
   //   }
   //   api_mulInvpay.content_purchase = this.editEnquiryForm.value.edit_purchaseContent;
@@ -1180,7 +1180,7 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //    return false;
   //   }else{
-     
+
   //     api_mulInvpay.invoiceAmount = this.editEnquiryForm.value.edit_amount;
   //   }
   //   api_mulInvpay.company = this.recurringEditBillerID;
@@ -1188,7 +1188,7 @@ export class PurchaseEntryComponent implements OnInit {
 
   //   api_mulInvpay.currency = this.recurringEditCurrencyID;
   //   api_mulInvpay.taxAmount = this.editEnquiryForm.value.edit_taxAmount;
-   
+
   //   var vendor= this.recurringEditVendorID;
   //   if (vendor=== null || vendor=== '' ||vendor=== undefined || vendor=== 'undefined') {
   //     iziToast.error({
@@ -1198,7 +1198,7 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //     return false;
   //   }else{
-      
+
   //     api_mulInvpay.vendorId = this.recurringEditVendorID;
   //   }
 
@@ -1211,11 +1211,11 @@ export class PurchaseEntryComponent implements OnInit {
   //     this.spinner.hide();
   //     return false;
   //   }else{
-      
+
   //     api_mulInvpay.purchase_type_id = this.recurringEditPurchaseTypeID;
   //   }
 
- 
+
   //   api_mulInvpay.purchaseEntryId = this.editpurchaseEntryID;
 
 
@@ -1264,67 +1264,67 @@ export class PurchaseEntryComponent implements OnInit {
 
     const purchaseEntryNumber = this.editEnquiryForm.value.edit_PurchaseEntryNo;
     if (!purchaseEntryNumber) {
-        iziToast.error({
-            message: "Fill Purchase Entry Number",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Purchase Entry Number",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.purchaseEntryNo = purchaseEntryNumber;
 
     const purchaseEntryDate = this.editEnquiryForm.value.edit_PurchaseEntryDate;
     if (!purchaseEntryDate) {
-        iziToast.error({
-            message: "Fill Purchase Entry Date",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Purchase Entry Date",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.purchaseEntryDate = purchaseEntryDate;
 
     const invoiceNo = this.editEnquiryForm.value.edit_InvoiceNo;
     if (!invoiceNo) {
-        iziToast.error({
-            message: "Fill Invoice Number",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Invoice Number",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.invoiceNo = invoiceNo;
 
     const invoiceAmount = this.editEnquiryForm.value.edit_amount;
     if (!invoiceAmount) {
-        iziToast.error({
-            message: "Fill Invoice Amount",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Invoice Amount",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.invoiceAmount = invoiceAmount;
 
     const vendorId = this.recurringEditVendorID;
     if (!vendorId) {
-        iziToast.error({
-            message: "Fill Vendor Details",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Vendor Details",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.vendorId = vendorId;
 
     const purchaseTypeId = this.recurringEditPurchaseTypeID;
     if (!purchaseTypeId) {
-        iziToast.error({
-            message: "Fill Purchase Type",
-            position: 'topRight'
-        });
-        this.spinner.hide();
-        return false;
+      iziToast.error({
+        message: "Fill Purchase Type",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
     api_mulInvpay.purchase_type_id = purchaseTypeId;
 
@@ -1332,7 +1332,7 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.poNo = this.editEnquiryForm.value.edit_PONo;
     api_mulInvpay.company = this.recurringEditBillerID;
     api_mulInvpay.conversionRate = this.editEnquiryForm.value.edit_convAmount;
-    
+
     api_mulInvpay.currency = this.recurringEditCurrencyID;
     api_mulInvpay.taxAmount = this.editEnquiryForm.value.edit_taxAmount;
     api_mulInvpay.purchaseEntryId = this.editpurchaseEntryID;
@@ -1340,35 +1340,35 @@ export class PurchaseEntryComponent implements OnInit {
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe({
-        next: (response: any) => {
-            this.spinner.hide();
-            if (response.status) {
-                this.PurchaseEntryList({});
-                iziToast.success({
-                    message: "Purchase Entry Values Updated Successfully",
-                    position: 'topRight'
-                });
-                $("#editPurchaseEntryFormId").modal("hide");
-            } else {
-                iziToast.warning({
-                    message: "Update Failed",
-                    position: 'topRight'
-                });
-            }
-        },
-        error: (error: any) => {
-            this.spinner.hide();
-            iziToast.error({
-                message: "Sorry, some server issue occurred. Please contact admin",
-                position: 'topRight'
-            });
-            console.log("Error:", error);
-        },
-        complete: () => {
-            console.log("Update purchase entry completed.");
+      next: (response: any) => {
+        this.spinner.hide();
+        if (response.status) {
+          this.PurchaseEntryList({});
+          iziToast.success({
+            message: "Purchase Entry Values Updated Successfully",
+            position: 'topRight'
+          });
+          $("#editPurchaseEntryFormId").modal("hide");
+        } else {
+          iziToast.warning({
+            message: "Update Failed",
+            position: 'topRight'
+          });
         }
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occurred. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("Error:", error);
+      },
+      complete: () => {
+        console.log("Update purchase entry completed.");
+      }
     });
-}
+  }
 
 
   PP_PaymentMethod(event: any) {
@@ -1398,7 +1398,7 @@ export class PurchaseEntryComponent implements OnInit {
         this.paymentNotes = response.paymentNote;
 
         this.purchasePaymentForm.patchValue({
-         // 'pay_date': response.billerId,
+          // 'pay_date': response.billerId,
           'pay_Total': response.invoiceAmount,
           'pay_paidAmount': response.paid_amt,
           'pay_balance': response.bal_amt,
@@ -1437,18 +1437,18 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.action = "processPurchasePayment";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.purchase_id = this.paymentProcessPurchaseID;
-    var desc=this.purchasePaymentForm.value.pay_description;
-    if(desc==null ||desc==undefined || desc=='undefined'){
+    var desc = this.purchasePaymentForm.value.pay_description;
+    if (desc == null || desc == undefined || desc == 'undefined') {
       iziToast.error({
         message: "Description Missing",
         position: 'topRight'
       });
       this.spinner.hide();
       return false;
-    }else{
+    } else {
       api_mulInvpay.payment_details = this.purchasePaymentForm.value.pay_description;
     }
- 
+
     api_mulInvpay.payment_method = this.purchasePaymentForm.value.pay_paymentType;
     api_mulInvpay.purchase_paid_amt = this.purchasePaymentForm.value.pay_rdAmount;
     api_mulInvpay.bal_amt = this.purchasePaymentForm.value.pay_balance;
@@ -1473,7 +1473,7 @@ export class PurchaseEntryComponent implements OnInit {
     } else {
       api_mulInvpay.payment_method = this.purchasePaymentForm.value.pay_paymentType;
     }
-  //  console.log("batter", this.purchasePaymentForm.value.pay_paymentType)
+    //  console.log("batter", this.purchasePaymentForm.value.pay_paymentType)
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1516,10 +1516,10 @@ export class PurchaseEntryComponent implements OnInit {
   }
   addVendorNameGo() {
     // $('#addPurchaseEntryFormId').modal('hide');
-    
-    this.http.get<any>(this.serverService.urlFinal +'vendor/getVendorCode').subscribe((data: any) => {
+
+    this.http.get<any>(this.serverService.urlFinal + 'vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
-    //  console.log("this.getVendorCode", this.getVendorCode)
+      //  console.log("this.getVendorCode", this.getVendorCode)
     });
 
     $('#PE_VendorManagementId').modal('show');
@@ -1589,9 +1589,9 @@ export class PurchaseEntryComponent implements OnInit {
         console.log("final error", error);
       };
   }
- 
+
   PurchaseEntryList(data: any) {
-   // alert("hi")
+    // alert("hi")
 
 
 
@@ -1616,7 +1616,7 @@ export class PurchaseEntryComponent implements OnInit {
     } else {
       api_deliveryOrder.search_txt = this.searchResult_CustomerName;
     }
-    
+
     // api_deliveryOrder.search_biller_str = this.searchResult1_CustomerName;
     if (this.edit_array_SearchBiller_Checkbox == undefined) {
       api_deliveryOrder.billerID = [];
@@ -1647,18 +1647,21 @@ export class PurchaseEntryComponent implements OnInit {
 
       if (response.status = true) {
         this.biller_list = response.biller_details;
-        this.purchaseEntryList = response.purchaseEntryList;
+        if (response.purchaseEntryList) {
 
-        this.notPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'notpaid');
-        this.paidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paid');
-        this.partialPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paritialypaid');
 
+          this.purchaseEntryList = response.purchaseEntryList;
+
+          this.notPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'notpaid');
+          this.paidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paid');
+          this.partialPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paritialypaid');
+        }
         // console.log("this.notPaidEntries",this.notPaidEntries)
         // console.log("this.notPaidEntries.length",this.notPaidEntries.length)
         // console.log("this.paidEntries",this.paidEntries)
         // console.log("this.partialPaidEntries",this.partialPaidEntries)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-       
+
         $('#searchDeliveryOrderFormId').modal("hide");
         $('#searchPurchaseOrderFormId').modal("hide");
         $('#searchPEFormId').modal("hide");
@@ -1717,21 +1720,21 @@ export class PurchaseEntryComponent implements OnInit {
       }
     })
   }
- 
+
   clearVendorSelection(event: any) {
     console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_vendorId = '';
     this.searchResult_vendorName = '';
-    this.recurringEditVendorID='';
+    this.recurringEditVendorID = '';
     console.log("AutoComplete-vendor ID", this.searchResult_vendorId)
     console.log("AutoComplete-vendor Name", this.searchResult_vendorName)
   }
   selectEventVendor(item: any) {
     console.log(item)
     this.searchResult_vendorId = item.vendorId;
-    this.recurringEditVendorID=this.searchResult_vendorId;
+    this.recurringEditVendorID = this.searchResult_vendorId;
     this.searchResult_vendorName = item.vendorName;
     console.log("AutoComplete-vendor ID", this.searchResult_vendorId)
     console.log("AutoComplete-vendor Name", this.searchResult_vendorName)
@@ -1777,7 +1780,7 @@ export class PurchaseEntryComponent implements OnInit {
   onFocusedVendor(e: any) {
     // do something when input is focused
   }
- 
+
 
 
 }

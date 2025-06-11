@@ -68,6 +68,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   response_total_cnt: any;
   customerNameData: any;
   variableCustomerData: any;
+  addressesArray1: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
@@ -459,6 +460,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   }
 
   clearSelection1(event: any, i: any) {
+    alert("check")
     // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
@@ -467,6 +469,9 @@ export class MultipleInvPaymentComponent implements OnInit {
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('invoice_amt').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('bal_amount').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('paid_amt').reset();
+     const addressesArray1 = this.addPI_section2.get('addresses') as FormArray;
+    const addressGroup = this.addressesArray1.at(i) as FormGroup;
+  addressGroup.reset();
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     // console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.Pay_Pending_list_show[i] = false;

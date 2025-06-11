@@ -108,6 +108,7 @@ export class ContractComponent implements OnInit {
   myFiles_add1: any;
   getResult: any;
   response_total_cnt: any;
+  contactFileForm:FormGroup;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -176,6 +177,10 @@ export class ContractComponent implements OnInit {
     });
     this.searchContractForm = new FormGroup({
       'company_Name': new FormControl(null),
+
+    });
+    this.contactFileForm= new FormGroup({
+      'up': new FormControl(null),
 
     });
 

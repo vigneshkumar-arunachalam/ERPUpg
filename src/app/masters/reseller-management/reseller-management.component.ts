@@ -779,6 +779,7 @@ export class ResellerManagementComponent implements OnInit {
       'e_billingAddress_state': new FormControl(null),
       'e_billingAddress_zipcode': new FormControl(null),
       'Edit_BA_countryname': new FormControl(null),
+      'Edit_ship_add': new FormControl(null),
       'e_edit_ship_address': new FormControl(null),
       'e_ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_shipto': new FormControl({ value: '', disabled: true }, Validators.required),
@@ -2887,8 +2888,8 @@ export class ResellerManagementComponent implements OnInit {
         setTimeout(() => {
           $("#cmsdepartment_name_edit").val(dpt_id)
         }, 3000);
-
-        this.editCustomerForm.patchValue({
+        if(response.result){
+           this.editCustomerForm.patchValue({
 
           'e_company_Code': response.result.customer_details[0].customerCode,
 
@@ -2956,8 +2957,7 @@ export class ResellerManagementComponent implements OnInit {
           'e_vsProvisionAttachment': response.result.customer_details[0].vs_provisioning_command,
           'DCIP_edit': response.result.customer_details[0].dc_ip_country,
         });
-
-        const formArray = new FormArray([]);
+         const formArray = new FormArray([]);
         var bill_code_length = response.result.customer_bill_code_arr.length <= 1 ? 1 : response.result.customer_bill_code_arr.length;
         for (let index = 0; index < bill_code_length; index++) {
 
@@ -2975,9 +2975,15 @@ export class ResellerManagementComponent implements OnInit {
           })
           );
         }
-
+ 
         console.log(formArray)
         this.billCodeEditForm3.setControl('addresses', formArray);
+
+        }
+
+       
+
+      
         console.log(this.addresses)
 
 
