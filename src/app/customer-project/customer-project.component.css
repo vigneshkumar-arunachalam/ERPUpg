@@ -245,7 +245,9 @@ i.fa.fa-bars {
 }
 
 tr:nth-child(even) {
-  background: rgb(239, 241, 238)
+  /* background: rgb(239, 241, 238); */
+   background: #dcabab63;
+ 
 }
 
 tr:nth-child(odd) {
@@ -665,6 +667,10 @@ label {
 .dropdown__item:hover .hide{display: block;}
 .dropdown__item:hover .show{display: none;}
 
+#callFormId_CP .modal-dialog,#licenceKeyDetFormId_CP .modal-dialog{
+  min-width: 85%;
+}
+
 #viewCustomerPjctMgmtID .modal-dialog{
   min-width: 75%;
 }
@@ -820,10 +826,10 @@ tr:hover td {
   transition: background 2s, color 2s;
 }
 .userDatatable table tbody tr td {
-  border: 1px dashed #0094bc;
+  border: 1px solid #0094bc;
 }
 .userDatatable table thead tr th {
-  border: 1px dashed #d2e4e9;
+  border: 1px solid #d2e4e9;
 }
 
 
@@ -880,4 +886,61 @@ tr:hover td {
 /* Handle on hover */
 .email-cc-template::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+
+
+
+.row-align {
+  display: flex;
+  align-items: center;
+  background-color: #efe4f108;
+  padding: 10px 12px;
+  border-radius: 6px;
+  gap: 10px;
+}
+
+.button-col {
+  flex: 0 0 150px; /* fixed width for button column */
+  display: flex;
+  align-items: center;
+}
+
+.name-col {
+  flex: 1; /* takes remaining space */
+  font-weight: 500;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.icon-col {
+  flex: 0 0 140px; /* fixed size for icons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonClass1 {
+  /* background: linear-gradient(to right, #f6e27a, #c78f0a); */
+  border: none;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.icon-col i {
+  color: rgb(216, 11, 59);
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon-col i:hover {
+  transform: scale(1.2);
 }

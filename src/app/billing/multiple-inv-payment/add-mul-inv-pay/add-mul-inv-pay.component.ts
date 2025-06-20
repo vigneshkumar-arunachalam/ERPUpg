@@ -271,12 +271,13 @@ export class AddMulInvPayComponent implements OnInit {
 
 
   clearSelection1(event: any, i: any) {
+    console.log("clear");
     console.log("i value", i)
      const addressesArray7 = this.addPI_section2.get('addresses') as FormArray;
     const addressFormGroup7 = addressesArray7.at(i) as FormGroup;
     addressFormGroup7.patchValue({
-      bal_amount: '',
-      net_payment: ''
+      bal_amount: [],
+      net_payment: []
     });
     // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)

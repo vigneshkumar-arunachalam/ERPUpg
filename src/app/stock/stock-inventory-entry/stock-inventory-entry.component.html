@@ -497,31 +497,31 @@
                   <li class="page-item">
                     <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
                       href="javascript:void(0)"
-                      (click)="paginationData.backtab=='show' ? productApprovalList({'offset':paginationData.start}) : false"><i
+                      (click)="paginationData.backtab=='show' ? issueProductList({'offset':paginationData.start}) : false"><i
                         class="fas fa-angle-left"></i></a>
                   </li>
                   <li class="page-item" *ngIf="paginationData.backtab =='show'">
                     <a class="page-link" href="javascript:void(0)"
-                      (click)="productApprovalList({'offset':paginationData.back})"><i
+                      (click)="issueProductList({'offset':paginationData.back})"><i
                         class="fas fa-angle-double-left"></i></a>
                   </li>
                   <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
                     *ngFor="let pagination of paginationData.data;let i=index">
                     <a class="page-link" href="javascript:void(0)"
-                      (click)=" pagination.load ==true ? productApprovalList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      (click)=" pagination.load ==true ? issueProductList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
                       <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
                   </li>
 
                   <li class="page-item" *ngIf="paginationData.nexttab =='show'">
                     <a class="page-link" href="javascript:void(0)"
-                      (click)="productApprovalList({'offset':paginationData.next})"><i
+                      (click)="issueProductList({'offset':paginationData.next})"><i
                         class="fas fa-angle-double-right"></i></a>
                   </li>
 
                   <li class="page-item">
                     <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
                       href="javascript:void(0)"
-                      (click)="paginationData.nexttab =='show' ? productApprovalList({'offset':paginationData.end}) : false"><i
+                      (click)="paginationData.nexttab =='show' ? issueProductList({'offset':paginationData.end}) : false"><i
                         class="fas fa-angle-right"></i></a>
                   </li>
                 </ul>

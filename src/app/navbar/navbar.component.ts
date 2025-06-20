@@ -3992,6 +3992,58 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
+   initTiny() {
+    var richTextArea_id = 'richTextAreacreated';
+    tinymce.init({
+      selector: '#richTextAreacreated',
+      height: 500,
+      plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
+      toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
+        alignleft aligncenter alignright alignjustify | \
+        bullist numlist outdent indent | autoresize',
+      paste_data_images: true,
+      images_upload_url: 'upload.php',
+      automatic_uploads: false,
+      default_link_target: "_blank",
+      extended_valid_elements: "a[href|target=_blank]",
+      link_assume_external_targets: true,
+      images_upload_handler: function (blobInfo: any, success: any, failure: any) {
+        var xhr: any, formData;
+
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', 'upload.php');
+
+        xhr.onload = function () {
+          var json;
+
+          if (xhr.status != 200) {
+            failure('HTTP Error: ' + xhr.status);
+            return;
+          }
+
+          json = JSON.parse(xhr.responseText);
+
+          if (!json || typeof json.file_path != 'string') {
+            failure('Invalid JSON: ' + xhr.responseText);
+            return;
+          }
+
+          success(json.file_path);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+      },
+    });
+    if (tinymce.editors.length > 0) {
+      //  tinymce.execCommand('mceFocus', true, richTextArea_id );       
+      tinymce.execCommand('mceRemoveEditor', true, richTextArea_id);
+      tinymce.execCommand('mceAddEditor', true, richTextArea_id);
+    }
+  }
 
 
 }

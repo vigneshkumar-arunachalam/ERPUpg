@@ -1437,10 +1437,10 @@ if(response.proforma_details){
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.mailContent = tinymce.get('tinyID_DIDInv').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyID_DIDInv': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -1448,13 +1448,13 @@ if(response.proforma_details){
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID': this.mailContent,
+            'tinyID_DIDInv': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID': this.mailContent,
+            'tinyID_DIDInv': this.mailContent,
           })
         }
 
@@ -1502,13 +1502,13 @@ if(response.proforma_details){
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID_DIDInv').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
         this.emailForm.patchValue({
 
           'Subject_Content': response.crm_subject_name,
 
-          'tinyID': this.mailContent,
+          'tinyID_DIDInv': this.mailContent,
 
         });
 
@@ -1532,7 +1532,7 @@ if(response.proforma_details){
     this.FromEmailValue = $('#emailFrom').val();
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+    this.msg_id = tinymce.get('tinyID_DIDInv').getContent();
     // console.log("msgid", this.msg_id)
     // console.log("email to", this.emailTo)
     // console.log("subject", this.subjectValue)

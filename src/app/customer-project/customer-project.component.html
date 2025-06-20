@@ -58,32 +58,39 @@
                                 </thead>
                                 <tbody>
                                     <ng-container *ngFor="let list of Transaction_list; let i = index">
-                                        <tr style="background-color: rgb(207, 244, 232);color: rgb(12, 6, 0);">
+                                        <tr
+                                            style="background-color: rgb(207, 244, 232);color: rgb(12, 6, 0);border-style: none;">
                                             <td colspan="5">
-                                                <div class="col-lg-12"
-                                                    style="display: flex;justify-content: space-around;">
-                                                    <div>
-                                                        <span><button type="button" class="buttonClass {{
-                                                            list.billerCode}}">{{
-                                                                list.billerCode}}</button></span>
-                                                    </div>
-                                                    <div>
-                                                        <span>{{ list.customerName}}</span>
-                                                    </div>
-                                                    <div>
-                                                        <span class="call-icon"
-                                                            (click)="getCustomerPhoneProvision(list.customer_id)">📞</span>
+                                                <div class="row-align">
+                                                    <!-- 1. Button -->
+                                                    <div class="button-col">
+
+                                                        <button type="button" class="buttonClass {{
+                                                            list.billerCode}}">
+                                                            {{list.billerCode}}</button>
                                                     </div>
 
+                                                    <!-- 2. Customer Name -->
+                                                    <div class="name-col">
+                                                        {{ list.customerName }}
+                                                    </div>
+
+                                                    <!-- 3. Phone Icon -->
+                                                    <div class="icon-col" *ngIf="list.phone_provision_status == 1"
+                                                        (click)="getCustomerPhoneProvision(list.customer_id)">
+                                                        <i class="fas fa-phone" title="Call"></i>
+                                                    </div>
+
+                                                    <!-- 4. Lock Icon -->
+                                                    <div class="icon-col" *ngIf="list.license_key_status == 1"
+                                                        (click)="getLicensekeyDetails(list.customer_id)">
+                                                        <i class="fa fa-lock" title="License Key"></i>
+                                                    </div>
                                                 </div>
-
-
-
-
-
-
-
                                             </td>
+
+
+
                                             <td>
                                                 <img *ngIf="list.profile_image" [src]="list.profile_image" alt="Owner"
                                                     class="owner-img" />
@@ -136,7 +143,10 @@
                                         </tr>
                                         <tr>
                                             <td colspan="7">
-                                                <span>Backup and Attachment</span>
+                                                <span (click)="backupAttachment(list.work_details_id)">Backup and
+                                                    Attachment<i class="fas fa-file"
+                                                        style="cursor: pointer; color: blue;margin-left: 5px;"
+                                                        title="Open File"></i></span>
                                             </td>
                                         </tr>
                                         <ng-container *ngFor="let list1 of list.projects; let j = index">
@@ -169,8 +179,15 @@
                                                     <span>{{ list1.project_date}}</span>
                                                 </td>
                                                 <td>
-                                                    <span>{{ list1.project_details_id}}</span>
-                                                </td>
+                                                    <ng-container
+                                                        *ngFor="let list6 of list1.attachment_file; let k = index">
+                                                        <i class="fas fa-paperclip"
+                                                            style="margin-right: 5px;color:#dd1007"
+                                                            (click)="viewAttachFile(list6.uploaded_file_name)"></i>
+                                                        <!-- FontAwesome icon -->
+                                                        <!-- {{ list6.uploaded_file_name }} -->
+                                                        <br />
+                                                    </ng-container>
                                                 <td>
                                                     <div class="page">
 
@@ -200,7 +217,7 @@
                                                                 </li>
                                                                 <li class="dropdown__item">
                                                                     <a class="hover1" title="Email" data-toggle="modal"
-                                                                    data-target="#emailFormId_cusproj"
+                                                                        data-target="#emailFormId_cusproj"
                                                                         (click)="openEmail(list1.project_details_id )">
                                                                         <img class="show"
                                                                             src="assets/img/icon2/gmail-blue.png">
@@ -248,6 +265,43 @@
 
                                 </tbody>
                             </table>
+                            <br>
+                            <nav class="atbd-page">
+                                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                                    <li class="page-item">
+                                        <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                            href="javascript:void(0)"
+                                            (click)="paginationData.backtab=='show' ? getTransactionNewList({'offset':paginationData.start}) : false"><i
+                                                class="fas fa-angle-left"></i></a>
+                                    </li>
+                                    <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                        <a class="page-link" href="javascript:void(0)"
+                                            (click)="getTransactionNewList({'offset':paginationData.back})"><i
+                                                class="fas fa-angle-double-left"></i></a>
+                                    </li>
+                                    <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                        *ngFor="let pagination of paginationData.data;let i=index">
+                                        <a class="page-link" href="javascript:void(0)"
+                                            (click)=" pagination.load ==true ? getTransactionNewList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                            <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                    </li>
+
+                                    <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                        <a class="page-link" href="javascript:void(0)"
+                                            (click)="getTransactionNewList({'offset':paginationData.next})"><i
+                                                class="fas fa-angle-double-right"></i></a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                            href="javascript:void(0)"
+                                            (click)="paginationData.nexttab =='show' ? getTransactionNewList({'offset':paginationData.end}) : false"><i
+                                                class="fas fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+
+                            </nav>
                         </div>
                     </div>
 
@@ -305,16 +359,16 @@
                                     <!-- <input type="text"  class="form-control" formControlName="viewDescription"  /> -->
                                     <!-- <textarea [innerHTML]="this.viewDescr" class="form-control" rows="4"
                                         formControlName="viewDescription"></textarea> -->
-                                        <p>Description:{{this.viewDescr}}</p>
-                                        <div *ngFor="let test of viewDescrcomments">
-                                            <p>--------</p>
-                                            <p>comment:{{test.comments}}</p>
-                                            <p>Created Date:{{test.create_datetime}}</p>
-                                            <p>Project Comment ID:{{test.create_datetime}}</p>
-                                         
+                                    <p>Description:{{this.viewDescr}}</p>
+                                    <div *ngFor="let test of viewDescrcomments">
+                                        <p>--------</p>
+                                        <p>comment:{{test.comments}}</p>
+                                        <p>Created Date:{{test.create_datetime}}</p>
+                                        <p>Project Comment ID:{{test.create_datetime}}</p>
 
-                                        </div>
-                                       
+
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -704,7 +758,7 @@
                             <div class="form-group row">
                                 <label for="teamviewer" class="col-lg-12 col-form-label">Teamviewer Details</label>
                                 <div class="col-lg-12">
-                                   
+
                                     <textarea class="form-control" formControlName="teamviewer" rows="4"></textarea>
                                 </div>
                             </div>
@@ -718,8 +772,8 @@
                                 </div>
                             </div>
                         </div>
-                      
-                       
+
+
 
 
 
@@ -743,226 +797,555 @@
 
 <!----------Modal Pop Up (BEGIN) add  ------------------>
 <div class="modal fade" id="GoogleAuthenticationGuruFormId" tabindex="-1" role="dialog"
-aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-  <div class="modal-content addcustomernewallcss">
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content addcustomernewallcss">
 
-    <div class="modal-header">
-      <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+            <div class="modal-header">
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #262127, #54b7aa);">
-        Google Authenticator </h2>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
+                    Google Authenticator </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-      <form [formGroup]="GoogleAuthenticationForm">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="form-group row">
-              <div class="col-lg-6">
-                <label>
-                  Google Authentication Code
-                </label>
-              </div>
-              <div class="col-lg-6">
-                <input type="text" class="form-control" 
-                (keyup.enter)="GoogleAuthenticationValidation()"
-                formControlName="google_AuthenticationCode" />
-              </div>
+                <form [formGroup]="GoogleAuthenticationForm">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>
+                                        Google Authentication Code
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control"
+                                        (keyup.enter)="GoogleAuthenticationValidation()"
+                                        formControlName="google_AuthenticationCode" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
 
             </div>
+            <div class="modal-footer">
 
-          </div>
+                <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+                    Validate
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
         </div>
-      </form>
-
     </div>
-    <div class="modal-footer">
-
-      <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
-        Validate
-      </button>
-      <button type="button" class="btn btn-dark" data-dismiss="modal">
-        Close
-      </button>
-    </div>
-  </div>
-</div>
 </div>
 <!----------Modal Pop Up (END)  add ------------------>
 
 
 
- <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
- <div class="modal fade" id="emailFormId_cusproj" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
- aria-hidden="true">
- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       
-       <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+<div class="modal fade" id="emailFormId_cusproj" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
        background: linear-gradient(to right, #262127, #54b7aa);">
-       Email</h2>
+                    Email</h2>
 
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-       </button>
-     </div>
-     <div class="modal-body">
-       <form [formGroup]="emailForm">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="emailForm">
 
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-             <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
-             <div class="col-lg-10">
-               <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
-                 change="handle__email_from($event)">
-                 <option [ngValue]="null" selected>Select From</option>
-                 <option *ngFor="let from of emailFromList" value="{{ from.email_from_id }}">
-                   {{ from.from_email }}
-                 </option>
-                 <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
+                                    change="handle__email_from($event)">
+                                    <option [ngValue]="null" selected>Select From</option>
+                                    <option *ngFor="let from of emailFromList" value="{{ from.email_from_id }}">
+                                        {{ from.from_email }}
+                                    </option>
+                                    <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                  {{ from.from_email }}
                </option> -->
-               </select>
-               <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-                 *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
-                 Please
-                 enter From Address
-               </div>
-             </div>
-           </div>
+                                </select>
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                                    Please
+                                    enter From Address
+                                </div>
+                            </div>
+                        </div>
 
-         </div>
-
-
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-             <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
-             <div class="col-md-9 col-9" style="display: flex;">
-               <div class="form-check" style="margin-right: 10px;">
-                 <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
-                   name="radio_ApprovalBy" id="company" (change)="handle_radioChange_email($event);" />
-
-                 <label class="form-check-label" for="company"> Company
-                 </label>
-               </div>
-
-               <div class="form-check">
-                 <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
-                   name="radio_ApprovalBy" id="finance" [checked]="true"
-                   (change)="handle_radioChange_email($event)" />
-                 <label class="form-check-label" for="finance">Finance
-                 </label>
-               </div>
-             </div>
-           </div>
-         </div>
-
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-             <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
-             <div class="col-lg-10">
-               <input type="email" id="emailto" class="form-control" formControlName="email_to">
-               <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-                 *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
-                 Please
-                 enter To Address
-               </div>
-             </div>
-           </div>
-
-         </div>
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-
-             <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
-
-             <div class="col-lg-10 ">
-             
-                 <input class="text" class="form-control" formControlName="email_cc" />
-             
-             </div>
-           </div>
-         </div>
-       
-
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-             <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
-             <div class="col-lg-10">
-               <input type="text"  class="form-control" formControlName="Subject_Content">
-               <div
-                 *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                 class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                 Subject is Required
-               </div>
-             </div>
-           </div>
-
-         </div>
-         <div class="col-md-12 col-12" >
-           <div class="form-group row">
-             <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
-             <div class="col-lg-10">
-               <select name="templat"  class="form-control" formControlName="email_template"
-                 (change)="templateContentEmailDropdown($event)">
-                 <option [ngValue]="null" selected>Select Template</option>
-                 <option *ngFor="let template of crmTemplateList" value="{{ template.crm_template_id }}">
-                   {{template.crm_template_name}}
-                 </option>
-               </select>
-               <br>
-
-               <div
-                 *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
-                 class="alert alert-danger alertdangerCustomCSS1 ">
-                 Template is Required
-               </div>
-             </div>
+                    </div>
 
 
-           </div>
-         </div>
-         <div class="col-md-12 col-12">
-           <div class="form-group row">
-             <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
-             <div class="col-lg-10">
-               <editor id="tinyID1_cuspjct" [init]="{
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                            <div class="col-md-9 col-9" style="display: flex;">
+                                <div class="form-check" style="margin-right: 10px;">
+                                    <input mdbRadio class="form-check-input" type="radio"
+                                        formControlName="radio_ApprovalBy" name="radio_ApprovalBy" id="company"
+                                        (change)="handle_radioChange_email($event);" />
+
+                                    <label class="form-check-label" for="company"> Company
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio"
+                                        formControlName="radio_ApprovalBy" name="radio_ApprovalBy" id="finance"
+                                        [checked]="true" (change)="handle_radioChange_email($event)" />
+                                    <label class="form-check-label" for="finance">Finance
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                            <div class="col-lg-10">
+                                <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                                    *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                                    Please
+                                    enter To Address
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+                            <div class="col-lg-10 ">
+
+                                <input class="text" class="form-control" formControlName="email_cc" />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                                    Subject is Required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                            <div class="col-lg-10">
+                                <select name="templat" class="form-control" formControlName="email_template"
+                                    (change)="templateContentEmailDropdown($event)">
+                                    <option [ngValue]="null" selected>Select Template</option>
+                                    <option *ngFor="let template of crmTemplateList"
+                                        value="{{ template.crm_template_id }}">
+                                        {{template.crm_template_name}}
+                                    </option>
+                                </select>
+                                <br>
+
+                                <div *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 ">
+                                    Template is Required
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                            <div class="col-lg-10">
+                                <editor id="tinyID1_cuspjct" [init]="{
                              base_url: '/tinymce', 
                              branding: false,
                              suffix: '.min'
                                  
                          }"></editor>
-             </div>
-           </div>
-         </div>
-         <!-- <div class="col-md-12 col-12">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12 col-12">
                      <div class="form-group row">
                          <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
 
                      </div>
                  </div> -->
 
-       </form>
-     </div>
-     <div class="modal-footer">
-       <button type="button" class="btn btn-primary" (click)="sendMail()">Send
-         Mail
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+                    Mail
 
-       </button>
-       <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
-         Close
-       </button>
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+                    Close
+                </button>
 
-     </div>
-   </div>
- </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
+<div class="modal fade" id="fileAttachCusFormId_CP" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    File Attachment</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="FileAttachmentForm">
+
+                    <div class="modal-body">
+                        <div>
+                            <label style="color: hsl(226, 59%, 21%)!important;">
+                                Attached Files</label>
+                        </div>
+
+                        <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;"
+                            style="padding-left: 30px;">
+
+                            {{display1.uploaded_file_name}}
+
+                            <button type="button" class="btn btn-link"
+                                (click)="fileAttachmentDelete(display1.work_details_id) "><span
+                                    class="bi bi-trash"></span>
+
+                            </button>
+
+                        </div>
+
+                        <div class="col-lg-12 mt-4">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label>
+                                        Select New Attachment</label>
+                                </div>
+                                <div class="col-lg-8" style="padding-left: 30px;">
+
+                                    <!-- <label for="file">File</label> -->
+
+                                    <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
+                                        class="form-control" (change)="onFileChange1($event)">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="fileAttachmentUpdate()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- File Attachment Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
+<div class="modal fade" id="callFormId_CP" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Phone Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-borderless">
+                            <thead>
+                                <tr class="userDatatable-header">
+
+                                    <th>
+                                        <span class="userDatatable-title">S No</span>
+                                    </th>
+
+
+                                    <th>
+                                        <span class="userDatatable-title">Date</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Phone Type</span>
+                                    </th>
+
+                                    <th>
+                                        <span class="userDatatable-title">MAC Address</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">DID No</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Label Name</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">DID No</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Account Name</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">User Name</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Password</span>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let list1 of getCustPhoneProvList; let i = index">
+
+                                    <tr>
+                                        <td>
+                                            <span>{{ i+1}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.phone_provision_date}}</span>
+                                        </td>
+
+
+
+                                        <td>
+                                            <span>{{ list1.type_phone_provision_name}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.mac_address_1}}</span>
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{ list1.did_name_1}}</span>
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{ list1.label_name_1}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.account_name_1}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.username_1}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.password_1}}</span>
+                                        </td>
+
+
+
+
+
+
+                                    </tr>
+                                </ng-container>
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- File Attachment Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
+<div class="modal fade" id="licenceKeyDetFormId_CP" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Licence Key Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-borderless">
+                            <thead>
+                                <tr class="userDatatable-header">
+
+                                    <th>
+                                        <span class="userDatatable-title">S No</span>
+                                    </th>
+
+
+                                    <th>
+                                        <span class="userDatatable-title">Biller</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Issue Date</span>
+                                    </th>
+
+                                    <th>
+                                        <span class="userDatatable-title">Product</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">License Key</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Primary License</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Key Exp Date</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Email</span>
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let list1 of getLicensekeyDetailsList; let i = index">
+
+                                    <tr>
+                                        <td>
+                                            <span>{{ i+1}}</span>
+                                        </td>
+                                        <td>
+                                            <span><button type="button" class="buttonClass {{
+                                                            list1.billerCode}}">
+                                                    {{list1.billerCode}}</button></span>
+                                            <!-- <span>{{ list1.billerCode}}</span> -->
+                                        </td>
+
+
+
+                                        <td>
+                                            <span>{{ list1.issueDate}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.license_product_name}}</span>
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{ list1.license_key}}</span>
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{ list1.primary_license}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.key_exp_date}}</span>
+                                        </td>
+                                        <td>
+
+                                            <span>{{ list1.activation_email}}</span>
+                                        </td>
+
+
+
+
+
+
+                                    </tr>
+                                </ng-container>
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- File Attachment Pop up ends------------------------------------------>

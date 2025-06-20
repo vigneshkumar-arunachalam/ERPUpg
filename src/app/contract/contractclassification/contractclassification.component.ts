@@ -50,7 +50,7 @@ export class ContractclassificationComponent implements OnInit {
     api_req.element_data = contractclassif_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check customer classification list", response)
+    //  console.log("check customer classification list", response)
       this.result = response.file_list;
 
 

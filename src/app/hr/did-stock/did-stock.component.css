@@ -1,6 +1,6 @@
 .form-container {
     margin: 20px auto;
-    background: #e0f7fa;
+    background: #f4feff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -713,6 +713,9 @@ td {
 
 #addVSProvisionFormId .modal-dialog,#editVSProvisionFormId .modal-dialog{
   min-width: 100%;
+}
+#searchDIDStockFormId .modal-dialog{
+  min-width: 80%;
 }
 
 

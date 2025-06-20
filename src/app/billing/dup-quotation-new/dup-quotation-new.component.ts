@@ -1755,13 +1755,13 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID_DC_qu').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
         this.emailForm.patchValue({
 
           'Subject_Content': response.crm_subject_name,
 
-          'tinyID': this.mailContent,
+          'tinyID_DC_qu': this.mailContent,
 
         });
 
@@ -1784,7 +1784,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.FromEmailValue = $('#emailFrom').val();
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+    this.msg_id = tinymce.get('tinyID_DC_qu').getContent();
     // console.log("msgid", this.msg_id)
     // console.log("email to", this.emailTo)
     // console.log("subject", this.subjectValue)

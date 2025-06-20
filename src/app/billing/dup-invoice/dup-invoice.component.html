@@ -1188,16 +1188,19 @@ data-backdrop="false"
 
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                  formControlName="CBF_PDFLink"
                     (change)="CBF_PDFLink($event)">
                   <label class="form-check-label" for="PDF Link">PDF Link</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                  formControlName="CBF_TemplateSelection"
                     [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
                   <label class="form-check-label" for="Template Selection"> Template Selection</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                  formControlName="CBF_PaymentLink"
                     (change)="CBF_PaymentLink($event)">
                   <label class="form-check-label" for="Payment Link">Payment Link</label>
                 </div>
@@ -1210,7 +1213,7 @@ data-backdrop="false"
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
               <div class="col-lg-10">
-                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                <input type="text" id="subject_inv" class="form-control" formControlName="Subject_Content">
                 <div
                   *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
                   class="alert alert-danger alertdangerCustomCSS1 mt-2">
@@ -1245,9 +1248,9 @@ data-backdrop="false"
           </div>
           <div class="col-md-12 col-12">
             <div class="form-group row">
-              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+              <label for="subjectuu" class="col-lg-2 col-form-label"><span>Message</span> :</label>
               <div class="col-lg-10">
-                <editor id="tinyIDInv" [init]="{
+                <editor id="tinyIDdupInv" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'

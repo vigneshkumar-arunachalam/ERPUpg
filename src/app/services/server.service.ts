@@ -9,12 +9,12 @@ import { Subject, Observable } from 'rxjs';
 export class ServerService {
 
 
-   public urlFinal = "https://laravelapi.erp1.cal4care.com/api/";
+  public urlFinal = "https://laravelapi.erp1.cal4care.com/api/";
   // public urlFinal = "https://erp1.cal4care.com/api/";
 
 
 
- baseUrl = 'https://laravelapi.erp1.cal4care.com/api/';
+  baseUrl = 'https://laravelapi.erp1.cal4care.com/api/';
   reload_profile: Subject<any> = new Subject();
   global_search: Subject<any> = new Subject();
   global_search_invoice: Subject<any> = new Subject();
@@ -24,12 +24,13 @@ export class ServerService {
   closemodal: Subject<any> = new Subject();
   invoice_search: Subject<any> = new Subject();
   invoice_search1: Subject<any> = new Subject();
- 
+
 
 
   constructor(private http: HttpClient) {
 
   }
+
   sendServer(postData: any) {
 
 
@@ -67,6 +68,14 @@ export class ServerService {
     // let url = "https://erp1.cal4care.com/api/" + getData.api_url;
     return this.http.get(url, httpOptions);
   }
+  uploadWithAction(data: FormData) {
+    return this.http.post<any>(this.urlFinal, data);  // unified endpoint
+  }
+uploadFileAttachment(fullUrl: string, data: FormData) {
+  return this.http.post<any>(fullUrl, data);
+}
+
+
 
   // sendServerpath(postData: any[]) {
   //   const httpOptions = {

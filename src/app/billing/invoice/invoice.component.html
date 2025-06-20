@@ -1970,6 +1970,7 @@
                 <div class="col-lg-6">
                   <select class="form-control" formControlName="setInvoice" name="setInvoice">
                     <option [ngValue]="null" selected>Select invoice From</option>
+                       
 
                     <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
                       {{invTy}}

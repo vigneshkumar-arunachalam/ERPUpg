@@ -146,26 +146,26 @@ i.fa.fa-bars {
 
 
 #addProductCategoryFormId .btn-primary,
-#editProductCategoryFormId .btn-primary,
-#viewProductCategoryFormId .btn-primary,
+#customerLicenseForm_Gr .btn-primary,
+#setKeyPeriodSerialNo_Gr .btn-primary,
 #searchProductCategoryFormId .btn-primary {
   background: linear-gradient(to right, #262127, #54b7aa);
   color: rgb(240 241 219);
   box-shadow: none;
 }
 
-#addProductCategoryFormId label,
-#editProductCategoryFormId label,
-#viewProductCategoryFormId label,
+#add_licenceKeyGr label,
+#customerLicenseForm_Gr label,
+#setKeyPeriodSerialNo_Gr label,
 #searchProductCategoryFormId label,
 #searchPettyCashFormId label {
   font-weight: 500;
   color: #051b5a !important;
 }
 
-#addProductCategoryFormId .modal-content button.close,
-#editProductCategoryFormId .modal-content button.close,
-#viewProductCategoryFormId .modal-content button.close,
+#add_licenceKeyGr .modal-content button.close,
+#customerLicenseForm_Gr .modal-content button.close,
+#setKeyPeriodSerialNo_Gr .modal-content button.close,
 #searchProductCategoryFormId .modal-content button.close {
   width: 2rem;
   height: 2rem;
@@ -179,16 +179,16 @@ i.fa.fa-bars {
   transition: all 0.5s ease;
 }
 
-#addProductCategoryFormId .modal-body .form-control:hover,
-#editProductCategoryFormId .modal-body .form-control:hover,
-#viewProductCategoryFormId .modal-body .form-control:hover,
+#add_licenceKeyGr .modal-body .form-control:hover,
+#customerLicenseForm_Gr .modal-body .form-control:hover,
+#setKeyPeriodSerialNo_Gr .modal-body .form-control:hover,
 #searchProductCategoryFormId .modal-body .form-control:hover {
   background-color: #f1e80724;
 }
 
-#addProductCategoryFormId .form-control:focus,
-#editProductCategoryFormId .form-control:focus,
-#viewProductCategoryFormId .form-control:focus,
+#add_licenceKeyGr .form-control:focus,
+#customerLicenseForm_Gr .form-control:focus,
+#setKeyPeriodSerialNo_Gr .form-control:focus,
 #searchProductCategoryFormId .form-control:focus {
   outline: none;
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
@@ -345,4 +345,7 @@ select {
 
 #add_licenceKeyGr .modal-dialog {
   max-width: 75%;
+}
+.userDatatable table td {
+  white-space: pre-line !important;
 }

@@ -255,6 +255,7 @@ saveModal() {
     params = params.set('attach_validate_state[]', attachValidateStates.join(','));
     params = params.set('reason_validate_state[]', reasonValidateStates.join(','));
     params = params.set('reason_details[]', reasonDetails.join(','));
+       params = params.set('user_id', localStorage.getItem('erp_c4c_user_id'));
   
     console.log('Payload as form data:', params);
   

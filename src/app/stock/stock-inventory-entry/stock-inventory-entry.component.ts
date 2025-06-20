@@ -71,7 +71,7 @@ export class StockInventoryEntryComponent implements OnInit {
   editPermPEH: any;
   deletePermPEH: any;
   searchPIEMForm: any;
-  search1PIEMForm:any;
+  search1PIEMForm: any;
   getbillerDatas: any;
   //search
   CBV_BillerName_All: any;
@@ -96,7 +96,7 @@ export class StockInventoryEntryComponent implements OnInit {
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.product_tabName = 'available_list';
-   // console.log("1", this.product_tabName);
+    // console.log("1", this.product_tabName);
     this.search1PIEMForm = new FormGroup({
       'searchText': new FormControl(null),
 
@@ -292,7 +292,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -359,7 +359,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -385,7 +385,7 @@ export class StockInventoryEntryComponent implements OnInit {
         $('#searchPIEMFormId').modal('hide');
         this.product_tabName = response.product_tabName;
         this.search1PIEMForm.controls['searchText'].reset();
-       // console.log("searchall-function", this.product_tabName);
+        // console.log("searchall-function", this.product_tabName);
         if (this.product_tabName == 'approval_list') {
           this.productApprovalList({});
           this.spinner.hide();
@@ -423,7 +423,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -443,7 +443,7 @@ export class StockInventoryEntryComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     // console.log("response", response)
+      // console.log("response", response)
       if (response.status === true && Array.isArray(response.data)) {
         this.invList = response.data;
         this.spinner.hide();
@@ -464,7 +464,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -501,7 +501,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -541,7 +541,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -580,7 +580,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -633,7 +633,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -689,7 +689,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -784,7 +784,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -802,7 +802,7 @@ export class StockInventoryEntryComponent implements OnInit {
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.product_stock_movement_id = this.DIP_product_stock_movement_id;
     const reverseQty = this.DIPDempProdRevForm.value.DIP_quantity;
-  //  console.log("reverseQty", reverseQty);
+    //  console.log("reverseQty", reverseQty);
     if (this.DIPDempProdRevForm.value.DIP_quantity) {
       api_postUPd.demo_reverse_qty = this.DIPDempProdRevForm.value.DIP_quantity;
     } else {
@@ -838,7 +838,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -884,7 +884,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1013,7 +1013,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1068,7 +1068,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1082,7 +1082,7 @@ export class StockInventoryEntryComponent implements OnInit {
 
   }
   productIssueCustomerUpdate() {
-      this.spinner.show();
+    this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
     api_req.moduleType = "product_stock_mgnt";
@@ -1154,7 +1154,7 @@ export class StockInventoryEntryComponent implements OnInit {
         this.ProductInventoryIssueForm.controls['PIE_InvoiceNumber'].reset();
         this.ProductInventoryIssueForm.controls['PIE_Demo'].reset();
         this.ProductInventoryIssueForm.controls['PIE_Quantity'].reset();
-        this.invList=[];
+        this.invList = [];
 
         // this.ProductInventoryIssueForm.reset();
         this.availableProductList({});
@@ -1173,7 +1173,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1212,7 +1212,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1251,7 +1251,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1311,7 +1311,7 @@ export class StockInventoryEntryComponent implements OnInit {
           position: 'topRight'
         });
         $('#ProductInventoryTransferFormId').modal('hide');
-      
+
         this.ProductInventoryTransferForm.controls['PIT_TransferBiller'].reset();
         this.ProductInventoryTransferForm.controls['PIT_Quantity'].reset();
         this.availableProductList({});
@@ -1330,7 +1330,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1393,7 +1393,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1462,7 +1462,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1510,7 +1510,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1563,7 +1563,7 @@ export class StockInventoryEntryComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -1702,7 +1702,7 @@ export class StockInventoryEntryComponent implements OnInit {
       if (response != '') {
         this.availableProdList = response.data;
         this.product_tabName = response.product_tabName;
-       // console.log("available pdt list-fn", this.product_tabName);
+        // console.log("available pdt list-fn", this.product_tabName);
 
         //  this.availableProdList = response.data[0].product_details;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
@@ -1755,7 +1755,7 @@ export class StockInventoryEntryComponent implements OnInit {
         this.issue_pool_convertlink_IPL = response.permission_arr.issue_pool_convertlink;
         this.rma_convertlink_IPL = response.permission_arr.rma_convertlink;
         this.product_tabName = response.product_tabName;
-       // console.log("issue-pdct-fn", this.product_tabName);
+        // console.log("issue-pdct-fn", this.product_tabName);
 
 
 
@@ -1803,9 +1803,12 @@ export class StockInventoryEntryComponent implements OnInit {
       }
       //  console.log("response", response);
       if (response != '') {
-        this.productApprovallist = response.data;
+        if (response.data) {
+          this.productApprovallist = response.data;
+        }
+
         this.product_tabName = response.product_tabName;
-       // console.log("prod-app-list-fn", this.product_tabName);
+        // console.log("prod-app-list-fn", this.product_tabName);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
       }
     });
@@ -1847,7 +1850,7 @@ export class StockInventoryEntryComponent implements OnInit {
         //  this.availableProdList=response.data[0].product_details;
         this.demoIssProdlist = response.data;
         this.product_tabName = response.product_tabName;
-      //  console.log("demo-iss-prd-fn", this.product_tabName);
+        //  console.log("demo-iss-prd-fn", this.product_tabName);
         this.issue_pool_convertlinkPerm = response.permission_arr.issue_pool_convertlink;
         this.demoIssProdlistPerm = response.permission_arr.list;
 
@@ -1898,7 +1901,7 @@ export class StockInventoryEntryComponent implements OnInit {
         //  this.availableProdList=response.data[0].product_details;
         this.rmaReissuedProductList = response.data;
         this.product_tabName = response.product_tabName;
-       // console.log("rma-reiss-fn", this.product_tabName);
+        // console.log("rma-reiss-fn", this.product_tabName);
 
 
 
@@ -1947,7 +1950,7 @@ export class StockInventoryEntryComponent implements OnInit {
         //  this.availableProdList=response.data[0].product_details;
         this.prodEntrHisList = response.data;
         this.product_tabName = response.product_tabName;
-      //  console.log("prod entry his-fn", this.product_tabName);
+        //  console.log("prod entry his-fn", this.product_tabName);
         this.editPermPEH = response.permission_arr.editProductStockLink;
         this.deletePermPEH = response.permission_arr.deleteProductStockLink;
 
@@ -1997,7 +2000,7 @@ export class StockInventoryEntryComponent implements OnInit {
         //  this.availableProdList=response.data[0].product_details;
         this.issueHistoryList = response.data;
         this.product_tabName = response.product_tabName;
-       // console.log("issue his-fn", this.product_tabName);
+        // console.log("issue his-fn", this.product_tabName);
 
 
 

@@ -21,7 +21,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
   searchTransactionForm: FormGroup;
   //pagination
   recordNotFound = false;
-  pageLimit = 50;
+  pageLimit = 20;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //search
@@ -249,6 +249,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     TNapi_req.period_value = this.setKeyPeriodForm.value.SetPeriod;
     TNapi_req.sno_hd =  this.setKeyPeriodSerialNo;
     TNapi_req.concurrent = this.setKeyPeriodForm.value.Concurrent;
+     TNapi_req.license_date_update =  this.setKeyPeriodForm.value.licenseKeyUpdate;
     TNapi_req.from_dt = '';
     TNapi_req.to_dt = '';
     api_req.element_data = TNapi_req;
@@ -378,6 +379,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
         this.resetForm();
         this.showAddModal = false;
         this.getTransactionNewList({});
+        $('#add_licenceKeyGr').modal('hide');      
       },
     );
   }
@@ -455,7 +457,9 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
           message: "Updated Successfully",
           position: 'topRight'
         });
+         this.customerLicenseForm.reset();
         this.getTransactionNewList({});
+       
       }else{
         $('#customerLicenseForm_Gr').modal('hide');
         iziToast.error({
