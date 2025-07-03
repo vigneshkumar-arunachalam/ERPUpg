@@ -14,6 +14,9 @@
 #currencyConvertorUIFormId .modal-dialog {
   max-width: 75% !important;
 }
+#stockPreApprovalFormId .modal-dialog {
+  max-width: 100% !important;
+}
 
 #currencyConvertorFormId label {
   font-weight: 600;
@@ -213,6 +216,88 @@
   background-color: #fff;
 }
 
+
+
+
+/* action output css--- general-starts */
+#ActionIdOutput_gpt .modal-dialog {
+  width: 100% !important;
+}
+
+#ActionIdOutput_gpt .modal-dialog {
+  max-width: 100% !important;
+  min-height: 100%;
+  margin: 0;
+}
+
+#ActionIdOutput_gpt .modal-dialog .modal-content.addcustomernewallcss {
+  min-height: 100%;
+}
+
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-up,
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left .fa-chevron-down {
+  display: none;
+}
+
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left .fa-chevron-up,
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-down {
+  display: block;
+}
+
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left {
+  margin: 0;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}
+
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left span {
+  padding: 0 20px 0px 0px;
+  margin: 0;
+  font-size: 18px;
+}
+
+#ActionIdOutput_gpt button.btn.btn-link.btn-block.text-left i {
+  color: #e4ebf5
+}
+
+/* action output css--- general-ends */
+#ActionIdOutput_gpt .card {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+}
+
+#ActionIdOutput_gpt .card .card-header {
+  background: #6d5dfc;
+  color: #e4ebf5;
+}
+
+#ActionIdOutput_gpt .modal-header {
+  background: #121240;
+}
+
+#addModalLongTitle {
+  color: #fff;
+}
+
+#ActionIdOutput_gpt .close {
+  opacity: 1;
+}
+
+#ActionIdOutput_gpt .card .card-header span {
+  color: #e4ebf5;
+}
+
+#ActionIdOutput_gpt .modal-content button.close {
+  color: #fff;
+}
+
+#ActionIdOutput_gpt .modal-content {
+  background-color: #fff;
+}
+
+
 /* ---------------------------------KS-CODE--------------------------------- */
 
 .userDatatable-header th {
@@ -251,6 +336,9 @@
 }
 
 /* ---------------------------------KS-CODE--------------------------------- */
+
+
+
 
 
 
@@ -617,7 +705,7 @@ border-radius: 50%;
 #ResellerRecuringFormId  .modal-dialog{
   min-width: 80%;
 } 
-#RecuringInvoiceFormId .modal-dialog{
+#RecuringInvoiceFormId .modal-dialog,#eInvoiceRegFormId .modal-dialog{
   min-width: 80%;
 } 
 
@@ -721,6 +809,15 @@ border-radius: 50%;
   align-items: center;
   justify-content: center;
   z-index: 1000; /* Ensures it's above other elements */
+}
+.long-text {
+  max-width: 200px; /* adjust width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
 }
 
 

@@ -35,22 +35,23 @@ export class CurrentStockOneComponent implements OnInit {
   userID: any;
   searchBILLERID: any;
   CBV_BillerName_All: any;
-  edit_array_SearchBiller_Checkbox: any;
+  edit_array_SearchBiller_Checkbox: any = [];
   grandstream_list: any;
   polycom_list: any;
   stockData: any;
+  totalData: any;
 
   constructor(
     private serverService: ServerService,
     private router: Router,
     private spinner: NgxSpinnerService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.searchTransactionForm = new FormGroup({
       search_billerName1: new FormControl(null),
-      company_Name6: new FormControl(null),
+      //  company_Name6: new FormControl(null),
     });
     this.userID = localStorage.getItem('erp_c4c_user_id');
     this.userBillerList();
@@ -79,45 +80,52 @@ export class CurrentStockOneComponent implements OnInit {
       }
     });
   }
-
+ private removeBackdrop(): void {
+    // Manually remove modal backdrops
+    document.body.classList.remove('modal-open');
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+  }
   inventory_list(data: any) {
-    let search_txt = this.searchTransactionForm.value.company_Name6;
+    //  let search_txt = this.searchTransactionForm.value.company_Name6;
     let search_billerName1 =
       this.searchTransactionForm.value.search_billerName1;
 
-      if(search_billerName1==null){
-        search_billerName1=''
-      }
-      if(search_txt==null){
-        search_txt=''
-      }
+    if (search_billerName1 == null) {
+      search_billerName1 = ''
+    }
+    // if(search_txt==null){
+    //   search_txt=''
+    // }
 
     let api_req: any =
-      '{"moduleType":"inventory","api_url":"inventory/nonezerolist","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"inventory/nonezerolist","user_id":"'+this.userID+'","biller_ids":"' +
-      search_billerName1 +
-      '","search_txt":"' +
-      search_txt +
-      '"}}';
+      '{"moduleType":"inventory","api_url":"inventory/nonezerolist","api_type":"web","access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI","element_data":{"action":"inventory/nonezerolist","user_id":"' + this.userID + '","biller_ids":"' +
+      search_billerName1 + '"}}';
 
     this.serverService.sendServerpath(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
         let overallResponseData = response.data;
+        // console.table(response.data)
+        this.totalData = response.data;
 
-        this.stockData = overallResponseData.map((category: { product_category_name: any; report_details: any[]; }) => ({
+        this.stockData = overallResponseData.map((category: {
+          product_category_name: any; report_details: any[]; total: any[]
+        }) => ({
           brand: category.product_category_name,
+          total: category.total,
           color: category.report_details.length > 0 ? category.report_details[0].category_color_1 : '#FFFFFF',
           items: category.report_details.map((product: { productName: any; STK_qty: any; RMA_qty: any; DEMO_qty: any; STK_color: any; RMA_color: any; DEMO_color: any; }) => ({
-              name: product.productName,
-              stkQty: product.STK_qty,
-              rmaQty: product.RMA_qty,
-              demoQty: product.DEMO_qty,
-              stkColor: product.STK_color,
-              rmaColor: product.RMA_color,
-              demoColor: product.DEMO_color
+            name: product.productName,
+            stkQty: product.STK_qty,
+            rmaQty: product.RMA_qty,
+            demoQty: product.DEMO_qty,
+            stkColor: product.STK_color,
+            rmaColor: product.RMA_color,
+            demoColor: product.DEMO_color
           }))
-      }));
-
+        }));
+        this.spinner.hide();
         // this.paginationData = this.serverService.pagination({
         //   offset: response.off_set,
         //   total: response.total_cnt,
@@ -125,14 +133,20 @@ export class CurrentStockOneComponent implements OnInit {
         // });
 
         $('#searchTransactionFormId').modal('hide');
+$('#searchTransactionFormId').on('hidden.bs.modal', function () {
+    // Remove all modal backdrops, not just one
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+});
       }
     });
   }
 
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    // console.log("this.searchBILLERID", this.searchBILLERID);
+    console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
+    console.log("this.CBV_BillerName_All ", this.CBV_BillerName_All)
     if (this.CBV_BillerName_All) {
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
@@ -144,7 +158,8 @@ export class CurrentStockOneComponent implements OnInit {
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+
     }
+    console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox);
   }
 }

@@ -11,13 +11,14 @@
 
 
                     <div class="quotation-btn-section">
-                        <button type="button" title="Add New Customer Projects"
-                            class="btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+                        <button type="button" title="Add New Customer Projects" data-toggle="modal"
+                            data-target="#addFirstCustPrjctMgmt" class="btn btn-primary btn-default btn-squared"
+                            style="margin-right: 10px;">
                             <i class="fas fa-plus" style="margin-right:4px;"></i>
                             Add
                         </button>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                            title="Search Customer Projects" data-target="#searchTransactionFormId">
+                            title="Search Customer Projects" data-target="#searchCustProjFormId">
                             <i class="fas fa-search" style="margin-right:4px;"></i>Search
                         </button>
                     </div>
@@ -143,7 +144,8 @@
                                         </tr>
                                         <tr>
                                             <td colspan="7">
-                                                <span (click)="backupAttachment(list.work_details_id)">Backup and
+                                                <span (click)="backupAttachment(list.work_details_id)"
+                                                    class="backup">Backup and
                                                     Attachment<i class="fas fa-file"
                                                         style="cursor: pointer; color: blue;margin-left: 5px;"
                                                         title="Open File"></i></span>
@@ -152,7 +154,7 @@
                                         <ng-container *ngFor="let list1 of list.projects; let j = index">
                                             <tr>
                                                 <td colspan="7">
-                                                    <span>{{ list1.subject_name}}</span>
+                                                    <span class="subj">{{ list1.subject_name}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -161,7 +163,7 @@
                                                 </td>
                                                 <td>
                                                     <!-- <span>{{ list1.project_name}}</span> -->
-                                                    <span>{{ list1.project_date}}</span>
+                                                    <span>{{ list1.project_name}}</span>
                                                 </td>
 
 
@@ -171,12 +173,12 @@
                                                 </td>
                                                 <td>
                                                     <!-- <span>{{ list1.subject_name}}</span> -->
-                                                    <span>{{ list1.project_date}}</span>
+                                                    <span>{{ list1.subject_name}}</span>
                                                 </td>
 
                                                 <td>
                                                     <!-- <span>{{ list1.description}}</span> -->
-                                                    <span>{{ list1.project_date}}</span>
+                                                    <span class="long-text" [innerHTML]="list1.description"></span>
                                                 </td>
                                                 <td>
                                                     <ng-container
@@ -1138,9 +1140,9 @@
                                     <th>
                                         <span class="userDatatable-title">Label Name</span>
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         <span class="userDatatable-title">DID No</span>
-                                    </th>
+                                    </th> -->
                                     <th>
                                         <span class="userDatatable-title">Account Name</span>
                                     </th>
@@ -1349,3 +1351,260 @@
     </div>
 </div>
 <!-------------- File Attachment Pop up ends------------------------------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for edit attachment in customer Contract------------------>
+<div class="modal fade" id="addFirstCustPrjctMgmt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+                    Add Customer Project </h2>
+
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addCustomerProjectForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_billerName" class="col-lg-12 col-form-label">Biller Name <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <select name="addc_billerName" class="form-control" aria-label="Select Sub Customer"
+                                        formControlName="addc_billerName">
+                                        <option value="null">Select Biller Name</option>
+
+                                        <option *ngFor="let classif of addBillerData" value="{{classif.billerId}}">
+                                            {{classif.biller_info}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_selectCustomer" class="col-lg-12 col-form-label">Select Customer
+                                    <span style="color:red">*</span></label>
+                                <div class="col-lg-12">
+
+                                    <div class="ng-autocomplete">
+
+                                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                            formControlName="addc_selectCustomer"
+                                            (selected)='selectEventCustomer($event)'
+                                            (inputChanged)='searchCustomerData($event)'
+                                            (inputCleared)="clearSelection($event)"
+                                            (inputFocused)='onFocusedCustomer($event)'
+                                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                                        </ng-autocomplete>
+
+                                        <ng-template #itemTemplateCustomer let-item>
+                                            <a [innerHTML]="item.customerName"></a>
+                                        </ng-template>
+
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 ">
+                            <div class="form-group row">
+                                <label for="tinyID_addAllCP" class="col-lg-12 col-form-label">Description</label>
+                                <div class="col-lg-12">
+
+                                    <editor id="tinyID_addAllCP" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_owner" class="col-lg-12 col-form-label">Owner <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <select name="addc_owner" class="form-control" aria-label="Select Sub Customer"
+                                        formControlName="addc_owner">
+                                        <option value="null">Select Owner</option>
+
+                                        <option *ngFor="let classif of addOwnerData" value="{{classif.userId}}">
+                                            {{classif.firstName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_dept" class="col-lg-12 col-form-label">Select Department</label>
+                                <div style="display:block;align-items: center;margin-left: 24px;">
+                                    <div *ngFor="let itg of addDepartment">
+                                        <input type="radio" name="department" [value]="itg.id"
+                                            formControlName="department" (change)="departmentChange($event,itg.id)"
+                                            id="dept_{{itg.id}}" />
+                                        <label [for]="'dept_' + itg.id" class="mr-2 ml-2">{{ itg.name }}</label>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_pjctFollower" class="col-lg-12 col-form-label">Project Follower</label>
+                                <div class="email-cc-template">
+                                    <div class="col-lg-10" *ngFor="let i =index;let display1 of projectFollower;">
+                                        <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                            checked="{{display1.chk_val == 'true' ? 'checked' : ''}}"
+                                            (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 col-6">
+                            <div class="form-group row ml-2">
+
+                                <label for="addc_pjctFollower" class="col-lg-12 col-form-label">Project Follower</label>
+
+                                <div class="email-cc-template">
+                                    <div class="" *ngFor="let i =index;let display1 of addFollowersData;">
+                                        <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                            [checked]="display1.chk_val === 'true'"
+                                            (change)=" EditCHK_emailCC1(display1.userId,$event)" />{{display1.firstName}}
+
+
+                                        <!-- <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}"
+                                    [checked]="display1.chk_val === 'true'"
+                                            formControlName="addc_pjctFollower"
+                                            (change)="EditCHK_emailCC1(display1.userId,$event)" />{{display1.firstName}} -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" (click)="addALLSaveUpdate()">Update</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>
+
+<!----------Modal Pop Up (BEGIN)  for edit attachment in customer Contract------------------>
+<div class="modal fade" id="searchCustProjFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #262127, #54b7aa);">
+                    Advance Search </h2>
+
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchCustomerProjectForm">
+                    <div class="row">
+
+
+
+
+                        <div class="col-lg-6 ">
+                            <div class="form-group row">
+                                <label for="addc_selectCustomer" class="col-lg-12 col-form-label">Select Customer
+                                    </label>
+                                <div class="col-lg-12">
+
+                                    <div class="ng-autocomplete">
+
+                                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                            formControlName="addc_selectCustomer"
+                                            (selected)='selectEventCustomer($event)'
+                                            (inputChanged)='searchCustomerData($event)'
+                                            (inputCleared)="clearSelection($event)"
+                                            (inputFocused)='onFocusedCustomer($event)'
+                                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                                        </ng-autocomplete>
+
+                                        <ng-template #itemTemplateCustomer let-item>
+                                            <a [innerHTML]="item.customerName"></a>
+                                        </ng-template>
+
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="addc_pjctFollower" class="col-lg-12 col-form-label">Search Text</label>
+                                <div class="col-lg-12">
+                                    <input type="text" formControlName="searchText" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" (click)="getTransactionNewList({})">Search</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (BEGIN)  for add attachment in customer Contract------------------>

@@ -7,10 +7,11 @@ import { Subject, Observable } from 'rxjs';
 })
 
 export class ServerService {
+  searchParams: any;
 
 
   public urlFinal = "https://laravelapi.erp1.cal4care.com/api/";
-  // public urlFinal = "https://erp1.cal4care.com/api/";
+  //  public urlFinal = "https://erp1.cal4care.com/api/";
 
 
 
@@ -71,9 +72,9 @@ export class ServerService {
   uploadWithAction(data: FormData) {
     return this.http.post<any>(this.urlFinal, data);  // unified endpoint
   }
-uploadFileAttachment(fullUrl: string, data: FormData) {
-  return this.http.post<any>(fullUrl, data);
-}
+  uploadFileAttachment(fullUrl: string, data: FormData) {
+    return this.http.post<any>(fullUrl, data);
+  }
 
 
 
@@ -137,7 +138,13 @@ uploadFileAttachment(fullUrl: string, data: FormData) {
     };
   }
 
+setSearchParams(params: any) {
+    this.searchParams = params;
+  }
 
+  getSearchParams() {
+    return this.searchParams;
+  }
 
 
   pagination(list_info: any) {

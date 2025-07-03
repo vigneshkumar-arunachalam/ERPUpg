@@ -29161,15 +29161,18 @@ li ul li a:hover .nav-icon{
     padding: 10px;
   }
   .fc-daygrid-day .fc-daygrid-event .fc-event-title{
-    color: white;
+    color: #000;
     font-size: 12px;
   }
+  a.fc-event.fc-event-start.fc-event-end.fc-event-past.fc-daygrid-event.fc-daygrid-block-event.fc-h-event {
+    border: 1px solid #ddd !important;
+}
  
   a.fc-event.fc-event-start {
     margin: 2px;
   }
   a.fc-event.fc-event-start:hover .fc-event-title{
-    color: white;
+    color: #2c3e50;
     font-size: 16px;
     cursor: pointer;
   }
@@ -29198,3 +29201,18 @@ li ul li a:hover .nav-icon{
   .mCS-minimal-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
     background-color: rgb(210 33 33)!important;
   }
+
+  .modal.fade.show {
+    background:hsl(0deg 0% 0% / 57%)
+  }
+  .fc-scroller.fc-scroller-liquid-absolute{
+    overflow: visible!important;
+  }
+
+.publictask .fc-day-past {
+  cursor: not-allowed !important;
+}
+.publictask .fc-day-past .fc-daygrid-event-harness{
+  cursor: not-allowed !important;
+  pointer-events:none;
+}  

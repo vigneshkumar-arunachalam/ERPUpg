@@ -325,7 +325,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
     this.serverService.global_search_customer.subscribe((val: any) => {
-     // console.log("Received value from observable:Customer Master", val)
+      // console.log("Received value from observable:Customer Master", val)
 
       // var k = JSON.parse(val);
       // console.log("after parse",val)
@@ -334,7 +334,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       // console.log("k length in customer", val.length);
       this.data_value = val;
       this.customerslist_dup(this.data_value);
-     // console.log("this.customer_list in customer", this.customer_list);
+      // console.log("this.customer_list in customer", this.customer_list);
       if (val != null || val != 'null') {
         this.Global_search_filter = true;
 
@@ -349,10 +349,10 @@ export class DupCustomerNewAllComponent implements OnInit {
       else {
         this.Global_search_filter = false;
 
-      }    
-	  
-	  });
-	   this.billCodeEditForm3 = this.fb.group({
+      }
+
+    });
+    this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
     });
 
@@ -411,7 +411,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   ];
   addEmail(event: MatChipInputEvent): void {
     this.email_alert = true;
-   // console.log(event.value);
+    // console.log(event.value);
 
     let api_req: any = new Object();
     let email_Validation: any = new Object();
@@ -446,7 +446,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
 
@@ -467,7 +467,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
 
   editEmail(event: MatChipInputEvent): void {
-  //  console.log(event.value)
+    //  console.log(event.value)
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -484,7 +484,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   addFinanceEmail(event: MatChipInputEvent): void {
     this.finance_email_alert = true;
-  //  console.log(event.value)
+    //  console.log(event.value)
 
     let api_req: any = new Object();
     let email_Validation: any = new Object();
@@ -519,7 +519,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
     if (event.value.indexOf('@') > 0) {
@@ -541,7 +541,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   editFinanceEmail(event: MatChipInputEvent): void {
     // if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '' ||   event.value.indexOf('.co.th') > 0 ||   event.value.indexOf('.global') > 0)
-   // console.log(event.value)
+    // console.log(event.value)
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -569,7 +569,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   removeFinanceEmail(financeemailDisplay: FinanceEmailArray): void {
     const index = this.financeemailList.indexOf(financeemailDisplay);
-   // console.log(index)
+    // console.log(index)
     if (index >= 0) {
       this.financeemailList.splice(index, 1);
     }
@@ -1062,7 +1062,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       return this.billCodeEditForm3.get('addresses') as FormArray;
     } else {
       // Handle the case where billCodeEditForm3 is undefined
-    //  console.error("billCodeEditForm3 is undefined");
+      //  console.error("billCodeEditForm3 is undefined");
       return null; // or return some default value or handle the error accordingly
     }
   }
@@ -1080,7 +1080,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-    //  console.log(this.test[index]);
+      //  console.log(this.test[index]);
 
 
     });
@@ -1153,7 +1153,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         api_req.element_data = api_billCoDel_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-        //  console.log("response", response);
+          //  console.log("response", response);
 
 
         });
@@ -1184,7 +1184,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     // console.log(this.itre);
     this.popupaddressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-    //  console.log(this.test[index]);
+      //  console.log(this.test[index]);
 
 
     });
@@ -1214,23 +1214,23 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
   onItemSelect(billerName: any) {
-  //  console.log(billerName);
+    //  console.log(billerName);
   }
 
   onSelectAll(billerNameAll: any) {
-  // console.log(billerNameAll);
+    // console.log(billerNameAll);
   }
   onItemSelectCC(cc: any) {
-   // console.log("1 check", cc);
+    // console.log("1 check", cc);
   }
   onSelectAllCC(ccAll: any) {
-  //  console.log(ccAll);
+    //  console.log(ccAll);
   }
   onItemSelectPA(PAname: any) {
-   // console.log(PAname);
+    // console.log(PAname);
   }
   onSelectAllPA(PAnameAll: any) {
-   // console.log(PAnameAll);
+    // console.log(PAnameAll);
   }
 
 
@@ -1242,7 +1242,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   // checkbox_EditShippingAddress: any;
   eventCheck(event: any) {
     this.checkbox_EditShippingAddress = event.target.checked;
-   // console.log(this.eventCheck)
+    // console.log(this.eventCheck)
 
     if (this.checkbox_EditShippingAddress) {
 
@@ -1267,14 +1267,14 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.addCustomer.get("ESA_countryname").enable();
 
     }
-  //  console.log(this.checkbox_EditShippingAddress)
+    //  console.log(this.checkbox_EditShippingAddress)
   }
 
 
   // checkbox_EdShippingAddress: any;
   edit_eventCheck(event: any) {
     this.checkbox_EdShippingAddress = event.target.checked;
-  //  console.log(this.checkbox_EdShippingAddress)
+    //  console.log(this.checkbox_EdShippingAddress)
 
     if (this.checkbox_EdShippingAddress) {
       // console.log(this.editCustomerForm.get('e_ESA_cntPerson').disable())
@@ -1299,7 +1299,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.editCustomerForm.get("e_ESA_countryname").enable();
 
     }
-   // console.log(this.checkbox_EdShippingAddress)
+    // console.log(this.checkbox_EdShippingAddress)
 
   }
   // checkbox_EdShippingAddress: any---default auto deselect;
@@ -1330,7 +1330,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
     }
-   // console.log(this.checkbox_EdShippingAddress)
+    // console.log(this.checkbox_EdShippingAddress)
 
   }
 
@@ -1363,77 +1363,77 @@ export class DupCustomerNewAllComponent implements OnInit {
   checkbox_premiumStatus: any;
   eventCheckPremiumStatus(event: any) {
     this.checkbox_premiumStatus = event.target.checked;
-   // console.log(this.checkbox_premiumStatus)
+    // console.log(this.checkbox_premiumStatus)
   }
   checkbox_SRP: any;
   eventCheckSRP(event: any) {
     this.checkbox_SRP = event.target.checked;
-  //  console.log(this.checkbox_SRP)
+    //  console.log(this.checkbox_SRP)
   }
   checkbox_3CXSD: any;
   eventCheck3CXSD(event: any) {
     this.checkbox_3CXSD = event.target.checked;
-   // console.log(this.checkbox_3CXSD)
+    // console.log(this.checkbox_3CXSD)
   }
   checkbox_shopGST: any;
   eventCheckshoppingGST(event: any) {
     this.checkbox_shopGST = event.target.checked;
- //   console.log(this.checkbox_shopGST)
+    //   console.log(this.checkbox_shopGST)
   }
   checkbox_invoice: any;
   eventCheckIncoice(event: any) {
     this.checkbox_invoice = event.target.checked;
-   // console.log(this.checkbox_invoice)
+    // console.log(this.checkbox_invoice)
   }
   checkbox_resellerStatus: any;
   eventCheckRS(event: any) {
     this.checkbox_resellerStatus = event.target.checked;
-  //  console.log(this.checkbox_resellerStatus)
+    //  console.log(this.checkbox_resellerStatus)
   }
   checkbox_voipSwitchCredit: any;
   eventCheckVSC(event: any) {
     this.checkbox_voipSwitchCredit = event.target.checked;
-  //  console.log(this.checkbox_voipSwitchCredit)
+    //  console.log(this.checkbox_voipSwitchCredit)
   }
   checkbox_specialEditSRP: any;
   eventCheck_spedit_SRP(event: any) {
     this.checkbox_specialEditSRP = event.target.checked;
-  //  console.log(this.checkbox_specialEditSRP)
+    //  console.log(this.checkbox_specialEditSRP)
   }
 
   checkbox_specialEditSystemDiscount: any;
   eventCheck_spedit_systemDiscount(event: any) {
     this.checkbox_specialEditSystemDiscount = event.target.checked;
-  //  console.log(this.checkbox_specialEditSystemDiscount)
+    //  console.log(this.checkbox_specialEditSystemDiscount)
   }
 
   checkbox_specialEdit3cxSpecialOption: any;
   eventCheck_spedit_3cxspecialOption(event: any) {
     this.checkbox_specialEdit3cxSpecialOption = event.target.checked;
-  //  console.log(this.checkbox_specialEdit3cxSpecialOption)
+    //  console.log(this.checkbox_specialEdit3cxSpecialOption)
   }
 
   checkbox_custBankingCharge: any;
   eventCheck_CustBankingCharge(event: any) {
     this.checkbox_custBankingCharge = event.target.checked;
-  //  console.log(this.checkbox_custBankingCharge)
+    //  console.log(this.checkbox_custBankingCharge)
   }
 
   checkbox_CAUS: any;
   eventCheckCAUS(event: any) {
     this.checkbox_CAUS = event.target.checked;
-  //  console.log(this.checkbox_CAUS)
+    //  console.log(this.checkbox_CAUS)
   }
   cmsdepartmentADD_ID: any;
   cmsdepartmentADD_Value: any;
 
   cmsdepartmentADD(event: any) {
 
-  //  console.log("cms event", event)
+    //  console.log("cms event", event)
     var test = event.target.value;
     var test2: any = [];
     test2 = test.split(',');
-  //  console.log("test2", test2)
+    //  console.log("test2", test2)
     this.cmsdepartmentADD_ID = test2[0];
     this.cmsdepartmentADD_val = test2[1];
 
@@ -1443,11 +1443,11 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   cmsdepartmentEdit(event: any) {
 
-   // console.log("cms event", event)
+    // console.log("cms event", event)
     var testf = event.target.value;
     var test21: any = [];
     test21 = testf.split(',');
-   // console.log("test21", test21)
+    // console.log("test21", test21)
     this.cmsdepartmentEdit_ID = test21[0];
     this.cmsdepartmentEdit_val = test21[1];
 
@@ -1459,25 +1459,25 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   eventCheckC4TAddressShow(event: any) {
     this.C4T_AddressShowState_Value = event.target.checked;
-   // console.log("this.checkbox_C4TAddressShow", this.C4T_AddressShowState_Value)
+    // console.log("this.checkbox_C4TAddressShow", this.C4T_AddressShowState_Value)
   }
 
 
   eventCheckMrvoipAddressShow(event: any) {
     this.mrvoip_AddressShowState_Value = event.target.checked;
-   // console.log(this.mrvoip_AddressShowState_Value)
+    // console.log(this.mrvoip_AddressShowState_Value)
   }
 
   eventCheckmconnectAddressShow(event: any) {
     this.mconnect_AddressShowState_Value = event.target.checked;
-  //  console.log(this.mconnect_AddressShowState_Value)
+    //  console.log(this.mconnect_AddressShowState_Value)
     // this.checkboxNumber_mconnectAddressShow = Number(this.checkbox_mconnectAddressShow);
     // console.log(" checkbox 1 or 0---:", this.checkboxNumber_mconnectAddressShow)
   }
   checkbox_RSsearch: any;
   eventCheckRSsearch(event: any) {
     this.checkbox_RSsearch = event.target.checked;
-  //  console.log(this.checkbox_RSsearch)
+    //  console.log(this.checkbox_RSsearch)
   }
 
 
@@ -1485,18 +1485,18 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     this.groupSelect_SharedCustomerPermission = data;
     this.checkbox_value_SharedCustomerPermission = event.target.checked;
-  //  console.log(this.checkbox_value_SharedCustomerPermission)
+    //  console.log(this.checkbox_value_SharedCustomerPermission)
     if (this.checkbox_value_SharedCustomerPermission) {
 
       this.edit_array_SharedCustomerPermission_Checkbox.push(data);
-    //  console.log("Final Checkbox After checkbox selected list", this.edit_array_SharedCustomerPermission_Checkbox);
+      //  console.log("Final Checkbox After checkbox selected list", this.edit_array_SharedCustomerPermission_Checkbox);
     }
     else {
       const index = this.edit_array_SharedCustomerPermission_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SharedCustomerPermission_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SharedCustomerPermission_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_SharedCustomerPermission_Checkbox)
 
     }
   }
@@ -1504,7 +1504,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   autoCreditPermission(event: any) {
     this.primary_code_auto_credit = event.target.checked;
 
-  //  console.log(this.primary_code_auto_credit)
+    //  console.log(this.primary_code_auto_credit)
     if (this.primary_code_auto_credit) {
 
       this.billCodeEditForm2.get('low_credit_740')?.enable();
@@ -1580,7 +1580,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   manualCreditPermission(event: any) {
     this.primary_code_manual_credit = event.target.checked;
     // this.primary_code_manual_credit = event.target.checked;
-   // console.log(this.primary_code_manual_credit)
+    // console.log(this.primary_code_manual_credit)
     if (this.primary_code_manual_credit = event.target.checked) {
 
 
@@ -1653,7 +1653,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   eventCheckNX32Permission(event: any) {
     this.checkbox_NX32Permission = event.target.checked;
-  //  console.log(this.checkbox_NX32Permission)
+    //  console.log(this.checkbox_NX32Permission)
   }
   selectEventCustomer(item: any) {
     this.searchResultTest = item.customerName;
@@ -1665,7 +1665,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   onFocusedCustomer(e: any) {
     // do something when input is focused
-  //  console.log(e)
+    //  console.log(e)
   }
   checkCustomerName() {
 
@@ -1685,7 +1685,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     } else {
       this.customerStatus_radiobox_Value = evt.target.id;
     }
-   // console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
+    // console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   handleChange(evt: any) {
     if (evt.target.id == 'N') {
@@ -1694,11 +1694,11 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.customerStatus_radiobox_Value = "Permanent";
     }
 
-  //  console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
+    //  console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   Radio_Partnertype_C4T(evt: any) {
     this.Partnertype_C4T_radiobox_Value = evt.target.id;
-  //  console.log("this.Partnertype_C4T_radiobox_Value", this.Partnertype_C4T_radiobox_Value);
+    //  console.log("this.Partnertype_C4T_radiobox_Value", this.Partnertype_C4T_radiobox_Value);
   }
   partnerTypehandleChange(evt: any) {
     this.partnerTypeMconn = evt.target.id;
@@ -1733,7 +1733,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   }
   CustomerSearchtext(event: any) {
-  //  console.log("event", event)
+    //  console.log("event", event)
     // this.CustomerSearchTextValue = event.target.value;
     this.CustomerSearchTextValue = event;
 
@@ -1747,19 +1747,19 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.checkAll_GroupID_Array = [];//clear the selected array
       this.customer_list.forEach((element: any, index: any) => {
         $("#check-grp-cusmascm-" + index).prop('checked', true);
-      //  console.log("this.customer_list", element.customerId)
+        //  console.log("this.customer_list", element.customerId)
         this.checkAll_GroupID_Array.push(element.customerId)
-      //  console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
+        //  console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
       });
     } else {
       this.customer_list.forEach((element: any, index: any) => {
         $("#check-grp-cusmascm-" + index).prop('checked', false);
         this.checkAll_GroupID_Array = [];//empties the array
-       // console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
+        // console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
       });
 
     }
-   // console.log("Final SelectAll/DeSelect All Checkbox array Values", this.checkAll_GroupID_Array)
+    // console.log("Final SelectAll/DeSelect All Checkbox array Values", this.checkAll_GroupID_Array)
     this.edit_array = this.checkAll_GroupID_Array
   }
 
@@ -1772,7 +1772,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       this.edit_array.push(data);
       this.edit_array.join(',');
-    //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
 
@@ -1780,7 +1780,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -1847,6 +1847,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   searchCustomerList() {
     $('#dupCussearchCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
 
@@ -1860,10 +1862,10 @@ export class DupCustomerNewAllComponent implements OnInit {
     }
     var list_data = this.listDataInfo(data);
     this.values = data.target.value;
-  //  console.log("this.values", this.values)
+    //  console.log("this.values", this.values)
 
 
-  //  console.log("You entered: ", data.target.value);
+    //  console.log("You entered: ", data.target.value);
     this.CustomerSearchTextValue = data.target.value;
 
     let api_req: any = new Object();
@@ -1882,26 +1884,30 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.spinner.hide();
-   //   console.log('12345678')
+      //   console.log('12345678')
       $('#dupCussearchCustomerFormId').modal('hide');
+      $('.modal-backdrop').remove();
+      $("body").removeClass("modal-open");
       if (response.total_cnt == 0) {
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         // iziToast.warning({
         //   message: "No Matching Records",
         //   position: 'topRight'
         // });
       }
-    //  console.log("search username ", response)
+      //  console.log("search username ", response)
       if (response.status != '') {
         Swal.close();
         this.QuickSearchResultList = response.user_list;
         this.customer_list = response.customer_details;
-      //  console.log("customer_list", this.customer_list);
+        //  console.log("customer_list", this.customer_list);
 
 
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#dupCussearchCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
 
 
       }
@@ -1939,12 +1945,14 @@ export class DupCustomerNewAllComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log('hgyrdrrd')
+      // console.log('hgyrdrrd')
       $('#dupCussearchCustomerFormId').modal('hide');
+      $('.modal-backdrop').remove();
+      $("body").removeClass("modal-open");
       this.spinner.hide();
 
       if (response.total_cnt == 0) {
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         // iziToast.warning({
         //   message: "No Matching Records",
         //   position: 'topRight'
@@ -1971,17 +1979,19 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   customerslist_dup(data: any) {
 
-  //  console.log(data);
+    //  console.log(data);
 
     this.customer_list = data.Customer_list_send;
-   // console.log("this.customer_list----main list", this.customer_list);
+    // console.log("this.customer_list----main list", this.customer_list);
     // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
     this.revenue_list = data.Customer_revenue_send;
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
 
   }
   listDataInfo(list_data: any) {
@@ -2014,7 +2024,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       if (response != '') {
         this.searchResult = response.customer_names;
-     //   console.log(" this.searchResult", this.searchResult)
+        //   console.log(" this.searchResult", this.searchResult)
       } else {
         Swal.close();
         iziToast.warning({
@@ -2031,7 +2041,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   getDynamicList() {
@@ -2072,14 +2082,14 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       this.addBillerNameCheckboxID_array.push(Number(data));
       this.addBillerNameCheckboxID_array.join(',');
-    //  console.log("Final BillerName Checkbox After checkbox selected list", this.addBillerNameCheckboxID_array);
+      //  console.log("Final BillerName Checkbox After checkbox selected list", this.addBillerNameCheckboxID_array);
     }
     else {
       const index = this.addBillerNameCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.addBillerNameCheckboxID_array.splice(index, 1);
       }
-    //  console.log("Final BillerName Checkbox After Deselected selected list", this.addBillerNameCheckboxID_array)
+      //  console.log("Final BillerName Checkbox After Deselected selected list", this.addBillerNameCheckboxID_array)
 
     }
 
@@ -2096,7 +2106,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.editBillerNameCheckboxID_array.push(Number(data));
       this.editBillerNameCheckboxID_array.join(',');
       this.editBillerNameCheckboxID_array.sort();
-    //  console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
+      //  console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
     }
     else {
 
@@ -2112,13 +2122,13 @@ export class DupCustomerNewAllComponent implements OnInit {
     }
     this.typeConvertionString_editBillName = this.editBillerNameCheckboxID_array.toString();
 
-  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editBillName)
+    //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editBillName)
     if (this.typeConvertionString_editBillName.includes(9)) {
       this.dcare = false;
-   //   console.log("dcare", this.dcare)
+      //   console.log("dcare", this.dcare)
     } else {
       this.dcare = true;
-    //  console.log("dcare", this.dcare)
+      //  console.log("dcare", this.dcare)
     }
   }
 
@@ -2126,26 +2136,26 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     this.editPermissionId = data;
     this.editPermission = event.target.checked;
-  //  console.log('editBillerNameBiller' + this.editPermission)
+    //  console.log('editBillerNameBiller' + this.editPermission)
 
     if (this.editPermission) {
 
       this.editPermissionCheckboxID_array.push(Number(data));
       this.editPermissionCheckboxID_array.join(',');
 
-    //  console.log("Final BillerName Checkbox After checkbox selected list--1", this.editPermissionCheckboxID_array);
+      //  console.log("Final BillerName Checkbox After checkbox selected list--1", this.editPermissionCheckboxID_array);
     }
     else {
 
       const index = this.editPermissionCheckboxID_array.findIndex((event: any) => { return event == data; });
 
       //   const index = this.editPermissionCheckboxID_array.findIndex((el:any) => return el == data);
-     // console.log("Final index", index);
+      // console.log("Final index", index);
 
       if (index > -1) {
         this.editPermissionCheckboxID_array.splice(index, 1);
       }
-   //   console.log("Final BillerName Checkbox After Deselected selected list--2", this.editPermissionCheckboxID_array)
+      //   console.log("Final BillerName Checkbox After Deselected selected list--2", this.editPermissionCheckboxID_array)
 
     }
 
@@ -2154,20 +2164,20 @@ export class DupCustomerNewAllComponent implements OnInit {
   addPermissionCHK(data: any, event: any) {
     this.addPermissionId = data;
     this.addPermission = event.target.checked;
-   // console.log('addPermission' + this.addPermission)
+    // console.log('addPermission' + this.addPermission)
 
     if (this.addPermission) {
 
       this.addPermissionCheckboxID_array.push(data);
       this.addPermissionCheckboxID_array.join(',');
-   //   console.log("Final BillerName Checkbox After checkbox selected list", this.addPermissionCheckboxID_array);
+      //   console.log("Final BillerName Checkbox After checkbox selected list", this.addPermissionCheckboxID_array);
     }
     else {
       const index = this.addPermissionCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.addPermissionCheckboxID_array.splice(index, 1);
       }
-    //  console.log("Final BillerName Checkbox After Deselected selected list", this.addPermissionCheckboxID_array)
+      //  console.log("Final BillerName Checkbox After Deselected selected list", this.addPermissionCheckboxID_array)
 
     }
   }
@@ -2200,14 +2210,14 @@ export class DupCustomerNewAllComponent implements OnInit {
     // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.addCustomerClassificationBillerId = data;
     this.addCustomerClassificationBiller = event.target.checked;
-   // console.log(this.addCustomerClassificationBiller)
+    // console.log(this.addCustomerClassificationBiller)
 
     if (this.addCustomerClassificationBiller) {
 
       this.addCustomerClassificationBillerCheckboxID_array.push(data);
       this.addCustomerClassificationBillerCheckboxID_array.join(',');
       this.addCustomerClassificationBillerCheckboxID_array.sort();
-     // console.log("Final customer classification Checkbox After checkbox selected list", this.addCustomerClassificationBillerCheckboxID_array);
+      // console.log("Final customer classification Checkbox After checkbox selected list", this.addCustomerClassificationBillerCheckboxID_array);
     }
     else {
       const index: number = this.addCustomerClassificationBillerCheckboxID_array.indexOf(data);
@@ -2225,7 +2235,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     }
     this.typeConvertionString_addCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
 
-  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_addCustomerClass)
+    //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_addCustomerClass)
 
   }
 
@@ -2233,7 +2243,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.editCustomerClassificationBillerId = data;
     this.editCustomerClassificationBiller = event.target.checked;
-   // console.log(this.editCustomerClassificationBiller)
+    // console.log(this.editCustomerClassificationBiller)
 
     if (this.editCustomerClassificationBiller) {
 
@@ -2241,7 +2251,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.editCustomerClassificationBillerCheckboxID_array.join(',');
       //  this.editCustomerClassificationBillerCheckboxID_array.sort();
       //  alert(this.editCustomerClassificationBillerCheckboxID_array)
-    //  console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
+      //  console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
     }
     else {
       // const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
@@ -2259,12 +2269,12 @@ export class DupCustomerNewAllComponent implements OnInit {
     }
     this.typeConvertionString_editCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
 
-   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editCustomerClass)
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editCustomerClass)
 
   }
   handle_radioChange_AccountManager(event: any) {
     this.radiobuttonValue_AccountManager = event.target.id;
-   // console.log(this.radiobuttonValue_AccountManager);
+    // console.log(this.radiobuttonValue_AccountManager);
   }
 
   CHKAll_BillerNameSelectAll(event: any) {
@@ -2272,7 +2282,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.chkAllStatus = event.target.checked;
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
-    //  console.log("this.billerNameList", this.billerNameList)
+      //  console.log("this.billerNameList", this.billerNameList)
 
       this.billerNameList.forEach((element: any, index: any) => {
         $("#check1-cus-grp-dup-" + index).prop('checked', true);
@@ -2288,7 +2298,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       });
       this.addBillerNameCheckboxID_array = [];
-    //  console.log("this.addBillerNameCheckboxID_array-De Select All", this.addBillerNameCheckboxID_array)
+      //  console.log("this.addBillerNameCheckboxID_array-De Select All", this.addBillerNameCheckboxID_array)
 
     }
 
@@ -2299,7 +2309,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
-     // console.log("this.billerNameList", this.geting_biller)
+      // console.log("this.billerNameList", this.geting_biller)
 
       this.geting_biller.forEach((element: any, index: any) => {
         $("#check-4" + index).prop('checked', true);
@@ -2315,7 +2325,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       });
       this.editBillerNameCheckboxID_array = [];
-    //  console.log("this.editBillerNameCheckboxID_array-De Select All", this.editBillerNameCheckboxID_array)
+      //  console.log("this.editBillerNameCheckboxID_array-De Select All", this.editBillerNameCheckboxID_array)
 
     }
 
@@ -2326,7 +2336,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
-    //  console.log("permission array list", this.customerPermissionList)
+      //  console.log("permission array list", this.customerPermissionList)
 
       this.customerPermissionList.forEach((element: any, index: any) => {
         $("#check-grpPerm-" + index).prop('checked', true);
@@ -2342,20 +2352,20 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       });
       this.addPermissionCheckboxID_array = [];
-     // console.log("this.addPermissionCheckboxID_array-De Select All", this.addPermissionCheckboxID_array)
+      // console.log("this.addPermissionCheckboxID_array-De Select All", this.addPermissionCheckboxID_array)
 
     }
 
   }
   kk() {
-   // console.log('oishfih')
+    // console.log('oishfih')
   }
   CHKAll_CustomerClassifSelectAll(event: any) {
 
 
     if (event.target.checked == true) {
       var checkAllCC_ID: any = [];
-    //  console.log("CHKAll_CustomerClassifSelectAll", this.customerType_list)
+      //  console.log("CHKAll_CustomerClassifSelectAll", this.customerType_list)
 
       this.customerType_list.forEach((element: any) => {
 
@@ -2371,7 +2381,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       });
       this.addCustomerClassificationBillerCheckboxID_array = [];
-     // console.log("this.addCustomerClassificationBillerCheckboxID_array-De Select All", this.addCustomerClassificationBillerCheckboxID_array)
+      // console.log("this.addCustomerClassificationBillerCheckboxID_array-De Select All", this.addCustomerClassificationBillerCheckboxID_array)
 
     }
 
@@ -2402,63 +2412,63 @@ export class DupCustomerNewAllComponent implements OnInit {
   // }
 
   CheckboxValueChanges_shareCustomerPermission(data: any, event: any) {
-  //  console.log("List - Checkbox ID", data);
+    //  console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_Value = data;
     this.Checkbox_value = event.target.checked;
-  //  console.log(this.Checkbox_value)
+    //  console.log(this.Checkbox_value)
     if (this.Checkbox_value) {
 
       this.CheckBox_DynamicArrayList_shareCustomerPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
       this.CheckBox_DynamicArrayList_shareCustomerPermission.sort();
-    //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+      //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
 
     }
     else {
 
       const index: number = this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
-    //  console.log(index)
+      //  console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
       }
-   //   console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
+      //   console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
 
     }
     this.typeConvertionString_Shared_Permission = this.CheckBox_DynamicArrayList_shareCustomerPermission.toString();
 
-   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_Shared_Permission)
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_Shared_Permission)
   }
 
   CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
 
-  //  console.log("List - Checkbox ID", data);
+    //  console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoice_Value = data;
     this.Checkbox_value_invoice = event.target.checked;
-  //  console.log(this.Checkbox_value_invoice)
+    //  console.log(this.Checkbox_value_invoice)
 
     if (this.Checkbox_value_invoice) {
 
       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.join(',');
       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.sort();
-     // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission);
+      // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data);
-    //  console.log(index)
+      //  console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
       }
-    //  console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+      //  console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
     }
     this.typeConvertionString_invoice_Shared_Permission = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
 
-   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoice_Shared_Permission)
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoice_Shared_Permission)
 
   }
   // CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
@@ -2497,6 +2507,8 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   viewCustomer(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.spinner.show();
     let api_req: any = new Object();
     let view_customer_req: any = new Object();
@@ -2542,7 +2554,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
 
@@ -2562,7 +2574,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
   addCustomerown(event: any) {
-   // console.log("mouse event", event.pointerType)
+    // console.log("mouse event", event.pointerType)
     if (event.pointerType == "mouse" || event.pointerType == "") {
       // this variable is used to find button click as mouse or kyboard enter
       this.Clicked = true;
@@ -2585,13 +2597,13 @@ export class DupCustomerNewAllComponent implements OnInit {
     Swal.showLoading();
 
     // finance email field condition
-   // console.log(this.financeemailList);
+    // console.log(this.financeemailList);
     let result_FinanceEmail_Field = this.financeemailList.map(o => o.financeemailParameterName).join(',');
-  //  console.log(result_FinanceEmail_Field);
+    //  console.log(result_FinanceEmail_Field);
 
     //  email field condition
     let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
-   // console.log(result_Email_Field);
+    // console.log(result_Email_Field);
 
     // this.searchResultTest='';
     let api_req: any = new Object();
@@ -2802,9 +2814,9 @@ export class DupCustomerNewAllComponent implements OnInit {
     $("#addCustomerSave").attr("disabled", true);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-   //   console.log(response);
+      //   console.log(response);
       var add_result = response;
-   //   console.log("add", add_result);
+      //   console.log("add", add_result);
       $("#addCustomerSave").removeAttr("disabled");
 
       if (response.status == true) {
@@ -2812,6 +2824,8 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.customerslist({});
         Swal.close();
         $('#dupCusaddCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
 
         iziToast.success({
           message: "Customer Added successfully,Send to Approval",
@@ -2836,15 +2850,17 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
 
   editCustomer(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.pageEditLoad();
-  //  console.log("id", id)
+    //  console.log("id", id)
     this.get_cust_type = [];
     this.editId = id;
     let api_req: any = new Object();
@@ -2864,9 +2880,9 @@ export class DupCustomerNewAllComponent implements OnInit {
 
       if (response.status == true) {
         var biller_id = response.result.customer_details[0].billerId;
-      //  console.log("dropdown billwer id", biller_id)
+        //  console.log("dropdown billwer id", biller_id)
         this.b_id = biller_id.split(',');
-      //  console.log(this.b_id)
+        //  console.log(this.b_id)
         var newArray = this.b_id.map(function (item: any) {
           return { 'id': item }
         })
@@ -2885,7 +2901,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
         this.emailList = response.result.customer_email;
-       // console.log(this.emailList)
+        // console.log(this.emailList)
         this.financeemailList = response.result.customer_finance_email;
         // console.log("just", newArray)
         // console.log(response);
@@ -3015,9 +3031,9 @@ export class DupCustomerNewAllComponent implements OnInit {
           );
         }
 
-      //  console.log(formArray)
+        //  console.log(formArray)
         this.billCodeEditForm3.setControl('addresses', formArray);
-      //  console.log(this.addresses)
+        //  console.log(this.addresses)
 
 
 
@@ -3081,8 +3097,9 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
         })
-       // console.log(this.editCustomerForm.value);
+        // console.log(this.editCustomerForm.value);
         $('#dupCuseditCustomerFormId').modal('show');
+
         //    this.customerslist({});
       } else {
         iziToast.warning({
@@ -3097,7 +3114,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   closeModal() {
@@ -3111,9 +3128,9 @@ export class DupCustomerNewAllComponent implements OnInit {
     // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
     //  email field condition
     let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
-   // console.log(result_Email_Field);
+    // console.log(result_Email_Field);
     let result_FinanceEmail_Field = this.financeemailList.map(o => o.financeemailParameterName).join(',');
-   // console.log(result_FinanceEmail_Field);
+    // console.log(result_FinanceEmail_Field);
 
     let api_req: any = new Object();
     let update_customer_req: any = new Object();
@@ -3207,7 +3224,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     //   }
     // }
     if (!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId == 0 || this.editCustomerForm.value.e_ESA_c3cxResellerId == '0') {
-     // console.log(1)
+      // console.log(1)
       // Condition 1: If 3CX Reseller Id is empty, null, or undefined, no error message is shown
       update_customer_req.cal4care_sg = this.cal4care1_sg;
       update_customer_req.cal4care_sdn = this.cal4care2_sdn;
@@ -3238,14 +3255,14 @@ export class DupCustomerNewAllComponent implements OnInit {
         update_customer_req.cal4care_none = this.cal4care4_none;
 
       } else if (!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp && !this.cal4care4_none && this.dcare == true) {
-       // console.log("2.1")
+        // console.log("2.1")
         // Condition 2: If there is any value for 3CX Reseller Id, but no radio button is selected
         iziToast.error({
           message: "Please select a 3CX Reseller License API option.",
           position: 'topRight'
         });
         Swal.close();
-      //  console.log(2)
+        //  console.log(2)
         return false;
       }
       else {
@@ -3288,29 +3305,29 @@ export class DupCustomerNewAllComponent implements OnInit {
     for (let i = 1; i < addr23.length; i++) {
 
       addr23[i].bill_code_name = $('#billCodeName' + i).val();
-    //  console.log("$('#billCodeName' + i).val()", $('#billCodeName' + i).val());
+      //  console.log("$('#billCodeName' + i).val()", $('#billCodeName' + i).val());
       addr23[i].bill_code_740 = $('#bill_code_740_' + i).val();
-    //  console.log("$('#bill_code_740_' + i).val()", $('#bill_code_740_' + i).val());
+      //  console.log("$('#bill_code_740_' + i).val()", $('#bill_code_740_' + i).val());
       addr23[i].bill_code_kl = $('#bill_code_kl_' + i).val();
-    //  console.log("$('#bill_code_kl_' + i).val()", $('#bill_code_kl_' + i).val());
+      //  console.log("$('#bill_code_kl_' + i).val()", $('#bill_code_kl_' + i).val());
       addr23[i].bill_code_sg = $('#bill_code_sg_' + i).val();
-     // console.log("$('#bill_code_sg_' + i).val()", $('#bill_code_sg_' + i).val());
+      // console.log("$('#bill_code_sg_' + i).val()", $('#bill_code_sg_' + i).val());
       addr23[i].bill_code_750 = $('#bill_code_750_' + i).val();
-     // console.log("$('#bill_code_750_' + i).val()", $('#bill_code_750_' + i).val());
+      // console.log("$('#bill_code_750_' + i).val()", $('#bill_code_750_' + i).val());
       addr23[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
-    //  console.log("$('#bill_code_750_8_' + i).val()", $('#bill_code_750_8_' + i).val());
+      //  console.log("$('#bill_code_750_8_' + i).val()", $('#bill_code_750_8_' + i).val());
       addr23[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
-     // console.log("$('#customer_bill_code_id' + i).val()", $('#customer_bill_code_id' + i).val());
+      // console.log("$('#customer_bill_code_id' + i).val()", $('#customer_bill_code_id' + i).val());
       addr23[i].conn_state = $('#conn_state' + i).val();
-    //  console.log("$('#conn_state' + i).val()", $('#conn_state' + i).val());
+      //  console.log("$('#conn_state' + i).val()", $('#conn_state' + i).val());
       addr23[i].customer_id = $('#customer_id' + i).val();
-    //  console.log("$('#customer_id' + i).val()", $('#customer_id' + i).val());
+      //  console.log("$('#customer_id' + i).val()", $('#customer_id' + i).val());
     }
     update_customer_req.billcode_value = addr23;
 
     // section - 3
     var primary = this.billCodeEditForm2.value;
-   // console.log(primary);
+    // console.log(primary);
 
     update_customer_req.primary_billcode_details = primary
     update_customer_req.bill_code_740 = this.billCodeEditForm2.value.primary_code_740;
@@ -3388,12 +3405,12 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     //     api_req.element_data = update_customer_req;
 
-  //  console.log(this.editCustomerForm.value);
+    //  console.log(this.editCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log(response);
+      //  console.log(response);
       var update_result = response;
-    //  console.log("update", update_result);
+      //  console.log("update", update_result);
 
       if (response.status == true) {
         iziToast.success({
@@ -3401,6 +3418,9 @@ export class DupCustomerNewAllComponent implements OnInit {
           position: 'topRight'
         });
         $('#dupCuseditCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
+
         this.customerslist_dup(this.data_value);
 
       } else {
@@ -3409,6 +3429,8 @@ export class DupCustomerNewAllComponent implements OnInit {
           position: 'topRight'
         });
         $('#dupCuseditCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
         this.customerslist_dup(this.data_value);
       }
     }),
@@ -3417,7 +3439,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -3454,9 +3476,9 @@ export class DupCustomerNewAllComponent implements OnInit {
     api_req.element_data = addCredit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
       var update_result = response;
-     // console.log("update", update_result);
+      // console.log("update", update_result);
 
       if (response.status == true) {
         iziToast.success({
@@ -3464,6 +3486,8 @@ export class DupCustomerNewAllComponent implements OnInit {
           position: 'topRight'
         });
         $('#dupCuseditCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
 
       } else {
         iziToast.warning({
@@ -3471,6 +3495,8 @@ export class DupCustomerNewAllComponent implements OnInit {
           position: 'topRight'
         });
         $('#dupCuseditCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
       }
     }),
       (error: any) => {
@@ -3478,13 +3504,15 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
 
   specialEditCustomer(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
 
     this.specialEditId = id;
     let api_req: any = new Object();
@@ -3500,7 +3528,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
-      //  console.log(response);
+        //  console.log(response);
         this.checkbox_specialEdit3cxSpecialOption = response[0].licence_buy_override
         this.specialEditCustomerForm.patchValue({
           'spedit_Email': response[0].email,
@@ -3515,7 +3543,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           'spedit_3cx_BuySpecial': response[0].licence_buy_override,
           'spedit_C3CXLicencepurchase': response[0].payment_chk,
         });
-      //  console.log(this.specialEditCustomerForm.value);
+        //  console.log(this.specialEditCustomerForm.value);
         // if (response.customer_details[0].status == 1) {
         //   $('#status').prop('checked', true);
         // } else {
@@ -3536,7 +3564,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
@@ -3564,14 +3592,14 @@ export class DupCustomerNewAllComponent implements OnInit {
     specialUpdate_customer_req.licence_buy_override = this.checkbox_specialEdit3cxSpecialOption;
 
     api_req.element_data = specialUpdate_customer_req;
- //   console.log(this.specialEditCustomerForm.value);
+    //   console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#dupCusspecialEditCustomerFormId").modal("hide");
       this.spinner.hide();
-  //    console.log(response);
+      //    console.log(response);
       var update_result = response;
-   //   console.log("special update", update_result);
+      //   console.log("special update", update_result);
       if (response != '') {
         this.spinner.hide();
         $("#dupCusspecialEditCustomerFormId").modal("hide");
@@ -3596,11 +3624,13 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-    //    console.log("final error", error);
+        //    console.log("final error", error);
       };
   }
   deleteCustomer(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     Swal.fire({
       title: 'Are you sure to Delete?',
       text: "You won't be able to revert this!",
@@ -3640,7 +3670,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           }
         }),
           (error: any) => {
-          //  console.log(error);
+            //  console.log(error);
           };
       }
     })
@@ -3651,6 +3681,8 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   fileAttachmentEdit(ID: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
 
     this.myFiles = [];
     $("#dupCusfileAttachmentFormId").modal("show");
@@ -3687,7 +3719,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   fileAttachmentDelete(credit_attament_id: any) {
@@ -3737,7 +3769,7 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-        //    console.log("final error", error);
+            //    console.log("final error", error);
           };
       }
     })
@@ -3771,7 +3803,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: this.serverService.urlFinal +'customer/customer_file_attachment_save',
+        url: this.serverService.urlFinal + 'customer/customer_file_attachment_save',
         cache: false,
         contentType: false,
         processData: false,
@@ -3781,7 +3813,7 @@ export class DupCustomerNewAllComponent implements OnInit {
             this.myFiles = [];
 
             self.customerslist({});
-         //   console.log(result);
+            //   console.log(result);
             Swal.close();
             $("#dupCusfileAttachmentFormId").modal("hide");
 
@@ -3801,7 +3833,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         },
         error: function (err: any) {
 
-        //  console.log("err", err)
+          //  console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -3817,6 +3849,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   mconnect_address_getList(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
 
     this.mconnectCustomerForm.reset();
     this.mconnect_Logo_Image = '';
@@ -3842,7 +3876,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.mconnect_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.mconnect_PartnerType_Value_Radio = response[0].partner_type;
         this.mconnect_AddressShowState_Value = response.mconnect_show_state == 1 ? true : false;
-      //  console.log("response.mconnect_company_logo", response.mconnect_company_logo)
+        //  console.log("response.mconnect_company_logo", response.mconnect_company_logo)
         this.mconnect_Logo_Image = response.mconnect_company_logo;
 
 
@@ -3872,7 +3906,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-     //   console.log("final error", error);
+        //   console.log("final error", error);
       };
   }
   onCal4careAddChange(selection: string) {
@@ -3951,7 +3985,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url:this.serverService.urlFinal + 'customer/mconnect_address_save',
+      url: this.serverService.urlFinal + 'customer/mconnect_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -3960,7 +3994,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         if (result.status == true) {
           Swal.close();
 
-        //  console.log(result);
+          //  console.log(result);
           $("#dupCusmconnectPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
@@ -3981,7 +4015,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       },
       error: function (err: any) {
 
-      //  console.log("err", err)
+        //  console.log("err", err)
         iziToast.error({
           message: "500 Error",
           position: 'topRight'
@@ -3998,6 +4032,8 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   mrvoip_address_getList(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.mrvoipCustomerForm.reset();
     this.mrvoip_Logo_Image = '';
     this.mrvoipParameter = id;
@@ -4020,7 +4056,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.mrvoip_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.mrvoip_PartnerType_Value_Radio = response[0].partner_type;
         //  this.mrvoip_AddressShowState_Value = response.mconnect_show_state==1?true:false;
-      //  console.log("0 to false, 1 to true response.call4tel_show_state ", this.mrvoip_AddressShowState_Value)
+        //  console.log("0 to false, 1 to true response.call4tel_show_state ", this.mrvoip_AddressShowState_Value)
         // console.log("mrvoip_company_logo ", response.mrvoip_company_logo);
         this.mrvoip_Logo_Image = response.mrvoip_company_logo;
 
@@ -4050,7 +4086,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   mrvoip_address_add(id: any) {
@@ -4078,7 +4114,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         if (result.status == true) {
           Swal.close();
 
-       //   console.log(result);
+          //   console.log(result);
           $("#DupCusMrvoipPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
@@ -4099,7 +4135,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       },
       error: function (err: any) {
 
-       // console.log("err", err)
+        // console.log("err", err)
         iziToast.error({
           message: "500 Error",
           position: 'topRight'
@@ -4113,6 +4149,8 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   call4tel_address_getList(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.Call4telCustomerForm.reset();
     this.C4T_Logo_Image = '';
     this.Call4telParameter = id;
@@ -4133,7 +4171,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.C4T_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.C4T_PartnerType_Value_Radio = response[0].partner_type;
         this.C4T_AddressShowState_Value = Boolean(response.call4tel_show_state);
-      //  console.log("0 to false, 1 to true response.call4tel_show_state ", this.C4T_AddressShowState_Value)
+        //  console.log("0 to false, 1 to true response.call4tel_show_state ", this.C4T_AddressShowState_Value)
         this.C4T_Logo_Image = response.call4tel_company_logo;
         // console.log("response[0].partner_type",response[0].partner_type);
         this.Call4telCustomerForm.patchValue({
@@ -4161,7 +4199,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-     //   console.log("final error", error);
+        //   console.log("final error", error);
       };
   }
   call4tel_address_add(id: any) {
@@ -4181,7 +4219,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url:this.serverService.urlFinal + 'customer/call4tel_address_save',
+      url: this.serverService.urlFinal + 'customer/call4tel_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4190,7 +4228,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         if (result.status == true) {
           Swal.close();
 
-       //   console.log(result);
+          //   console.log(result);
           $("#dupCuscall4tellPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
@@ -4210,7 +4248,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       },
       error: function (err: any) {
 
-      //  console.log("err", err)
+        //  console.log("err", err)
         iziToast.error({
           message: "500 Error",
           position: 'topRight'
@@ -4227,6 +4265,8 @@ export class DupCustomerNewAllComponent implements OnInit {
 
   nx32CustomerCreate(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     Swal.fire({
       title: 'Are you sure to create NX32 Customer?',
       text: "You won't be able to revert this!",
@@ -4272,7 +4312,7 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-         //   console.log("final error", error);
+            //   console.log("final error", error);
           };
       }
     })
@@ -4282,7 +4322,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   invoiceShare_edit(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
 
-
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.invoice_shareCustomerPermission_ID = id;
 
     let api_req: any = new Object();
@@ -4304,7 +4345,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.Invoice_SharedCustomerPermission_List = response.user_details;
         this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',').map(Number);;
         // this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',');
-       // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+        // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
       } else {
         iziToast.warning({
           message: "No API Response",
@@ -4317,7 +4358,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-     //   console.log("final error", error);
+        //   console.log("final error", error);
       };
   }
   // invoiceShare_edit(id: any) {
@@ -4375,6 +4416,8 @@ export class DupCustomerNewAllComponent implements OnInit {
         });
 
         $('#dupCusinvoiceSharedCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
         $("#sel_check").val('');
         this.typeConvertionString_invoice_Shared_Permission = [];
       } else {
@@ -4389,7 +4432,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-     //   console.log("final error", error);
+        //   console.log("final error", error);
       };
   }
 
@@ -4478,13 +4521,15 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-         //   console.log("final error", error);
+            //   console.log("final error", error);
           };
       }
     })
   }
   shareCustomerPermission_edit(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
 
     this.shareCustomerPermission_ID = id;
     let api_req: any = new Object();
@@ -4504,7 +4549,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
         this.SharedCustomerPermission_List = response.user_details;
         this.CheckBox_DynamicArrayList_shareCustomerPermission = response.access_user[0].access_userid.split(',').map(Number);
-       // console.log("access_userid", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+        // console.log("access_userid", this.CheckBox_DynamicArrayList_shareCustomerPermission);
 
         //  this.CheckBox_DynamicArrayList_shareCustomerPermission =  response.access_user[0].access_userid.split(',');
         // const chk_arr = response.access_user[0].access_userid.split(',');
@@ -4529,7 +4574,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
@@ -4557,6 +4602,8 @@ export class DupCustomerNewAllComponent implements OnInit {
         });
 
         $('#DupCusSharedCustomerPermissionFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
         $("#sel_check").val('');
         this.CheckBox_DynamicArrayList_shareCustomerPermission = [];
       }
@@ -4572,13 +4619,15 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
 
   customer_status(id: any, Status_variable: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     Swal.fire({
       title: 'Are you sure to change Customer status?',
       text: "You won't be able to revert this!",
@@ -4591,7 +4640,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       if (result.value) {
         this.spinner.show();
 
-      //  console.log("id", id)
+        //  console.log("id", id)
         var status;
         if (Status_variable == 'P') {
           status = 'N'
@@ -4613,9 +4662,9 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           this.spinner.hide();
           if (response.status == true) {
-        //    console.log("before change", this.isCustomerStatus)
+            //    console.log("before change", this.isCustomerStatus)
             this.isCustomerStatus = !this.isCustomerStatus;
-         //   console.log("after change", this.isCustomerStatus)
+            //   console.log("after change", this.isCustomerStatus)
 
             iziToast.success({
               message: "Customer Status changed successfully",
@@ -4634,7 +4683,7 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-         //   console.log("final error", error);
+            //   console.log("final error", error);
           };
       }
     })
@@ -4643,6 +4692,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   employee_status(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     Swal.fire({
       title: 'Are you sure to change Employee status?',
       text: "You won't be able to revert this!",
@@ -4669,9 +4720,9 @@ export class DupCustomerNewAllComponent implements OnInit {
           this.spinner.hide();
           if (response.status == true) {
 
-          //  console.log("before change-employee status", this.isEmployeeStatus)
+            //  console.log("before change-employee status", this.isEmployeeStatus)
             this.isEmployeeStatus = !this.isEmployeeStatus;
-           // console.log("after change-employee status", this.isEmployeeStatus)
+            // console.log("after change-employee status", this.isEmployeeStatus)
             iziToast.success({
               message: "Employee Status changed successfully",
               position: 'topRight'
@@ -4689,7 +4740,7 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-         //   console.log("final error", error);
+            //   console.log("final error", error);
           };
       }
     })
@@ -4698,6 +4749,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   reseller_statusMethod(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     Swal.fire({
       title: 'Are you sure to change Reseller status?',
       text: "You won't be able to revert this!",
@@ -4724,9 +4777,9 @@ export class DupCustomerNewAllComponent implements OnInit {
           this.spinner.hide();
           if (response.status == true) {
 
-         //   console.log("before change-reseller status", this.isResllerStatus)
+            //   console.log("before change-reseller status", this.isResllerStatus)
             this.isResllerStatus = !this.isResllerStatus;
-          //  console.log("after change-reseller status", this.isResllerStatus)
+            //  console.log("after change-reseller status", this.isResllerStatus)
             iziToast.success({
               message: "Reseller Status changed successfully",
               position: 'topRight'
@@ -4744,7 +4797,7 @@ export class DupCustomerNewAllComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-           // console.log("final error", error);
+            // console.log("final error", error);
           };
       }
     })
@@ -4753,7 +4806,9 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   customer_NX32PermissionDisplay(id: any, nx32id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
-  //  console.log("checkbox result", this.checkbox_NX32Permission)
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+    //  console.log("checkbox result", this.checkbox_NX32Permission)
     this.NX32SharePermissionParameter = id;
     this.nx32permissionStatus = nx32id;
     let api_req: any = new Object();
@@ -4771,7 +4826,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.checkbox_status_nx32Permission = response.status;
-     // console.log("customer nx32 permission response.status", response.status);
+      // console.log("customer nx32 permission response.status", response.status);
       if (response != '') {
         this.customerNX32SharePermissionForm.patchValue({
 
@@ -4796,7 +4851,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
@@ -4818,9 +4873,11 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       this.checkbox_status_nx32Permission = response.status;
-    //  console.log("customer nx32 permission response.status", response.status);
+      //  console.log("customer nx32 permission response.status", response.status);
       if (response.status == true) {
         $('#dupcuscustomer_NX32PermissionFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
         this.customerslist({});
 
         iziToast.success({
@@ -4841,11 +4898,13 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-     //   console.log("final error", error);
+        //   console.log("final error", error);
       };
   }
   billCodeAttachmentEdit(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     // this.billCodeEditForm2.reset();
     let api_req: any = new Object();
     let api_billCodeEdit_req: any = new Object();
@@ -4864,7 +4923,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     api_req.element_data = api_billCodeEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("bill code edit", response);
+      //  console.log("bill code edit", response);
       // console.log("bill code edit check other empty", response.primary_bill_code[0].customer_bill_code_id);
 
       this.billCodeResponse = response;
@@ -4890,9 +4949,9 @@ export class DupCustomerNewAllComponent implements OnInit {
           })
           );
         }
-      //  console.log(formArray)
+        //  console.log(formArray)
         this.popupBillCodeForm3.setControl('popupBillCode1', formArray);
-      //  console.log(this.popupBillCode1)
+        //  console.log(this.popupBillCode1)
 
       }
       // if (response.primary_bill_code != '') {
@@ -4949,7 +5008,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       });
 
       // }
-    //  console.log("bill code edit form 2", this.billCodeEditForm2.value);
+      //  console.log("bill code edit form 2", this.billCodeEditForm2.value);
 
       // }
 
@@ -4980,7 +5039,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     updateBillCode_req.customerId = this.popupBillCodeForm2.value.popup_customerId;
     var addr = this.popupBillCodeForm3.value.popupBillCode1;
     for (let i = 0; i < addr.length; i++) {
-    //  console.log(addr[i].bill_code_740)
+      //  console.log(addr[i].bill_code_740)
 
       addr[i].billCodeName = $('#bill_code_name_' + i).val();
       addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
@@ -5000,7 +5059,7 @@ export class DupCustomerNewAllComponent implements OnInit {
 
 
     var popup_primary_code_arr = this.popupBillCodeForm2.value
-  //  console.log(popup_primary_code_arr);
+    //  console.log(popup_primary_code_arr);
     updateBillCode_req.primary_billcode_details = popup_primary_code_arr;
 
 
@@ -5079,9 +5138,9 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
 
-     // console.log("update response", response);
+      // console.log("update response", response);
       var updateBillCode = response;
-     // console.log('uadate', updateBillCode);
+      // console.log('uadate', updateBillCode);
 
 
       if (response != '') {
@@ -5125,7 +5184,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         this.cmslistadd = response.cmsDep;
-      //  console.log("this.cmslistadd", this.cmslistadd);
+        //  console.log("this.cmslistadd", this.cmslistadd);
 
 
       } else {
@@ -5140,7 +5199,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -5191,12 +5250,14 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
   }
   AssignAccountManager_edit(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
 
     this.AssignAccountManager_CustomerID = id;
     let api_req: any = new Object();
@@ -5231,7 +5292,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -5272,11 +5333,13 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   landscapeEmailEdit(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.landscapeEmailForm.reset();
     this.landscapeEmail_Customer_ID = id;
     let api_req: any = new Object();
@@ -5295,7 +5358,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       if (response != '') {
         this.From_List = response.email_from_det;
         this.Template_List = response.crm_template_det;
-      //  console.log("Landscape  Email Template_List", this.Template_List);
+        //  console.log("Landscape  Email Template_List", this.Template_List);
 
         this.landscapeEmailForm.patchValue({
           'landscapeEmail_From': response.email_from_det,
@@ -5321,7 +5384,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
   // somethingChanged(event: any){
@@ -5330,7 +5393,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   LandscapeEmailContentDropdown(event: any) {
     this.spinner.show();
     this.CRMTemplateID = event.target.value;
-   // console.log("template ID check", this.CRMTemplateID);
+    // console.log("template ID check", this.CRMTemplateID);
     let api_req: any = new Object();
     let api_mailContentDropdown_req: any = new Object();
     api_req.moduleType = "customer";
@@ -5365,7 +5428,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   sendLandscapeMail() {
@@ -5461,7 +5524,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
 
@@ -5472,6 +5535,8 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   GoogleAuthenticationId(id: any, i: any) {
     $("#ActionIdCustDup" + i).modal("hide");
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
     this.GoogleAuthenticationForm.reset();
     $('#DupCusGoogleAuthentication').modal("show");
 
@@ -5534,7 +5599,7 @@ export class DupCustomerNewAllComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
 
@@ -5599,48 +5664,78 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
   closeview() {
     $('#dupCusviewCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   closeedit() {
     $('#dupCuseditCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   closeSpecialEdit() {
     $('#dupCusspecialEditCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   mconnectClose() {
     $('#dupCusmconnectPartnerDetailsFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   mrvoipClose() {
     $('#DupCusMrvoipPartnerDetailsFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   call4tellClose() {
     $('#dupCuscall4tellPartnerDetailsFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   invoiceSharedCustomerClose() {
     $('#dupCusinvoiceSharedCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   SharedCustomerPermissionClose() {
     $('#DupCusSharedCustomerPermissionFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   NX32PermissionClose() {
     $('#dupcuscustomer_NX32PermissionFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   fileAttachmentClose() {
     $('#dupCusfileAttachmentFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   billCodeClose() {
     $('#dupCusbillCodeFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   landscapeEmailClose() {
     $('#dupCuslandscapeEmailFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   searchCustomerClose() {
     $('#dupCussearchCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   AssignAccountManagerClose() {
     $('#DupCusAssignAccountManager').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
   GoogleAuthClose() {
     $('#DupCusGoogleAuthentication').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
   }
 
 }

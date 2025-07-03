@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit,  OnChanges, SimpleChanges} from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import Swal from 'sweetalert2';
+
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 declare var $: any;
@@ -23,6 +24,8 @@ export interface FinanceEmailArray {
   styleUrls: ['./customernewall.component.css']
 })
 export class CustomernewallComponent implements OnInit {
+  @Input() customerList: any[] = [];
+  @Input() revenueList: any[] = [];
   submitted = true;
   //view
   viewCustomerForm: FormGroup;
@@ -52,7 +55,7 @@ export class CustomernewallComponent implements OnInit {
   displayDynamicData: any;
   customerPermissionList: any;
   billList: any;
-  customer_list: any;
+  customer_list: any=[];
   paymentList: any;
   departmentData: any;
   departmentDataOut: any;
@@ -314,7 +317,7 @@ export class CustomernewallComponent implements OnInit {
   submit_status: boolean = false;
   Clicked: boolean = false;
   defaultBillerID_edit: any;
-  dcare: boolean=true;
+  dcare: boolean = true;
   response_total_cnt: any;
 
 
@@ -332,7 +335,8 @@ export class CustomernewallComponent implements OnInit {
         this.testing = false;
       }
       console.log(this.testing)
-    })
+    });
+
     this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
     });
@@ -562,7 +566,17 @@ export class CustomernewallComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.searchResultTest = '';
+    this.customer_list = this.customerList;
 
+    const searchParams = this.serverService.getSearchParams();
+    if (searchParams && searchParams.companyName) {
+      this.searchResultTest = searchParams.companyName;
+      
+    }else{
+      this.searchResultTest = '';
+    }
+    console.log("this.searchResultTest-from global search", this.searchResultTest);
     this.customerslist({});
     this.getDynamicList();
     this.cmsDepartmentList1();
@@ -573,7 +587,7 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_EditShippingAddress = true;
     this.checkbox_EdShippingAddress = true;
     this.radio = [{ "name": "New", "values1": "N" }, { "name": "Permanent", "values1": "P" }];
-  
+
 
 
     this.departmentData = '[{ "status": true, "result": { "status": true, "data": [ { "department_name": "Sales", "dept_id": "83", "alise_email": "isales@cal4care.com" }, { "department_name": "Activation", "dept_id": "89", "alise_email": "activation@cal4care.com" }, { "department_name": "WebSupport", "dept_id": "90", "alise_email": "Websupport@cal4care.com" }, { "department_name": "CloudNippon", "dept_id": "100", "alise_email": "cc@cloudnippon.com" }, { "department_name": "CallnClear", "dept_id": "97", "alise_email": "cc@callnclear.com" }, { "department_name": "CallaCloud", "dept_id": "99", "alise_email": "CC@callacloud.com" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "cc@calncall.com" }, { "department_name": "Connectviet", "dept_id": "101", "alise_email": "cc@connectviet.com" }, { "department_name": "Support IN", "dept_id": "102", "alise_email": "Support@dcare.net" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "Support@cal4care.com" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "support@cal4care.com.sg" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "support@calncall.com" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@cal4care.com.my" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@callacloud.com" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cal4care.co.jp" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cloudnippon.com" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@cal4care.co.th" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@callnclear.com" }, { "department_name": "Support Call4Tel", "dept_id": "107", "alise_email": "Support@call4tel.com" }, { "department_name": "ACN", "dept_id": "108", "alise_email": "v.support@acncomm.com" }, { "department_name": "Global Sales", "dept_id": "109", "alise_email": "globalsales@mconnectapps.com" }, { "department_name": "WebDev", "dept_id": "110", "alise_email": "webdav@cal4care.com" } ] } }]';
@@ -758,7 +772,7 @@ export class CustomernewallComponent implements OnInit {
       'voip_switch_credit': new FormControl(null),
       'common_group_name': new FormControl(null),
       'ESA_email': new FormControl(null, [Validators.email]),
-      
+
 
 
     });
@@ -780,7 +794,7 @@ export class CustomernewallComponent implements OnInit {
       'e_billingAddress_zipcode': new FormControl(null),
       'Edit_BA_countryname': new FormControl(null),
       'e_edit_ship_address': new FormControl(null),
-        'e_ESA_cbk': new FormControl(null),
+      'e_ESA_cbk': new FormControl(null),
       'e_ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_shipto': new FormControl({ value: '', disabled: true }, Validators.required),
       'e_ESA_address1': new FormControl({ value: '', disabled: true }, Validators.required),
@@ -1023,9 +1037,20 @@ export class CustomernewallComponent implements OnInit {
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
+     this.customer_list = this.customerList;
+     console.log("this.customerList",this.customerList);
 
   }
 
+   ngOnChanges(changes: SimpleChanges) {
+    if (changes['customerList'] && changes['customerList'].currentValue) {
+      this.customer_list = changes['customerList'].currentValue;
+    }
+  }
+ closeModalView() {
+
+        $('#viewCustomerFormId_CM').modal('hide');
+ }
 
 
   get addressControls() {
@@ -1078,7 +1103,7 @@ export class CustomernewallComponent implements OnInit {
 
     console.log('iiii--' + i)
     console.log(this.addresses)
-    console.log("this.billCodeEditForm3.value.addresses",this.billCodeEditForm3.value.addresses)
+    console.log("this.billCodeEditForm3.value.addresses", this.billCodeEditForm3.value.addresses)
     var customer_bill_code_id = $('#customer_bill_code_id' + i).val();
     var cust_id = $('#customer_id' + i).val();
     // console.log('pd_billchild_id'+pd_billchild_id);
@@ -1098,8 +1123,8 @@ export class CustomernewallComponent implements OnInit {
 
         const addressesArray = this.billCodeEditForm3.get('addresses') as FormArray;
         addressesArray.removeAt(i);
-        
-       // this.billCodeEditForm3.value.addresses.removeAt(i);
+
+        // this.billCodeEditForm3.value.addresses.removeAt(i);
         // var addr = this.addPI_section2.value.addresses;
         // var list_cnt = addr.length;
 
@@ -1691,7 +1716,7 @@ export class CustomernewallComponent implements OnInit {
   clearCustomerAdd() {
 
     this.addCustomer.reset();
- 
+
     // this.addCustomer.patchValue({
     //   'company_Code': 'D6387',
     // });
@@ -1849,10 +1874,10 @@ export class CustomernewallComponent implements OnInit {
       // this.spinner.hide();
       console.log('12345678')
       $('#searchCustomerFormId').modal('hide');
-      this.response_total_cnt=response.total_cnt;
+      this.response_total_cnt = response.total_cnt;
       if (response.total_cnt == 0) {
-        this.response_total_cnt=response.total_cnt;
-      
+        this.response_total_cnt = response.total_cnt;
+
         // iziToast.warning({
         //   message: "No Matching Records",
         //   position: 'topRight'
@@ -1870,7 +1895,7 @@ export class CustomernewallComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
 
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
       }
       else {
         iziToast.warning({
@@ -1909,9 +1934,9 @@ export class CustomernewallComponent implements OnInit {
       //console.log('hgyrdrrd')
       $('#searchCustomerFormId').modal('hide');
       this.spinner.hide();
-      
+
       if (response.total_cnt == 0) {
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         // iziToast.warning({
         //   message: "No Matching Records",
         //   position: 'topRight'
@@ -2006,16 +2031,16 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         this.billerNameList = response.bill_details;
-        this.billList =response.bill_details;
-        this.currencyList =response.currency_det;
+        this.billList = response.bill_details;
+        this.currencyList = response.currency_det;
         this.countryList = response.country_details;
-        this.paymentList=response.payment_det;
+        this.paymentList = response.payment_det;
         this.customerType_list = response.cus_type;
         this.customerClassificationValue = response.cus_type;
         this.customerPermissionList = response.cus_permission;
-        this.permissionValue= response.cus_permission;
-        this.termList= response.terms_det;
-        this.dcIPAllowCountries=response.dc_ip_allow_countries;
+        this.permissionValue = response.cus_permission;
+        this.termList = response.terms_det;
+        this.dcIPAllowCountries = response.dc_ip_allow_countries;
         this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
 
@@ -2076,13 +2101,13 @@ export class CustomernewallComponent implements OnInit {
     this.typeConvertionString_editBillName = this.editBillerNameCheckboxID_array.toString();
 
     console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editBillName)
-        if(this.typeConvertionString_editBillName.includes(9)){
-          this.dcare=false;
-          console.log("dcare",this.dcare)
-        }else{
-          this.dcare=true;
-          console.log("dcare",this.dcare)
-        }
+    if (this.typeConvertionString_editBillName.includes(9)) {
+      this.dcare = false;
+      console.log("dcare", this.dcare)
+    } else {
+      this.dcare = true;
+      console.log("dcare", this.dcare)
+    }
   }
 
   editPermissionCHK(data: any, event: any) {
@@ -2724,17 +2749,17 @@ export class CustomernewallComponent implements OnInit {
 
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
-    
-    if(this.addCustomer.value.ESA_c3cxResellerId_add !=null){
-    
-      if( this.addCustomer.value.defaultBillerName!=9 && this.cal4care1_sg_add==false && this.cal4care3_jp_add==false && this.cal4care2_sdn_add==false){
+
+    if (this.addCustomer.value.ESA_c3cxResellerId_add != null) {
+
+      if (this.addCustomer.value.defaultBillerName != 9 && this.cal4care1_sg_add == false && this.cal4care3_jp_add == false && this.cal4care2_sdn_add == false) {
         iziToast.error({
           message: "3CX Reseller License API Checkbox value Missing",
           position: 'topRight'
         });
         Swal.close();
         return false;
-      }else{
+      } else {
         add_customer_req.cal4care_sg = this.cal4care1_sg_add;
         add_customer_req.cal4care_sdn = this.cal4care2_sdn_add;
         add_customer_req.cal4care_jp = this.cal4care3_jp_add;
@@ -2742,7 +2767,7 @@ export class CustomernewallComponent implements OnInit {
 
       }
     }
-  
+
 
     add_customer_req.def_currency_id = this.addCustomer.value.currencyname;
     add_customer_req.reseller_dis_per = this.addCustomer.value.discount_percentage;
@@ -2840,8 +2865,8 @@ export class CustomernewallComponent implements OnInit {
         this.cal4care1_sg = response.partnerID.cal4care1_sg;
         this.cal4care2_sdn = response.partnerID.cal4care2_sdn;
         this.cal4care3_jp = response.partnerID.cal4care3_jp;
-        this.cal4care4_none =false;
-       
+        this.cal4care4_none = false;
+
         console.log(" this.cal4care1_sg", this.cal4care1_sg);
         console.log("this.cal4care2_sdn", this.cal4care2_sdn);
         console.log("this.cal4care2_sdn", this.cal4care2_sdn);
@@ -2873,11 +2898,11 @@ export class CustomernewallComponent implements OnInit {
         this.customerType_listEdit = response.result.cus_class_type;
         this.customerStatusEdit = response.result.customer_details[0].cust_status;
         this.customerIDBillCode = response.result.customer_details[0].customerId;
-        this.defaultBillerID_edit =response.result.customer_details[0].def_biller_id;
-        if(this.defaultBillerID_edit==9){
-          this.dcare=false;
-        }else{
-          this.dcare=true;
+        this.defaultBillerID_edit = response.result.customer_details[0].def_biller_id;
+        if (this.defaultBillerID_edit == 9) {
+          this.dcare = false;
+        } else {
+          this.dcare = true;
         }
         // console.log('selected_biller', response.result.billerId_det);
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
@@ -3149,9 +3174,9 @@ export class CustomernewallComponent implements OnInit {
 
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;
- 
+
     // if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null || this.editCustomerForm.value.e_ESA_c3cxResellerId !=''){
-    
+
     //   if( this.editCustomerForm.value.edit_defaultBillerName!=9 && this.cal4care1_sg==false && this.cal4care3_jp==false && this.cal4care2_sdn==false){
     //     iziToast.error({
     //       message: "3CX Reseller License API Checkbox value Missing",
@@ -3165,60 +3190,60 @@ export class CustomernewallComponent implements OnInit {
     //     update_customer_req.cal4care_jp = this.cal4care3_jp;
     //   }
     // }
-    if (!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId==0 || this.editCustomerForm.value.e_ESA_c3cxResellerId=='0') {
+    if (!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId == 0 || this.editCustomerForm.value.e_ESA_c3cxResellerId == '0') {
       console.log(1)
       // Condition 1: If 3CX Reseller Id is empty, null, or undefined, no error message is shown
-          update_customer_req.cal4care_sg = this.cal4care1_sg;
-          update_customer_req.cal4care_sdn = this.cal4care2_sdn;
-          update_customer_req.cal4care_jp = this.cal4care3_jp;
-          update_customer_req.cal4care_none = this.cal4care4_none;
-          // added by vignesh for dcare
-          if((!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId==0 || this.editCustomerForm.value.e_ESA_c3cxResellerId=='0' )&&(this.addCustomer.value.defaultBillerName==9) ){
-            update_customer_req.cal4care_sg = this.cal4care1_sg;
-            update_customer_req.cal4care_sdn = this.cal4care2_sdn;
-            update_customer_req.cal4care_jp = this.cal4care3_jp;
-            update_customer_req.cal4care_none = this.cal4care4_none;
-          }
-  } else {
-    console.log(2)
-    console.log("this.cal4care1_sg",this.cal4care1_sg)
-    console.log("!this.cal4care1_sg",!this.cal4care1_sg)
-    console.log("this.cal4care2_sdn",this.cal4care2_sdn)
-    console.log("!this.cal4care2_sdn",!this.cal4care2_sdn)
-    console.log("this.cal4care3_jp",this.cal4care3_jp)
-    console.log("!this.cal4care3_jp",!this.cal4care3_jp)
-    console.log("this.cal4care4_none",this.cal4care4_none)
-    console.log("!this.cal4care4_none",!this.cal4care4_none)
-
-      if (this.editCustomerForm.value.e_ESA_c3cxResellerId !='' && (this.addCustomer.value.defaultBillerName==9) ) {
+      update_customer_req.cal4care_sg = this.cal4care1_sg;
+      update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+      update_customer_req.cal4care_jp = this.cal4care3_jp;
+      update_customer_req.cal4care_none = this.cal4care4_none;
+      // added by vignesh for dcare
+      if ((!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId == 0 || this.editCustomerForm.value.e_ESA_c3cxResellerId == '0') && (this.addCustomer.value.defaultBillerName == 9)) {
         update_customer_req.cal4care_sg = this.cal4care1_sg;
         update_customer_req.cal4care_sdn = this.cal4care2_sdn;
         update_customer_req.cal4care_jp = this.cal4care3_jp;
         update_customer_req.cal4care_none = this.cal4care4_none;
-        
-      } else if(!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp && !this.cal4care4_none && this.dcare==true ){
+      }
+    } else {
+      console.log(2)
+      console.log("this.cal4care1_sg", this.cal4care1_sg)
+      console.log("!this.cal4care1_sg", !this.cal4care1_sg)
+      console.log("this.cal4care2_sdn", this.cal4care2_sdn)
+      console.log("!this.cal4care2_sdn", !this.cal4care2_sdn)
+      console.log("this.cal4care3_jp", this.cal4care3_jp)
+      console.log("!this.cal4care3_jp", !this.cal4care3_jp)
+      console.log("this.cal4care4_none", this.cal4care4_none)
+      console.log("!this.cal4care4_none", !this.cal4care4_none)
+
+      if (this.editCustomerForm.value.e_ESA_c3cxResellerId != '' && (this.addCustomer.value.defaultBillerName == 9)) {
+        update_customer_req.cal4care_sg = this.cal4care1_sg;
+        update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+        update_customer_req.cal4care_jp = this.cal4care3_jp;
+        update_customer_req.cal4care_none = this.cal4care4_none;
+
+      } else if (!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp && !this.cal4care4_none && this.dcare == true) {
         console.log("2.1")
         // Condition 2: If there is any value for 3CX Reseller Id, but no radio button is selected
         iziToast.error({
-            message: "Please select a 3CX Reseller License API option.",
-            position: 'topRight'
+          message: "Please select a 3CX Reseller License API option.",
+          position: 'topRight'
         });
         Swal.close();
         console.log(2)
         return false;
       }
       else {
-          // If conditions 1 and 2 are met, proceed with assigning values
-          console.log(3)
-          console.log("2.2")
-          update_customer_req.cal4care_sg = this.cal4care1_sg;
-          update_customer_req.cal4care_sdn = this.cal4care2_sdn;
-          update_customer_req.cal4care_jp = this.cal4care3_jp;
-          update_customer_req.cal4care_none = this.cal4care4_none;
+        // If conditions 1 and 2 are met, proceed with assigning values
+        console.log(3)
+        console.log("2.2")
+        update_customer_req.cal4care_sg = this.cal4care1_sg;
+        update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+        update_customer_req.cal4care_jp = this.cal4care3_jp;
+        update_customer_req.cal4care_none = this.cal4care4_none;
 
       }
-  }
-  
+    }
+
     update_customer_req.def_currency_id = this.editCustomerForm.value.edit_currencyname;
     update_customer_req.stripe_customerId = this.editCustomerForm.value.e_stripe_customer_id;
     update_customer_req.stripe_recurring_state = this.editCustomerForm.value.e_stripe_recurr_payment;
@@ -3474,7 +3499,7 @@ export class CustomernewallComponent implements OnInit {
           'spedit_3cx_BuySpecial': response[0].licence_buy_override,
           'spedit_C3CXLicencepurchase': response[0].payment_chk,
         });
-       // console.log(this.specialEditCustomerForm.value);
+        // console.log(this.specialEditCustomerForm.value);
         // if (response.customer_details[0].status == 1) {
         //   $('#status').prop('checked', true);
         // } else {
@@ -3836,62 +3861,62 @@ export class CustomernewallComponent implements OnInit {
   }
   onCal4careAddChange(selection: string) {
     if (selection === 'cal4care1_sg_add') {
-        this.cal4care1_sg_add = true;
-        this.cal4care2_sdn_add = false;
-        this.cal4care3_jp_add = false;
-        this.cal4care4_none_add = false;
+      this.cal4care1_sg_add = true;
+      this.cal4care2_sdn_add = false;
+      this.cal4care3_jp_add = false;
+      this.cal4care4_none_add = false;
 
     } else if (selection === 'cal4care2_sdn_add') {
-        this.cal4care1_sg_add = false;
-        this.cal4care2_sdn_add = true;
-        this.cal4care3_jp_add = false;
-        this.cal4care4_none_add = false;
+      this.cal4care1_sg_add = false;
+      this.cal4care2_sdn_add = true;
+      this.cal4care3_jp_add = false;
+      this.cal4care4_none_add = false;
     } else if (selection === 'cal4care3_jp_add') {
-        this.cal4care1_sg_add = false;
-        this.cal4care2_sdn_add = false;
-        this.cal4care3_jp_add = true;
-        this.cal4care4_none_add = false;
-    }else if (selection === 'cal4care4_none_add') {
+      this.cal4care1_sg_add = false;
+      this.cal4care2_sdn_add = false;
+      this.cal4care3_jp_add = true;
+      this.cal4care4_none_add = false;
+    } else if (selection === 'cal4care4_none_add') {
       this.cal4care1_sg_add = false;
       this.cal4care2_sdn_add = false;
       this.cal4care3_jp_add = false;
       this.cal4care4_none_add = false;
+    }
+    console.log("selection", selection);
+    console.log("this.cal4care1_sg_add", this.cal4care1_sg_add)
+    console.log("this.cal4care2_sdn_add", this.cal4care2_sdn_add)
+    console.log("this.cal4care3_jp_add", this.cal4care3_jp_add)
+    console.log("this.cal4care4_none_add", this.cal4care4_none_add)
   }
-    console.log("selection",selection);
-    console.log("this.cal4care1_sg_add",this.cal4care1_sg_add)
-    console.log("this.cal4care2_sdn_add",this.cal4care2_sdn_add)
-    console.log("this.cal4care3_jp_add",this.cal4care3_jp_add)
-    console.log("this.cal4care4_none_add",this.cal4care4_none_add)
-}
   onCal4careChange(selection: string) {
 
     if (selection === 'cal4care1_sg') {
-        this.cal4care1_sg = true;
-        this.cal4care2_sdn = false;
-        this.cal4care3_jp = false;
-        this.cal4care4_none = false;
+      this.cal4care1_sg = true;
+      this.cal4care2_sdn = false;
+      this.cal4care3_jp = false;
+      this.cal4care4_none = false;
     } else if (selection === 'cal4care2_sdn') {
-        this.cal4care1_sg = false;
-        this.cal4care2_sdn = true;
-        this.cal4care3_jp = false;
-        this.cal4care4_none = false;
+      this.cal4care1_sg = false;
+      this.cal4care2_sdn = true;
+      this.cal4care3_jp = false;
+      this.cal4care4_none = false;
     } else if (selection === 'cal4care3_jp') {
-        this.cal4care1_sg = false;
-        this.cal4care2_sdn = false;
-        this.cal4care3_jp = true;
-        this.cal4care4_none = false;
-    }else if (selection === 'cal4care4_none') {
+      this.cal4care1_sg = false;
+      this.cal4care2_sdn = false;
+      this.cal4care3_jp = true;
+      this.cal4care4_none = false;
+    } else if (selection === 'cal4care4_none') {
       this.cal4care1_sg = false;
       this.cal4care2_sdn = false;
       this.cal4care3_jp = false;
       this.cal4care4_none = false;
     }
-    console.log("selection",selection);
-    console.log("this.cal4care1_sg",this.cal4care1_sg)
-    console.log("this.cal4care2_sdn",this.cal4care2_sdn)
-    console.log("this.cal4care3_jp",this.cal4care3_jp)
-    console.log("this.cal4care4_none",this.cal4care4_none)
-}
+    console.log("selection", selection);
+    console.log("this.cal4care1_sg", this.cal4care1_sg)
+    console.log("this.cal4care2_sdn", this.cal4care2_sdn)
+    console.log("this.cal4care3_jp", this.cal4care3_jp)
+    console.log("this.cal4care4_none", this.cal4care4_none)
+  }
 
   mconnect_address_add(id: any) {
     Swal.fire('MConnect Partner Details Updating');
@@ -3910,7 +3935,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: this.serverService.urlFinal +'customer/mconnect_address_save',
+      url: this.serverService.urlFinal + 'customer/mconnect_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4028,7 +4053,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: this.serverService.urlFinal +'customer/mrvoip_address_save',
+      url: this.serverService.urlFinal + 'customer/mrvoip_address_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -4140,7 +4165,7 @@ export class CustomernewallComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: this.serverService.urlFinal +'customer/call4tel_address_save',
+      url: this.serverService.urlFinal + 'customer/call4tel_address_save',
       cache: false,
       contentType: false,
       processData: false,

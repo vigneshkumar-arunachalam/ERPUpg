@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,8 +17,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 })
 export class ProformaInvoiceComponent implements OnInit {
+  @Input() proformaList: any[] = [];
   //list
-  PI_list: any;
+  PI_list: any = [];
   biller_list: any;
   biller_temp: any;
   //advance search biller checkbox
@@ -79,7 +80,7 @@ export class ProformaInvoiceComponent implements OnInit {
   quotation_Emailtemplate_id: any;
   messageContent: any;
   mailContent: any;
-  FromEmailValue: any='';
+  FromEmailValue: any = '';
   Email_BillId: any;
   CBV_TemplateSelection: any;
   CBV_PDFLink: any;
@@ -134,7 +135,7 @@ export class ProformaInvoiceComponent implements OnInit {
   upd_searchName: any;
   upd_searchFlag: any;
   searchFlag: any;
- 
+
   selected_billerId: any = [];
   getSearch: boolean = false;
   response_total_cnt: any;
@@ -143,18 +144,18 @@ export class ProformaInvoiceComponent implements OnInit {
       //  console.log("before parse", val)
       // var k = JSON.parse(val);
       // console.log("after parse", k)
- if (typeof val === 'string') {
-    try {
-       var k= JSON.parse(val);
-      // console.log("Parsed JSON", k);
-    } catch (e) {
-      // console.error("Invalid JSON string:", val);
-    }
-  } else if (typeof val === 'object') {
-    // console.log("Value is already an object", val);
-  } else {
-    // console.warn("Unsupported data type:", typeof val);
-  }
+      if (typeof val === 'string') {
+        try {
+          var k = JSON.parse(val);
+          // console.log("Parsed JSON", k);
+        } catch (e) {
+          // console.error("Invalid JSON string:", val);
+        }
+      } else if (typeof val === 'object') {
+        // console.log("Value is already an object", val);
+      } else {
+        // console.warn("Unsupported data type:", typeof val);
+      }
 
       this.PI_list = k;
       // console.log(k.type)
@@ -164,15 +165,28 @@ export class ProformaInvoiceComponent implements OnInit {
       } else {
         this.Global_search_filter = false;
       }
-     // console.log(this.Global_search_filter)
+      // console.log(this.Global_search_filter)
     });
+    $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+    this.user_ids = localStorage.getItem('erp_c4c_user_id');
+    this.searchResult_CustomerName = '';
+    this.PI_list = this.proformaList;
+
+    const searchParams = this.serverService.getSearchParams();
+    if (searchParams && searchParams.companyName) {
+      this.searchResult_CustomerName = searchParams.companyName;
+
+    } else {
+      this.searchResult_CustomerName = '';
+    }
+    console.log("this.searchResultTest-from global search-Proforma Invoice", this.searchResult_CustomerName);
 
     this.search_BillerList();
-    this.user_ids = localStorage.getItem('erp_c4c_user_id');
+
 
     this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
     this.displayDynamicData = JSON.parse(this.allData);
@@ -235,13 +249,13 @@ export class ProformaInvoiceComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-       // console.log("params after didpi", params)
+        // console.log("params after didpi", params)
         this.upd_searchName = params['upd_search_name'];
         this.upd_searchFlag = params['upd_searchFlag'];
 
         if (this.upd_searchFlag == 1) {
           this.searchResult_CustomerName = this.upd_searchName;
-         // console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
+          // console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
           this.PIList({});
         }
         else {
@@ -255,8 +269,14 @@ export class ProformaInvoiceComponent implements OnInit {
     // console.log("checklist-this.upd_searchFlag", this.upd_searchFlag);
 
   }
+   ngOnChanges(changes: SimpleChanges) {
+      if (changes['proformaList'] && changes['proformaList'].currentValue) {
+        this.PI_list = changes['proformaList'].currentValue;
+      }
+    }
+  
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
@@ -268,28 +288,28 @@ export class ProformaInvoiceComponent implements OnInit {
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-   // console.log(this.Select_To_Type_radiobox_Value);
+    // console.log(this.Select_To_Type_radiobox_Value);
   }
   radioChange_selectToType(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-  //  console.log(this.Select_To_Type_radiobox_Value);
+    //  console.log(this.Select_To_Type_radiobox_Value);
   }
   CBF_TemplateSelection(event: any) {
     this.CBV_TemplateSelection = event.target.checked;
-   // console.log(this.CBV_TemplateSelection);
+    // console.log(this.CBV_TemplateSelection);
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
-   // console.log(this.CBV_PDFLink);
+    // console.log(this.CBV_PDFLink);
   }
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
-  //  console.log(this.CBV_PaymentLink);
+    //  console.log(this.CBV_PaymentLink);
 
   }
   email_fromChange(event: any) {
     this.FromEmailValue = event.target.value;
-  // console.log(this.FromEmailValue);
+    // console.log(this.FromEmailValue);
 
   }
   searchBillerNameCHK(data: any, event: any) {
@@ -300,75 +320,75 @@ export class ProformaInvoiceComponent implements OnInit {
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
         this.edit_array_SearchBiller_Checkbox = [];
-      
+
       }
 
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
         this.edit_array_SearchBiller_Checkbox = [];
-       
-        
+
+
       }
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
   }
   EditCHK_emailCC(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
   InvoiceShowCHK(data: any, event: any) {
-   // console.log("List - Checkbox ID", data);
+    // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
     this.Checkbox_value_invoiceShow = event.target.checked;
-   // console.log(this.Checkbox_value_invoiceShow)
+    // console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-     // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+      // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
-     // console.log(index)
+      // console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+      // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   searchCustomerData(data: any) {
@@ -384,12 +404,12 @@ export class ProformaInvoiceComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer_status response", response);
+      // console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
       this.searchResult_CustomerName = response.customer_names;
 
-     // console.log("vignesh-advanced search result", this.searchResult);
+      // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -407,7 +427,7 @@ export class ProformaInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
 
-     // console.log("vignesh-customer_status response", response);
+      // console.log("vignesh-customer_status response", response);
 
       this.searchBillerResult = response.biller_list;
 
@@ -416,22 +436,22 @@ export class ProformaInvoiceComponent implements OnInit {
     });
   }
   QuotationSearchCHK(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_searchId = data;
     this.checkbox_value = event.target.checked;
-  //  console.log(this.checkbox_value)
+    //  console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.quotationSearchCheckboxID_array.push(data);
       this.quotationSearchCheckboxID_array.join(',');
-    //  console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
+      //  console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
     }
     else {
       const index = this.quotationSearchCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.quotationSearchCheckboxID_array.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
+      // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
 
     }
   }
@@ -460,10 +480,10 @@ export class ProformaInvoiceComponent implements OnInit {
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.subjectValue =response.subject;
-        this.emailTo =response.company_email;
+        this.subjectValue = response.subject;
+        this.emailTo = response.company_email;
         this.mailContent = tinymce.get('tinyID_89').setContent("<p>" + this.messageContent + "</p>");
-        
+
         this.emailForm.patchValue({
 
           'tinyID_89': this.mailContent,
@@ -500,12 +520,12 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -520,7 +540,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("quotation-template Dropdown response", response)
+      //  console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID_89').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -602,7 +622,7 @@ export class ProformaInvoiceComponent implements OnInit {
               position: 'topRight'
             });
             this.PIList({});
-          //  console.log("final error", error);
+            //  console.log("final error", error);
           };
       }
     })
@@ -663,7 +683,7 @@ export class ProformaInvoiceComponent implements OnInit {
               position: 'topRight'
             });
             this.PIList({});
-           // console.log("final error", error);
+            // console.log("final error", error);
           };
       }
     })
@@ -672,9 +692,9 @@ export class ProformaInvoiceComponent implements OnInit {
     Swal.fire('Sending Email');
     Swal.showLoading();
 
-  //  this.FromEmailValue = $('#emailFrom').val();
-   // this.emailTo = $('#emailto').val();
-   // this.subjectValue = $('#subject').val();
+    //  this.FromEmailValue = $('#emailFrom').val();
+    // this.emailTo = $('#emailto').val();
+    // this.subjectValue = $('#subject').val();
     this.msg_id = tinymce.get('tinyID_89').getContent();
     // console.log("msgid", this.msg_id)
     // console.log("email to", this.emailTo)
@@ -682,11 +702,11 @@ export class ProformaInvoiceComponent implements OnInit {
     var pdf_state = 0
     if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
       var pdf_state = 1;
-     // console.log("if condition if any checkbox selects", pdf_state)
+      // console.log("if condition if any checkbox selects", pdf_state)
     }
     else {
       var pdf_state = 0;
-     // console.log("if condition if none of checkbox selects", pdf_state)
+      // console.log("if condition if none of checkbox selects", pdf_state)
     }
 
 
@@ -700,7 +720,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_email_req.billId = this.Email_BillId;
 
-    
+
     if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
 
       iziToast.warning({
@@ -710,10 +730,10 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
-    }else{
+    } else {
       api_email_req.fromEmailId = this.FromEmailValue;
     }
-  
+
     if (this.emailTo === null) {
 
       iziToast.warning({
@@ -723,12 +743,12 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
-    }else{
+    } else {
       api_email_req.toEmailId = this.emailTo;
     }
     // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.pdf_state = pdf_state;
-   
+
     if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
 
       iziToast.warning({
@@ -738,7 +758,7 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
-    }else{
+    } else {
       api_email_req.subject = this.subjectValue;
     }
 
@@ -751,14 +771,14 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
-    }else{
+    } else {
       api_email_req.message = this.msg_id;
     }
 
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-     // console.log("response status", response.status);
+      // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -793,7 +813,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
   }
   initTiny() {
@@ -855,9 +875,9 @@ export class ProformaInvoiceComponent implements OnInit {
     tinymce.activeEditor.setContent("");
   }
   clearSearch() {
-  //  this.edit_array_SearchBiller_Checkbox = [];
+    //  this.edit_array_SearchBiller_Checkbox = [];
     this.searchResult_CustomerName = '';
-   //    this.searchPIForm.get('company_Name').setValue('');
+    //    this.searchPIForm.get('company_Name').setValue('');
 
   }
   getSearch1() {
@@ -866,7 +886,7 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
   clearSelection(event: any) {
-  //  console.log("clear selection", event)
+    //  console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
@@ -883,10 +903,10 @@ export class ProformaInvoiceComponent implements OnInit {
   }
   PIList(data: any) {
     this.spinner.show();
-   // console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    // console.log("billerid", this.edit_array_SearchBiller_Checkbox);
     if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
       this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
-     // console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+      // console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
     }
     var list_data = this.listDataInfo(data);
 
@@ -936,7 +956,7 @@ export class ProformaInvoiceComponent implements OnInit {
         this.Search_Permission = response.proforma_permission_arr.search;
         this.Permission_share = response.proforma_permission_arr.share;
         this.Permission_view = response.proforma_permission_arr.view;
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
 
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_filtervalues[0].biller_ids;
@@ -945,9 +965,9 @@ export class ProformaInvoiceComponent implements OnInit {
           this.edit_array_SearchBiller_Checkbox = Array.from(new Set(this.edit_array_SearchBiller_Checkbox));
 
         }
-        if(response.selected_filtervalues[0].name_serach != ''){
+        if (response.selected_filtervalues[0].name_serach != '') {
           this.searchPIForm.patchValue({
-            'company_Name':response.selected_filtervalues[0].name_serach
+            'company_Name': response.selected_filtervalues[0].name_serach
           })
         }
 
@@ -962,7 +982,7 @@ export class ProformaInvoiceComponent implements OnInit {
         // console.log("proforma_details list", this.PI_list)
         // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-       // console.log("end of list",this.edit_array_SearchBiller_Checkbox)
+        // console.log("end of list",this.edit_array_SearchBiller_Checkbox)
       }
       else {
         Swal.fire({
@@ -988,7 +1008,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
-   // console.log("url", url)
+    // console.log("url", url)
     // $('#pdfFormId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -1012,14 +1032,14 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
   EditCHK(data: any, event: any) {
-  //  console.log("List - CheckBox ID", data);
+    //  console.log("List - CheckBox ID", data);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array.push(data);
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array);
 
     }
     else {
@@ -1027,7 +1047,7 @@ export class ProformaInvoiceComponent implements OnInit {
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -1044,6 +1064,7 @@ export class ProformaInvoiceComponent implements OnInit {
         e_searchFlag: this.searchFlag
       }
     });
+    $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
 
@@ -1061,6 +1082,7 @@ export class ProformaInvoiceComponent implements OnInit {
         e_searchFlag: this.searchFlag
       }
     });
+    $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
 
@@ -1070,22 +1092,22 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
   CHKGroup_emailCC(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.email_checkbox_value = event.target.checked;
-   // console.log(this.email_checkbox_value)
+    // console.log(this.email_checkbox_value)
     if (this.email_checkbox_value) {
 
       this.email_array_emailCC_Checkbox.push(data);
       this.email_array_emailCC_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.email_array_emailCC_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.email_array_emailCC_Checkbox);
     }
     else {
       const index = this.email_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.email_array_emailCC_Checkbox.splice(index, 1);
       }
-    //  console.log("Final Checkbox After Deselected selected list", this.email_array_emailCC_Checkbox)
+      //  console.log("Final Checkbox After Deselected selected list", this.email_array_emailCC_Checkbox)
 
     }
   }
@@ -1162,7 +1184,7 @@ export class ProformaInvoiceComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-           // console.log("final error", error);
+            // console.log("final error", error);
           };
       }
     })
@@ -1197,7 +1219,7 @@ export class ProformaInvoiceComponent implements OnInit {
         this.invoiceShowPermission_List1 = response.access_userid;
         this.invoiceShowResult = response.user_list;
         this.CheckBox_DynamicArrayList_invoiceShowPermission = response.access_userid.split(',').map(Number);
-       // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+        // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
 
       }
       else {
@@ -1213,7 +1235,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-    //  console.log("final error", error);
+      //  console.log("final error", error);
     }
   }
   invoiceShowPermissionUpdate() {
@@ -1251,7 +1273,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
 
@@ -1263,12 +1285,12 @@ export class ProformaInvoiceComponent implements OnInit {
     } else {
       var url = this.serverService.urlFinal + "invoice/getBillpdf?billId=" + billId + "";
 
-      
+
 
     }
 
     window.open(url, '_blank');
-   // console.log("url", url)
+    // console.log("url", url)
   }
 
   showPerission() {
@@ -1332,7 +1354,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   processPaymentUpdate() {
@@ -1402,7 +1424,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
 
       };
   }
@@ -1428,7 +1450,7 @@ export class ProformaInvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-      //  console.log("response.selected_invoice_type", response.selected_invoice_type)
+        //  console.log("response.selected_invoice_type", response.selected_invoice_type)
         this.setInvoiceType.patchValue({
           'setInvoice': response.selected_invoice_type
         })
@@ -1449,7 +1471,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -1491,7 +1513,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }
@@ -1542,7 +1564,7 @@ export class ProformaInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
   }

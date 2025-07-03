@@ -100,11 +100,14 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
   showAddModal = false;
   isSubmitting: boolean = false;
   customerSerialNo: any;
-  customerLicenseForm:FormGroup;
+  customerLicenseForm: FormGroup;
   setKeyPeriodSerialNo: any;
-  setKeyPeriodForm:FormGroup;
+  setKeyPeriodForm: FormGroup;
   periodList: any;
   concList: any;
+  //notes
+  notesForm: FormGroup;
+  sno: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
@@ -129,9 +132,10 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
   hiddenFieldsVisible: boolean = false;
 
   ngOnInit(): void {
+     const currentDate = new Date().toISOString().split('T')[0];
     this.Select_To_Type_radiobox_Value = 'finance';
-    this.periodList=[{periodid:1,name:"14 Days"},{periodid:2,name:"30 Days"},{periodid:3,name:"Perpetual"}];
-    this.concList=[{concurrentid:1,name:"4 SC"},{concurrentid:2,name:"8 SC"},{concurrentid:3,name:"16 SC"},{concurrentid:4,name:"32 SC"},{concurrentid:5,name:"64 SC"},{concurrentid:6,name:"128 SC"},{concurrentid:7,name:"256 SC"},{concurrentid:8,name:"512 SC"},{concurrentid:9,name:"1024 SC"}];
+    this.periodList = [{ periodid: 1, name: "14 Days" }, { periodid: 2, name: "30 Days" }, { periodid: 3, name: "Perpetual" }];
+    this.concList = [{ concurrentid: 1, name: "4 SC" }, { concurrentid: 2, name: "8 SC" }, { concurrentid: 3, name: "16 SC" }, { concurrentid: 4, name: "32 SC" }, { concurrentid: 5, name: "64 SC" }, { concurrentid: 6, name: "128 SC" }, { concurrentid: 7, name: "256 SC" }, { concurrentid: 8, name: "512 SC" }, { concurrentid: 9, name: "1024 SC" }];
     this.concurrent_list();
     this.set_period_list();
     this.searchTransactionForm = new FormGroup({
@@ -149,13 +153,18 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
       'formControlName="radio_ApprovalBy': new FormControl(null),
 
     });
-    this.customerLicenseForm=new FormGroup({
+    this.customerLicenseForm = new FormGroup({
       'customerName': new FormControl(null, Validators.required),
     });
-    this.setKeyPeriodForm=new FormGroup({
-      'SetPeriod': new FormControl(null, Validators.required),
+    this.setKeyPeriodForm = new FormGroup({
+      'setPeriod': new FormControl(null, Validators.required),
+       'fromDate': new FormControl(currentDate),
+       'toSetDate': new FormControl(null, Validators.required),
       'Concurrent': new FormControl(null, Validators.required),
       'licenseKeyUpdate': new FormControl(null, Validators.required),
+    });
+    this.notesForm = new FormGroup({
+      'note': new FormControl(null, Validators.required),
     });
 
     this.getTransactionNewList({});
@@ -182,8 +191,66 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     $('#add_licenceKeyGr').modal('hide');
     $('#setKeyPeriodSerialNo_Gr').modal('hide');
     $('#customerLicenseForm_Gr').modal('hide');
-  
+
     this.resetForm();
+  }
+   notes(sno: any) {
+    this.sno=sno;
+    this.spinner.show();
+    
+    let api_req: any = new Object();
+    let TNapi_req: any = new Object();
+    api_req.moduleType = "key";
+    api_req.api_url = "key/get_comments";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    TNapi_req.action = "key/get_comments";
+    TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    TNapi_req.sno = sno;
+    api_req.element_data = TNapi_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.notesForm.patchValue({
+          'note':response.comments
+
+        });
+        $('#myVoipLicenseNote').modal('show');
+        
+      }
+
+    });
+
+  }
+     notesUpdate() {
+    this.spinner.show();
+    
+    let api_req: any = new Object();
+    let TNapi_req: any = new Object();
+    api_req.moduleType = "key";
+    api_req.api_url = "key/comments";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    TNapi_req.action = "key/comments";
+    TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    TNapi_req.sno = this.sno;
+    TNapi_req.comments = this.notesForm.value.note;
+    api_req.element_data = TNapi_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+          iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
+          this.getTransactionNewList({});
+        $('#myVoipLicenseNote').modal('hide');
+      }
+
+    });
+
   }
   getTransactionNewList(data: any) {
     this.spinner.show();
@@ -236,7 +303,27 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  setKeyPeriodUpdate(){
+  closePeriod(){
+    this.setKeyPeriodForm.controls['toSetDate'].reset();
+    this.setKeyPeriodForm.controls['setPeriod'].reset();
+    this.setKeyPeriodForm.controls['licenseKeyUpdate'].reset();
+
+
+
+  }
+  calculatePeriod() {
+    const from = new Date(this.setKeyPeriodForm.get('fromDate')?.value);
+    const to = new Date(this.setKeyPeriodForm.get('toSetDate')?.value);
+
+    if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
+      const diffTime = to.getTime() - from.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24)) + 1; // +1 to include both start & end dates
+      this.setKeyPeriodForm.get('setPeriod')?.setValue(`${diffDays} Days`);
+    } else {
+      this.setKeyPeriodForm.get('setPeriod')?.setValue('');
+    }
+  }
+  setKeyPeriodUpdate() {
     this.spinner.show();
     let api_req: any = new Object();
     let TNapi_req: any = new Object();
@@ -247,55 +334,55 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     TNapi_req.action = "key/license_key_period_update";
     TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
     TNapi_req.period_value = this.setKeyPeriodForm.value.SetPeriod;
-    TNapi_req.sno_hd =  this.setKeyPeriodSerialNo;
+     TNapi_req.sno_hd = this.setKeyPeriodSerialNo;
     TNapi_req.concurrent = this.setKeyPeriodForm.value.Concurrent;
-     TNapi_req.license_date_update =  this.setKeyPeriodForm.value.licenseKeyUpdate;
-    TNapi_req.from_dt = '';
-    TNapi_req.to_dt = '';
+    TNapi_req.license_date_update = this.setKeyPeriodForm.value.licenseKeyUpdate;
+    TNapi_req.from_dt = this.setKeyPeriodForm.value.fromDate;
+    TNapi_req.valid_upto_date = this.setKeyPeriodForm.value.SetPeriod;;
     api_req.element_data = TNapi_req;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status== true) {
+      if (response.status == true) {
         $('#setKeyPeriodSerialNo_Gr').modal('hide');
         iziToast.success({
           message: "Updated Successfully",
           position: 'topRight'
         });
-  
-      }else{
-    
-      
+
+      } else {
+
+
       }
-  
+
     });
 
   }
-  set_period_list(){
-  let api_req: any = new Object();
-  let TNapi_req: any = new Object();
-  api_req.moduleType = "set_period_list";
-  api_req.api_url = "key/set_period_list";
-  api_req.api_type = "web";
-  api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  TNapi_req.action = "key/set_period_list";
-  TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
-  api_req.element_data = TNapi_req;
+  set_period_list() {
+    let api_req: any = new Object();
+    let TNapi_req: any = new Object();
+    api_req.moduleType = "set_period_list";
+    api_req.api_url = "key/set_period_list";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    TNapi_req.action = "key/set_period_list";
+    TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = TNapi_req;
 
-  this.serverService.sendServer(api_req).subscribe((response: any) => {
-    this.spinner.hide();
-    if (response.status== true) {
-     // this.periodList=response.data;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        // this.periodList=response.data;
 
-    }else{
-  
-    
-    }
+      } else {
 
-  });
+
+      }
+
+    });
 
   }
-  concurrent_list(){
+  concurrent_list() {
     let api_req: any = new Object();
     let TNapi_req: any = new Object();
     api_req.moduleType = "concurrent_list";
@@ -305,21 +392,21 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     TNapi_req.action = "key/concurrent_list";
     TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = TNapi_req;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status== true) {
-       // this.concList=response.data;
-  
-      }else{
-    
-      
+      if (response.status == true) {
+        // this.concList=response.data;
+
+      } else {
+
+
       }
-  
+
     });
-  
-    }
-  
+
+  }
+
   onSubmit() {
     const apiRequestGet = {
       moduleType: 'key',
@@ -328,19 +415,19 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
       access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI',
       element_data: {
         action: 'key/get_license_key',
-        user_id: localStorage.getItem('erp_c4c_user_id'), 
+        user_id: localStorage.getItem('erp_c4c_user_id'),
         cnt_val: this.licenseKeyCount,
         p_code: this.productCode,
         p_name: this.productName
       }
     };
     this.serverService.sendServer(apiRequestGet).subscribe(
-  
+
       (response: any) => {
         this.hiddenLicenseKeys = response.data.map((item: { license_key: any; }) => item.license_key);
         this.hiddenProductCodes = response.data.map((item: { product_code: any; }) => item.product_code);
         this.hiddenProductNames = response.data.map((item: { product_name: any; }) => item.product_name);
-  
+
         // Make the hidden fields visible
         this.hiddenFieldsVisible = true;
         this.isSubmitting = true;
@@ -352,14 +439,14 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
   }
 
   saveLicensekey() {
-  
+
     // Prepare the license key data from hidden fields
     const licenseKeyData = this.hiddenLicenseKeys.map((key, i) => ({
       license_key: key,
       product_code: this.hiddenProductCodes[i],
       product_name: this.hiddenProductNames[i]
     }));
-  
+
     // API request to save the data
     const apiRequestAdd = {
       moduleType: 'key',
@@ -368,32 +455,32 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
       access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI',
       element_data: {
         action: 'key/license_key_group_addtion',
-        user_id: localStorage.getItem('erp_c4c_user_id'), 
+        user_id: localStorage.getItem('erp_c4c_user_id'),
         license_key_cnt: licenseKeyData
       }
     };
-  
-      this.serverService.sendServer(apiRequestAdd).subscribe(
+
+    this.serverService.sendServer(apiRequestAdd).subscribe(
       (response: any) => {
         console.log("License Key Added Successfully:", response);
         this.resetForm();
         this.showAddModal = false;
         this.getTransactionNewList({});
-        $('#add_licenceKeyGr').modal('hide');      
+        $('#add_licenceKeyGr').modal('hide');
       },
     );
   }
-  
-  
-    getRepeatedFields() {
-      return new Array(this.licenseKeyCount);
-    }
-    setKeyPeriod(sno:any){
-      this.setKeyPeriodSerialNo=sno;
-      $('#setKeyPeriodSerialNo_Gr').modal('show');
-      this.spinner.show();
-  
-     
+
+
+  getRepeatedFields() {
+    return new Array(this.licenseKeyCount);
+  }
+  setKeyPeriod(sno: any) {
+    this.setKeyPeriodSerialNo = sno;
+    $('#setKeyPeriodSerialNo_Gr').modal('show');
+    this.spinner.show();
+
+
     let api_req: any = new Object();
     let TNapi_req: any = new Object();
     api_req.moduleType = "key";
@@ -403,37 +490,37 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     TNapi_req.action = "key/get_license_key_update";
     TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
     TNapi_req.sno_hd = this.setKeyPeriodSerialNo;
-  
+
     api_req.element_data = TNapi_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status== true) {
+      if (response.status == true) {
 
         $("#setKeyPeriodSerialNo_Gr").modal("show");
         this.setKeyPeriodForm.patchValue({
           'SetPeriod': response.data.key_type,
           'Concurrent': response.data.concurrent,
-          'licenseKeyUpdate':1
+          'licenseKeyUpdate': 1
         })
-   
-    
-      }else{
-    
-      
+
+
+      } else {
+
+
       }
 
     });
 
-    }
-    customer(sno:any){
-      this.customerSerialNo=sno;
-      $('#customerLicenseForm_Gr').modal('show');
-    }
-    customerUpdate(){
-      this.spinner.show();
-  
-     
+  }
+  customer(sno: any) {
+    this.customerSerialNo = sno;
+    $('#customerLicenseForm_Gr').modal('show');
+  }
+  customerUpdate() {
+    this.spinner.show();
+
+
     let api_req: any = new Object();
     let TNapi_req: any = new Object();
     api_req.moduleType = "key";
@@ -448,7 +535,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status== true) {
+      if (response.status == true) {
 
 
         $('#customerLicenseForm_Gr').modal('hide');
@@ -457,10 +544,10 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
           message: "Updated Successfully",
           position: 'topRight'
         });
-         this.customerLicenseForm.reset();
+        this.customerLicenseForm.reset();
         this.getTransactionNewList({});
-       
-      }else{
+
+      } else {
         $('#customerLicenseForm_Gr').modal('hide');
         iziToast.error({
           message: "Updated Failed",
@@ -472,12 +559,12 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     });
 
 
-    }
+  }
 
-  
+
   flushTransaction(sno: any) {
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you sure to Flush?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -487,7 +574,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-       
+
         Swal.showLoading();
         let api_req: any = new Object();
         let del_req: any = new Object();
@@ -542,7 +629,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-       
+
         Swal.showLoading();
         let api_req: any = new Object();
         let del_req: any = new Object();
@@ -597,7 +684,7 @@ export class MyVOIPLicenceKeyComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-       
+
         Swal.showLoading();
         let api_req: any = new Object();
         let del_req: any = new Object();

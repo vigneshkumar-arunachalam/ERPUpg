@@ -852,7 +852,7 @@ if(response.proforma_details){
 
     }
 
-
+ $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
 
   }
@@ -866,6 +866,7 @@ if(response.proforma_details){
         e_editDuplicateID: editDuplicateID,
       }
     });
+     $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
 
@@ -2637,6 +2638,7 @@ if(response.proforma_details){
 
     this.billId_ResellerCommissionId = id;
     $("#ActionId" + i).modal("hide");
+     $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
     $("#ActionId", i).modal("hide")
 

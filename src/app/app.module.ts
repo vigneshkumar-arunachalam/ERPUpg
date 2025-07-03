@@ -207,6 +207,8 @@ import { CurrentStockOneComponent } from './stock/current-stock-one/current-stoc
 
 // import { RatecaDeliverychallanComponenttalogComponent} from './ratecatalog/ratecatalog.component';
 //  import {RatecatalogComponent} from './stock/ratecatalog.component';
+//  import {RatecatalogComponent} from './stock/ratecatalog.component';
+// import {RatecatalogComponent} from './stock/ratecatalog.component;
 
 
 
@@ -387,6 +389,7 @@ import { CurrentStockOneComponent } from './stock/current-stock-one/current-stoc
      VendorComponent,
      CustomerProjectComponent,
      CurrentStockOneComponent,
+ 
    
     
 

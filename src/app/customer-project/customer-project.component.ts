@@ -80,14 +80,39 @@ export class CustomerProjectComponent implements OnInit {
   fileAttach_workDetailsID: any;
   getFileAttachmentResult: any;
   getLicensekeyDetailsList: any;
+  addCustomerProjectForm: FormGroup;
+  addBillerData: any;
+  addDepartment: any;
+  addOwnerData: any;
+  //add
+  selectedDepartment: any;
+  deptValue: any;
+  addFollowersData: any = [];
+  groupSelect_emailCCId1: any;
+  edit_array_emailCC_Checkbox1: any = [];
+  checkbox_value1: any;
+  selectedList: any = [];
+  followersId: any;
+  keywordCompanyName = 'customerName';
+  searchResult: any;
+  searchResult_CustomerID: any;
+  searchResult_CustomerName: any;
+  //search
+  searchCustomerProjectForm:FormGroup;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.GoogleAuthenticationForm = new FormGroup({
       'google_AuthenticationCode': new FormControl(null),
     });
+     this.searchCustomerProjectForm = new FormGroup({
+      'addc_selectCustomer': new FormControl(null),
+      'searchText': new FormControl(null),
+
+    });
     // $('#GoogleAuthenticationGuruFormId').modal('show');
     this.getTransactionNewList({});
+    this.addBasicDetails();
 
     this.viewCustomerPjctMgmtForm = new FormGroup({
       'view_comments': new FormControl(null),
@@ -100,6 +125,7 @@ export class CustomerProjectComponent implements OnInit {
       'add_projDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'add_subjName': new FormControl(null),
       'add_description': new FormControl(null),
+
       'file': new FormControl(null),
 
 
@@ -121,8 +147,13 @@ export class CustomerProjectComponent implements OnInit {
       'edit_selectCustomer': new FormControl(null),
       'edit_owner': new FormControl(null),
       'edit_pjctFollower': new FormControl(null),
-
-
+    });
+    this.addCustomerProjectForm = new FormGroup({
+      'addc_billerName': new FormControl(null),
+      'addc_selectCustomer': new FormControl(null),
+      'addc_owner': new FormControl(null),
+      'addc_pjctFollower': new FormControl(null),
+      'department': new FormControl(null),
     });
     this.FileAttachmentForm = new FormGroup({
       'file': new FormControl(null),
@@ -144,6 +175,15 @@ export class CustomerProjectComponent implements OnInit {
 
     });
     this.Select_To_Type_radiobox_Value = 'finance';
+    this.deptValue = 'Sales';
+
+    this.addProjectFollowers();
+  }
+  departmentChange(event: any, id: any) {
+    this.deptValue = id;
+    console.log("this.deptValue", this.deptValue);
+    this.addProjectFollowers();
+
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
@@ -277,10 +317,10 @@ export class CustomerProjectComponent implements OnInit {
 
     TNapi_req.limit_val = list_data.limit;
 
-    TNapi_req.search_txt = '';
+    TNapi_req.search_txt = this.searchCustomerProjectForm.value.searchText;
 
     TNapi_req.current_page = "";
-    TNapi_req.cus_pro_customer_name = '';
+    TNapi_req.cus_pro_customer_name =  this.searchResult_CustomerID ;
     api_req.element_data = TNapi_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -289,7 +329,11 @@ export class CustomerProjectComponent implements OnInit {
 
 
         this.Transaction_list = response.data;
-         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
+         this.searchResult_CustomerID ='';
+        // console.table(this.Transaction_list);
+       // console.dir(this.Transaction_list);
+       $('#searchCustProjFormId').modal('hide');
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
 
 
       }
@@ -412,12 +456,12 @@ export class CustomerProjectComponent implements OnInit {
     api_req.element_data = api_nx32PermissionUpdate_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
 
       if (response.status == true) {
         this.spinner.hide();
-     //   $('#getCustPhoneProvID').modal('show');
-         $('#callFormId_CP').modal('show');
+        //   $('#getCustPhoneProvID').modal('show');
+        $('#callFormId_CP').modal('show');
         this.getCustPhoneProvList = response.customerData;
 
         // this.customerslist({});
@@ -454,12 +498,12 @@ export class CustomerProjectComponent implements OnInit {
     api_req.element_data = api_nx32PermissionUpdate_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
 
       if (response.status == true) {
         this.spinner.hide();
-     //   $('#getCustPhoneProvID').modal('show');
-         $('#licenceKeyDetFormId_CP').modal('show');
+        //   $('#getCustPhoneProvID').modal('show');
+        $('#licenceKeyDetFormId_CP').modal('show');
         this.getLicensekeyDetailsList = response.data;
 
         // this.customerslist({});
@@ -741,6 +785,54 @@ export class CustomerProjectComponent implements OnInit {
 
     }
   }
+  EditCHK_emailCC2(data: any, event: any) {
+    console.log("List - CheckBox ID", data);
+    const inputElement = event.target as HTMLInputElement;
+    const isChecked = inputElement.checked;
+    console.log("event", event)
+    this.groupSelect_emailCCId1 = data;
+    this.checkbox_value1 = isChecked;
+    console.log(this.checkbox_value1);
+    if (this.checkbox_value) {
+
+      this.edit_array_emailCC_Checkbox1.push(data);
+      this.edit_array_emailCC_Checkbox1.join(',');
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+    }
+    else {
+      const index = this.edit_array_emailCC_Checkbox1.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_Checkbox1.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox1)
+
+    }
+  }
+  EditCHK_emailCC1(data: any, event: Event) {
+    console.log("List - CheckBox ID", data);
+    const inputElement = event.target as HTMLInputElement;
+    const isChecked = inputElement.checked;
+    console.log("Checkbox checked?", isChecked);
+
+    this.groupSelect_emailCCId1 = data;
+    this.checkbox_value1 = isChecked;
+
+    console.log("Final Checkbox Value", this.checkbox_value1);
+
+    // Example: update selected list
+    if (isChecked) {
+      this.selectedList.push(data);
+      this.selectedList.join(',');
+    } else {
+      // this.selectedList = this.selectedList.filter((id: any) => id !== data);
+      const index = this.selectedList.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.selectedList.splice(index, 1);
+      }
+    }
+    console.log("Final Checkbox After Deselected selected list", this.selectedList);
+  }
+
 
 
   openDelete(work_details_id: any) {
@@ -1266,9 +1358,9 @@ export class CustomerProjectComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+
       if (response != '') {
-      this.getFileAttachmentResult=response.data;
+        this.getFileAttachmentResult = response.data;
 
       }
       else {
@@ -1283,64 +1375,64 @@ export class CustomerProjectComponent implements OnInit {
     });
   }
 
-fileAttachmentUpdate() {
-  Swal.fire({
-    title: 'File Updating...',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
-  });
-
-  if (this.myFiles1.length === 0) {
-    Swal.close();
-    iziToast.warning({
-      message: "Attachment File Missing",
-      position: 'topRight'
-    });
-    return;
-  }
-
-  const data = new FormData();
-  for (let i = 0; i < this.myFiles1.length; i++) {
-    data.append("myfile[]", this.myFiles1[i]);
-  }
-
-  data.append('user_id', localStorage.getItem('erp_c4c_user_id') || '');
-  data.append('work_details_id', this.fileAttach_workDetailsID);
-   data.append('action', 'customer_projects/backupdetails');
-
-  // ✅ Actual endpoint used here
-  const fullUrl = 'https://laravelapi.erp1.cal4care.com/api/customer_projects/backupdetails';
-
-  this.serverService.uploadFileAttachment(fullUrl, data).subscribe(
-    (result) => {
-      Swal.close();
-      if (result.status === true) {
-        this.myFiles1=[];
-        this.getTransactionNewList({});
-        $('#callFormId_CP').modal('hide');
-        iziToast.success({
-          message: "File uploaded successfully",
-          position: 'topRight'
-        });
-      } else {
-        iziToast.error({
-          message: "File upload failed",
-          position: 'topRight'
-        });
+  fileAttachmentUpdate() {
+    Swal.fire({
+      title: 'File Updating...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
       }
-    },
-    (error) => {
+    });
+
+    if (this.myFiles1.length === 0) {
       Swal.close();
-      iziToast.error({
-        message: "Upload error occurred",
+      iziToast.warning({
+        message: "Attachment File Missing",
         position: 'topRight'
       });
-      console.error('Upload Error:', error);
+      return;
     }
-  );
-}
+
+    const data = new FormData();
+    for (let i = 0; i < this.myFiles1.length; i++) {
+      data.append("myfile[]", this.myFiles1[i]);
+    }
+
+    data.append('user_id', localStorage.getItem('erp_c4c_user_id') || '');
+    data.append('work_details_id', this.fileAttach_workDetailsID);
+    data.append('action', 'customer_projects/backupdetails');
+
+    // ✅ Actual endpoint used here
+    const fullUrl = 'https://laravelapi.erp1.cal4care.com/api/customer_projects/backupdetails';
+
+    this.serverService.uploadFileAttachment(fullUrl, data).subscribe(
+      (result) => {
+        Swal.close();
+        if (result.status === true) {
+          this.myFiles1 = [];
+          this.getTransactionNewList({});
+          $('#callFormId_CP').modal('hide');
+          iziToast.success({
+            message: "File uploaded successfully",
+            position: 'topRight'
+          });
+        } else {
+          iziToast.error({
+            message: "File upload failed",
+            position: 'topRight'
+          });
+        }
+      },
+      (error) => {
+        Swal.close();
+        iziToast.error({
+          message: "Upload error occurred",
+          position: 'topRight'
+        });
+        console.error('Upload Error:', error);
+      }
+    );
+  }
 
 
 
@@ -1365,7 +1457,7 @@ fileAttachmentUpdate() {
     }).then((result: any) => {
       if (result.value) {
 
-       
+
         let api_req: any = new Object();
         let fileattachDelete_req: any = new Object();
         api_req.moduleType = "customer_projects";
@@ -1376,7 +1468,7 @@ fileAttachmentUpdate() {
         fileattachDelete_req.action = "customer_projects/customerProjectDelete";
         fileattachDelete_req.work_details_id = work_details_id;
         fileattachDelete_req.user_id = localStorage.getItem('erp_c4c_user_id');
-      
+
         api_req.element_data = fileattachDelete_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1387,7 +1479,7 @@ fileAttachmentUpdate() {
               position: 'topRight'
             });
 
-          //  $("#fileAttachCusFormId_CP").modal("hide");
+            //  $("#fileAttachCusFormId_CP").modal("hide");
 
           } else {
             iziToast.warning({
@@ -1404,5 +1496,204 @@ fileAttachmentUpdate() {
 
 
   }
+  addBasicDetails() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_nx32PermissionUpdate_req: any = new Object();
+    api_req.moduleType = "customer_projects";
+    api_req.api_url = "customer_projects/get_customer_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_nx32PermissionUpdate_req.action = "customer_projects/get_customer_details";
+    api_nx32PermissionUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_nx32PermissionUpdate_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+
+      if (response.status == true) {
+        this.addBillerData = response.billerData;
+        this.addDepartment = response.department;
+        this.addOwnerData = response.ourOwnerData;
+
+
+
+
+        // this.customerslist({});
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  addProjectFollowers() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_nx32PermissionUpdate_req: any = new Object();
+    api_req.moduleType = "customer_projects";
+    api_req.api_url = "customer_projects/getDepartmentUsers";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_nx32PermissionUpdate_req.action = "customer_projects/getDepartmentUsers";
+    api_nx32PermissionUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_nx32PermissionUpdate_req.department = this.deptValue;
+    api_req.element_data = api_nx32PermissionUpdate_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+
+      if (response.status == true) {
+        this.addFollowersData = response.data;
+        this.selectedList = response.userId_val;
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  addALLSaveUpdate() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_nx32PermissionUpdate_req: any = new Object();
+    api_req.moduleType = "customer_projects";
+    api_req.api_url = "customer_projects/customer_projects_details_create";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_nx32PermissionUpdate_req.action = "customer_projects/customer_projects_details_create";
+    api_nx32PermissionUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
+     if (this.addCustomerProjectForm.value.addc_billerName) {
+      api_nx32PermissionUpdate_req.billerId = this.addCustomerProjectForm.value.addc_billerName;
+    } else {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Biller Details Missing",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    if (this.searchResult_CustomerID) {
+      api_nx32PermissionUpdate_req.customer_id = this.searchResult_CustomerID;
+    } else {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Customer Details Missing",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+    api_nx32PermissionUpdate_req.description = tinymce.get('tinyID_addAllCP').getContent();
+   
+     if (this.addCustomerProjectForm.value.addc_owner) {
+        api_nx32PermissionUpdate_req.owner_id = this.addCustomerProjectForm.value.addc_owner;
+    } else {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Owner Details Missing",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+  
+    api_nx32PermissionUpdate_req.project_follower_id = this.selectedList;
+    api_req.element_data = api_nx32PermissionUpdate_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+
+      if (response.status == true) {
+        $('#addFirstCustPrjctMgmt').modal('hide');
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
+        this.searchResult_CustomerID = '';
+        this.searchResult_CustomerName = '';
+
+
+        // this.customerslist({});
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  selectEventCustomer(item: any) {
+
+
+    //  console.log(item)
+    this.searchResult_CustomerID = item.customerId;
+    this.searchResult_CustomerName = item.customerName;
+
+  }
+  clearSelection(event: any) {
+
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
+  }
+  searchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/customer_name_search";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "customer_name_search";
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_Search_req.customerName = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      //  console.log("vignesh-customer_status response", response);
+
+
+
+      // console.log("vignesh-advanced search result", this.searchResult);
+      if (response.customer_names) {
+        this.searchResult = response.customer_names;
+      }
+    });
+  }
+
 
 }

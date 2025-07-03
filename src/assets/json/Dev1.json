@@ -3,12 +3,12 @@
     "icon":"package",
     "isActive": false,
     "menuId":5,
-    "IDs": [1001, 1002, 1003, 1004, 1005, 1101, 1102, 1103, 1104, 1105, 2001, 2002, 2003, 2004, 2005, 9931, 9932, 9933, 9934, 9935, 9941, 9942, 9943, 9944, 9945, 9951, 9952, 9953, 9954, 9955,2076,1137,911,912,913,914],
+    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
     "Type": "Main Menu",
     "children": [{
             "name": "Transaction New",
             "icon": "folder-plus",
-            "IDs": [1101, 1102, 1103, 1104, 1105],
+            "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -16,7 +16,7 @@
         },{
             "name": "Purchase Entry",
             "icon": "figma",
-            "IDs": [9931, 9932, 9933, 9934, 9935],
+            "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -24,7 +24,7 @@
         },{
             "name": "Petty Cash",
             "icon": "shopping-bag",
-            "IDs": [9912],
+            "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -67,14 +67,15 @@
     ],
     "isVisible": true,
     "value": "/transactionnew"
-}, {
+},
+    {
     "name": "Billing",
     "icon": "airplay",
     "isActive": false,
     "menuId":2,
     "IDs": [1000,7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715, 7043, 7044, 1201, 1202, 1203, 1204, 3001, 3002, 3003, 3004, 3005, 3101, 3102, 3103, 3104, 3105, 9501, 9502, 9503, 9504, 9505, 9521, 9522, 9523, 9524, 9525, 9601, 9602, 9603, 9604, 9605, 9701, 9702, 9703, 9704, 9705, 9711, 9712, 9713, 9714, 9715],
     "Type": "Main Menu",
-    "children": [{
+    "children": [ {
             "name": "Transaction Approval",
             "icon": "film",
             "IDs": [1201, 1202, 1203, 1204, 2018],
@@ -82,7 +83,7 @@
             "subchild": [],
             "isVisible": true,
             "value": "/TransactionApproval"
-        }, {
+        },{
             "name": "Quotation New",
             "icon": "message-square",
             "IDs": [9501, 9502, 9503, 9504, 9505],
@@ -90,31 +91,7 @@
             "subchild": [],
             "isVisible": true,
             "value": "/quotationnew"
-        },{
-            "name": "Quotation New-DCare",
-            "icon": "message-square",
-            "IDs": [1000],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/dcare-quotation"
-        },{
-            "name": "Purchase Order",
-            "icon": "airplay",
-            "IDs": [9601, 9602, 9603, 9604, 9605],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/purchaseorder"
         }, {
-            "name": "Delivery Order",
-            "icon": "truck",
-            "IDs": [9711, 9712, 9713, 9714, 9715],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/deliveryorder"
-        },  {
             "name": "Proforma Invoice",
             "icon": "save",
             "IDs": [3101, 3102, 3103, 3104, 3105],
@@ -123,30 +100,13 @@
             "isVisible": true,
             "value": "/ProformaInvoice"
         },{
-            "name": "Proforma Invoice-Dcare",
-            "icon": "save",
-            "IDs": [1000],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/dcare-pi"
-        },{
             "name": "Invoice",
             "icon": "layers",
             "IDs": [3001, 3002, 3003, 3004, 3005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-			 "value": "/invoice"
-           
-        },{
-            "name": "Invoice-Dcare",
-            "icon": "layers",
-            "IDs": [1000],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-			 "value": "/dcare-invoice"
+            "value": "/invoice"
         },{
             "name": "DID Invoice",
             "icon": "triangle",
@@ -166,19 +126,11 @@
         },{
             "name": "Reseller Payment",
             "icon": "framer",
-            "IDs": [2077],
+            "IDs": [2036],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
             "value": "/resellerPayment"
-        },{
-            "name": "Recurring Reseller",
-            "icon": "image",
-            "IDs": [2077],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/recurringReseller"
         },{
             "name": "Recurring Date Update",
             "icon": "slack",
@@ -220,12 +172,10 @@
             "isVisible": true,
             "value": "/prepaidnote"
         }
-       
-        
       
     ],
     "isVisible": true,
-    "value": "/bing--"
+    "value": "/TransactionApproval"
 },{
     "name": "Stock",
     "icon":"database",
@@ -264,17 +214,9 @@
 				"subchild": [],
 				"isVisible": true,
 				"value": "/CurrentStockMaster"
-				},	{
-				"name": "Rate Catalog Master",
-				"icon": "box",
-				"IDs": [2057],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/rateCatalog"
 				}
 				
-							],
+				],
             "isVisible": true,
             "value": "/stockproductmaster1"
         },{
@@ -309,8 +251,7 @@
 				}],
             "isVisible": true,
 		"value": "/stockDIDMaster1"
-		}
-        ,{
+		},{
             "name": "Stock Inventory Entry",
             "icon": "anchor",
             "IDs": [2058],
@@ -327,10 +268,11 @@
             "subchild": [],
             "isVisible": true,
             "value": "/didStock"
-        },{
+        }
+      ,{
             "name": "DID Number Catalog",
             "icon": "watch",
-            "IDs": [7077],
+            "IDs": [7007],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -343,15 +285,15 @@
             "subchild": [],
             "isVisible": true,
             "value": "/Currentstock"
-        } ,{
-            "name": "Rate Catalog",
-            "icon": "clock",
-            "IDs": [7007],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/RateCatalog"
-        } ,{
+        },{
+				"name": "Rate Catalog Master",
+				"icon": "box",
+				"IDs": [2057],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/rateCatalog"
+				},{
             "name": "RMA Issue",
             "icon": "cpu",
             "IDs": [7007],
@@ -362,186 +304,90 @@
         }
     ],
     "isVisible": true,
-    "value": "/stock1"
-}, {
-    "name": "Customer Project",
-    "icon":"layers",
+    "value": "/ProductCategory"
+},
+{
+    "name": "VOIP Switch",
+    "icon":"unlock",
     "isActive": false,
     "menuId":5,
     "IDs": [6071, 6072, 6073, 6074, 6075],
     "Type": "Main Menu",
     "children": [{
-            "name": "Customer Project",
-            "icon": "image",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/customerProject"
-        }
-       
-
-    ],
-    "isVisible": true,
-    "value": "/customerProject"
-},
-{
-    "name": "HR",
-    "icon":"users",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [2092,2093,2079,9951,9952,9953,9954,9955],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Leave Request",
-            "icon": "folder-plus",
-            "IDs": [2092],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/leaveRequestFinal"
-        },{
-            "name": "Leave Approval",
-            "icon": "folder-plus",
-            "IDs": [2092],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/leaveapproval"
-        },{
-            "name": "Designation Type Mgmt",
-            "icon": "user-check",
-            "IDs": [2079],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/HRDesgTyMgmt"
-        },{
-            "name": "User Group Mgmt",
-            "icon": "user-plus",
-            "IDs": [2079],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/HRuserGroup"
-        },{
-            "name": "User Mgmt",
-            "icon": "user-x",
-            "IDs": [2079],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/HRUserMgmt"
-        },{
-            "name": "Salary Entry",
-            "icon": "dollar-sign",
-            "IDs": [9951,9952,9953,9954,9955],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/salaryEntry"
-        },{
-            "name": "Contribution Master",
-            "icon": "anchor",
-            "IDs": [2093],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contributionmaster"
-        },{
-            "name": "Attendance Report",
-            "icon": "figma",
-            "IDs": [2092],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/attendance_report"
-        },{
-            "name": "Staff Permission Report",
-            "icon": "cast",
-            "IDs": [2092],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/staff_permiss_report"
-        },{
-            "name": "Monthly Contribution",
-            "icon": "columns",
-            "IDs": [2093],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/monthlycontribution"
-        },{
-            "name": "Current Payslip",
-            "icon": "grid",
-            "IDs": [2093],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/currentPayslip"
-        } 
-    ],
-    "isVisible": true,
-    "value": "/crm--"
-},{
-    "name": "VOIP Switch",
-    "icon":"unlock",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [6114,6124,6134],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Credit Manager",
+            "name": "Credit Manager - SG New",
             "icon": "check-square",
             "IDs": [6114],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
             "value": "/creditmanager"
-        }],
-    "isVisible": true,
-    "value": "/voiiipsw"
-}, 
-{
-   "name": "Masters",
-   "icon":"sunrise",
-   "isActive": false,
-   "menuId":5,
-   "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
-   "Type": "Main Menu",
-   "children": [{
-           "name": "Customer Management",
-           "icon": "grid",
-           "IDs": [5001, 5002, 5003, 5004, 5005],
-           "Type": "Sub Menu",
-           "subchild": [],
-           "isVisible": true,
-           "value": "/customernewall"
-       },
-       {
-           "name": "Reseller Management",
-           "icon": "printer",
-           "IDs": [5001, 5002, 5003, 5004, 5005],
-           "Type": "Sub Menu",
-           "subchild": [],
-           "isVisible": true,
-           "value": "/ResellerManagement"
-       },
-       {
-           "name": "Calendar Template",
-           "icon": "box",
-           "IDs": [5001, 5002, 5003, 5004, 5005],
-           "Type": "Sub Menu",
-           "subchild": [],
-           "isVisible": true,
-           "value": "/calendarTemplate"
-       }
-      
+        }
+       
 
-   ],
-   "isVisible": true,
-   "value": "/custom--"
+    ],
+    "isVisible": true,
+    "value": "/creditmanager"
+},{
+    "name": "Call4Tel",
+    "icon":"cloud",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "NX32 Serial Number",
+            "icon": "cloud",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/nx32"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/nx32"
+},
+ {
+    "name": "Masters",
+    "icon":"sunrise",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Customer Master",
+            "icon": "users",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/customernewall"
+        },
+        {
+            "name": "Reseller Management",
+            "icon": "printer",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/ResellerManagement"
+        },
+        {
+            "name": "Calendar Template",
+            "icon": "box",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/calendarTemplate"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/customernewall"
 }, {
     "name": "Contract",
     "icon": "slack",
@@ -587,7 +433,7 @@
         }
     ],
     "isVisible": true,
-    "value": "/contract1"
+    "value": "/contract"
 },{
     "name": "Reports",
     "icon":"pie-chart",
@@ -622,7 +468,7 @@
         },{
             "name": "SST Report-Cal4Care SDN BHD",
             "icon": "gift",
-            "IDs": [1135],
+            "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -633,8 +479,9 @@
 
     ],
     "isVisible": true,
-    "value": "/reports--"
-},{
+    "value": "/invoiceReportsOld"
+},
+{
     "name": "Tools",
     "icon":"tool",
     "isActive": false,
@@ -650,13 +497,13 @@
             "isVisible": true,
             "value": "/guru"
         },{
-            "name": "VS Provisional",
-            "icon": "user-check",
-            "IDs": [9961,9962,9963,9964,9965],
+            "name": "Customer Project",
+            "icon": "image",
+            "IDs": [6041, 6042, 6043, 6044, 6045],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/vsprovision"
+            "value": "/customerProject"
         },{
             "name": "Public Task",
             "icon": "users",
@@ -674,59 +521,12 @@
             "isVisible": true,
             "value": "/erp-app-permission"
         }
-    ],
-    "isVisible": true,
-    "value": "/reports--"
-}, {
-    "name": "Call4Tel",
-    "icon":"cloud",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "NX32 Serial Number",
-            "icon": "cloud",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/nx32"
-        }
+       
        
 
     ],
     "isVisible": true,
-    "value": "/cal4tel--"
-},{
-    "name": "Mconnect",
-    "icon":"phone-call",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "MC Licence Key Management",
-            "icon": "pen-tool",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/mconnectlicensekeyMgmt"
-        },{
-            "name": "MC Licence Key Management-vig",
-            "icon": "pen-tool",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/myVoipLicenceKey"
-        }
-       
-
-    ],
-    "isVisible": true,
-    "value": "/cal4tel--"
+    "value": "/guru"
 },
 {
     "name": "3CX",
@@ -747,25 +547,24 @@
         }
     ],
     "isVisible": true,
-    "value": "/LicenseCreditComponent"
-},{
+    "value": "/licenseCredit"
+},
+ {
     "name": "Settings",
     "icon":"settings",
     "isActive": false,
     "menuId":5,
-    "IDs": [6115],
+    "IDs": [],
     "Type": "Main Menu",
     "children": [{
             "name": "Profile Details",
             "icon": "grid",
-            "IDs": [6115],
+            "IDs": [],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
             "value": "/profiledetails"
         }
-       
-
     ],
     "isVisible": true,
     "value": "/profiledetails"

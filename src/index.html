@@ -69,7 +69,15 @@
     //     }
     //   });
     // });
-
+$(document).ready(function () {
+  // Listen for the hidden.bs.modal event globally
+  $(document).on('hidden.bs.modal', function () {
+    // Remove all modal backdrops
+    $('.modal-backdrop').remove();
+    // Remove the modal-open class from the body
+    $('body').removeClass('modal-open');
+  });
+});
   </script>
 
 </body>

@@ -254,7 +254,7 @@
                                 class="fa fa-bars"></i></button>
 
                           </div>
-                          <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                          <div class="modal fade"  id="ActionId{{i}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ActionId" role="document"
                               style="max-width: 1000px;">
@@ -636,7 +636,7 @@
         <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">View Customer
           Details </h2>
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close"  (click)="closeModalView()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -787,7 +787,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
+        <button type="button" class="btn btn-dark" (click)="closeModalView()">
           Cancel
         </button>
 

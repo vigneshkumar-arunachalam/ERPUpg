@@ -401,6 +401,7 @@ input.form-control {
 }
 .email-cc-template{
   height: 150px;
+  width:400px;
   overflow-y: scroll;
 }
 
@@ -667,7 +668,8 @@ label {
 .dropdown__item:hover .hide{display: block;}
 .dropdown__item:hover .show{display: none;}
 
-#callFormId_CP .modal-dialog,#licenceKeyDetFormId_CP .modal-dialog{
+#callFormId_CP .modal-dialog,#licenceKeyDetFormId_CP .modal-dialog,
+#addCustPrjctMgmt .modal-dialog,#addFirstCustPrjctMgmt .modal-dialog{
   min-width: 85%;
 }
 
@@ -907,16 +909,18 @@ tr:hover td {
 }
 
 .name-col {
-  flex: 1; /* takes remaining space */
-  font-weight: 500;
-  font-family: Arial, sans-serif;
+  flex: 0.2; /* takes remaining space */
+  font-weight: 800;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
   text-align: left;
+  color: #100597;
+  background-color: #f2e8ea;
   display: flex;
   align-items: center;
 }
 
 .icon-col {
-  flex: 0 0 140px; /* fixed size for icons */
+  flex: 0 0 40px; /* fixed size for icons */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -943,4 +947,31 @@ tr:hover td {
 
 .icon-col i:hover {
   transform: scale(1.2);
+}
+
+
+.long-text {
+  max-width: 300px; /* adjust width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: top;
+}
+.backup{
+  cursor: pointer;
+  font-size: large;
+  color:#0450a2;
+}
+
+.subj{
+   cursor: pointer;
+  font-size: large;
+  color:#f60404;
+}
+
+
+#addFirstCustPrjctMgmt label,#CustPjctMgmtEdit label{
+    font-weight: 500;
+    color: #051b5a !important;
 }

@@ -393,7 +393,7 @@ export class DupInvoiceComponent implements OnInit {
     });
 
 
-
+ $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
 
@@ -1730,10 +1730,11 @@ export class DupInvoiceComponent implements OnInit {
 
     }
 
-
+ $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
 
   }
+  
 
   duplicatePIGo(id: any, i: any, didState: any) {
     $("#ActionIdInvDup" + i).modal("hide");
@@ -1762,7 +1763,7 @@ export class DupInvoiceComponent implements OnInit {
 
     }
 
-
+ $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
   }
   clearSearch() {

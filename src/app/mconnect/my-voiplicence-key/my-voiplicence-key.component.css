@@ -158,7 +158,8 @@ i.fa.fa-bars {
 #customerLicenseForm_Gr label,
 #setKeyPeriodSerialNo_Gr label,
 #searchProductCategoryFormId label,
-#searchPettyCashFormId label {
+#searchPettyCashFormId label,
+#myVoipLicenseNote label {
   font-weight: 500;
   color: #051b5a !important;
 }
@@ -315,7 +316,8 @@ select {
 
 .red-row {
   background-color: rgb(252, 255, 164);
-  color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
+  color: rgb(6, 6, 6);
+  /* Optional: Adjust text color for better contrast */
 }
 
 
@@ -333,19 +335,29 @@ select {
 }
 
 .card-body {
-  padding: 0!important;
+  padding: 0 !important;
 
 }
-.contents-section{
+
+/* .contents-section {
   overflow: scroll !important;
   height: 600px;
-  width: 1600px;
+  width: 1400px;
   background: #fff;
-}
+} */
 
 #add_licenceKeyGr .modal-dialog {
   max-width: 75%;
 }
+
 .userDatatable table td {
   white-space: pre-line !important;
 }
+
+
+ .scrollzz{
+    overflow-y: scroll !important;
+    height:560px;
+    overflow-x: scroll !important;
+    width:1380px;
+  }

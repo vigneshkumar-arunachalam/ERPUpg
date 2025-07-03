@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl,FormBuilder,Validators  } from '@angular/forms';
 import listPlugin from '@fullcalendar/list';
 import { ServerService } from '../../services/server.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -43,7 +43,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,listMonth'
+      right: 'dayGridMonth'
     },
     customButtons: {
       prev: {
@@ -64,15 +64,20 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
           const calendarApi = this.calendarComponent.getApi();
           calendarApi.next();
           // this.nextMonth();
+           this.getLeaveRequestDetails();
+        this.getHolidayList();
         }
       },
       today: {
         text: 'today',
         click: () => {
           console.log('Today button clicked');
+            const calendarApi = this.calendarComponent.getApi();
+            calendarApi.today(); // Move calendar to today's date
         }
       }
     },
+    
     datesSet: this.onDatesSet.bind(this),
   };
   showModal = false;
@@ -104,7 +109,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   billerId: any;
   leaveCategory: any;
   LeaveType: any;
-  leaveRequestForm: any;
+  leaveRequestForm: FormGroup;
   availableALCurrentMonth: any;
   TotalAL: any;
   balanceAL: any;
@@ -139,8 +144,11 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   assinedYear: number;
   durationTypeValue:any;
   timeStatus:boolean=false;
-
-  constructor(private cd: ChangeDetectorRef,private spinner: NgxSpinnerService, private http: HttpClient, private serverService: ServerService, private datePipe: DatePipe) {
+  editLeaveForm: FormGroup;
+   editTimeStatus: boolean = false;
+  editMedicalCertRequired: boolean = false;
+leaveAttachmentUrl: string = '';
+  constructor(private cd: ChangeDetectorRef,private fb: FormBuilder,private spinner: NgxSpinnerService, private http: HttpClient, private serverService: ServerService, private datePipe: DatePipe) {
     this.taskForm = new FormGroup({
       taskStatus: new FormControl(''),
       notifyState: new FormControl(false),
@@ -148,6 +156,16 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       reason: new FormControl('')
     });
     this.today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+     this.editLeaveForm = this.fb.group({
+      startDate: [''],
+      endDate: [''],
+      leaveType: [''],
+      durationType: [''],
+      startTime: [''],
+      endTime: [''],
+      leaveReason: ['']
+    });
   }
  
   ngAfterViewInit(): void {
@@ -163,19 +181,22 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    $("#holidayFormId").modal("show");
     this.currentYearValue = new Date().getFullYear();
     console.log("this.currentYearValue", this.currentYearValue);
     this.assinedYear=this.currentYearValue; 
-    this.leaveRequestForm = new FormGroup({
-      'leaveType': new FormControl(null),
-      'durationType': new FormControl(null),
-      'startDate': new FormControl(this.today),
-      'endDate': new FormControl(this.today),
-      'startTime': new FormControl(null),
-      'endTime': new FormControl(null),
-      'medicalcert': new FormControl(null),
-      'leaveReason': new FormControl(null),
+    this.leaveRequestForm = this.fb.group({
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required],
+      leaveType: [null, Validators.required],
+      durationType: [null, Validators.required],
+      startTime: [''],
+      endTime: [''],
+      leaveReason: ['', Validators.required],
+      medicalcert: [null]
     });
+
+
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
    // this.user_ids = 169;
    // this.getLeaveHolidayDetails();
@@ -192,19 +213,19 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
 
   }
-  fetchEvents() {
-    this.http.get<any>('YOUR_API_URL').subscribe(response => {
-      if (response.leaveCount && Array.isArray(response.leaveCount)) {
-        this.calendarOptions.events = response.leaveCount.map((item: any) => ({
-          title: `${item.Subject} (${item.userName})`, // Example title format
-          start: this.formatDate(item.start_dt_time), // Ensure proper date format
-          end: this.formatDate(item.end_dt_time),
-          classNames: ['leave-event'], // Add custom styling class if needed
-          backgroundColor: item.colorCodes // Apply color from API
-        }));
-      }
-    });
-  }
+  // fetchEvents() {
+  //   this.http.get<any>('YOUR_API_URL').subscribe(response => {
+  //     if (response.leaveCount && Array.isArray(response.leaveCount)) {
+  //       this.calendarOptions.events = response.leaveCount.map((item: any) => ({
+  //         title: `${item.Subject} (${item.userName})`, // Example title format
+  //         start: this.formatDate(item.start_dt_time), // Ensure proper date format
+  //         end: this.formatDate(item.end_dt_time),
+  //         classNames: ['leave-event'], // Add custom styling class if needed
+  //         backgroundColor: item.colorCodes // Apply color from API
+  //       }));
+  //     }
+  //   });
+  // }
   durationTypeChange(event:any){
     this.durationTypeValue=event.target.value;
     console.log("this.durationTypeValue",this.durationTypeValue);
@@ -215,6 +236,41 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     }
 
   }
+durationTypeChange1(event: any) {
+ this.durationTypeValue=event.target.value;
+  console.log("this.durationTypeValue", this.durationTypeValue);
+
+  if (this.durationTypeValue == 1) {
+    this.timeStatus = true;
+  this.leaveRequestForm.get('startTime')?.updateValueAndValidity();
+  this.leaveRequestForm.get('endTime')?.updateValueAndValidity();
+    // ✅ Set validators for time
+    this.leaveRequestForm.get('startTime')?.setValidators(Validators.required);
+    this.leaveRequestForm.get('endTime')?.setValidators(Validators.required);
+
+    // ❌ Remove validator for medical cert
+    this.leaveRequestForm.get('medicalcert')?.clearValidators();
+    this.leaveRequestForm.get('medicalcert')?.reset();
+
+  } else {
+    // Full Day – Show medical certificate if needed
+    this.timeStatus = false;
+
+    // ✅ Set validator for medical cert
+    //this.leaveRequestForm.get('medicalcert')?.setValidators(Validators.required);
+
+
+  }
+}
+ leavetypechange(event: any) {
+    this.medicalcert = event.target.value;
+
+    //  if (this.medicalcert == 1) {
+    //   this.leaveRequestForm.get('medicalcert')?.setValidators(Validators.required);
+    //  }
+
+  }
+
   prevMonth(calendar: any) {
     calendar.getApi().prev();
   }
@@ -255,10 +311,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       return '';
     }
   }
-  leavetypechange(event: any) {
-    this.medicalcert = event.target.value;
-
-  }
+ 
   createLeave1(){
     this.spinner.show();
     let api_req: any = new Object();
@@ -355,7 +408,17 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
 
   }
-  
+  onFileChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const files: FileList = input.files;
+    const filesArray = Array.from(files);
+    this.leaveRequestForm.patchValue({
+      medicalcert: filesArray
+    });
+  }
+}
+
   adjustTime() {
     let timeValue = this.leaveRequestForm.value.startTime;
     if (!timeValue) return;
@@ -371,12 +434,21 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     // Update the form value with the adjusted time
     this.leaveRequestForm.patchValue({ startTime: date.toISOString().slice(0, 16) });
   }
-  createLeave() {
+
+ createLeave() {
+    if (this.leaveRequestForm.invalid) {
+      this.leaveRequestForm.markAllAsTouched();
+      return;
+    }
+
+    // Proceed with saving
+    console.log(this.leaveRequestForm.value);
     console.log("this.leaveRequestForm.value.startTime",this.leaveRequestForm.value.startTime);
     console.log("this.leaveRequestForm.value.endTime",this.leaveRequestForm.value.endTime);
     this.spinner.show();
 
     const formData = new FormData();
+    const files: File[] = this.leaveRequestForm.get('medicalcert').value;
     formData.append('user_id', localStorage.getItem('erp_c4c_user_id'));
     formData.append('api_url', 'hr/createLeave');
     formData.append('api_type', 'web');
@@ -384,19 +456,24 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     formData.append('action', 'hr/createLeave');
    if(this.durationTypeValue!=1){
     formData.append('StartTime', this.startLeave);
-    formData.append('EndTime', this.EndDate);
+   formData.append('EndTime', this.leaveRequestForm.value.endDate);
     
-    formData.append('start_time', '00:00');
-    formData.append('end_time', '00:00');
+    formData.append('start_time', this.startLeave);
+    formData.append('end_time', this.leaveRequestForm.value.endDate);
 
     formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
     formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
     formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
+    formData.append('product_img', this.leaveRequestForm.value.medicalcert);
+     if (files && files.length > 0) {
+    files.forEach(file => {
+      formData.append('product_img[]', file);
+    });
+  }
     formData.append('StartTime_value', this.startLeave);
    }else{
     
-    
-    formData.append('StartTime', this.leaveRequestForm.value.startTime);
+     formData.append('StartTime', this.leaveRequestForm.value.startTime);
     formData.append('EndTime', this.leaveRequestForm.value.endTime);
      
     formData.append('start_time', this.startLeave);
@@ -406,6 +483,11 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
     formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
     formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
+     if (files && files.length > 0) {
+    files.forEach(file => {
+      formData.append('product_img[]', file);
+    });
+  }
     formData.append('StartTime_value', this.startLeave);
 
    }
@@ -422,39 +504,48 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
       contentType: false,
       processData: false,
       data: formData,
+      
       success: (result: any) => {
         this.spinner.hide();
         if (result.status === true) {
       
           // this.contractList({});
           $("#leaveRequestFormId").modal("hide");
-          Swal.fire({
-            icon: 'success',
-            title: 'Leave has been Saved',
-            showConfirmButton: false,
-            timer: 1200,
-          });
+
+        iziToast.success({
+          message: "Leave has been Saved",
+          position: 'topRight'
+        });
+          this.leaveRequestForm.reset(); 
+           this.getLeaveRequestDetails();
         }else if(result.status === false){
+         
           this.spinner.hide();
-            iziToast.error({
-            title: 'Error,Check Missing Field Values',
-            message: 'Leave not Saved !',
-            position:'topRight',
+          $("#leaveRequestFormId").modal("hide");
+           const errorMessage = result.message || "Leave not Saved!";
+          console.log(errorMessage);
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: 'topRight'
           });
+          this.leaveRequestForm.reset();
         }
        
       },
       error: (err: any) => {
         this.spinner.hide();
         console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'An error occurred while saving the contract.',
-        });
+         iziToast.error({
+            title: 'An error occurred while saving the contract.',
+            position:'topRight',
+          });
+       this.leaveRequestForm.reset();
       }
     });
   }
+
+
   changeCountry(billerid:any){
     this.countryBillerID=billerid;
     console.log("this.countryBillerID",this.countryBillerID);
@@ -462,6 +553,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
   }
   handleDateSelect(selectInfo: any) {
+    this.leaveRequestForm.reset();
     console.log("selectInfo",selectInfo);
     
    // alert("hi")
@@ -544,24 +636,21 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     }
 
 
-
-    
-
-    
-
   }
   handleEventClick(arg: any) {
-  
+    const leaveId = arg.event.extendedProps.LeaveId;
+  console.log("Clicked Leave ID:", leaveId);
     // console.log("arg",arg)
  
   //  alert("hello-bottom-last")
-    $('#leaveRequestFormId-2').modal('show');
+    $('#editLeaveRequestFormId').modal('show');
     const currentDate = arg.event.start;
     console.log('Clicked event date:', currentDate);
     const formattedDate1 = currentDate?.toLocaleDateString();
     console.log('Formatted date:', formattedDate1);
     const formattedDate = currentDate ? currentDate.toISOString().split('T')[0] : '';
-    console.log("currentDate", formattedDate)
+    console.log("currentDate", formattedDate);
+   
     // alert(`Event: ${arg.event.title}`);
     this.selectedEvent = arg.event;
 
@@ -574,40 +663,73 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     let api_req: any = new Object();
     let sendMet_req: any = new Object();
     api_req.moduleType = "hr";
-    api_req.api_url = "hr/currenctDayLeaveHR";
+    api_req.api_url = "hr/getLeaveData";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    sendMet_req.action = "hr/currenctDayLeaveHR";
+    sendMet_req.action = "hr/getLeaveData";
 
     sendMet_req.user_id = this.user_ids;
-    sendMet_req.date = formattedDate1;
+    sendMet_req.LeaveId = leaveId;
     api_req.element_data = sendMet_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response) {
-        this.leaveDataList = response.leaveData;
+        this.leaveDataList = response.data;
+         this.editMedicalCertRequired = this.leaveDataList.LeaveTypeName === 'Medical Leave';
+         this.leaveAttachmentUrl = this.leaveDataList.leave_attachment_filename || '';
+         const isTimeLeave = /^\d{2}:\d{2}$/.test(this.leaveDataList.StartTime) &&
+                          /^\d{2}:\d{2}$/.test(this.leaveDataList.EndTime);
+         this.editTimeStatus = isTimeLeave;
+      
+        this.editLeaveForm.patchValue({
+          startDate: this.extractDate(this.leaveDataList.start_time),
+          endDate: this.extractDate(this.leaveDataList.end_time),
+          subject: this.leaveDataList.Subject,
+          startTime: isTimeLeave ? this.leaveDataList.StartTime : '',
+          endTime: isTimeLeave ? this.leaveDataList.EndTime : '',
+          leaveReason: this.leaveDataList.LeaveDesc,
+          
+        });
+      } else {
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
       }
-      else {
-
-        // iziToast.error({
-        //   message: "Data Not Found",
-        //   position: 'topRight'
-        // });
-
-      }
-    }), (error: any) => {
+    }, (error: any) => {
       iziToast.error({
-        message: "Sorry, some server issue occur. Please contact admin",
+        message: "Sorry, some server issue occurred. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
-    }
-
-
-
-
+      console.error("API error", error);
+    });
 
   }
+  extractDate(value: string): string | null {
+  // If it's already a date format, return it directly
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return value;
+  }
+
+  // If it's time (like "14:15") or empty/null
+  if (/^\d{2}:\d{2}$/.test(value) || !value) {
+    return null; // Or return today's date if fallback is needed
+  }
+
+  // If it's a full ISO datetime string, split and return only the date part
+  if (value.includes("T")) {
+    return value.split("T")[0];
+  }
+
+  // Try parsing manually in case of other formats
+  const date = new Date(value);
+  if (!isNaN(date.getTime())) {
+    return date.toISOString().split("T")[0];
+  }
+
+  return null;
+}
+
   preventEmptyDateClick(arg: any) {
     return false;
     //  console.log("arg",arg.dateStr);
@@ -702,6 +824,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
             let leave = sortedLeaves[i];
             let start = this.formatDate1(leave.start_dt_time);
             let end = this.formatDate1(leave.end_dt_time);
+        
             
             if (currentLeave && new Date(start).getTime() === new Date(currentLeave.end).getTime()) {
               // Extend the existing event if it's consecutive
@@ -714,7 +837,11 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
                 start: start,
                 end: end, // Ensure continuous mapping
                 backgroundColor: leave.colorCodes || '#B8860B',
-                classNames: ['leave-event']
+                classNames: ['leave-event'],
+                display: 'block',
+                 extendedProps: {
+                  LeaveId: leave.LeaveId //  include this!
+                }
               };
             }
           }
@@ -759,7 +886,7 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
 
   }
   getHolidayList() {
-    $("#holidayFormId").modal("show");
+    //$("#holidayFormId").modal("show");
 
 
     let api_req: any = new Object();

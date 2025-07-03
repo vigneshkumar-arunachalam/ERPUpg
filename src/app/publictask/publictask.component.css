@@ -137,4 +137,27 @@ th, td {
   border: 1px solid #ddd;
   padding: 5px 10px;
 }
-  
+
+
+
+tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+thead{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+table{
+  max-height: 300px;
+    overflow-y: scroll;
+    display: block;
+    width: 100%;
+}
+.popup-header{padding: 20px 20px 0;}

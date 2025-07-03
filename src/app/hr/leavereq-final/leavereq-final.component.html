@@ -46,257 +46,293 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-
-          <table cellpadding="10" class="table table-striped">
-            <thead class="thead-dark">
-
-              <tr>
-
-                <th class="title_data">Leave Type
-                </th>
-                <th class="title_data"> Total Leave
-                </th>
-                <th class="title_data"> Consumed Leave
-                </th>
-
-                <th class="title_data">Balance Leave</th>
-                <th class="title_data">Upcoming Carry Forward - 2026</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              <tr>
-
-                <td class="title_data" *ngIf="this.billerId!=29">Annual Leave<br> (AL + Carry Forward)
-                  <small><b>{{this.annualLeave}}+{{this.carryForward}}</b></small>
-                </td>
-                <td class="title_data" *ngIf="this.billerId==29">Annual Leave<br> (AL + Carry Forward + SIL)
-                  <small><b>{{this.annualLeave}}+{{this.carryForward}}+{{this.silLeave}}</b></small>
-                </td>
-                <td>{{this.annualLeave}} Days</td>
-                <td>{{this.consumedAnnualLeave}} Days</td>
-                <td>{{this.balanceAnnualLeave}} Days</td>
-                <td>{{ this.upcomingCarryForwadLeave}} Days</td>
-
-              </tr>
-              <tr>
-
-                <td class="title_data">Medical Leave</td>
-                <td>{{ this.MedicalLeave}} Days</td>
-                <td>{{this.consumedMedicalLeave}}Days</td>
-                <td>{{this.balanceMedicalLeave}} Days</td>
-                <td>0 Days</td>
-              </tr>
-
-            </tbody>
-          </table>
-          <table cellpadding="10" style="border-collapse:collapse" *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
-            <thead>
-
-              <tr>
-                <td colspan="5">
-                  <pre>    Hours calculations:
-Total consumed leaves = 11.9 days; //11 days 9 hours
-//In hours calculation only take floating value for calc so leaveHours is 0.9 hrs;
-(Ex.1)11.9 -&gt; 0.9 hrs (Ex.2) 10.5 -&gt; 0.5 hrs (Ex.3) 8.3 -&gt; 0.3 hrs
-Formula:			
-Condition 1: leaveHours &gt;= 0.80 -&gt; 1 //Ex. leaveHours = 0.9 -&gt; become 1 day         
-Condition 2:  0.8 &gt; leaveHours &gt;= 0.4 -&gt; 0.5 //Ex. leaveHours = 0.6 -&gt; become 0.5 hrs        
-Condition 3:  0.4 &gt; leaveHours  -&gt; 0.0 //Ex. leaveHours = 0.3 -&gt; become 0.0 hrs
-Example: 
-consumed leave = 10.7 days;//with hours added leave from Database
-Hours = 0.7 // in consumed leave
-So it satifies condition 2 then hours become 0.5
-Final consumed leave = 10 days + 0.5 hrs = 10.5 //is displayed below 
-</pre>
-                </td>
-                <td colspan="6">
-                  <pre>    Example: <span style="color:red">(For those who are continuing their job for the whole year)</span>	
-carry forward = 1 day;
-Total allocated leave = 13 days; 
-(Annual leave + carry forward)(i.e)12+1
-consumed leave = 10.5 days;//with hours added leave 
-balance leave = 13 - 10.5 ; //2.5 days
-This balance leave become next year carry forward.
-Carry forward calculation:
-balance leave = 2.5 days;
-balance leave &gt;= 4 then the carry forward is 4.
-balance leave &lt; 4 then the carry forward is balance leave . (i.e)3.5&lt;4 =&gt; 3.5  
-<span style="color:red">Note : When there is a termination / resignation the pro rate will be applied.</span>	
-</pre>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4">
-                  <pre>    Leave calculated Formulas:
-AU - Allocated for User, CF -Carry Forward, LCF - Last year CF,
-PL - Personal Leave, ML - Medical Leave   
-</pre>
-                </td>
-                <td colspan="4">
-                  <pre>        Total Leave:
-Personal Leave -&gt; AU, Medical Leave  -&gt; AU,
-Carry Forward -&gt; LCF, Total Days -&gt; PL + CF 
-</pre>
-                </td>
-
-                <td colspan="3">
-                  <pre>        Balance Leave 2025:
-Personal Leave -&gt; Total days - consumed PL
-Medical Leave  -&gt; Total ML - consumed ML     
-</pre>
-                </td>
-              </tr>
-              <tr>
-                <th class="title_data">Leave Type
-                </th>
-                <th class="title_data" colspan="4"> Total Leave
-                </th>
-                <th class="title_data" colspan="3"> Consumed Leave 2025
-                </th>
-                <th class="title_data" colspan="3">Balance Leave 2025</th>
-
-
-
-              </tr>
-              <tr>
-                <th class="title_data">&nbsp;</th>
-                <th class="title_data" style="width:80px">Personal Leave</th>
-                <th class="title_data" style="width:80px">Medical Leave</th>
-                <th class="title_data" style="width:80px">Carry Forward</th>
-                <th class="title_data" style="width:80px">Total Days</th>
-                <th class="title_data">Personal Leave</th>
-                <th class="title_data">Medical Leave</th>
-                <th class="title_data">Unpaid Leave</th>
-
-                <th class="title_data">Personal Leave</th>
-                <th class="title_data">Medical Leave</th>
-
-                <th class="title_data">Next Year - Carry Forward</th>
-
-
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr *ngFor="let list of userLeaveDatas">
-                <td class="title_data">{{list.name}}</td>
-                <td>{{list.user_personal_leave}} Days </td>
-                <td>{{list.user_medical_leave}} Days</td>
-                <td>{{list.carry_forward}} Days</td>
-                <td>{{list.total_leave}} Days</td>
-
-                <td>{{list.user_consumed_personal_leave}} Days </td>
-                <td>{{list.user_consumed_medical_leave}} Days </td>
-                <td>{{list.user_consumed_unpaid_leave}}</td>
-                <td>{{list.balance_personal_leave}} Days</td>
-
-                <td>{{list.balance_medical_leave}} Days</td>
-
-                <td>{{list.carry_forward_nextYear}} Days</td>
-
-
-              </tr>
-
-
-
-
-
-
-            </tbody>
-          </table>
-
-          <div class="leave_request_tab_data">
-
-
-            <div class="tab-content" id="myTabContent">
-
-              <div id="CurrentYear" class="tab-pane fade show active" role="tabpanel" aria-labelledby="CurrentYear-tab">
-                <br>
-                <ul class="nav nav-pills" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear"
-                      (click)="changeYear(this.currentYearValue-1)" role="tab" aria-controls="CurrentYear"
-                      aria-selected="true"> {{this.currentYearValue-1}}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#CurrentYear"
-                      (click)="changeYear(this.currentYearValue)" role="tab" aria-controls="CurrentYear"
-                      aria-selected="false">{{this.currentYearValue}}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear"
-                      (click)="changeYear(this.currentYearValue+1)" role="tab" aria-controls="CurrentYear"
-                      aria-selected="false">{{this.currentYearValue+1}}</a>
-                  </li>
-
-
-                </ul>
-                <br>
-                <ul class="nav nav-pills" role="tablist" *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
-                  <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab"
-                      aria-controls="countryListSGid" (click)="changeCountry(countryListSGid)" aria-selected="true">
-                      SG</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
-                      aria-controls="countryListMYid" (click)="changeCountry(countryListMYid)" aria-selected="true">
-                      MY</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
-                      aria-controls="countryListINDid" (click)="changeCountry(countryListINDid)" aria-selected="true">
-                      IND</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
-                      aria-controls="countryListPHid" (click)="changeCountry(countryListPHid)" aria-selected="true">
-                      PH</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
-                      aria-controls="countryListUSAid" (click)="changeCountry(countryListUSAid)" aria-selected="true">
-                      USA</a>
-                  </li>
-
-
-
-
-                </ul>
-
-                <table cellpadding="10" style="border-collapse:collapse;width:100%;align-items: center;"
-                  class="table table-striped">
+        <div id="accordionleave" class="accordion">
+          <div class="card ng-star-inserted">
+            <div class="card-header" id="Leave_cal1">
+              <h2 class="mb-0"><button type="button" aria-expanded="true" class="btn btn-link" data-toggle="collapse"
+                  data-target="#leavetype" aria-controls="leavetype">
+                  Leave Type Table </button></h2>
+            </div>
+            <div data-parent="#accordionleave" class="collapse show" id="leavetype" aria-labelledby="Leave_cal1">
+              <div class="card-body">
+                <table cellpadding="10" class="table table-striped">
                   <thead class="thead-dark">
                     <tr>
-                      <th class="title_data"> Date </th>
-                      <th class="title_data"> Description </th>
+                      <th class="title_data">Leave Type
+                      </th>
+                      <th class="title_data"> Total Leave
+                      </th>
+                      <th class="title_data"> Consumed Leave
+                      </th>
+                      <th class="title_data">Balance Leave</th>
+                      <th class="title_data">Upcoming Carry Forward - 2026</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of holidaysArray">
-                      <td>{{item.date}}</td>
-                      <td>{{item.description}}<br></td>
+                    <tr>
+                      <td class="title_data" *ngIf="this.billerId!=29">Annual Leave<br> (AL + Carry Forward)
+                        <small><b>{{this.annualLeave}}+{{this.carryForward}}</b></small>
+                      </td>
+                      <td class="title_data" *ngIf="this.billerId==29">Annual Leave<br> (AL + Carry Forward + SIL)
+                        <small><b>{{this.annualLeave}}+{{this.carryForward}}+{{this.silLeave}}</b></small>
+                      </td>
+                      <td>{{this.annualLeave}} Days</td>
+                      <td>{{this.consumedAnnualLeave}} Days</td>
+                      <td>{{this.balanceAnnualLeave}} Days</td>
+                      <td>{{ this.upcomingCarryForwadLeave}} Days</td>
                     </tr>
-                    <tr *ngIf="holidaysArray && holidaysArray.length === 0">
-                      <td colspan="2">No Record Found</td>
+                    <tr>
+                      <td class="title_data">Medical Leave</td>
+                      <td>{{ this.MedicalLeave}} Days</td>
+                      <td>{{this.consumedMedicalLeave}}Days</td>
+                      <td>{{this.balanceMedicalLeave}} Days</td>
+                      <td>0 Days</td>
                     </tr>
 
                   </tbody>
                 </table>
-                <div class="policy-content" [innerHTML]="policyDescription"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card ng-star-inserted">
+            <div class="card-header" id="Leave_cal2">
+              <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link collapsed"
+                  data-toggle="collapse" data-target="#Leaverule" aria-controls="Leaverule">Leave Calculation
+                  Rules</button></h2>
+            </div>
+            <div data-parent="#accordionleave" class="collapse" id="Leaverule" aria-labelledby="Leave_cal2">
+              <div class="row" *ngIf="[2, 7, 36, 39, 26, 57, 119, 80, 169].includes(+this.user_ids)">
+                <div class="col-12 col-lg-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h3 class="card-title"><strong>Hours Calculations</strong></h3>
+                      <span class="card-text">
+                        Total consumed leaves = 11.9 days (11 days 9 hours). In hours calculation only take floating
+                        values for calc so leaveHours is 0.9 hrs;
+                        <br><br>
+                        <strong>Formula:</strong>
+                        <ul>
+                          <li>Condition 1: leaveHours >= 0.80 → 1 day</li>
+                          <li>Condition 2: 0.8 > leaveHours >= 0.4 → 0.5 hours</li>
+                          <li>Condition 3: 0.4 > leaveHours → 0.0 hours</li>
+                        </ul>
+                        <strong> Example:</strong>
+                        <br>
+                        consumed leave = 10.7 days;//with hours added leave from Database<br>
+                        Hours = 0.7 // in consumed leave<br>
+                        So it satifies condition 2 then hours become 0.5
+                        <br><br>
+                        Final consumed leave = 10 days + 0.5 hours = 10.5 days.
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
+                <div class="col-12 col-lg-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h3 class="card-title"><strong>Leave Calculation Example (For Whole Year)</strong></h3>
+                      <span class="card-text">
+                        Carry Forward = 1 day; Total allocated leave = 13 days.
+                        <br><br>
+                        Consumed leave = 10.5 days; Balance leave = 13 - 10.5 = 2.5 days.
+                        This balance leave becomes next year's carry forward.
+                        <br><br>
+                        Carry Forward Calculation:
+                        <ul>
+                          <li>If balance leave >= 4, carry forward is 4 days.</li>
+                          <li>If balance leave < 4, carry forward is the balance leave (e.g., 3.5 days).</li>
+                        </ul>
+                        <strong>Note:</strong> When there is termination or resignation, the pro-rata will be applied.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h4 class="card-title"><strong>Leave calculated formulas:</strong></h4>
+                      <p class="card-text">
+                        AU → Allocated for User, CF → Carry Forward, LCF → Last year CF, PL → Personal Leave, ML →
+                        Medical Leave.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h4 class="card-title"><strong>Total Leave:</strong></h4>
+                      <p class="card-text">
+                        Personal Leave → AU, Medical Leave → AU, Carry Forward → LCF, Total Days → PL + CF.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h4 class="card-title"><strong> Balance Leave 2025:</strong></h4>
+                      <p class="card-text">
+                        Personal Leave → Total days - consumed PL<br>
+                        Medical Leave → Total ML - consumed ML
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
+          </div>
+          <div class="card ng-star-inserted">
+            <div class="card-header" id="Leave_cal3">
+              <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
+                  data-target="#leave_calculation" aria-controls="leave_calculation">Employer Leave
+                  calculations</button></h2>
+            </div>
+            <div data-parent="#accordionleave" class="collapse" id="leave_calculation" aria-labelledby="Leave_cal3">
+              <table cellpadding="10" style="border-collapse:collapse"
+                *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
+                <thead>
+                  <tr>
+                    <th class="title_data">Leave Type
+                    </th>
+                    <th class="title_data" colspan="4"> Total Leave
+                    </th>
+                    <th class="title_data" colspan="3"> Consumed Leave 2025
+                    </th>
+                    <th class="title_data" colspan="3">Balance Leave 2025</th>
+                  </tr>
+                  <tr>
+                    <th class="title_data">&nbsp;</th>
+                    <th class="title_data" style="width:80px">Personal Leave</th>
+                    <th class="title_data" style="width:80px">Medical Leave</th>
+                    <th class="title_data" style="width:80px">Carry Forward</th>
+                    <th class="title_data" style="width:80px">Total Days</th>
+                    <th class="title_data">Personal Leave</th>
+                    <th class="title_data">Medical Leave</th>
+                    <th class="title_data">Unpaid Leave</th>
+                    <th class="title_data">Personal Leave</th>
+                    <th class="title_data">Medical Leave</th>
+                    <th class="title_data">Next Year - Carry Forward</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of userLeaveDatas">
+                    <td class="title_data">{{list.name}}</td>
+                    <td>{{list.user_personal_leave}} Days </td>
+                    <td>{{list.user_medical_leave}} Days</td>
+                    <td>{{list.carry_forward}} Days</td>
+                    <td>{{list.total_leave}} Days</td>
+                    <td>{{list.user_consumed_personal_leave}} Days </td>
+                    <td>{{list.user_consumed_medical_leave}} Days </td>
+                    <td>{{list.user_consumed_unpaid_leave}}</td>
+                    <td>{{list.balance_personal_leave}} Days</td>
+                    <td>{{list.balance_medical_leave}} Days</td>
+                    <td>{{list.carry_forward_nextYear}} Days</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card ng-star-inserted">
+            <div class="card-header" id="Leave_cal4">
+              <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
+                  data-target="#leave_list" aria-controls="leave_list">Leave
+                  List</button></h2>
+            </div>
+            <div data-parent="#accordionleave" class="collapse" id="leave_list" aria-labelledby="Leave_cal4">
+              <div class="leave_request_tab_data">
+                <div class="tab-content" id="myTabContent">
+                  <div id="CurrentYear" class="tab-pane fade show active" role="tabpanel"
+                    aria-labelledby="CurrentYear-tab">
+                    <br>
+                    <ul class="nav nav-pills" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear"
+                          (click)="changeYear(this.currentYearValue-1)" role="tab" aria-controls="CurrentYear"
+                          aria-selected="true"> {{this.currentYearValue-1}}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#CurrentYear"
+                          (click)="changeYear(this.currentYearValue)" role="tab" aria-controls="CurrentYear"
+                          aria-selected="false">{{this.currentYearValue}}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear"
+                          (click)="changeYear(this.currentYearValue+1)" role="tab" aria-controls="CurrentYear"
+                          aria-selected="false">{{this.currentYearValue+1}}</a>
+                      </li>
+                    </ul>
+                    <br>
+                    <ul class="nav nav-pills" role="tablist"
+                      *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListSGid" (click)="changeCountry(countryListSGid)" aria-selected="true">
+                          SG</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListMYid" (click)="changeCountry(countryListMYid)" aria-selected="true">
+                          MY</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListINDid" (click)="changeCountry(countryListINDid)"
+                          aria-selected="true">
+                          IND</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListPHid" (click)="changeCountry(countryListPHid)" aria-selected="true">
+                          PH</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListUSAid" (click)="changeCountry(countryListUSAid)"
+                          aria-selected="true">
+                          USA</a>
+                      </li>
+                    </ul>
+                    <table cellpadding="10" style="border-collapse:collapse;width:50%;align-items: center;"
+                      class="table table-striped">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th class="title_data"> Date </th>
+                          <th class="title_data"> Description </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of holidaysArray">
+                          <td>{{item.date}}</td>
+                          <td>{{item.description}}<br></td>
+                        </tr>
+                        <tr *ngIf="holidaysArray && holidaysArray.length === 0">
+                          <td colspan="2">No Record Found</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
-        </form>
-
+          <div class="card ng-star-inserted">
+            <div class="card-header" id="Leave_cal4">
+              <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
+                  data-target="#leave_list" aria-controls="leave_list">
+                  Policy</button></h2>
+            </div>
+            <div data-parent="#accordionleave" class="collapse" id="leave_list" aria-labelledby="Leave_cal4">
+              <div class="policy-content" [innerHTML]="policyDescription"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
 
@@ -356,12 +392,11 @@ Medical Leave  -&gt; Total ML - consumed ML
                               </tr> -->
                   <tr>
                     <td>Start Date</td>
-                    <td><input type="date" class="form-control" formControlName="startDate"></td>
+                    <td><input type="date" class="form-control" formControlName="startDate">
+                    </td>
                     <td>End Date</td>
                     <td><input type="date" class="form-control" formControlName="endDate"></td>
-
                   </tr>
-                
                   <tr>
                     <td>Leave Type</td>
                     <td>
@@ -372,44 +407,58 @@ Medical Leave  -&gt; Total ML - consumed ML
                           {{ from.LeaveTypeName }}
                         </option>
                       </select>
-
+                      <div
+                        *ngIf="leaveRequestForm.get('leaveType').touched && leaveRequestForm.get('leaveType').invalid"
+                        class="text-danger">
+                        Leave Type is required.
+                      </div>
                     </td>
-
                     <td>Duration Type</td>
                     <td>
                       <select name="durationType" id="durationType" (change)="durationTypeChange($event)"
-                      class="form-control" formControlName="durationType">
-                        <option [ngValue]="null" selected >Select Duration </option>
+                        class="form-control" formControlName="durationType">
+                        <option [ngValue]="null" selected>Select Duration </option>
                         <option *ngFor="let from of leaveCategory" value="{{ from.LeavCatId }}">
                           {{ from.LeaveCatName }}
                         </option>
                       </select>
-
-
+                      <div
+                        *ngIf="leaveRequestForm.get('durationType').touched && leaveRequestForm.get('durationType').invalid"
+                        class="text-danger">
+                        Duration Type is required.
+                      </div>
                     </td>
-
-
                   </tr>
                   <tr *ngIf="timeStatus==true">
-                    <td>Start Time</td>
-                    <td><input type="time" class="form-control" formControlName="startTime" (change)="adjustTime()"></td>
+                    <td>Start Time</td> 
+                    <td>
+                      <input type="time" class="form-control" formControlName="startTime" (change)="adjustTime()">
+                    </td>
                     <td>End Time</td>
-                    <td><input type="time" class="form-control" formControlName="endTime"></td>
-                    
+                    <td>
+                     <input type="time" class="form-control" formControlName="endTime">
+                    </td>
                   </tr>
-
-
                   <tr>
-
                     <td>Reason</td>
-                    <td><textarea rows="4" style="width: -webkit-fill-available"
-                        formControlName="leaveReason"></textarea></td>
-
+                    <td>
+                      <textarea rows="4" style="width: -webkit-fill-available" formControlName="leaveReason"></textarea>
+                      <div
+                        *ngIf="leaveRequestForm.get('leaveReason').touched && leaveRequestForm.get('leaveReason').invalid"
+                        class="text-danger">
+                        Reason is required.
+                      </div>
+                    </td>
                     <td *ngIf="this.medicalcert==1">Medical Certificate:</td>
-                    <td *ngIf="this.medicalcert==1"><input type="file" class="form-control"
-                        formControlName="medicalcert"></td>
+                    <td *ngIf="this.medicalcert==1">
+                    <input type="file" class="form-control" formControlName="medicalcert" (change)="onFileChange($event)">
 
-
+                      <!-- <div
+                        *ngIf="leaveRequestForm.get('medicalcert').touched && leaveRequestForm.get('medicalcert').invalid"
+                        class="text-danger">
+                        Medical Certificate is required.
+                      </div> -->
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -466,10 +515,7 @@ Medical Leave  -&gt; Total ML - consumed ML
 
             </div>
           </div>
-
         </form>
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="createLeave()">
@@ -487,74 +533,82 @@ Medical Leave  -&gt; Total ML - consumed ML
 <!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
-<div class="modal fade" id="leaveRequestFormId-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+
+
+
+<!-- EDIT LEAVE MODAL -->
+<div class="modal fade" id="editLeaveRequestFormId" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-
-        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-                    background: linear-gradient(to right, #262127, #54b7aa);">
-          Leave Request </h2>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h2 class="modal-title text-center col-11"
+          style="font-family: cursive; color: rgb(255, 255, 255); background: linear-gradient(to right, #1c1c1c, #8e44ad);">
+          Leave Request for {{leaveDataList?.Subject}}
+        </h2>
+        <button type="button" class="close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
 
-        <div class="rascal">
+        <form [formGroup]="editLeaveForm">
           <div class="container">
+            <table>
+              <tr >
+                <td>Start Date</td>
+                <td><input type="date" class="form-control" formControlName="startDate"></td>
+                <td>End Date</td>
+                <td><input type="date" class="form-control" formControlName="endDate"></td>
+              </tr>
+              <tr>
+                <td>Leave Type</td>
+                <td>
+                  <input type="text" class="form-control" [value]="leaveDataList?.LeaveTypeName" disabled>
+                </td>
+                <td>Duration Type</td>
+                <td>
+                  <input type="text" class="form-control" [value]="leaveDataList?.LeaveCatName" disabled>
+                </td>
+              </tr>
 
+              <tr *ngIf="editTimeStatus">
+                <td>Start Time</td>
+                <td><input type="time" class="form-control" formControlName="startTime"></td>
+                <td>End Time</td>
+                <td><input type="time" class="form-control" formControlName="endTime"></td>
+              </tr>
 
-            <div class="leave-status">
-              <table>
-                <tr>
-                  <th>S.NO</th>
-                  <th>Name</th>
-                  <th>Leave Type</th>
-                  <th>Leave Category</th>
-                  <th>Biller Name</th>
+              <tr>
+                <td>Reason</td>
+                <td colspan="3">
+                  <textarea rows="4" class="form-control" formControlName="leaveReason"></textarea>
+                </td>
+              </tr>
 
-                </tr>
-                <tr *ngFor="let item of leaveDataList;let i=index">
-                  <td>{{i+1}}</td>
-                  <td>{{item.firstName}}<br></td>
-                  <td>{{item.LeaveTypeName}}<br></td>
-                  <td>{{item.LeaveCatName}}<br></td>
-                  <td>
-                    <!-- <span> {{ list.billerName }} </span> -->
-                    <span><button type="button" class="buttonClass {{item.billerCode}}">
-                        {{item.billerCode}}</button></span>
-                  </td>
-                </tr>
-                <tr *ngIf="leaveDataList && leaveDataList.length === 0">
-                  <td colspan="5">No Record Found</td>
-                </tr>
-
-
-                <!-- Leave Status Rows Can Be Added Here -->
-              </table>
-            </div>
+              <tr *ngIf="editMedicalCertRequired">
+                <td>Medical Certificate</td>
+                <td colspan="3">
+                  <div *ngIf="leaveAttachmentUrl" style="margin-top: 8px;">
+                    <a [href]="leaveAttachmentUrl" target="_blank" rel="noopener noreferrer">
+                      View Current Attachment
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </table>
           </div>
-        </div>
-
-
-
+        </form>
 
       </div>
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="createLeave()">
-          Save
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Close
-        </button>
-
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
+
     </div>
   </div>
 </div>
+
 
 <!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->

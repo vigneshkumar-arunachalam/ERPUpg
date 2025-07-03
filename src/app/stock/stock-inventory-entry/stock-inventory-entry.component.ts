@@ -383,6 +383,11 @@ export class StockInventoryEntryComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         $('#searchPIEMFormId').modal('hide');
+           $('#searchPIEMFormId').on('hidden.bs.modal', () => {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+      });
+
         this.product_tabName = response.product_tabName;
         this.search1PIEMForm.controls['searchText'].reset();
         // console.log("searchall-function", this.product_tabName);
@@ -1597,26 +1602,26 @@ export class StockInventoryEntryComponent implements OnInit {
       }
     });
   }
-  transferProductApproval(transaction_approval_id: any) {
-    this.spinner.show();
-    let api_req: any = new Object();
-    let api_deliveryOrder: any = new Object();
-    api_req.moduleType = "product_stock_mgnt";
-    api_req.api_url = "product_stock_mgnt/product_stock_approval"
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_deliveryOrder.action = "product_stock_mgnt/product_stock_approval";
-    api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
-    api_deliveryOrder.transaction_approval_id = transaction_approval_id;
-    api_req.element_data = api_deliveryOrder;
+  // transferProductApproval(transaction_approval_id: any) {
+  //   this.spinner.show();
+  //   let api_req: any = new Object();
+  //   let api_deliveryOrder: any = new Object();
+  //   api_req.moduleType = "product_stock_mgnt";
+  //   api_req.api_url = "product_stock_mgnt/product_stock_approval"
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_deliveryOrder.action = "product_stock_mgnt/product_stock_approval";
+  //   api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
+  //   api_deliveryOrder.transaction_approval_id = transaction_approval_id;
+  //   api_req.element_data = api_deliveryOrder;
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
-      this.transferProductList();
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     this.spinner.hide();
+  //     this.transferProductList();
 
-    });
-  }
-  transferProductReject(transaction_approval_id: any) {
+  //   });
+  // }
+  transferProductReject1(transaction_approval_id: any) {
     this.spinner.show();
     let api_req: any = new Object();
     let api_deliveryOrder: any = new Object();
@@ -1635,36 +1640,118 @@ export class StockInventoryEntryComponent implements OnInit {
 
     });
   }
-  transferProductDelete(transaction_approval_id: any) {
-    this.spinner.show();
-    let api_req: any = new Object();
-    let api_deliveryOrder: any = new Object();
-    api_req.moduleType = "product_stock_mgnt";
-    api_req.api_url = "product_stock_mgnt/product_stock_approval"
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_deliveryOrder.action = "product_stock_mgnt/product_stock_approval";
-    api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
-    api_deliveryOrder.transaction_approval_id = transaction_approval_id;
-    api_req.element_data = api_deliveryOrder;
+  transferProductReject(transaction_approval_id: any) {
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
-      if (response.count == 0) {
-        iziToast.warning({
-          message: "Sorry,No Matching Data",
-          position: 'topRight'
-        });
+    Swal.fire({
+      title: 'Are you sure to Reject?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Reject it!'
+    }).then((result: any) => {
+      if (result.value) {
 
+        this.spinner.show();
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let api_deliveryOrder: any = new Object();
+        api_req.moduleType = "product_stock_mgnt";
+        api_req.api_url = "product_stock_mgnt/product_stock_reject"
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_deliveryOrder.action = "product_stock_mgnt/product_stock_reject";
+        api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
+        api_deliveryOrder.transaction_approval_id = transaction_approval_id;
+        api_req.element_data = api_deliveryOrder;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            Swal.close();
+            this.spinner.hide();
+            iziToast.success({
+              message: "Rejected Successfully",
+              position: 'topRight'
+            });
+            this.transferProductList();
+          } else {
+            Swal.close();
+            this.spinner.hide();
+            iziToast.warning({
+              message: "Reject Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            //   console.log("final error", error);
+          };
       }
-      //  console.log("response", response);
-      if (response != '') {
-        // this.biller_list = response.biller_details;
-        this.transferProdList = response.data;
-
-      }
-    });
+    })
   }
+  transferProductApproval(transaction_approval_id: any) {
+
+    Swal.fire({
+      title: 'Are you sure to Approve?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+        this.spinner.show();
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let api_deliveryOrder: any = new Object();
+        api_req.moduleType = "product_stock_mgnt";
+        api_req.api_url = "product_stock_mgnt/product_stock_approval"
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_deliveryOrder.action = "product_stock_mgnt/product_stock_approval";
+        api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
+        api_deliveryOrder.transaction_approval_id = transaction_approval_id;
+        api_req.element_data = api_deliveryOrder;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.spinner.hide();
+            Swal.close();
+            iziToast.success({
+              message: "Approved Successfully",
+              position: 'topRight'
+            });
+            this.transferProductList();
+          } else {
+            Swal.close();
+            this.spinner.hide();
+            iziToast.warning({
+              message: "Approve Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            //   console.log("final error", error);
+          };
+      }
+    })
+  }
+
   availableProductList(data: any) {
 
 
@@ -1689,18 +1776,25 @@ export class StockInventoryEntryComponent implements OnInit {
     api_req.element_data = api_deliveryOrder;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
+
       if (response.count == 0) {
         iziToast.warning({
           message: "Sorry,No Matching Data",
           position: 'topRight'
-        });
+        }); this.spinner.hide();
 
       }
 
       //  console.log("response", response);
       if (response != '') {
-        this.availableProdList = response.data;
+        this.spinner.hide();
+        if (response.data) {
+          this.availableProdList = response.data;
+        } else {
+          this.spinner.hide();
+
+        }
+
         this.product_tabName = response.product_tabName;
         // console.log("available pdt list-fn", this.product_tabName);
 

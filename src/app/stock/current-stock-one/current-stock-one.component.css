@@ -83,5 +83,18 @@
   -webkit-text-fill-color: transparent;
   padding: 10px;
   margin-bottom: 20px;
-  border-bottom: 3px solid #4CAF50;
+  border-bottom: 3px solid #facefd;
+}
+.userDatatable-header th{
+  background: #6d5dfc;
+}
+.userDatatable-header th span{
+  color: #e4ebf5;
+}
+
+.userDatatable table tbody tr td {
+  border: 1px solid #0094bc;
+}
+.userDatatable table thead tr th {
+  border: 1px solid #d2e4e9;
 }

@@ -167,11 +167,13 @@
 }
 /* ul.nav.nav-pills{padding:0 1.56rem;} */
 ul.nav.nav-pills a.nav-link {
-  /* background: #5f63f2; */
-  background: #cf7a0a;
-  color: #fff;
+  background: #f7f5f3;
+  color: #440000;
   border-radius: 4px;
-  border-right: 3px solid #fff;
+  margin: 0px 4px;
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid #ddd;
 }
 ul.nav.nav-pills a.nav-link.active, ul.nav.nav-pills .show > .nav-link {
   color: #fff;
@@ -252,7 +254,7 @@ select {
 
 
 
-#leaveRequestFormId .modal-dialog,#leaveRequestFormId-2 .modal-dialog {
+#leaveRequestFormId .modal-dialog,#editLeaveRequestFormId .modal-dialog {
   max-width: 100% !important;
   width: 100% !important;
   height: 100vh;
@@ -261,7 +263,7 @@ select {
   align-items: center;
 }
 
-#leaveRequestFormId .modal-content,#leaveRequestFormId-2 .modal-content {
+#leaveRequestFormId .modal-content,#editLeaveRequestFormId .modal-content {
   width: 100%;
   height: 100%;
   border-radius: 0; /* Removes rounded corners */
@@ -280,7 +282,26 @@ select {
   padding-left: 20px;
 }
 
-
-
+.collapse {padding: 20px;}
+.card-body {
+    border-radius: 10px;
+}
+.card.mb-3 {
+    border: none;
+}
+button.btn.btn-link {
+    color: #e95d5d;
+}
+.accordion > .card > .card-header {
+    border-radius: 0;
+    margin-bottom: 8px;
+}
+.accordion  .card:last-child .card-header{margin-bottom: 0;}
+tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #c9f1a2, #df97b4);
+}
+tr:nth-child(even):hover {
+    background: linear-gradient(to right, #f5fb97, #fcb35f);
+}
   
   

@@ -98,6 +98,7 @@ export class DidStockComponent implements OnInit {
 
     this.edit_aval_action = this.fb.group({
       Issue_Date: [this.today],
+      Demo:[false],
       customer_id: [''],
       Remarks: [''],
       linkDID: [null]
@@ -160,19 +161,28 @@ export class DidStockComponent implements OnInit {
     this.SelectedCustomerID = '';
     this.search_customer = '';
     this.SelectedIssueCustomerID = '';
-
-
   }
+   customerClearlist(event: any) {
+    this.LinkDIDNumValue = '';
+    this.SelectedCustomerID = '';
+  }
+  clear(){
+     this.SelectedCustomerID = '';
+        this.customer_data='';
+            this.LinkDIDNumValue = '';
+   //  this.edit_aval_action.value.customer_id.reset();
+     this.edit_aval_action.controls['customer_id'].reset();
+      this.edit_aval_action.controls['Demo'].reset();
+       this.edit_aval_action.controls['Remarks'].reset();
+  }
+  
 
   LinkDIDNumbChange(eve: any) {
     this.LinkDIDNumValue = eve.target.value;
     console.log("this.LinkDIDNumValue", this.LinkDIDNumValue);
 
   }
-  customerClearlist(event: any) {
-    this.LinkDIDNumValue = '';
-    this.SelectedCustomerID = '';
-  }
+ 
   // currentDate34:any;
   currentDate34 = new Date().toISOString().substring(0, 10);
   createRow(): FormGroup {
@@ -431,8 +441,12 @@ export class DidStockComponent implements OnInit {
     api_req.element_data = get_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
+        if (response.data) {
+          this.getNRSList = response.data;
+          this.spinner.hide();
+        }
 
-        this.getNRSList = response.data;
+
         this.spinner.hide();
 
       } else {
@@ -581,7 +595,9 @@ export class DidStockComponent implements OnInit {
 
   }
   edit_nrs_did_avali_save() {
+  //  console.log("1",1);
     var formdata = this.edit_aval_action.value;
+   //  console.log("formdata",formdata);
     this.spinner.show();
     let api_req: any = new Object();
     let get_req: any = new Object();
@@ -610,7 +626,7 @@ export class DidStockComponent implements OnInit {
 
     }
 
-    get_req.issueDate = formdata.issueDate;
+    get_req.issueDate = formdata.Issue_Date;
     if (this.LinkDIDNumValue) {
       get_req.link_didnumber = this.LinkDIDNumValue;
     } else {
@@ -626,7 +642,7 @@ export class DidStockComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         iziToast.success({
-          message: response.message,
+          message: 'success',
           position: 'topRight'
         });
         this.spinner.hide();
@@ -638,6 +654,7 @@ export class DidStockComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -1025,7 +1042,7 @@ export class DidStockComponent implements OnInit {
     const rowsArray = this.recordForm.get('rows') as FormArray;
     const firstRow = rowsArray.at(0) as FormGroup;
     if (!firstRow.get('billerName')?.value) {
-      console.log("111");
+      // console.log("111");
       this.spinner.hide();
       iziToast.error({
         message: "Billername Missing",
@@ -1034,7 +1051,7 @@ export class DidStockComponent implements OnInit {
       return false;
 
     } else if (!firstRow.get('trunkName')?.value) {
-      console.log("222");
+      // console.log("222");
       this.spinner.hide();
       iziToast.error({
         message: "Trunkname Missing",
@@ -1043,7 +1060,7 @@ export class DidStockComponent implements OnInit {
       return false;
 
     } else if (!firstRow.get('didNumber')?.value) {
-      console.log("333");
+      // console.log("333");
       this.spinner.hide();
       iziToast.error({
         message: "DIDNumber Missing",
@@ -1053,7 +1070,7 @@ export class DidStockComponent implements OnInit {
 
     }
     else {
-      console.log("444");
+      // console.log("444");
       api_postUPd.products = formdata.rows;
     }
 
@@ -1068,14 +1085,17 @@ export class DidStockComponent implements OnInit {
           position: 'topRight'
         });
         $('#add_new_modal').modal('hide');
-        rowsArray.controls.forEach((row: any) => {
-          row.billerName.reset();
-          row.trunkName.reset();
-          row.didNumber.reset();
-          row.nrs.reset();
-        });
-
         this.did_inventory_List({});
+        rowsArray.clear();
+        this.addRow();
+        // rowsArray.controls.forEach((row: any) => {
+        //   row.billerName.reset();
+        //   row.trunkName.reset();
+        //   row.didNumber.reset();
+        //   row.nrs.reset();
+        // });
+
+
         this.spinner.hide();
       } else {
         iziToast.warning({
@@ -1292,7 +1312,7 @@ export class DidStockComponent implements OnInit {
         console.log(error);
       };
   }
-   saveAllIssuedDIDInv() {
+  saveAllIssuedDIDInv() {
     this.spinner.show();
 
 
@@ -1306,7 +1326,7 @@ export class DidStockComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     get_req.action = "did_inventory/issueDID_saveAll";
     get_req.user_id = localStorage.getItem('erp_c4c_user_id');
-  
+
     if (this.selectedDIDs_issued) {
       get_req.did_entry_id = this.selectedDIDs_issued;
     } else {

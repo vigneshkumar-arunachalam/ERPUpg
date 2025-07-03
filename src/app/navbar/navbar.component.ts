@@ -39,6 +39,11 @@ export class NavbarComponent implements OnInit {
   searchResultTest: any;
   CompanyName: any;
   searchResult: any;
+  //pagination
+  recordNotFound = false;
+  pageLimit = 100;
+  paginationData: any = { info: 'hide' };
+  offset_count = 0;
   // Contract Details
   ContractDetailsForm: FormGroup;
   user_ids: any;
@@ -71,6 +76,7 @@ export class NavbarComponent implements OnInit {
   Quotation_list_send: any;
   Customer_list_send: any;
   Invoice_list_send: any;
+  Proforma_list_send:any;
   contract_filter = false;
   PG_LicenseKey: any;
   PG_DIDNumbers: any;
@@ -92,6 +98,7 @@ export class NavbarComponent implements OnInit {
   payment_transaction_reports_Permission: string;
   currencyConvertorForm: FormGroup;
   getCurrencyList: any;
+  preStockApprovalList: any;
 
   currencyConvOutput: any;
   getCurrencyDetails: any;
@@ -263,7 +270,26 @@ export class NavbarComponent implements OnInit {
   ResellerInvoiceCount: any;
   recuringApInvCount: any;
   custIDEmailSingle: any;
-
+  //e governance
+  eInvoiceRegForm: FormGroup;
+  eInvRegList: any;
+  searchResult_eGov: any;
+  searchResult_eGovCustID: any = '';
+  preStockApprovalListLength: any;
+  overdueResponseLength: any;
+  getRecurredListValueLength: any;
+  ResellerRecuringApprovalListLength: any;
+  combinedDataLength: any;
+  postalInvoiceDetailsLength: any;
+  role_vig: any;
+  //global search-chatgpt
+  selectedPage = ''; // e.g., 'Customer New'
+  companyName = '';
+   pageRouteMap: any = {
+    'Customer New': 'customernewall',
+      'Invoice': 'invoice', 
+    // add more as needed
+  };
 
   constructor(private router: Router, private serverService: ServerService,
     private http: HttpClient, private fb: FormBuilder,
@@ -326,6 +352,11 @@ export class NavbarComponent implements OnInit {
   keywordLicenseNumber = 'license_key';
   OS_keywordCustomerName = 'customerName';
   ngOnInit(): void {
+    console.log("this.role_Permission-initial", localStorage.getItem("role"));
+    this.role_vig = localStorage.getItem('role');
+   
+    this.role_vig = this.role_vig.split(',').map((x: string) => x.trim());
+    console.log("role-vig-array",this.role_vig);
     this.show = true;
     this.Select_To_Type_radiobox_Value = 'finance';
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
@@ -345,6 +376,7 @@ export class NavbarComponent implements OnInit {
     this.PageList();
     this.searchGlobalList();
     this.roles = localStorage.getItem("role");
+    console.log("roles-vig", this.roles);
     this.get_permission();
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
     //  console.log(this.testVariable)
@@ -371,6 +403,11 @@ export class NavbarComponent implements OnInit {
       'OS_fromDate': new FormControl(null),
       'OS_toDate': new FormControl(null),
 
+    });
+    this.eInvoiceRegForm = new FormGroup({
+      'eGov_fromDate': new FormControl(null),
+      'eGov_toDate': new FormControl(null),
+      'eGov_cust': new FormControl(null),
     })
 
     this.processPaymentForm = new FormGroup({
@@ -458,6 +495,7 @@ export class NavbarComponent implements OnInit {
 
       if (data != '') {
         this.postalInvoiceDetails = data;
+        this.postalInvoiceDetailsLength = data.length;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
@@ -483,8 +521,12 @@ export class NavbarComponent implements OnInit {
       // console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     });
     this.getRecurringCountList();
+    console.log("this.role_Permission", this.role_Permission);
 
   }
+  hasStockPreAppPermission(): boolean {
+  return this.role_vig.includes('1139');
+}
   toggleMenu(event: Event): void {
     event.stopPropagation();
     this.isMenuVisible = !this.isMenuVisible;
@@ -592,22 +634,35 @@ export class NavbarComponent implements OnInit {
     // Check if the billId is in the selectedBillIds array
     return this.selectedBillIds.includes(billId);
   }
-
+selectEventCustomerClear(e:any){
+this.PG_customerName ='';
+ this.PG_customerId='';
+}
 
   selectEventCustomer(item: any) {
 
     this.searchResultTest = item.customerName;
     this.PG_customerId = item.customerId;
     this.PG_customerName = item.customerName;
-    // console.log(" this.PG_customerName-customer select change", this.PG_customerName);
-    // console.log(item.customerId)
-    // console.log(item.customerName)
+  //   console.log(" this.PG_customerName-customer select change", this.PG_customerName);
+  //   console.log(item.customerId);
+  //   console.log(item.customerName);
+  //  console.log(item.customerName);
+  //    console.log("this.CompanyName",this.CompanyName);
 
     this.CompanyName = item.customerName;
+       //  console.log("this.CompanyName",this.CompanyName);
 
     this.onFocusedCustomer({});
     // this.spinner.show();
     // do something with selected item
+  }
+
+  selectEventCustomer_eGov(item: any) {
+
+    this.searchResult_eGovCustID = item.customerId;
+    console.log("item-custid", item)
+
   }
   showFunction() {
     this.show = true;
@@ -627,7 +682,8 @@ export class NavbarComponent implements OnInit {
     api_contract_req.user_id = this.user_ids;
     api_contract_req.customer_id = this.PG_customerId;
     api_req.element_data = api_contract_req;
-    if (this.PG_customerId == undefined) {
+    console.log("this.PG_customerId",this.PG_customerId);
+    if (this.PG_customerId == undefined || this.PG_customerId == 'undefined' || this.PG_customerId == '') {
       this.spinner.hide();
       return false;
     }
@@ -803,6 +859,55 @@ export class NavbarComponent implements OnInit {
       }
     })
   }
+  approveRejStock(transaction_approval_id: any, stock: any) {
+    Swal.fire({
+      title: 'Are you sure ?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let api_reqD1: any = new Object();
+        api_req.moduleType = "product_stock_mgnt";
+        api_req.api_url = "stockPreApproval/transactionPreApproval";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqD1.action = "stockPreApproval/transactionPreApproval";
+        api_reqD1.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqD1.trans_id = transaction_approval_id;
+        api_reqD1.state = stock;
+        api_req.element_data = api_reqD1;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.stockPreApproval();
+            this.spinner.hide();
+            iziToast.success({
+              message: "Success",
+              position: 'topRight'
+            });
+
+
+          } else {
+            this.spinner.hide();
+
+          }
+        }),
+          (error: any) => {
+            this.spinner.hide();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            // console.log("final error", error)
+          };
+      }
+    })
+  }
   clearPostalInvoice() {
     this.selectedBillIds = [];
 
@@ -836,6 +941,7 @@ export class NavbarComponent implements OnInit {
 
               if (data != '') {
                 this.postalInvoiceDetails = data;
+                this.postalInvoiceDetailsLength = data.length;
               }
               //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
             });
@@ -885,8 +991,87 @@ export class NavbarComponent implements OnInit {
     var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(userid) + "&authToken=" + btoa(userid + username);
     window.open(url, '_blank');
   }
-  searchGlobalList() {
+  eInvoiceRegistration(data: any) {
+
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "einvoice";
+    api_req.api_url = "einvoice/getMyinvoice_list";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "getMyinvoice_list";
+    sendMet_req.user_id = this.user_ids;
+    sendMet_req.from_date = this.eInvoiceRegForm.value.eGov_fromDate;
+    sendMet_req.to_date = this.eInvoiceRegForm.value.eGov_toDate;
+
+    sendMet_req.cust_id = this.searchResult_eGovCustID;
+
+    sendMet_req.off_set = list_data.offset;
+    sendMet_req.limit_val = list_data.limit;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $('#eInvoiceRegFormId').modal('show');
+      if (response.status == true) {
+        this.eInvRegList = response.data;
+        $('#eInvoiceRegFormId').modal('show');
+
+      }
+      else {
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+
+  }
+  listDataInfo(list_data: any) {
+
+    list_data.order_by_type =
+      list_data.order_by_type == undefined ? 'desc' : list_data.order_by_type;
+    list_data.limit =
+      list_data.limit == undefined ? this.pageLimit : list_data.limit;
+    list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
+    return list_data;
+  }
+  stockPreApproval() {
+
+
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "product_stock_mgnt";
+    api_req.api_url = "stockPreApproval/preApprovalList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "stockPreApproval/preApprovalList";
+    sendMet_req.user_id = this.user_ids;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.preStockApprovalList = response.data;
+        this.preStockApprovalListLength = response.data.length;
+        $('#stockPreApprovalFormId').modal('show');
+
+      }
+      else {
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+
+  }
+  searchGlobalList1() {
     this.spinner.show();
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
     this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
     if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
@@ -1057,7 +1242,14 @@ export class NavbarComponent implements OnInit {
         // console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
         this.dashboard = true;
         var api_req: any = '{"type":"hello","proformalist":this.PI_list_send}';
-        $('#ActionIdOutput').modal('show');
+
+
+        $('#ActionIdOutput').modal({
+          backdrop: false,
+          keyboard: false,
+          show: true
+        });
+
       } else {
         Swal.close();
         iziToast.warning({
@@ -1075,6 +1267,222 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
+   searchGlobalList() {
+    this.spinner.show();
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+    this.onFocusedCustomer({});
+  
+    if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
+
+    }
+
+    let api_req: any = new Object();
+    let api_schGlo_req: any = new Object();
+    api_req.moduleType = "global";
+    api_req.api_url = "global/globalSearchAll";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_schGlo_req.action = "globalSearchAll";
+    api_schGlo_req.user_id = this.user_ids;
+    if ((this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) &&
+      (this.PG_customerName == '' || this.PG_customerName == 'undefined' || this.PG_customerName == undefined) &&
+      (this.PG_LicenseNum == '' || this.PG_LicenseNum == 'undefined' || this.PG_LicenseNum == undefined) &&
+      (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined)
+    ) {
+      this.spinner.hide();
+ 
+      return false;
+
+    } else {
+      api_schGlo_req.customer_id = this.PG_customerId;
+    }
+
+    // console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
+    api_schGlo_req.customer_name = this.PG_customerName;
+    api_schGlo_req.customer_code = this.PG_CustomerCode;
+
+    api_schGlo_req.license_number = this.PG_LicenseNum;
+    api_schGlo_req.did_number = this.PG_DIDNumber;
+
+    if (!this.selectedPageNames) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Select Page ",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+      //  console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
+      api_schGlo_req.pagename = this.selectedPageNames;
+    }
+
+
+    api_req.element_data = api_schGlo_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+ 
+      if (response != '') {
+    
+        if (response.menuList) {
+          this.SelectPageList = response.menuList;
+        }
+        if (response.selected_menu) {
+          this.componentDynamic = response.selected_menu;
+        }
+
+
+
+ 
+    
+
+        if (response.customer_list != 0 || response.customer_list != '0') {
+          if (response.customer_list) {
+            this.Customer_list_send = response.customer_list.customer_details;
+            this.Customer_revenue_send = response.customer_list.revenue_list;
+            this.Customer_list_send = response.customer_list.customer_details;
+            this.Cust_UI_Show = response.customer_list;
+
+          }
+
+          let api_reqs: any = {
+            Customer_list_send: this.Customer_list_send,
+            Customer_revenue_send: this.Customer_revenue_send
+          };
+          this.serverService.global_search_customer.next(api_reqs);
+        } else {
+          if (response.customer_list) {
+            this.Cust_UI_Show = response.customer_list;
+          }
+
+          // console.log("Customer List Skipped")
+        }
+
+
+       
+        this.dashboard = true;
+    
+
+
+        $('#ActionIdOutput').modal({
+          backdrop: false,
+          keyboard: false,
+          show: true
+        });
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+ searchNow() {
+    if (!this.selectedPageNames.length) {
+      alert('Please select at least one page.');
+      return;
+    }
+
+    const firstSelectedPage = this.selectedPageNames[0]; // Use the first checkbox
+    const route = this.pageRouteMap[firstSelectedPage];
+
+    if (!route) {
+      alert('Invalid page selected');
+      return;
+    }
+
+    this.serverService.setSearchParams({
+      companyName: this.CompanyName,
+      // Add other fields if needed
+    });
+
+    this.router.navigate([`/${route}`]);
+  }
+  searchGlobalList_gpt() {
+  this.spinner.show();
+  $('.modal-backdrop').remove();
+  $("body").removeClass("modal-open");
+  this.onFocusedCustomer({});
+
+  const isEmpty = [this.PG_customerId, this.PG_customerName, this.PG_LicenseNum, this.PG_DIDNumber]
+    .every(field => !field || field === 'undefined');
+
+  if (isEmpty) {
+    this.spinner.hide();
+    iziToast.warning({ message: "Please enter at least one search criteria", position: 'topRight' });
+    return;
+  }
+
+  if (!this.selectedPageNames?.length) {
+    this.spinner.hide();
+    iziToast.error({ message: "Select a Page", position: 'topRight' });
+    return;
+  }
+
+  const api_req: any = {
+    moduleType: "global",
+    api_url: "global/globalSearchAll",
+    api_type: "web",
+    access_token: "your_access_token",
+    element_data: {
+      action: "globalSearchAll",
+      user_id: this.user_ids,
+      customer_id: this.PG_customerId,
+      customer_name: this.PG_customerName,
+      customer_code: this.PG_CustomerCode,
+      license_number: this.PG_LicenseNum,
+      did_number: this.PG_DIDNumber,
+      pagename: this.selectedPageNames
+    }
+  };
+
+  this.serverService.sendServer(api_req).subscribe({
+    next: (response: any) => {
+      this.spinner.hide();
+        this.serverService.setSearchParams({
+      companyName: this.PG_customerName,
+      // Add other fields if needed
+    });
+
+      // Set visibility flags
+      this.PI_UI_Show = response.proforma_invoice_list ? 1 : 0;
+      this.Invoice_UI_Show = response.invoice_list ? 1 : 0;
+      this.Quot_UI_Show = response.quotation_list ? 1 : 0;
+      this.Cust_UI_Show = response.customer_list ? 1 : 0;
+
+      // Pass data
+      this.Customer_list_send = response.customer_list?.customer_details;
+      this.Customer_revenue_send = response.customer_list?.revenue_list;
+
+      this.Invoice_list_send = response.invoice_list?.proforma_details;
+      this.Quotation_list_send = response.quotation_list?.quotation_details;
+      this.Proforma_list_send = response.proforma_invoice_list?.proforma_details;
+
+      // Show modal
+      $('#ActionIdOutput_gpt').modal({
+        backdrop: false,
+        keyboard: false,
+        show: true
+      });
+    },
+    error: () => {
+      this.spinner.hide();
+      iziToast.error({ message: "Server error. Please contact admin.", position: 'topRight' });
+    }
+  });
+}
+
   gotoRoot() {
 
     $('#ActionIdxx2').modal('hide');
@@ -1121,7 +1529,9 @@ export class NavbarComponent implements OnInit {
   }
   closeModal() {
     this.PageList();
-    $('#ActionIdOutput').modal('hide');
+   // $('#ActionIdOutput').modal('hide');
+        $('#ActionIdOutput_gpt').modal('hide');
+    
     setTimeout(() => {
       this.functionclose();
     }, 1000);
@@ -1200,6 +1610,7 @@ export class NavbarComponent implements OnInit {
       //  console.log(" response--pagelist", response)
       if (response != '') {
         this.overdueResponse = response;
+        this.overdueResponseLength = response.length;
         if (response.overduePayments) {
           this.overduePaymentsBillerWise = response.overduePayments;
         }
@@ -1326,6 +1737,7 @@ export class NavbarComponent implements OnInit {
           this.searchCustomerData_OS({});
           this.overdueResponse = '';
           this.overdueResponse = response;
+          this.overdueResponseLength = response.length;
           this.billerNameDisplay = response[0].billerName;
           this.billerIDDisplay = response[0].billerId;
           $('#overduePaymentFormId').modal('hide');
@@ -1399,6 +1811,7 @@ export class NavbarComponent implements OnInit {
 
             if (data != '') {
               this.postalInvoiceDetails = data;
+              this.postalInvoiceDetailsLength = data.length;
             }
           });
           this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
@@ -1656,6 +2069,7 @@ export class NavbarComponent implements OnInit {
         this.overdueResponse = '';
         this.selectedBillIds_overdue = {};
         this.overdueResponse = response;
+        this.overdueResponseLength = response.length;
         this.overduePaymentsBillerWise = '';
         if (response.overduePayments) {
           this.overduePaymentsBillerWise = response.overduePayments;
@@ -1719,6 +2133,11 @@ export class NavbarComponent implements OnInit {
       };
 
   }
+  clearSelection_eGov(event: any) {
+
+    this.searchResult_eGovCustID = '';
+
+  }
   searchCustomerData(data: any) {
     let api_req: any = new Object();
     let api_comCode_req: any = new Object();
@@ -1735,6 +2154,7 @@ export class NavbarComponent implements OnInit {
 
       if (response.customerName) {
         this.searchResult = response.customerName;
+        this.searchResult_eGov = response.customerName;
         // console.log(" this.searchResult", this.searchResult)
         this.onFocusedCustomer({});
       } else {
@@ -1784,8 +2204,8 @@ export class NavbarComponent implements OnInit {
   selected_CustomerCode(item: any) {
     this.PG_CustomerCode = item.customerCode;
     this.PG_customerId = item.customerId;
-    // console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
-    // console.log(item)
+     console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
+     console.log(item)
   }
 
   inpChanged_DIDNumber(data: any) {
@@ -3484,6 +3904,7 @@ export class NavbarComponent implements OnInit {
         this.spinner.hide();
         if (response.data) {
           this.getRecurredListValue = response.data;
+          this.getRecurredListValueLength = response.data.length;
         }
 
 
@@ -3525,6 +3946,7 @@ export class NavbarComponent implements OnInit {
         this.spinner.hide();
         if (response.data) {
           this.ResellerRecuringApprovalList = response.data;
+          this.ResellerRecuringApprovalListLength = response.data.length;
         }
 
 
@@ -3570,6 +3992,8 @@ export class NavbarComponent implements OnInit {
             title: item.title[0],  // Assuming only one title per group
             invoices: item.dataList
           }));
+          this.combinedDataLength = response.data.length;
+
 
         }
 
@@ -3617,9 +4041,9 @@ export class NavbarComponent implements OnInit {
         .map(menuItem => menuItem.menu_name);
     }
 
-    // console.log('Selected Checkbox IDs:', this.selectedPageIds);
+     console.log('Selected Checkbox IDs:', this.selectedPageIds);
 
-    // console.log('Selected Checkbox Names:', this.selectedPageNames);
+     console.log('Selected Checkbox Names:', this.selectedPageNames);
   }
 
   // Toggle all checkboxes
@@ -3992,7 +4416,7 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
-   initTiny() {
+  initTiny() {
     var richTextArea_id = 'richTextAreacreated';
     tinymce.init({
       selector: '#richTextAreacreated',

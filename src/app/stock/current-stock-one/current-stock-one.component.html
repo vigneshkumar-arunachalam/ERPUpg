@@ -5,7 +5,7 @@
       <div class="card quotation">
         <div class="card-header color-dark fw-500">
           <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-            <span class="breadcrumb-item active">Transaction Management</span>
+            <span class="breadcrumb-item active">Current Stock-Product Inventory</span>
           </h3>
 
 
@@ -23,28 +23,41 @@
 
   <h2 class="text-center listRecord">List of Records</h2>
   <div class="row">
-    <div *ngFor="let category of stockData" class="col-md-4">
-      <table class="table table-bordered">
-        <thead>
-          <tr [style.backgroundColor]="category.color">
-            <th colspan="4">{{ category.brand }}</th>
-          </tr>
-          <tr>
-            <th>{{ category.brand }}</th>
-            <th>STK Qty</th>
-            <th>RMA Qty</th>
-            <th>DEMO Qty</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of category.items">
-            <td>{{ item.name }}</td>
-            <td [style.backgroundColor]="item.stkColor">{{ item.stkQty }}</td>
-            <td [style.backgroundColor]="item.rmaColor">{{ item.rmaQty }}</td>
-            <td [style.backgroundColor]="item.demoColor">{{ item.demoQty }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div *ngFor="let category of stockData" class="userDatatable global-shadow border-0 bg-white w-100 col-md-4">
+      <div class="table-responsive">
+        <table class="table mb-0 table-borderless">
+          <thead>
+            <tr [style.backgroundColor]="category.color">
+              <th colspan="4">{{ category.brand }}</th>
+            </tr>
+            <tr class="userDatatable-header">
+              <th> <span class="userDatatable-title">{{ category.brand }}</span></th>
+              <th><span class="userDatatable-title">STK Qty</span></th>
+              <th><span class="userDatatable-title">RMA Qty</span></th>
+              <th><span class="userDatatable-title">DEMO Qty</span></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of category.items">
+              <td>{{ item.name }}</td>
+              <td [style.backgroundColor]="item.stkColor">{{ item.stkQty }}</td>
+              <td [style.backgroundColor]="item.rmaColor">{{ item.rmaQty }}</td>
+              <td [style.backgroundColor]="item.demoColor">{{ item.demoQty }}</td>
+            </tr>
+            <tr *ngFor="let item1 of category.total" class="mb-2"
+              style="background-color: rgb(241, 241, 121);color:blue;font-size: large;font-weight: 600;">
+              <td>Total</td>
+              <td [style.backgroundColor]="item1.total_bottom_color">{{ item1.total_qty_1 }}</td>
+              <td [style.backgroundColor]="item1.total_bottom_color">{{ item1.total_rma_qty_1 }}</td>
+              <td [style.backgroundColor]="item1.total_bottom_color">{{ item1.total_demo_qty_1 }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
     </div>
   </div>
 
@@ -76,16 +89,21 @@
             <div class="col-lg-4">
               <div class="form-group row">
                 <label for="temp11" class="col-lg-12 ">Transaction Name</label>
-                <div class="col-lg-12 " *ngFor="let biller12 of biller_list;let i =index">
-                  <input type="checkbox" id="{{biller12.id}}" formControlName="search_billerName1"
-                    (change)="searchBillerNameCHK(biller12.id,$event)">
+                <div class="col-lg-12 ">
 
-                  {{biller12.billerName}}
+                  <select name="search_billerName1" class="form-control" aria-label="Select Sub Customer"
+                    formControlName="search_billerName1">
+                    <option value="null">Select Biller</option>
+
+                    <option *ngFor="let classif of biller_list" value="{{classif.billerId}}">
+                      {{classif.billerName}}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <div class="col-lg-8">
+            <!-- <div class="col-lg-8">
               <div class="form-group row">
 
                 <label for="company_Name" class="col-lg-12 ">Search Text</label>
@@ -95,7 +113,7 @@
                   <input type="search" class="form-control" formControlName="company_Name6" />
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 
@@ -105,7 +123,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)="inventory_list({})">
           Search
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">

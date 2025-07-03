@@ -3,9 +3,11 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { FormGroup, FormControl, FormBuilder,FormArray, AbstractControl  } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,FormArray, AbstractControl,ValidatorFn, ValidationErrors } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+declare var $: any
+declare var iziToast: any;
 @Component({
   selector: 'app-publictask',
   templateUrl: './publictask.component.html',
@@ -24,7 +26,7 @@ export class PublictaskComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth'
+      right: ''
     },
     datesSet: this.onDatesSet.bind(this),
   };
@@ -41,7 +43,7 @@ export class PublictaskComponent implements OnInit {
   nextDate: string = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
   generatereport: any;
 
-  constructor(private http: HttpClient,private fb: FormBuilder,private serverService: ServerService) {
+  constructor(private http: HttpClient,private fb: FormBuilder,private serverService: ServerService, private spinner: NgxSpinnerService) {
     this.eventDetailsForm = this.fb.group({
       calendar_entries: this.fb.array([]) 
     });
@@ -172,7 +174,7 @@ export class PublictaskComponent implements OnInit {
         notify_state: [entry.notify_state ?? 0],
         reason: [entry.reason ?? 'N/A'],
         calendar_template_child_id: [entry.calendar_template_child_id]
-      });
+      }, { validators: [this.workStatusValidator()] });
   
       calendarEntries.push(entryFormGroup);
     });
@@ -200,10 +202,42 @@ export class PublictaskComponent implements OnInit {
   }
 
  
+onNotifyChange(event: Event, entry: AbstractControl) {
+  const input = event.target as HTMLInputElement;
+  entry.get('notify_state')?.setValue(input.checked ? 1 : 0);
+}
+workStatusValidator(): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const yes = group.get('work_status_yes')?.value;
+    const no = group.get('work_status_no')?.value;
 
+    if (yes === 1 || no === 1) {
+      return null; // valid
+    }
 
+    return { workStatusRequired: true }; // invalid
+  };
+}
 saveModal() {
+  if (this.eventDetailsForm.invalid) {
+    this.eventDetailsForm.markAllAsTouched();
+
+    // Optional: Scroll to the first invalid row
+    const firstInvalidIndex = this.calendarEntries.controls.findIndex(entry => entry.invalid);
+    if (firstInvalidIndex !== -1) {
+      const element = document.querySelectorAll('tbody tr')[firstInvalidIndex];
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    iziToast.warning({
+      message: 'Please select "Ok" or "Not Ok" for each task before saving.',
+      position: 'topRight'
+    });
+
+    return;
+  }
     // Collect form data for each entry
+    this.spinner.show();
     const calendarEntriesData = this.calendarEntries.controls.map((entry: AbstractControl) => {
       return {
         calendar_template_child_id: entry.get('calendar_template_child_id').value,
@@ -264,24 +298,44 @@ saveModal() {
     // Make the HTTP POST request with form data (HttpParams)
     this.http.post(apiUrl, params).subscribe(
       (response: any) => {
+            this.spinner.hide();
         if (response.status) {
-          console.log('Calendar entries saved successfully:', response);
-          if (this.generatereport === 0) {
-            this.showgeneratereport = true;
-          } else {
-            this.showgeneratereport = false;
-          }
-          //this.showModal = false;  // Close the modal on success
+           this.spinner.hide();
+        //  console.log('Calendar entries saved successfully:', response);
+          // if (this.generatereport === 0) {
+          //   this.showgeneratereport = true;
+          // } else {
+          //   this.showgeneratereport = false;
+          // }
+          this.generatereport = response.generate_state;
+           iziToast.success({
+            message: "Calendar entries saved successfully",
+            position: 'topRight'
+          });
+
+          this.showModal = false;  // Close the modal on success
         } else {
+           this.spinner.hide();
           console.error('Failed to save calendar entries:', response);
+          iziToast.warning({
+            message: "Failed to save calendar entries",
+            position: 'topRight'
+          });
+
         }
       },
       (error) => {
+         this.spinner.hide();
         console.error('Error saving calendar entries:', error);
+        iziToast.warning({
+            message: "Failed to save calendar entries",
+            position: 'topRight'
+          });
       }
     );
 }
   generateEmailApprovalReport(calendarTemplateId: number, entryDate: number, entryMonth: number, entryYear: number) {
+        this.spinner.show();
     const apiUrl = this.serverService.urlFinal + 'publicTask/generateEmailApprovalReport';
     const payload = {
       moduleType: 'publicTask',
@@ -298,15 +352,30 @@ saveModal() {
     };
     this.http.post(apiUrl, payload).subscribe(
       (response: any) => {
+            this.spinner.hide();
         if (response.success === true  ) {
           console.log('Email approval report generated successfully:', response);
           this.showModal = false;
+           iziToast.success({
+            message: "Email approval report generated successfully",
+            position: 'topRight'
+          });
         } else {
+              this.spinner.hide();
           console.error('Failed to generate email approval report:', response);
+           iziToast.warning({
+            message: "Failed to generate email approval report",
+            position: 'topRight'
+          });
         }
       },
       (error) => {
+            this.spinner.hide();
         console.error('Error generating email approval report:', error);
+         iziToast.warning({
+            message: "Error generating email approval report",
+            position: 'topRight'
+          });
       }
     );
   }

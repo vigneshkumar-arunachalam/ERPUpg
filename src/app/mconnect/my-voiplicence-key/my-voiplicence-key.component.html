@@ -1,448 +1,514 @@
 <div class="contents-section">
 
-    <div class="row no-gutters">
-        <div class="col-lg-12 mb-30">
-            <div class="card quotation">
-                <div class="card-header color-dark fw-500">
-                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
-                            Home</a>
-                        <span class="breadcrumb-item active">Mconnect-License Key Management</span>
-                    </h3>
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card quotation">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+              Home</a>
+            <span class="breadcrumb-item active">Mconnect-License Key Management</span>
+          </h3>
 
 
-                    <div class="quotation-btn-section">
-                        <button type="button" title="Add License Key" (click)="openAddModal()"
-                            class="btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
-                            <i class="fas fa-plus" style="margin-right:4px;"></i>
-                            Add
-                        </button>
-                        <button type="button" class="btn btn-primary" title="Search License Key">
-                            <i class="fas fa-search" style="margin-right:4px;"></i>Search
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-borderless">
-                                <thead>
-                                    <tr class="userDatatable-header">
-                                        <!-- <th>
+          <div class="quotation-btn-section">
+            <button type="button" title="Add License Key" (click)="openAddModal()"
+              class="btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+              <i class="fas fa-plus" style="margin-right:4px;"></i>
+              Add
+            </button>
+            <button type="button" class="btn btn-primary" title="Search License Key">
+              <i class="fas fa-search" style="margin-right:4px;"></i>Search
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive ">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <!-- <th>
                          
                             <span class="userDatatable-title"><input type="checkbox"></span>
                           </th> -->
-                                        <th>
-                                            <span class="userDatatable-title">SNo</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Customer Name</span>
-                                        </th>
+                    <th>
+                      <span class="userDatatable-title">SNo</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Cust. Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Notes</span>
+                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">EmailID</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Product Code</span>
-                                        </th>
+                    <th>
+                      <span class="userDatatable-title">EmailID</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Product Code</span>
+                    </th>
 
 
-                                        <th>
-                                            <span class="userDatatable-title">Product Name</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Hardware ID</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">License Key</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Concurrent</span>
-                                        </th>
+                    <th>
+                      <span class="userDatatable-title">Product Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Hardware ID</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Lic. Key</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Concurrent</span>
+                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">Installation Date</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">License Updated Date</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Remaining Days</span>
-                                        </th>
+                    <th>
+                      <span class="userDatatable-title">Installation Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Updated Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Rem.Days</span>
+                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">Action</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
 
-                                    <tr *ngFor="let list of Transaction_list; let i = index"
-                                        [ngStyle]="{'background-color':(list.status_colour=='1') ? ('#d0ffc3 ') : ( (list.status_colour=='2') ? ('#ffb8b8') : ( (list.status_colour=='3') ? ('#ffffff') : ('Default')) )}">
+                  <tr *ngFor="let list of Transaction_list; let i = index"
+                    [ngStyle]="{'background-color':(list.status_colour=='1') ? ('#d0ffc3 ') : ( (list.status_colour=='2') ? ('#ffb8b8') : ( (list.status_colour=='3') ? ('#ffffff') : ('Default')) )}">
 
-                                        <!-- <td>
+                    <!-- <td>
                         <span><input type="checkbox"></span>
                       </td> -->
-                                        <td>
-                                            <span>{{ list.sno}}</span>
-                                        </td>
+                    <td>
+                      <span>{{ list.sno}}</span>
+                    </td>
 
-                                        <td>
-                                            <span>{{ list.company_name}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{ list.email_id}}</span>
-                                        </td>
+                    <td>
+                      <span>{{ list.company_name}}</span>
+                    </td>
+                    <td>
+                      <span>{{ list.comments}}</span>
+                    </td>
+                    <td>
+                      <span>{{ list.email_id}}</span>
+                    </td>
 
-                                        <td>
-                                            <span>{{ list.product_code | uppercase}}</span>
-                                        </td>
-
-
-                                        <td>
-                                            <span>{{ list.product_name | titlecase}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{ list.hwid}}</span>
-
-                                        </td>
-                                        <td>
-
-                                            <span>{{ list.license_key}}</span>
-                                        </td>
-                                        <td>
-
-                                            <span>{{ list.concurrent}}</span>
-                                        </td>
-                                        <td>
-
-                                            <span>{{ list.installation_date}}</span>
-                                        </td>
-                                        <td>
-
-                                            <span>{{ list.installation_date}}</span>
-                                        </td>
-                                        <td>
-
-                                            <span>{{ list.remain_days}}</span>
-                                        </td>
-                                        <td>
-                                            <div class="page">
-
-                                                <div class="dropdown">
-                                                    <button class="btn1"><i class="fa fa-bars"></i></button>
-                                                    <ul class="dropdown__list">
+                    <td>
+                      <span>{{ list.product_code | uppercase}}</span>
+                    </td>
 
 
-                                                        <li class="dropdown__item">
-                                                            <a class="hover1" title="License Key Period Setting"
-                                                                (click)="setKeyPeriod(list.sno)">
-                                                                <img class="show" src="assets/img/icon/nfc-pen-b.png">
-                                                                <img class="hide" src="assets/img/icon/nfc-pen.png">
-                                                            </a>
+                    <td>
+                      <span>{{ list.product_name | titlecase}}</span>
+                    </td>
+                    <td>
+                      <span>{{ list.hwid}}</span>
 
-                                                        </li>
+                    </td>
+                    <td>
 
-                                                        <li class="dropdown__item">
-                                                            <a class="hover1" title="Delete" (click)="delete(list.sno)">
-                                                                <img class="show" src="assets/img/icon/remove-b.png">
-                                                                <img class="hide" src="assets/img/icon/remove.png">
-                                                            </a>
-                                                        </li>
+                      <span>{{ list.license_key}}</span>
+                    </td>
+                    <td>
 
-                                                        <!-- <li class="dropdown__item" >
+                      <span>{{ list.concurrent}}</span>
+                    </td>
+                    <td>
+
+                      <span>{{ list.installation_date}}</span>
+                    </td>
+                    <td>
+
+                      <span>{{ list.installation_date}}</span>
+                    </td>
+                    <td>
+
+                      <span>{{ list.remain_days}}</span>
+                    </td>
+                    <td>
+                      <div class="page">
+
+                        <div class="dropdown">
+                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                          <ul class="dropdown__list">
+
+
+                            <li class="dropdown__item">
+                              <a class="hover1" title="License Key Period Setting" (click)="setKeyPeriod(list.sno)">
+                                <img class="show" src="assets/img/icon/nfc-pen-b.png">
+                                <img class="hide" src="assets/img/icon/nfc-pen.png">
+                              </a>
+
+                            </li>
+
+                            <!-- <li class="dropdown__item">
+                              <a class="hover1" title="Delete" (click)="delete(list.sno)">
+                                <img class="show" src="assets/img/icon/remove-b.png">
+                                <img class="hide" src="assets/img/icon/remove.png">
+                              </a>
+                            </li> -->
+
+                            <!-- <li class="dropdown__item" >
                                 <a class="hover1" title="Email" data-toggle="modal" 
                                   data-target="#emailFormId_creditNote">
                                   <img class="show" src="assets/img/icon2/gmail-blue.png">
                                   <img class="hide" src="assets/img/icon2/gmail-black.png">
                                 </a>
                               </li> -->
-                                                        <li class="dropdown__item" *ngIf="list.status==1">
-                                                            <a class="hover1" title="Status Change"
-                                                                (click)="statusChange(list.sno)">
-                                                                <img class="show" src="assets/img/icon2/P-green.png">
-                                                                <img class="hide" src="assets/img/icon2/P-black.png">
-                                                            </a>
-                                                        </li>
-                                                        <li class="dropdown__item" *ngIf="list.status==0">
-                                                            <a class="hover1" title="Status Change"
-                                                                (click)="statusChange(list.sno)">
-                                                                <img class="show" src="assets/img/icon2/P-red.png">
-                                                                <img class="hide" src="assets/img/icon2/P-black.png">
-                                                            </a>
-                                                        </li>
-                                                        <li class="dropdown__item">
-                                                            <a class="hover1" title="License Key Demo Issue Customer"
-                                                                (click)="customer(list.sno)">
-                                                                <img class="show"
-                                                                    src="assets/img/icon2/customer-blue.png">
-                                                                <img class="hide"
-                                                                    src="assets/img/icon2/customer-black.png">
-                                                            </a>
-                                                        </li>
+                            <li class="dropdown__item">
+                              <a class="hover1" title="Notes" (click)="notes(list.sno)">
+                                <img class="show" src="assets/img/icon2/notepad-blue.png">
+                                <img class="hide" src="assets/img/icon2/notepad-black.png">
+                              </a>
+                            </li>
+                            <li class="dropdown__item" *ngIf="list.status==1">
+                              <a class="hover1" title="Status Change" (click)="statusChange(list.sno)">
+                                <img class="show" src="assets/img/icon2/P-green.png">
+                                <img class="hide" src="assets/img/icon2/P-black.png">
+                              </a>
+                            </li>
+                            <li class="dropdown__item" *ngIf="list.status==0">
+                              <a class="hover1" title="Status Change" (click)="statusChange(list.sno)">
+                                <img class="show" src="assets/img/icon2/P-red.png">
+                                <img class="hide" src="assets/img/icon2/P-black.png">
+                              </a>
+                            </li>
+                            <li class="dropdown__item">
+                              <a class="hover1" title="License Key Demo Issue Customer" (click)="customer(list.sno)">
+                                <img class="show" src="assets/img/icon2/customer-blue.png">
+                                <img class="hide" src="assets/img/icon2/customer-black.png">
+                              </a>
+                            </li>
 
-                                                        <li class="dropdown__item">
-                                                            <a class="hover1" title="License Key Flush"
-                                                                (click)="flushTransaction(list.sno)">
-                                                                <img class="show" src="assets/img/icon2/trash-blue.png">
-                                                                <img class="hide"
-                                                                    src="assets/img/icon2/trash-black.png">
-                                                            </a>
-                                                        </li>
-
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                            <li class="dropdown__item">
+                              <a class="hover1" title="License Key Flush" (click)="flushTransaction(list.sno)">
+                                <img class="show" src="assets/img/icon2/trash-blue.png">
+                                <img class="hide" src="assets/img/icon2/trash-black.png">
+                              </a>
+                            </li>
 
 
-                                </tbody>
-                            </table>
-                            <br>
-                            <nav class="atbd-page">
-                                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-                                    <li class="page-item">
-                                        <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                            href="javascript:void(0)"
-                                            (click)="paginationData.backtab=='show' ? getTransactionNewList({'offset':paginationData.start}) : false"><i
-                                                class="fas fa-angle-left"></i></a>
-                                    </li>
-                                    <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                                        <a class="page-link" href="javascript:void(0)"
-                                            (click)="getTransactionNewList({'offset':paginationData.back})"><i
-                                                class="fas fa-angle-double-left"></i></a>
-                                    </li>
-                                    <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                                        *ngFor="let pagination of paginationData.data;let i=index">
-                                        <a class="page-link" href="javascript:void(0)"
-                                            (click)=" pagination.load ==true ? getTransactionNewList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                            <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                                    </li>
-                                    <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                                        <a class="page-link" href="javascript:void(0)"
-                                            (click)="getTransactionNewList({'offset':paginationData.next})"><i
-                                                class="fas fa-angle-double-right"></i></a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                            href="javascript:void(0)"
-                                            (click)="paginationData.nexttab =='show' ? getTransactionNewList({'offset':paginationData.end}) : false"><i
-                                                class="fas fa-angle-right"></i></a>
-                                    </li>
-                                    <li class="dropdown__item">
-                                        <a class="hover3" title="Testing Payment Link" data-toggle="modal"
-                                            data-target="#">
-
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                          </ul>
                         </div>
-                    </div>
+                      </div>
+                    </td>
+                  </tr>
 
 
-                </div>
+                </tbody>
+              </table>
+              <br>
+              <nav class="atbd-page">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? getTransactionNewList({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getTransactionNewList({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? getTransactionNewList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getTransactionNewList({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? getTransactionNewList({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li class="dropdown__item">
+                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
-        </div>
-    </div>
+          </div>
 
-</div>
-  
-
-
-  <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
-
-  <div class="modal fade" id="add_licenceKeyGr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-          background: linear-gradient(to right, #262127, #54b7aa);">
-          License Key Group Add</h2>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label for="license-key-count">How many License Key do you want?</label>
-              <input type="text" id="license-key-count" class="form-control" [(ngModel)]="licenseKeyCount" name="licenseKeyCount" required />
-            </div>
-            <div class="form-group">
-              <label for="product-code">Product Code</label>
-              <input type="text" id="product-code" class="form-control" [(ngModel)]="productCode" name="productCode" required />
-            </div>
-            <div class="form-group">
-              <label for="product-name">Product Name</label>
-              <input type="text" id="product-name" class="form-control" [(ngModel)]="productName" name="productName" required />
-            </div>
-        
-            <button type="submit" class="btn btn-secondary">Submit</button>
-        
-            <!-- Hidden fields with *ngFor to repeat based on the response data -->
-            <div *ngIf="hiddenFieldsVisible">
-              <div *ngFor="let key of hiddenLicenseKeys; let i = index"  class="row" style="margin-top: 20px;">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label for="hidden-product-code-{{i}}">Product Code</label>
-                    <input type="text" id="hidden-product-code-{{i}}" class="form-control" [(ngModel)]="hiddenProductCodes[i]" name="hiddenProductCode{{i}}" />
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label for="hidden-product-name-{{i}}">Product Name</label>
-                    <input type="text" id="hidden-product-name-{{i}}" class="form-control" [(ngModel)]="hiddenProductNames[i]" name="hiddenProductName{{i}}" />
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label for="hidden-license-key-{{i}}">License Key</label>
-                    <input type="text" id="hidden-license-key-{{i}}" class="form-control" [(ngModel)]="hiddenLicenseKeys[i]" name="hiddenLicenseKey{{i}}" readonly />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" [disabled]="!isSubmitting" (click)="saveLicensekey()">Save</button>
-          <button type="button" class="btn btn-danger" (click)="closeAddModal()">Cancel</button>
 
         </div>
       </div>
     </div>
   </div>
 
-  <!-------------- Email-Landscape Pop up ends------------------------------------------>
+</div>
 
 
 
-    <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-    <div class="modal fade" id="customerLicenseForm_Gr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+<div class="modal fade" id="add_licenceKeyGr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          License Key Group Add111</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="col-lg-12 row">
+            <div class="col-lg-4">
+              <label for="license-key-count">How many License Key do you want?</label>
+              <input type="text" id="license-key-count" class="form-control" [(ngModel)]="licenseKeyCount"
+                name="licenseKeyCount" required />
+            </div>
+            <div class="col-lg-4">
+              <label for="product-code">Product Code</label>
+              <input type="text" id="product-code" class="form-control" [(ngModel)]="productCode" name="productCode"
+                required />
+            </div>
+            <div class="col-lg-4">
+              <label for="product-name">Product Name</label>
+              <input type="text" id="product-name" class="form-control" [(ngModel)]="productName" name="productName"
+                required />
+            </div>
+
+          </div>
+
+          <div class="mt-2">
+            <button type="submit" class="btn btn-secondary">Submit</button>
+
+          </div>
+
+
+          <!-- Hidden fields with *ngFor to repeat based on the response data -->
+          <div *ngIf="hiddenFieldsVisible">
+            <div *ngFor="let key of hiddenLicenseKeys; let i = index" class="row" style="margin-top: 20px;">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="hidden-product-code-{{i}}">Product Code</label>
+                  <input type="text" id="hidden-product-code-{{i}}" class="form-control"
+                    [(ngModel)]="hiddenProductCodes[i]" name="hiddenProductCode{{i}}" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="hidden-product-name-{{i}}">Product Name</label>
+                  <input type="text" id="hidden-product-name-{{i}}" class="form-control"
+                    [(ngModel)]="hiddenProductNames[i]" name="hiddenProductName{{i}}" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="hidden-license-key-{{i}}">License Key</label>
+                  <input type="text" id="hidden-license-key-{{i}}" class="form-control"
+                    [(ngModel)]="hiddenLicenseKeys[i]" name="hiddenLicenseKey{{i}}" readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="!isSubmitting"
+          (click)="saveLicensekey()">Save</button>
+        <button type="button" class="btn btn-danger" (click)="closeAddModal()">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+
+
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+
+<div class="modal fade" id="customerLicenseForm_Gr" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Update Customer</h2>
 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="customerLicenseForm">
-            <div class="form-group row col-lg-12">
-              <div class=" col-lg-4">
-                  <label for="license-key-count">Customer Name</label>
-              </div>
-               <div class=" col-lg-8">
-                    <input type="text"  class="form-control"  formControlName="customerName" />
-              </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="customerLicenseForm">
+          <div class="form-group row col-lg-12">
+            <div class=" col-lg-4">
+              <label for="license-key-count">Customer Name</label>
             </div>
+            <div class=" col-lg-8">
+              <input type="text" class="form-control" formControlName="customerName" />
+            </div>
+          </div>
 
-          </form>
-       
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  (click)="customerUpdate()">Update</button>
-          <button type="button" class="btn btn-dark" (click)="closeAddModal()">Cancel</button>
+        </form>
 
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="customerUpdate()">Update</button>
+        <button type="button" class="btn btn-dark" (click)="closeAddModal()">Cancel</button>
+
       </div>
     </div>
   </div>
+</div>
 
-  <!-------------- Email-Landscape Pop up ends------------------------------------------>
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
+<!-----------------Modal Pop Up (BEGIN) Notes-Landscape------------------>
 
+<div class="modal fade" id="myVoipLicenseNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          Notes</h2>
 
-      <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
-
-      <div class="modal fade" id="setKeyPeriodSerialNo_Gr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            
-            <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #262127, #54b7aa);">
-            License Key Period Setting</h2>
-  
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="notesForm">
+          <div class="form-group row col-lg-12">
+            <div class=" col-lg-4">
+              <label for="license-key-count">Notes</label>
+            </div>
+            <div class=" col-lg-8">
+              <input type="text" class="form-control" formControlName="note" />
+            </div>
           </div>
-          <div class="modal-body">
-            <form [formGroup]="setKeyPeriodForm">
-              <div class="col-md-12 col-12" >
-                <div class="form-group row">
-                  <label for="SetPeriod" class="col-lg-6 col-form-label"><span>License Key Date Update</span> :</label>
-                  <div class="col-lg-6">
-                    <input type="checkbox" formControlName="licenseKeyUpdate">
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-12" >
-                <div class="form-group row">
-                  <label for="SetPeriod" class="col-lg-6 col-form-label"><span>Set Period</span> :</label>
-                  <div class="col-lg-6">
-                    <select name="SetPeriod" class="form-control" formControlName="SetPeriod">
-                      <option [ngValue]="null" selected>Select Set Period</option>
-                      <option *ngFor="let template of periodList" value="{{ template.periodid }}">
-                        {{template.name}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-12" >
-                <div class="form-group row">
-                  <label for="SetPeriod" class="col-lg-6 col-form-label"><span>Concurrent</span> :</label>
-                  <div class="col-lg-6">
-                    <select name="Concurrent" class="form-control" formControlName="Concurrent">
-                      <option [ngValue]="null" selected>Select Concurrent</option>
-                      <option *ngFor="let template of concList" value="{{ template.concurrentid }}">
-                        {{template.name}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-  
-            </form>
-         
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary"  (click)="setKeyPeriodUpdate()">Update</button>
-            <button type="button" class="btn btn-dark" (click)="closeAddModal()">Cancel</button>
-  
-          </div>
-        </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="notesUpdate()">Update</button>
+        <button type="button" class="btn btn-dark" (click)="closeAddModal()">Cancel</button>
+
       </div>
     </div>
-  
-    <!-------------- Email-Landscape Pop up ends------------------------------------------>
+  </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
 
 
 
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
+<div class="modal fade" id="setKeyPeriodSerialNo_Gr" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #262127, #54b7aa);">
+          License Key Period Setting</h2>
 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="setKeyPeriodForm">
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SetPeriod" class="col-lg-6 col-form-label"><span>License Key Date Update</span> :</label>
+              <div class="col-lg-6">
+                <input type="checkbox" formControlName="licenseKeyUpdate">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SetPeriod" class="col-lg-6 col-form-label"><span>From Date</span> :</label>
+              <div class="col-lg-6">
+                <input type="date" class="form-control" formControlName="fromDate" (change)="calculatePeriod()">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SetPeriod" class="col-lg-6 col-form-label"><span>To Set Date</span> :</label>
+              <div class="col-lg-6">
+                <input type="date" class="form-control" formControlName="toSetDate" (change)="calculatePeriod()">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SetPeriod" class="col-lg-6 col-form-label"><span>Set Period</span> :</label>
+              <div class="col-lg-6">
+                <!-- <select name="SetPeriod" class="form-control" formControlName="SetPeriod">
+                  <option [ngValue]="null" selected>Select Set Period</option>
+                  <option *ngFor="let template of periodList" value="{{ template.periodid }}">
+                    {{template.name}}
+                  </option>
+                </select> -->
+                <!-- <select formControlName="setPeriod" class="form-control" >
+                  <option>{{ setKeyPeriodForm.get('setPeriod')?.value }}</option>
+                </select> -->
+                <input type="text" formControlName="setPeriod" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SetPeriod" class="col-lg-6 col-form-label"><span>Concurrent</span> :</label>
+              <div class="col-lg-6">
+                <select name="Concurrent" class="form-control" formControlName="Concurrent">
+                  <option [ngValue]="null" selected>Select Concurrent</option>
+                  <option *ngFor="let template of concList" value="{{ template.concurrentid }}">
+                    {{template.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
 
+        </form>
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="setKeyPeriodUpdate()">Update</button>
+        <button type="button" class="btn btn-dark" (click)="closePeriod()">Clear</button>
 
+      </div>
+    </div>
+  </div>
+</div>
 
-
-
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
