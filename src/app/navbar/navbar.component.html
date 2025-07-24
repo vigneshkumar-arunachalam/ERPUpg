@@ -87,18 +87,185 @@
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content addcustomernewallcss">
+        <div class="modal-content addcustomernewallcss" *ngIf="isGlobalModalVisible">
           <div class="modal-header " style="background-color: #cae0e0;">
             <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
               style="font-weight: 500;font-size:x-large; color: #861F41 !important;">Global Search
             </h1>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-              (click)="clearGlobalCustomerName()">
+            <button type="button" class="close" aria-label="Close" (click)="clearGlobalCustomerName();gotoRoot()">
               <span aria-hidden="true">&times;</span>
             </button>
 
           </div>
           <div class="modal-body mousepoint mt-0">
+            <form [formGroup]="GlobalSearch">
+              <div class="row mt-2">
+                <div class="col-lg-6">
+                  <div class="col-lg-12" style="padding-left:0">
+                    <label class="col-lg-3 col-form-label" style="font-weight: 420;color: blue; padding-left:0;"> Select
+                      Pages<span class="mandatoryField">*</span></label>
+                    <input type="checkbox" [checked]="allSelected" (change)="selectAll_menuList($event)"
+                      formControlName="SelectAll_menuName">All Page
+                    <div class="CheckboxScroll">
+                      <div *ngFor="let menuItem of menuList">
+                        <label>
+                          <input type="checkbox" [checked]="menuItem.checked === 'true'"
+                            (change)="onCheckboxChange(menuItem, $event)">
+                          {{ menuItem.menu_name }}
+                        </label>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+
+                </div>
+
+                <div class="col-lg-6 ml-0">
+
+
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_CustomerName" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">Company
+                          Name<span class="mandatoryField" style="color:red">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                          formControlName="GS_CustomerName" (selected)='selectEventCustomer($event)'
+                          (inputCleared)="selectEventCustomerClear($event)" (inputChanged)='searchCustomerData($event)'
+                          (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateCustomer let-item>
+                          <a [innerHTML]="item.customerName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_CustomerCode" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue;">Customer
+                          Code<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_code" [searchKeyword]="keywordCompanyCode"
+                          formControlName="GS_CustomerCode" (selected)='selected_CustomerCode($event)'
+                          (inputChanged)='inpChanged_CodeData($event)' (inputFocused)='onFocused_CustomerCode($event)'
+                          [itemTemplate]="itemTemplateCustomerCode" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateCustomerCode let-item>
+                          <a [innerHTML]="item.customerCode"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
+
+                    </div>
+                  </div>
+                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_DIDNumber" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">DID
+                          Number<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_DIDNumber" [searchKeyword]="keywordDIDNumber"
+                          formControlName="GS_DIDNumber" (selected)='selected_DIDNumber($event)'
+                          (inputChanged)='inpChanged_DIDNumber($event)' (inputFocused)='onFocused_DIDNumber($event)'
+                          [itemTemplate]="itemTemplatedidnumbers" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplatedidnumbers let-item>
+                          <a [innerHTML]="item.did_numbers"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_LicenseNumber" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">License
+                          Number<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_LicenseNumber" [searchKeyword]="keywordLicenseNumber"
+                          formControlName="GS_LicenseNumber" (selected)='selected_LicenseNumber($event)'
+                          (inputChanged)='inpChanged_LicenseNumber($event)'
+                          (inputFocused)='onFocused_LicenseNumber($event)' [itemTemplate]="itemTemplateLicensenumbers"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateLicensenumbers let-item>
+                          <a [innerHTML]="item.license_key"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_LicenseNumber'].invalid && (GlobalSearch.controls['GS_LicenseNumber'].dirty || GlobalSearch.controls['GS_LicenseNumber'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        License Number is Required
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+
+            </form>
             <div *ngIf="(show==false)">
               <label for="companyCode" class="col-lg-12 col-form-label"
                 style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
@@ -200,188 +367,21 @@
               </div>
 
             </div>
-            <form [formGroup]="GlobalSearch">
-              <div class="row mt-2">
-                <div class="col-lg-6">
-                  <div class="col-lg-12" style="padding-left:0">
-                    <label class="col-lg-3 col-form-label" style="font-weight: 420;color: blue; padding-left:0;"> Select
-                      Pages<span class="mandatoryField">*</span></label>
-                    <input type="checkbox" [checked]="allSelected" (change)="selectAll_menuList($event)"
-                      formControlName="SelectAll_menuName">All Page
-                    <div class="CheckboxScroll">
-                      <div *ngFor="let menuItem of menuList">
-                        <label>
-                          <input type="checkbox" [checked]="menuItem.checked === 'true'"
-                            (change)="onCheckboxChange(menuItem, $event)">
-                          {{ menuItem.menu_name }}
-                        </label>
-                      </div>
 
-                    </div>
-                  </div>
-
-
-
-
-
-                </div>
-
-                <div class="col-lg-6 ml-0">
-
-
-                  <div class="col-lg-12">
-                    <div class="form-group row">
-                      <div class="ng-autocomplete">
-                        <label for="GS_CustomerCode" class="col-lg-12 col-form-label"
-                          style="font-weight: 420;color: blue;">Customer
-                          Code<span class="mandatoryField">
-                            *</span></label>
-                        <ng-autocomplete [data]="searchResult_code" [searchKeyword]="keywordCompanyCode"
-                          formControlName="GS_CustomerCode" (selected)='selected_CustomerCode($event)'
-                          (inputChanged)='inpChanged_CodeData($event)' (inputFocused)='onFocused_CustomerCode($event)'
-                          [itemTemplate]="itemTemplateCustomerCode" [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
-
-                        <ng-template #itemTemplateCustomerCode let-item>
-                          <a [innerHTML]="item.customerCode"></a>
-                        </ng-template>
-
-                        <ng-template #notFoundTemplate let-notFound>
-                          <div [innerHTML]="notFound"></div>
-                        </ng-template>
-
-                      </div>
-                      <div
-                        *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
-                        class="alert alert-danger alertdangerCustomCSS mt-2">
-                        Company Name is Required
-                      </div>
-
-                    </div>
-                  </div>
-
-
-                  <div class="col-lg-12">
-                    <div class="form-group row">
-                      <div class="ng-autocomplete">
-                        <label for="GS_CustomerName" class="col-lg-12 col-form-label"
-                          style="font-weight: 420;color: blue; ">Company
-                          Name<span class="mandatoryField">
-                            *</span></label>
-                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                          formControlName="GS_CustomerName" (selected)='selectEventCustomer($event)'
-                           (inputCleared)="selectEventCustomerClear($event)"
-                          (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                          [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
-
-                        <ng-template #itemTemplateCustomer let-item>
-                          <a [innerHTML]="item.customerName"></a>
-                        </ng-template>
-
-                        <ng-template #notFoundTemplate let-notFound>
-                          <div [innerHTML]="notFound"></div>
-                        </ng-template>
-
-                      </div>
-                      <div
-                        *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
-                        class="alert alert-danger alertdangerCustomCSS mt-2">
-                        Company Name is Required
-                      </div>
-
-                    </div>
-                  </div>
-                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-
-                  <div class="col-lg-12">
-                    <div class="form-group row">
-                      <div class="ng-autocomplete">
-                        <label for="GS_DIDNumber" class="col-lg-12 col-form-label"
-                          style="font-weight: 420;color: blue; ">DID
-                          Number<span class="mandatoryField">
-                            *</span></label>
-                        <ng-autocomplete [data]="searchResult_DIDNumber" [searchKeyword]="keywordDIDNumber"
-                          formControlName="GS_DIDNumber" (selected)='selected_DIDNumber($event)'
-                          (inputChanged)='inpChanged_DIDNumber($event)' (inputFocused)='onFocused_DIDNumber($event)'
-                          [itemTemplate]="itemTemplatedidnumbers" [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
-
-                        <ng-template #itemTemplatedidnumbers let-item>
-                          <a [innerHTML]="item.did_numbers"></a>
-                        </ng-template>
-
-                        <ng-template #notFoundTemplate let-notFound>
-                          <div [innerHTML]="notFound"></div>
-                        </ng-template>
-
-                      </div>
-                      <div
-                        *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
-                        class="alert alert-danger alertdangerCustomCSS mt-2">
-                        Company Name is Required
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-
-                  <div class="col-lg-12">
-                    <div class="form-group row">
-                      <div class="ng-autocomplete">
-                        <label for="GS_LicenseNumber" class="col-lg-12 col-form-label"
-                          style="font-weight: 420;color: blue; ">License
-                          Number<span class="mandatoryField">
-                            *</span></label>
-                        <ng-autocomplete [data]="searchResult_LicenseNumber" [searchKeyword]="keywordLicenseNumber"
-                          formControlName="GS_LicenseNumber" (selected)='selected_LicenseNumber($event)'
-                          (inputChanged)='inpChanged_LicenseNumber($event)'
-                         
-                          (inputFocused)='onFocused_LicenseNumber($event)' [itemTemplate]="itemTemplateLicensenumbers"
-                          [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
-
-                        <ng-template #itemTemplateLicensenumbers let-item>
-                          <a [innerHTML]="item.license_key"></a>
-                        </ng-template>
-
-                        <ng-template #notFoundTemplate let-notFound>
-                          <div [innerHTML]="notFound"></div>
-                        </ng-template>
-
-                      </div>
-                      <div
-                        *ngIf="GlobalSearch.controls['GS_LicenseNumber'].invalid && (GlobalSearch.controls['GS_LicenseNumber'].dirty || GlobalSearch.controls['GS_LicenseNumber'].touched)"
-                        class="alert alert-danger alertdangerCustomCSS mt-2">
-                        License Number is Required
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-              </div>
-
-
-            </form>
 
           </div>
 
           <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-primary" (click)="searchGlobalList();">
+            <button type="button" class="btn btn-primary" (click)="searchGlobalList();">
+              Search
+            </button>
+            <!-- <button type="button" class="btn btn-primary" (click)="searchGlobalList_gpt();">
               Search
             </button> -->
-            <button type="button" class="btn btn-primary" (click)="searchGlobalList_gpt();">
-              Searchgpt
-            </button>
-            <button type="button" class="btn btn-primary" (click)="searchNow();">
+            <!-- <button type="button" class="btn btn-primary" (click)="searchNow();">
               Search
-            </button>
-            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="gotoRoot()">
+            </button> -->
+            <button type="button" class="btn btn-dark" (click)="gotoRoot()">
               Cancel
             </button>
 
@@ -435,11 +435,20 @@
               title="e-Invoice Registration"></a>
         </li> -->
         <li>
-          <a href="javascript:;" class="navbar-brand" (click)="stockPreApproval()" style="margin-right: 0;"
+          <!-- <a href="javascript:;" class="navbar-brand" (click)="stockPreApproval()" style="margin-right: 0;"
             *ngIf="hasStockPreAppPermission()">
 
             <img class="svg" src="assets/img/icon2/online-payment.png" style="height: 30px;width:30px;" alt="img"
-              title="Stock Pre Approval"></a>
+              title="Stock Pre Approval">
+             <span  class="count">{{this.postalInvoiceCount}}</span></a> -->
+
+
+          <a href="javascript:;" class="navbar-brand" style=" position: relative;" *ngIf="hasStockPreAppPermission()"
+            (click)="stockPreApproval()">
+
+            <img class="svg" src="assets/img/icon2/online-payment.png" style="height: 30px;width:30px" alt="img"
+              title="Stock Pre Approval">
+            <span class="count">{{this.preApprCount}}</span></a>
         </li>
         <li>
 
@@ -499,8 +508,7 @@
           </div>
         </li>
         <li>
-          <a href="javascript:;" class="navbar-brand" style=" position: relative;"
-            *ngIf="this.role_Permission==7009||3013">
+          <a href="javascript:;" class="navbar-brand" style=" position: relative;" *ngIf="hasRecurringPermission()">
             <span class="countLeft" title="Recurring Invoice new" data-toggle="modal" (click)="getRecurringDemo()"
               data-target="#RecurringInvoicenewFormId">{{monthlyRecurInvCount}}</span>
             <span class="countLeftBottom" title="Recurred Invoice" data-toggle="modal" (click)="getRecurredList()"
@@ -535,8 +543,7 @@
           <a href="javascript:;" class="navbar-brand" (click)="PageList()" *ngIf="(this.GlobalSearchPermission==1148)">
 
             <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
-              (click)="showFunction()" alt="img" title="Global Search" data-toggle="modal"
-              data-target="#ActionIdxx2"></a>
+              (click)="showFunction()" alt="img" title="Global Search"></a>
           <a href="javascript:;" class="navbar-brand">
             <img class="svg" src="assets/img/icon2/to-do-list.png" title="Task List" style="height: 30px;width:30px"
               alt="img" data-toggle="modal" data-target="#TaskList">
@@ -2258,16 +2265,16 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary"  (click)="invoiceApprovee()">
           Invoice Approve
         </button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary"  (click)="PIApprovee()" >
           PI Approve
         </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
+        <button type="button" class="btn btn-dark"  (click)="RejectRecurr()">
           Reject
         </button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary"  (click)="nextRecrr()" >
           Next Recurring
         </button>
 
@@ -2389,11 +2396,11 @@
 
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
-        <button type="button" class="btn btn-primary" data-dismiss="modal"
+        <button type="button" class="btn btn-primary" 
           (click)="getRecurringDemoApproval('Invoice')">
           Invoice Approval
         </button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="getRecurringDemoApproval('Reject')">
+        <button type="button" class="btn btn-warning"  (click)="getRecurringDemoApproval('Reject')">
           Reject
         </button>
 
@@ -2771,62 +2778,45 @@
         <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
           Search
         </h1>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
 
       </div>
       <div class="modal-body">
 
-
         <div class="accordion" id="accordionExample">
 
 
-          <div class="card" *ngIf="(this.PI_UI_Show!=0)">
-            <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  <span>Proforma Invoice</span>
-                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                </button>
-              </h2>
-            </div>
 
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body" *ngIf="(this.PI_UI_Show!=0)">
-                <app-dup-proforma-invoice></app-dup-proforma-invoice>
-              </div>
-
-            </div>
-          </div>
-          <div class="card" *ngIf="(this.Invoice_UI_Show!=0)">
+          <!-- Invoice -->
+          <div class="card" *ngIf="Invoice_UI_Show != 0">
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
                   data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                   <span>Invoice</span>
-                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                  <i class="fa fa-chevron-down"></i>
+                  <i class="fa fa-chevron-up"></i>
                 </button>
               </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
               <div class="card-body">
-
                 <app-dup-invoice></app-dup-invoice>
               </div>
             </div>
           </div>
-          <div class="card" *ngIf="(this.Quot_UI_Show!=0)">
+
+          <!-- Quotation -->
+          <div class="card" *ngIf="Quot_UI_Show != 0">
             <div class="card-header" id="headingThree">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
                   data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                   <span>Quotation</span>
-                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                  <i class="fa fa-chevron-down"></i>
+                  <i class="fa fa-chevron-up"></i>
                 </button>
               </h2>
             </div>
@@ -2836,14 +2826,34 @@
               </div>
             </div>
           </div>
-          <div class="card" *ngIf="(this.Cust_UI_Show!=0)">
+          <!-- Proforma Invoice -->
+          <div class="card" *ngIf="PI_UI_Show != 0">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <span>Proforma Invoice</span>
+                  <i class="fa fa-chevron-down"></i>
+                  <i class="fa fa-chevron-up"></i>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <app-dup-proforma-invoice></app-dup-proforma-invoice>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer -->
+          <div class="card" *ngIf="Cust_UI_Show != 0">
             <div class="card-header" id="headingFour">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
                   data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                   <span>Customer</span>
-                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                  <i class="fa fa-chevron-down"></i>
+                  <i class="fa fa-chevron-up"></i>
                 </button>
               </h2>
             </div>
@@ -2853,12 +2863,15 @@
               </div>
             </div>
           </div>
+
         </div>
+
+
       </div>
 
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
+        <button type="button" class="btn btn-dark" (click)="closeModal()">
           Cancel
         </button>
 
@@ -2877,78 +2890,91 @@
         <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
           Search
         </h1>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
 
       </div>
-      <div class="modal-body">
-        <div class="accordion" id="accordionExample">
-
-          <div class="card" *ngIf="PI_UI_Show">
-            <div class="card-header" id="headingOne">
-              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <span>Proforma Invoice</span>
-              </button>
-            </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
-              <div class="card-body">
-                <app-proforma-invoice [proformaList]="Proforma_list_send"></app-proforma-invoice>
-              </div>
+      <div class="modal-body" style="overflow:scroll">
+        <!-- Proforma Invoice -->
+        <div class="card" *ngIf="PI_UI_Show">
+          <div class="card-header" id="headingOne">
+            <button class="btn btn-link btn-block text-left" type="button"
+              (click)="activePanel = (activePanel === 'proforma' ? '' : 'proforma')">
+              <span>Proforma Invoice</span>
+            </button>
+          </div>
+          <div id="collapseOne" class="collapse" [class.show]="activePanel === 'proforma'" aria-labelledby="headingOne">
+            <div class="card-body">
+              <app-proforma-invoice [proformaList]="Proforma_list_send" [globalSearchStatus]="globalSearchStatusPara"
+                [searchDataGlobal]="searchResultTest" [selectedPages]="selectedPageNames">
+              </app-proforma-invoice>
             </div>
           </div>
-
-          <div class="card" *ngIf="Invoice_UI_Show">
-            <div class="card-header" id="headingTwo">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <span>Invoice</span>
-              </button>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
-              <div class="card-body">
-                <app-invoice [invoiceList]="Invoice_list_send"></app-invoice>
-              </div>
-            </div>
-          </div>
-
-          <div class="card" *ngIf="Quot_UI_Show">
-            <div class="card-header" id="headingThree">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <span>Quotation</span>
-              </button>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
-              <div class="card-body">
-                <app-quotationnew [QuotatList]="Quotation_list_send"></app-quotationnew>
-              </div>
-            </div>
-          </div> 
-
-          <div class="card" *ngIf="Cust_UI_Show">
-            <div class="card-header" id="headingFour">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                <span>Customer</span>
-              </button>
-            </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour">
-              <div class="card-body">
-                <app-customernewall [customerList]="Customer_list_send" [revenueList]="Customer_revenue_send">
-                </app-customernewall>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        <!-- Invoice -->
+        <div class="card" *ngIf="Invoice_UI_Show">
+          <div class="card-header" id="headingTwo">
+            <button class="btn btn-link btn-block text-left" type="button"
+              (click)="activePanel = (activePanel === 'invoice' ? '' : 'invoice')">
+              <span>Invoice</span>
+            </button>
+          </div>
+          <div id="collapseTwo" class="collapse" [class.show]="activePanel === 'invoice'" aria-labelledby="headingTwo">
+            <div class="card-body">
+              <app-invoice [invoiceList]="Invoice_list_send" [globalSearchStatus]="globalSearchStatusPara"
+                [searchDataGlobal]="searchResultTest" [selectedPages]="selectedPageNames">
+              </app-invoice>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quotation -->
+        <div class="card" *ngIf="Quot_UI_Show">
+          <div class="card-header" id="headingThree">
+            <button class="btn btn-link btn-block text-left" type="button"
+              (click)="activePanel = (activePanel === 'quotation' ? '' : 'quotation')">
+              <span>Quotation</span>
+            </button>
+          </div>
+          <div id="collapseThree" class="collapse" [class.show]="activePanel === 'quotation'"
+            aria-labelledby="headingThree">
+            <div class="card-body">
+              <app-quotationnew [QuotatList]="Quotation_list_send" [globalSearchStatus]="globalSearchStatusPara"
+                [searchDataGlobal]="searchResultTest" [selectedPages]="selectedPageNames">
+              </app-quotationnew>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer -->
+        <div class="card" *ngIf="Cust_UI_Show">
+          <div class="card-header" id="headingFour">
+            <button class="btn btn-link btn-block text-left" type="button"
+              (click)="activePanel = (activePanel === 'customer' ? '' : 'customer')">
+              <span>Customer</span>
+            </button>
+          </div>
+          <div id="collapseFour" class="collapse" [class.show]="activePanel === 'customer'"
+            aria-labelledby="headingFour">
+            <div class="card-body">
+              <app-customernewall [customerList]="Customer_list_send" [globalSearchStatus]="globalSearchStatusPara"
+                [searchDataGlobal]="searchResultTest" [selectedPages]="selectedPageNames"
+                [revenueList]="Customer_revenue_send">
+              </app-customernewall>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+
 
 
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-dark"  (click)="closeModal()">
+        <button type="button" class="btn btn-dark" (click)="closeModal()">
           Cancel
         </button>
 

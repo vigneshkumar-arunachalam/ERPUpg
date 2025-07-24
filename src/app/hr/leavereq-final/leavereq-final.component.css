@@ -290,7 +290,8 @@ select {
     border: none;
 }
 button.btn.btn-link {
-    color: #e95d5d;
+    color: #45867f;
+    font-weight: 500;
 }
 .accordion > .card > .card-header {
     border-radius: 0;
@@ -304,4 +305,8 @@ tr:nth-child(even):hover {
     background: linear-gradient(to right, #f5fb97, #fcb35f);
 }
   
-  
+#accordionleave .card-header {
+    border: 1px solid #427e78;
+    border-radius: 10px;
+}
+#accordionleave .card{border:none} 

@@ -162,7 +162,7 @@ export class EditInvoiceComponent implements OnInit {
   billerID_Edit: any;
   userID_Edit: any;
   TaxAmtEDIt: any;
-  search_values:any
+  search_values: any
   searchFlag: any;
   upd_flagName: any;
   upd_search_name: any;
@@ -189,7 +189,7 @@ export class EditInvoiceComponent implements OnInit {
   ShipAdr31: any;
 
   billerIdCurrencyConv: any;
-  sstCheckbox: boolean=false;
+  sstCheckbox: boolean = false;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
@@ -198,16 +198,16 @@ export class EditInvoiceComponent implements OnInit {
     });
     this.serverService.invoice_search.subscribe((val: any) => {
       // alert("hi")
-    
-     // console.log("before parse-invoice search-kavin", val.type) 
-      if(val.type=="search girlfriend"){
+
+      // console.log("before parse-invoice search-kavin", val.type) 
+      if (val.type == "search girlfriend") {
         this.search_values = val;
-      //  console.log("invoice_search-val--------poda",val)
+        //  console.log("invoice_search-val--------poda",val)
       }
       // var k = JSON.parse(val);
       // console.log("kavin",k);
-    // console.log(val['type'])
-    // console.log(val.type)
+      // console.log(val['type'])
+      // console.log(val.type)
 
     });
 
@@ -221,13 +221,13 @@ export class EditInvoiceComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-       // console.log("params output value", params);
+        // console.log("params output value", params);
 
         this.editbillerID = params['e_editBillID'];
         this.editDIDStateID = params['e_editDIDState'];
         this.edit_Duplicate_ID = params['e_editDuplicateID'];
         this.searchFlag = params['e_searchFlag'];
-       
+
 
         // console.log("edit biller id", this.editbillerID);
         // console.log("edit DID state id", this.editDIDStateID);
@@ -237,31 +237,31 @@ export class EditInvoiceComponent implements OnInit {
 
       }
       );
-     
+
 
     // this.route.queryParams
     //   .subscribe(params => {
     //     console.log("params output value", params);
 
-        
+
     //     this.editDIDStateID = params['e_editDIDState'];
 
 
 
 
-     
+
     //     console.log("edit DID state id", this.editDIDStateID);
 
 
 
-       
+
     //   }
     //   );
     this.loadADD();
 
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      
+
     });
 
     this.dynamicCheckboxwithKey = [
@@ -406,7 +406,7 @@ export class EditInvoiceComponent implements OnInit {
     // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = false;
-     // console.log(this.test[index]);
+      // console.log(this.test[index]);
 
 
     });
@@ -451,16 +451,16 @@ export class EditInvoiceComponent implements OnInit {
 
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-   // console.log(this.chkTermsandcondition)
+    // console.log(this.chkTermsandcondition)
   }
   chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
-   // console.log(this.chkReceivedAuthorizedSignature)
+    // console.log(this.chkReceivedAuthorizedSignature)
   }
 
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-   // console.log(this.chklogoAddressSignature)
+    // console.log(this.chklogoAddressSignature)
   }
 
   removeAddress(i: number) {
@@ -476,20 +476,20 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   removeParticular(i: number) {
-  
-  //   console.log('Attempting to remove address at index', i);
-  // console.log('Form array:', this.addresses); 
+
+    //   console.log('Attempting to remove address at index', i);
+    // console.log('Form array:', this.addresses); 
 
     // var pd_billchild_id = $('#pd_billchild_id_' + i).val();
     // console.log("pd_billchild_id-non formarray",pd_billchild_id)
-   // alert(pd_billchild_id)  
-   
-   const othersAddressesArray = this.addPI_section2.get('addresses') as FormArray;
-   
-   
-   const billId_others = othersAddressesArray.at(i).get('pd_billchild_id').value;
-  
-   // console.log("pd_billchild_id-formarray",billId_others)
+    // alert(pd_billchild_id)  
+
+    const othersAddressesArray = this.addPI_section2.get('addresses') as FormArray;
+
+
+    const billId_others = othersAddressesArray.at(i).get('pd_billchild_id').value;
+
+    // console.log("pd_billchild_id-formarray",billId_others)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -513,12 +513,12 @@ export class EditInvoiceComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-       // api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        // api_ProdAutoFill_req.billchild_id = pd_billchild_id;
         api_ProdAutoFill_req.billchild_id = billId_others;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-         // console.log("response", response);
+          // console.log("response", response);
 
         });
 
@@ -556,24 +556,24 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   finalDiscountCalc() {
-   // console.log("-----------------------------------------------------")
+    // console.log("-----------------------------------------------------")
     var enablePercentabeDiscont = $('#enablePerFinal1').val()
-  //  console.log("enablePercentabeDiscont", enablePercentabeDiscont)
+    //  console.log("enablePercentabeDiscont", enablePercentabeDiscont)
     var enablePriceDiscont = $('#finaldiscountTYpe_amt').val()
-   // console.log("enablePriceDiscont", enablePriceDiscont)
+    // console.log("enablePriceDiscont", enablePriceDiscont)
     var tax_amt = $('#tax_amt_id').val()
-  //  console.log("tax_amt", tax_amt)
+    //  console.log("tax_amt", tax_amt)
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-  //  console.log("disType", disType)
+    //  console.log("disType", disType)
     var final_tot = this.grossTotal;
-   // console.log("final_tot-grosstotal", this.grossTotal)
+    // console.log("final_tot-grosstotal", this.grossTotal)
 
     var price: any;
 
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
-  //  console.log('disType' + disType + 'final_tot' + final_tot);
+    //  console.log('disType' + disType + 'final_tot' + final_tot);
 
     if (disType == 'per') {
 
@@ -609,7 +609,7 @@ export class EditInvoiceComponent implements OnInit {
       this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
 
-   // console.log('grandTotal' + this.grandTotal);
+    // console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
 
     setTimeout(() => {
@@ -657,19 +657,19 @@ export class EditInvoiceComponent implements OnInit {
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-    //  console.log('discount_type' + discount_type);
+      //  console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-      //  console.log('discount_type1111' + this.sub_dis_val);
+        //  console.log('discount_type1111' + this.sub_dis_val);
         if (this.sub_dis_val == '') {
           this.sub_dis_val = 0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-       // console.log('dis_amt_val' + dis_amt_val);
+        // console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val);
-        
-        $('#pd_netPrice_'+a).val((sub_total_amt).toFixed(2));
-        $('#sub_discount_'+a).val(dis_amt_val);
+
+        $('#pd_netPrice_' + a).val((sub_total_amt).toFixed(2));
+        $('#sub_discount_' + a).val(dis_amt_val);
       } else if (discount_type == 'amt') {
 
 
@@ -688,7 +688,7 @@ export class EditInvoiceComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
-      //  console.log('-this.finalDiscount---' + this.finalDiscount);
+        //  console.log('-this.finalDiscount---' + this.finalDiscount);
 
         tax_amt_tot += netAmt;
 
@@ -760,7 +760,7 @@ export class EditInvoiceComponent implements OnInit {
     // console.log("evt-id", evt.target.id)
     this.radio_Value_ExportState = evt.target.value;
 
-   // console.log("radio button value", this.radio_Value_ExportState);
+    // console.log("radio button value", this.radio_Value_ExportState);
 
   }
   handleChange_SelectExtraLogo(data: any, evt: any) {
@@ -771,7 +771,7 @@ export class EditInvoiceComponent implements OnInit {
     // console.log("evt-id", evt.target.id)
     this.radio_Value_SelectExtraLogo = evt.target.value;
 
-   // console.log("radio button value", this.radio_Value_SelectExtraLogo);
+    // console.log("radio button value", this.radio_Value_SelectExtraLogo);
 
   }
   handleChange_mileSate_InvoiceType(data: any, evt: any) {
@@ -782,12 +782,12 @@ export class EditInvoiceComponent implements OnInit {
     // console.log("evt-id", evt.target.id)
     this.radio_Value_mileSate_InvoiceType = evt.target.value;
 
-   // console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
+    // console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
 
   }
-  handleChange_SSTax(event:any){
-    this.sstCheckbox=event.target.checked;
-  //  console.log("this.sstCheckbox",this.sstCheckbox);
+  handleChange_SSTax(event: any) {
+    this.sstCheckbox = event.target.checked;
+    //  console.log("this.sstCheckbox",this.sstCheckbox);
 
   }
 
@@ -798,26 +798,26 @@ export class EditInvoiceComponent implements OnInit {
   }
   cbk_fn_conversionAmtShow(event: any) {
     this.cbk_conversionAmtShow_value = event.target.checked;
-   // console.log(this.cbk_conversionAmtShow_value)
+    // console.log(this.cbk_conversionAmtShow_value)
 
   }
   cbk_fn_deductWithholdingTax(event: any) {
     this.cbk_deductWithholdingTax = event.target.checked;
-   // console.log(this.cbk_deductWithholdingTax)
+    // console.log(this.cbk_deductWithholdingTax)
 
   }
   cbk_fn_previousDue(event: any) {
     this.cbk_previousDue = event.target.checked;
-  //  console.log(this.cbk_previousDue)
+    //  console.log(this.cbk_previousDue)
   }
   cbk_fn_JomPAYLogo(event: any) {
     this.cbk_JomPAYLogo = event.target.checked;
-   // console.log(this.cbk_JomPAYLogo)
+    // console.log(this.cbk_JomPAYLogo)
   }
 
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
-  //  console.log(this.EditShippingAddress)
+    //  console.log(this.EditShippingAddress)
 
     if (this.EditShippingAddress) {
 
@@ -843,34 +843,34 @@ export class EditInvoiceComponent implements OnInit {
 
   selectEventCustomer(item: any) {
 
-   // console.log(item)
+    // console.log(item)
 
   }
   onFocusedCustomer(e: any) {
 
   }
   EditCHK_MileDiscount(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_MileDiscount = data;
     this.checkbox_value_MileDiscount = event.target.checked;
-   // console.log(this.checkbox_value_MileDiscount)
+    // console.log(this.checkbox_value_MileDiscount)
     if (this.checkbox_value_MileDiscount) {
 
       this.edit_array_MileDiscount.push(data);
       this.edit_array_MileDiscount.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
     }
     else {
       const index = this.edit_array_MileDiscount.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_MileDiscount.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
 
     }
   }
   EditCHK_ExtraLogo(data: any, event: any) {
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_ExtraLogo = data;
     this.checkbox_value_ExtraLogo = event.target.checked;
     // console.log(this.checkbox_value_ExtraLogo)
@@ -878,14 +878,14 @@ export class EditInvoiceComponent implements OnInit {
 
       this.edit_array_ExtraLogo.push(data);
       this.edit_array_ExtraLogo.join(',');
-     //  console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
+      //  console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
     }
     else {
       const index = this.edit_array_ExtraLogo.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_ExtraLogo.splice(index, 1);
       }
-    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
+      //  console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
 
     }
   }
@@ -901,7 +901,7 @@ export class EditInvoiceComponent implements OnInit {
     add_BillerDetails_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log(response);
+      // console.log(response);
 
 
       if (response != '') {
@@ -932,7 +932,7 @@ export class EditInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log(error);
+        // console.log(error);
       }
 
 
@@ -960,7 +960,7 @@ export class EditInvoiceComponent implements OnInit {
       this.paymentviaList = response.paymentvia;
 
 
-   //   console.log("response-load-pi", response)
+      //   console.log("response-load-pi", response)
     });
 
   }
@@ -990,7 +990,7 @@ export class EditInvoiceComponent implements OnInit {
 
         }, 500);
 
-       // console.log('response.default_tax_id' + response.default_tax_id);
+        // console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -1014,7 +1014,7 @@ export class EditInvoiceComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_name response", response.customer_list.customerId);
+      //  console.log("vignesh-customer_name response", response.customer_list.customerId);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1029,7 +1029,7 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   searchCustomer_selectDropdownData(data: any) {
-    
+
     // alert(2)
     this.spinner.show();
     // console.log("search data in dropdown", data)
@@ -1054,32 +1054,32 @@ export class EditInvoiceComponent implements OnInit {
 
       this.spinner.hide();
       if (response.status == true) {
-        this.custAdr1=response.customer_details.customerAddress1;
-        this.custAdr2=response.customer_details.customerAddress2;
-        this.custAdr3=response.customer_details.city;
-        this.ShipAdr1=response.customer_details.ship_customerAddress1;
-        this.ShipAdr2=response.customer_details.ship_customerAddress2;
-        this.ShipAdr3=response.customer_details.ship_city;
+        this.custAdr1 = response.customer_details.customerAddress1;
+        this.custAdr2 = response.customer_details.customerAddress2;
+        this.custAdr3 = response.customer_details.city;
+        this.ShipAdr1 = response.customer_details.ship_customerAddress1;
+        this.ShipAdr2 = response.customer_details.ship_customerAddress2;
+        this.ShipAdr3 = response.customer_details.ship_city;
 
-        if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
-          this.shipAddress1_Final=this.custAdr1
-        }else{
-          this.shipAddress1_Final=this.ShipAdr1
+        if (this.ShipAdr1 == null || this.ShipAdr1 == '' || this.ShipAdr1 == 'undefined' || this.ShipAdr1 == undefined) {
+          this.shipAddress1_Final = this.custAdr1
+        } else {
+          this.shipAddress1_Final = this.ShipAdr1
         }
-       
-        if(this.ShipAdr2==null || this.ShipAdr2=='' || this.ShipAdr2=='undefined' || this.ShipAdr2==undefined){
-          this.shipAddress2_Final=this.custAdr2
-        }else{
-          this.shipAddress2_Final=this.ShipAdr2
+
+        if (this.ShipAdr2 == null || this.ShipAdr2 == '' || this.ShipAdr2 == 'undefined' || this.ShipAdr2 == undefined) {
+          this.shipAddress2_Final = this.custAdr2
+        } else {
+          this.shipAddress2_Final = this.ShipAdr2
         }
-        if(this.ShipAdr3==null || this.ShipAdr3=='' || this.ShipAdr3=='undefined' || this.ShipAdr3==undefined){
-          this.shipAddress3_Final=this.custAdr3
-        }else{
-          this.shipAddress3_Final=this.ShipAdr3
+        if (this.ShipAdr3 == null || this.ShipAdr3 == '' || this.ShipAdr3 == 'undefined' || this.ShipAdr3 == undefined) {
+          this.shipAddress3_Final = this.custAdr3
+        } else {
+          this.shipAddress3_Final = this.ShipAdr3
         }
-        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
-          this.ship_to_str_Final= response.customer_details.customerName; 
-       
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined) {
+          this.ship_to_str_Final = response.customer_details.customerName;
+
         } else {
           this.ship_to_str_Final = response.customer_details.ship_to;
         }
@@ -1093,7 +1093,7 @@ export class EditInvoiceComponent implements OnInit {
           'address_2': response.customer_details.customerAddress2,
           'address_3': response.customer_details.customerAddress3,
           'Attn_1': response.customer_details.kind_Attention,
-          'ship_to':  response.customer_details.ship_to,
+          'ship_to': response.customer_details.ship_to,
           'shipTo_1': response.customer_details.ship_customerAddress1,
           'shipTo_2': response.customer_details.ship_customerAddress2,
           'shipTo_3': response.customer_details.ship_customerAddress3,
@@ -1114,8 +1114,8 @@ export class EditInvoiceComponent implements OnInit {
   getCustomerInvoiceDetails(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
-    this.billerID_Edit=event.target.value;
-  //  console.log("billerID check", this.billerID);
+    this.billerID_Edit = event.target.value;
+    //  console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1136,7 +1136,7 @@ export class EditInvoiceComponent implements OnInit {
 
           'invoiceNo': response.invoice_no,
           'Currency': response.currency_id,
-          'CurrencyConversionRate':response.currencyValue
+          'CurrencyConversionRate': response.currencyValue
 
         });
 
@@ -1184,7 +1184,7 @@ export class EditInvoiceComponent implements OnInit {
 
       if (response != '') {
         this.spinner.hide();
-        if(response.billing_pararent_details[0]){
+        if (response.billing_pararent_details[0]) {
           this.shipAdd_Edit = response.billing_pararent_details[0].s_address
           this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy
           this.billID_Edit = response.billing_pararent_details[0].billId;
@@ -1192,126 +1192,126 @@ export class EditInvoiceComponent implements OnInit {
           this.exportState_value = response.billing_pararent_details[0].export_state;
           this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
           this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
-          this.customerID_value =response.billing_pararent_details[0].custId
+          this.customerID_value = response.billing_pararent_details[0].custId
           this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
           this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
           this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-         // console.log(response.billing_pararent_details[0].currency)
+          // console.log(response.billing_pararent_details[0].currency)
           $('#curren').val(response.billing_pararent_details[0].currency);
-       //   $('#inlineCjjedit').val(response.billing_pararent_details[0].sst_tax);
+          //   $('#inlineCjjedit').val(response.billing_pararent_details[0].sst_tax);
           this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
-  
-  
+
+
           this.customerName_Data = response.billing_pararent_details[0].custId;
           this.customerName_Change = response.billing_pararent_details[0].b_name;
-  
-          let cus_address=response.billing_pararent_details[0].b_address;
-          let ship_address=response.billing_pararent_details[0].s_address;
+
+          let cus_address = response.billing_pararent_details[0].b_address;
+          let ship_address = response.billing_pararent_details[0].s_address;
           let cus_address_break = cus_address.split('\n');
           let ship_address_break = ship_address.split('\n');
-          this.custAdr11=cus_address_break[0];
-          this.custAdr21=cus_address_break[1];
-          this.custAdr31=cus_address_break[2];
-          this.ShipAdr11=ship_address_break[0];
-          this.ShipAdr21=ship_address_break[1];
-          this.ShipAdr31=ship_address_break[2];
+          this.custAdr11 = cus_address_break[0];
+          this.custAdr21 = cus_address_break[1];
+          this.custAdr31 = cus_address_break[2];
+          this.ShipAdr11 = ship_address_break[0];
+          this.ShipAdr21 = ship_address_break[1];
+          this.ShipAdr31 = ship_address_break[2];
         }
-  
-       
-       
-      
- 
- 
-if(response.billing_pararent_details[0]){
-  this.addPI_section1.patchValue({
-    'billId_edit': response.billing_pararent_details[0].billId,
-    'companyName': response.billing_pararent_details[0].billerId,
-    'BillTo': response.billing_pararent_details[0].b_name,
-    'customer_name': response.billing_pararent_details[0].b_name,
-    'customer_id_hd': response.billing_pararent_details[0].custId,
-    'address_1': this.custAdr11,
-    'address_2': this.custAdr21,
-    'address_3': this.custAdr31,
-    'shipTo_1':this.ShipAdr11,
-    'shipTo_2':this.ShipAdr21,
-    'shipTo_3':this.ShipAdr31,
 
-    'Attn_1': response.billing_pararent_details[0].b_attn,
 
-    'Attn_2': response.billing_pararent_details[0].s_attn,
-    'Ref': response.billing_pararent_details[0].ref,
 
-    'invoiceNo': response.billing_pararent_details[0].invoice_no,
-    'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
-    'tin': response.billing_pararent_details[0].tinNo,
-    'cst': response.billing_pararent_details[0].cstNo,
-    'Date': response.billing_pararent_details[0].billDate,
-    'PoNo': response.billing_pararent_details[0].po_no,
-    'PoDate': response.billing_pararent_details[0].po_date,
-    'salesRep': response.billing_pararent_details[0].sales_rep,
-    'ShipBy': response.billing_pararent_details[0].ship_by,
-    'ShipDate': response.billing_pararent_details[0].ship_date,
-    'terms': response.billing_pararent_details[0].terms,
-    'Currency': response.billing_pararent_details[0].currency,
-    'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-    'PaymentVia': response.billing_pararent_details[0].paymentVIA,
-    'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
-    'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
-    'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
-    'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
-    'sst_Cbk': response.billing_pararent_details[0].sst_tax,
 
-  });
 
-//  console.log('billchild_details.length' + response.billchild_details.length);
-  this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
 
-}
+        if (response.billing_pararent_details[0]) {
+          this.addPI_section1.patchValue({
+            'billId_edit': response.billing_pararent_details[0].billId,
+            'companyName': response.billing_pararent_details[0].billerId,
+            'BillTo': response.billing_pararent_details[0].b_name,
+            'customer_name': response.billing_pararent_details[0].b_name,
+            'customer_id_hd': response.billing_pararent_details[0].custId,
+            'address_1': this.custAdr11,
+            'address_2': this.custAdr21,
+            'address_3': this.custAdr31,
+            'shipTo_1': this.ShipAdr11,
+            'shipTo_2': this.ShipAdr21,
+            'shipTo_3': this.ShipAdr31,
 
-       
+            'Attn_1': response.billing_pararent_details[0].b_attn,
+
+            'Attn_2': response.billing_pararent_details[0].s_attn,
+            'Ref': response.billing_pararent_details[0].ref,
+
+            'invoiceNo': response.billing_pararent_details[0].invoice_no,
+            'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
+            'tin': response.billing_pararent_details[0].tinNo,
+            'cst': response.billing_pararent_details[0].cstNo,
+            'Date': response.billing_pararent_details[0].billDate,
+            'PoNo': response.billing_pararent_details[0].po_no,
+            'PoDate': response.billing_pararent_details[0].po_date,
+            'salesRep': response.billing_pararent_details[0].sales_rep,
+            'ShipBy': response.billing_pararent_details[0].ship_by,
+            'ShipDate': response.billing_pararent_details[0].ship_date,
+            'terms': response.billing_pararent_details[0].terms,
+            'Currency': response.billing_pararent_details[0].currency,
+            'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
+            'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+            'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
+            'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
+            'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
+            'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
+            'sst_Cbk': response.billing_pararent_details[0].sst_tax,
+
+          });
+
+          //  console.log('billchild_details.length' + response.billchild_details.length);
+          this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+
+        }
+
+
 
         this.TaxDropdown();
 
 
         const formArray = new FormArray([]);
-        if(response.billchild_details){
+        if (response.billchild_details) {
           for (let index = 0; index < response.billchild_details.length; index++) {
 
             //  console.log('billchild_details++index' + index);
-    
-    
-              formArray.push(this.fb.group({
-                "pd_billchild_id": response.billchild_details[index].billChildid,
-                "pd_nextPage_checkbox": response.billchild_details[index].to_next_page == 1 ? true : false,
-    
-                "pd_productName_txtbox1": response.billchild_details[index].productName,
-                "pd_productName_txtArea": response.billchild_details[index].productDesc,
-                "pd_quantity_txtbox1": response.billchild_details[index].quantity,
-                "pd_current_month_str": response.billchild_details[index].current_month_str,
-                "pd_unit": response.billchild_details[index].unit,
-                "pd_sellingPrice": response.billchild_details[index].rate,
-                "pd_Total": response.billchild_details[index].total_amt,
-                "pd_netPrice": response.billchild_details[index].net_amt,
-                "pd_OutCall": response.billchild_details[index].out_call_state == 1 ? true : false,
-                "sub_dis_amt": response.billchild_details[index].dis_amt,
-                "sub_dis_type": response.billchild_details[index].dis_type,
-                "sub_dis_val": response.billchild_details[index].dis_per,
-                "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
-                "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
-    
-    
-              })
-    
-              );
-            }
+
+
+            formArray.push(this.fb.group({
+              "pd_billchild_id": response.billchild_details[index].billChildid,
+              "pd_nextPage_checkbox": response.billchild_details[index].to_next_page == 1 ? true : false,
+
+              "pd_productName_txtbox1": response.billchild_details[index].productName,
+              "pd_productName_txtArea": response.billchild_details[index].productDesc,
+              "pd_quantity_txtbox1": response.billchild_details[index].quantity,
+              "pd_current_month_str": response.billchild_details[index].current_month_str,
+              "pd_unit": response.billchild_details[index].unit,
+              "pd_sellingPrice": response.billchild_details[index].rate,
+              "pd_Total": response.billchild_details[index].total_amt,
+              "pd_netPrice": response.billchild_details[index].net_amt,
+              "pd_OutCall": response.billchild_details[index].out_call_state == 1 ? true : false,
+              "sub_dis_amt": response.billchild_details[index].dis_amt,
+              "sub_dis_type": response.billchild_details[index].dis_type,
+              "sub_dis_val": response.billchild_details[index].dis_per,
+              "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
+              "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
+
+
+            })
+
+            );
+          }
 
         }
-       
 
 
-      //  console.log(formArray)
+
+        //  console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
-      //  console.log(this.addresses)
+        //  console.log(this.addresses)
 
 
         this.finalDiscountType = '';
@@ -1329,17 +1329,17 @@ if(response.billing_pararent_details[0]){
 
         }
 
-        if(response.billing_pararent_details[0]){
+        if (response.billing_pararent_details[0]) {
           this.addPI_section3.patchValue({
             //row-1
-  
+
             'section3_gross_total': response.billing_pararent_details[0].grossAmount,
             //row-2
-  
+
             'section3_discount_txtbox': response.billing_pararent_details[0].discountAmount,
             'final_dis_val': this.finalDiscountVal,
             'final_dis_type': this.finalDiscountType,
-  
+
             //row-3
             'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
             'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
@@ -1348,14 +1348,14 @@ if(response.billing_pararent_details[0]){
             'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
             'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
             'banking_charge_name': response.billing_pararent_details[0].add_name,
-  
+
             'banking_charge_amt': response.billing_pararent_details[0].add_amt,
             //row-5
             'section3_grand_total': response.billing_pararent_details[0].netPayment,
             //row-7
             'section3_remarks': response.billing_pararent_details[0].remarks,
             'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
-  
+
             //row-8
             'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
             'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
@@ -1369,13 +1369,13 @@ if(response.billing_pararent_details[0]){
             'section3_logo': response.billing_pararent_details[0].print_logo,
             'section3_select_additional_signature': response.quot_signature_show_state,
           });
-  
-         // console.log('==finalDiscountVal==' + this.finalDiscountVal);
+
+          // console.log('==finalDiscountVal==' + this.finalDiscountVal);
           this.received_signature_state = response.billing_pararent_details[0].received_signature;
           this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
         }
-       
+
 
 
         this.editAddress();
@@ -1405,8 +1405,8 @@ if(response.billing_pararent_details[0]){
 
         //   $('#billerIDs').val(this.TaxValuEDIt);
         //   $('#tax_amt_id').val(this.TaxAmtEDIt);
-          
-          
+
+
         // }, 3000);
 
         this.spinner.hide();
@@ -1430,7 +1430,7 @@ if(response.billing_pararent_details[0]){
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log(error);
+        //  console.log(error);
       }
 
     this.spinner.hide();
@@ -1440,13 +1440,13 @@ if(response.billing_pararent_details[0]){
 
 
   Customer_selectDropdownData(customerId: any) {
-  
-  
-  this.spinner.show();
+
+
+    this.spinner.show();
     this.customerName_Data = customerId;
     // console.log("this.customerName_Data",this.customerName_Data)
     // console.log("this.customerName_Change",this.customerName_Change)
- 
+
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -1455,43 +1455,43 @@ if(response.billing_pararent_details[0]){
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
     api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        
+
     api_SearchCUST_req.billerId = this.addPI_section1.value.companyName;
     api_SearchCUST_req.customerId = customerId;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    //  console.log("customer_address_details---response", response)
+      //  console.log("customer_address_details---response", response)
       if (response.status == true) {
 
         this.spinner.hide();
 
-        this.custAdr1=response.customer_details.customerAddress1;
-        this.custAdr2=response.customer_details.customerAddress2;
-        this.custAdr3=response.customer_details.city;
-        this.ShipAdr1=response.customer_details.ship_customerAddress1;
-        this.ShipAdr2=response.customer_details.ship_customerAddress2;
-        this.ShipAdr3=response.customer_details.ship_city;
+        this.custAdr1 = response.customer_details.customerAddress1;
+        this.custAdr2 = response.customer_details.customerAddress2;
+        this.custAdr3 = response.customer_details.city;
+        this.ShipAdr1 = response.customer_details.ship_customerAddress1;
+        this.ShipAdr2 = response.customer_details.ship_customerAddress2;
+        this.ShipAdr3 = response.customer_details.ship_city;
 
-        if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
-          this.shipAddress1_Final=this.custAdr1
-        }else{
-          this.shipAddress1_Final=this.ShipAdr1
+        if (this.ShipAdr1 == null || this.ShipAdr1 == '' || this.ShipAdr1 == 'undefined' || this.ShipAdr1 == undefined) {
+          this.shipAddress1_Final = this.custAdr1
+        } else {
+          this.shipAddress1_Final = this.ShipAdr1
         }
-       
-        if(this.ShipAdr2==null || this.ShipAdr2=='' || this.ShipAdr2=='undefined' || this.ShipAdr2==undefined){
-          this.shipAddress2_Final=this.custAdr2
-        }else{
-          this.shipAddress2_Final=this.ShipAdr2
+
+        if (this.ShipAdr2 == null || this.ShipAdr2 == '' || this.ShipAdr2 == 'undefined' || this.ShipAdr2 == undefined) {
+          this.shipAddress2_Final = this.custAdr2
+        } else {
+          this.shipAddress2_Final = this.ShipAdr2
         }
-        if(this.ShipAdr3==null || this.ShipAdr3=='' || this.ShipAdr3=='undefined' || this.ShipAdr3==undefined){
-          this.shipAddress3_Final=this.custAdr3
-        }else{
-          this.shipAddress3_Final=this.ShipAdr3
+        if (this.ShipAdr3 == null || this.ShipAdr3 == '' || this.ShipAdr3 == 'undefined' || this.ShipAdr3 == undefined) {
+          this.shipAddress3_Final = this.custAdr3
+        } else {
+          this.shipAddress3_Final = this.ShipAdr3
         }
-        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
-          this.ship_to_str_Final= response.customer_details.customerName; 
-       
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined) {
+          this.ship_to_str_Final = response.customer_details.customerName;
+
         } else {
           this.ship_to_str_Final = response.customer_details.ship_to;
         }
@@ -1505,13 +1505,13 @@ if(response.billing_pararent_details[0]){
           'address_2': response.customer_details.customerAddress2,
           'address_3': response.customer_details.customerAddress3,
           'Attn_1': response.customer_details.kind_Attention,
-          'ship_to':  response.customer_details.ship_to,
+          'ship_to': response.customer_details.ship_to,
           'shipTo_1': response.customer_details.ship_customerAddress1,
           'shipTo_2': response.customer_details.ship_customerAddress2,
           'shipTo_3': response.customer_details.ship_customerAddress3,
           'ship_attn': response.customer_details.ship_attn,
 
-        //  'cusInvoiceNo': response.customer_invoice_no,
+          //  'cusInvoiceNo': response.customer_invoice_no,
         });
       }
       else {
@@ -1532,14 +1532,14 @@ if(response.billing_pararent_details[0]){
     });
   }
 
-  clearSelection(event:any){
-    this.customerName_Data='';
-    this.customerName_Change='';
+  clearSelection(event: any) {
+    this.customerName_Data = '';
+    this.customerName_Change = '';
   }
 
   updateInvoice() {
- 
-  
+
+
     // console.log("alert(this.customerName_Change)",this.customerName_Change)
     // console.log("alert(this.customerName_Data)",this.customerName_Data)
     var vv = this.addPI_section1.value.shipTo_3;
@@ -1577,38 +1577,38 @@ if(response.billing_pararent_details[0]){
     api_updatePI_req.action = "update_proforma_invoice";
     api_updatePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-  //  console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
+    //  console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
     api_updatePI_req.billerId = this.addPI_section1.value.companyName;
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-   
+
     api_updatePI_req.cus_invoice_no = $('#cusInvNo').val();
-  
-    if(this.customerName_Data==null || this.customerName_Data==''){
+
+    if (this.customerName_Data == null || this.customerName_Data == '') {
       this.spinner.hide();
       iziToast.error({
         message: "Bill To is empty",
         position: 'topRight'
       });
       return false;
-    }else{
-     
+    } else {
+
       api_updatePI_req.customerId = this.customerName_Data;
     }
-    
-    if(this.customerName_Change==null || this.customerName_Change==''){
+
+    if (this.customerName_Change == null || this.customerName_Change == '') {
       this.spinner.hide();
       iziToast.error({
         message: "Bill To is empty",
         position: 'topRight'
       });
       return false;
-    }else{
-     
+    } else {
+
       api_updatePI_req.b_name = this.customerName_Change;
     }
 
-   // api_updatePI_req.b_name = this.customerName_Change;
+    // api_updatePI_req.b_name = this.customerName_Change;
     api_updatePI_req.tinNo = this.addPI_section1.value.tin;
     api_updatePI_req.b_address1 = this.addPI_section1.value.address_1;
     api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
@@ -1616,35 +1616,35 @@ if(response.billing_pararent_details[0]){
     api_updatePI_req.cstNo = this.addPI_section1.value.cst;
     api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
-   // api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
-    api_updatePI_req.searchFlag =this.searchFlag;
+    // api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
+    api_updatePI_req.searchFlag = this.searchFlag;
 
-    if(this.addPI_section1.value.shipTo_1==null){
-      api_updatePI_req.ship_address_1 =this.shipAddress1_Final 
-    }else{
+    if (this.addPI_section1.value.shipTo_1 == null) {
+      api_updatePI_req.ship_address_1 = this.shipAddress1_Final
+    } else {
       api_updatePI_req.ship_address_1 = this.addPI_section1.value.shipTo_1
     }
-    if(this.addPI_section1.value.shipTo_2==null){
-      api_updatePI_req.ship_address_2 =this.shipAddress2_Final 
-    }else{
+    if (this.addPI_section1.value.shipTo_2 == null) {
+      api_updatePI_req.ship_address_2 = this.shipAddress2_Final
+    } else {
       api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2
     }
 
-    if(this.addPI_section1.value.shipTo_3==null){
-      api_updatePI_req.ship_address_3 =this.shipAddress3_Final 
-    }else{
+    if (this.addPI_section1.value.shipTo_3 == null) {
+      api_updatePI_req.ship_address_3 = this.shipAddress3_Final
+    } else {
       api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3
     }
 
     if (this.addPI_section1.value.ship_to == undefined) {
-      api_updatePI_req.s_name =  this.ship_to_str_Final;
+      api_updatePI_req.s_name = this.ship_to_str_Final;
 
     }
     else {
       api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
     }
 
-      api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
+    api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
 
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
@@ -1671,7 +1671,7 @@ if(response.billing_pararent_details[0]){
     api_updatePI_req.dw_tax_state = this.addPI_section1.value.DWT_Cbk;
     api_updatePI_req.sst_tax = $('#inlineCjjedit').val();
 
-   
+
 
 
     //section-2
@@ -1729,7 +1729,7 @@ if(response.billing_pararent_details[0]){
 
     var addr = this.addPI_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-     // console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
+      // console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
       addr[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -1755,10 +1755,10 @@ if(response.billing_pararent_details[0]){
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     // console.log("add quotation new save", response);
+      // console.log("add quotation new save", response);
       if (response.status == true) {
-        this.upd_flagName=response.searchFlag;
-        this.upd_search_name=response.search_name;
+        this.upd_flagName = response.searchFlag;
+        this.upd_search_name = response.search_name;
         this.spinner.hide();
         this.goBack();
         iziToast.success({
@@ -1767,13 +1767,13 @@ if(response.billing_pararent_details[0]){
           message: 'Invoice Updated Successfully !',
         });
         setTimeout(() => {
-         
-        //  console.log("search_values",this.search_values)
+
+          //  console.log("search_values",this.search_values)
           this.serverService.invoice_search1.next(this.search_values);
         }, 1000);
 
         setTimeout(() => {
-         
+
           this.router.navigate(['/invoice'], {
             queryParams: {
               upd_searchFlag: this.upd_flagName,
@@ -1781,11 +1781,11 @@ if(response.billing_pararent_details[0]){
             }
           });
         }, 2000);
-        
-        this.goBack();
-      
 
-      }else if(response.status == false){
+        this.goBack();
+
+
+      } else if (response.status == false) {
         this.spinner.hide();
         iziToast.error({
           title: 'Not Updated',
@@ -1808,15 +1808,15 @@ if(response.billing_pararent_details[0]){
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
     this.goBack();
   }
 
   getCurrencyValues(event: any) {
-   // console.log("event.target;", event.target);
+    // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-   // console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1937,17 +1937,17 @@ if(response.billing_pararent_details[0]){
     var enablePriceFinal = $('#enablePriceFinal').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
-   // console.log('final_ tot', final_tot);
+    // console.log('final_ tot', final_tot);
 
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
 
       if (enablePerFinal != '') {
-      //  console.log('3333' + final_tot);
+        //  console.log('3333' + final_tot);
         price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
-       // console.log('1...price...', price);
+        // console.log('1...price...', price);
 
 
         $('#sub_discount_' + this.invocePriceKey).val(price);
@@ -1965,7 +1965,7 @@ if(response.billing_pararent_details[0]){
 
     } else {
       price = final_tot - enablePriceFinal;
-     // console.log('price...', price);
+      // console.log('price...', price);
 
       $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
       $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
@@ -1996,7 +1996,7 @@ if(response.billing_pararent_details[0]){
     var row_cnt = val;
     var sub_dis_val = 0;
 
-   // console.log('row_cnt' + row_cnt);
+    // console.log('row_cnt' + row_cnt);
     $('#enablePerFinal').val('');
     $('#enablePriceFinal').val('');
 
@@ -2045,20 +2045,20 @@ if(response.billing_pararent_details[0]){
     $('#finaldiscountTYpe_amt').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-   // console.log('111' + disType);
+    // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal1').val(final_dis_val);
-    //  console.log('22' + disType);
+      //  console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#finalDiscount_amt').val();
       $('#finaldiscountTYpe_amt').val(final_dis_val);
-    //  console.log('33' + disType);
+      //  console.log('33' + disType);
     } else {
-     // console.log('44' + disType);
+      // console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -2141,7 +2141,7 @@ if(response.billing_pararent_details[0]){
 
   eventCheckSelectReceivedSignature(e: any) {
     this.checkbox_selectReceivedSignature = e.target.checked
-  //  console.log(this.checkbox_selectAdditionalSignature);
+    //  console.log(this.checkbox_selectAdditionalSignature);
   }
 
   eventCheckSelectAdditionalSignature(e: any) {
@@ -2155,7 +2155,7 @@ if(response.billing_pararent_details[0]){
       $('#signature_message_id').css("display", "block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-  //  console.log(this.checkbox_selectAdditionalSignature);
+    //  console.log(this.checkbox_selectAdditionalSignature);
   }
 
   invoiceAddSignatureEdit(sign_val: any) {
@@ -2170,19 +2170,19 @@ if(response.billing_pararent_details[0]){
 
     api_invoiceAddSignatureEdit_req.user_id = this.userID_Edit;
 
-    api_invoiceAddSignatureEdit_req.billerId =    this.billerID_Edit;
+    api_invoiceAddSignatureEdit_req.billerId = this.billerID_Edit;
     api_invoiceAddSignatureEdit_req.billId = this.billID_Edit;
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("quotation-quotation_add_signature response", response)
+      //  console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
         this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if (sign_val == 0) {
-         // console.log('response.signature_filename' + response.signature_filename);
+          // console.log('response.signature_filename' + response.signature_filename);
           this.invoiceAddSignature_filename = response.signature_filename;
         }
         this.invoiceAddSignature_filename = response.signature_filename;
@@ -2206,6 +2206,11 @@ if(response.billing_pararent_details[0]){
 
 
   }
-
+  clearGrossDiscount() {
+    $('#discountFormFinal').modal('hide');
+  }
+  clearSaveDiscount() {
+    $('#discountFormId').modal('hide');
+  }
 
 }

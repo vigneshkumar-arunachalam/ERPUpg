@@ -21,7 +21,7 @@ export class AddprepaidnoteComponent implements OnInit {
   public CommissionForm: FormGroup;
   // company name list
   companyNameList: any;
-  billerChangeID: any='';
+  billerChangeID: any = '';
   editQuotationID: any;
   //get add quotation
   billerList: any;
@@ -76,7 +76,7 @@ export class AddprepaidnoteComponent implements OnInit {
   bankingCharge: any;
   tax_per_mod: any;
   net_amt: any;
-  total_amt:any;
+  total_amt: any;
   sub_dis_val: any;
   edit_array_ExtraLogo: any = [];
   dynamicChangeText: any;
@@ -95,7 +95,7 @@ export class AddprepaidnoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.ADDLoadDO();
-    
+
     this.addDo_section1 = new FormGroup({
       'companyName': new FormControl(null),
       'e_selectFooter': new FormControl(null),
@@ -110,14 +110,14 @@ export class AddprepaidnoteComponent implements OnInit {
       'kind_Attention': new FormControl(null),
       'currency': new FormControl(null),
       'attn_name_bill': new FormControl(null),
-      
+
       'companyName_bill': new FormControl(null),
       'address_bill': new FormControl(null),
       'address1_bill': new FormControl(null),
       'address2_bill': new FormControl(null),
       'address3_bill': new FormControl(null),
       'reference': new FormControl(null),
-    
+
     });
     this.billerChangeDetails_initial();
     this.addPI_section3 = new FormGroup({
@@ -182,9 +182,9 @@ export class AddprepaidnoteComponent implements OnInit {
         setTimeout(() => {
           this.totalCalculate();
         }, 1000)
-    
 
-     
+
+
       }
     });
 
@@ -205,7 +205,7 @@ export class AddprepaidnoteComponent implements OnInit {
     console.log("radio button value", radioSelectFooter);
   }
 
-  tax_details_cbo(){
+  tax_details_cbo() {
     this.billerChangeID = this.addDo_section1.value.companyName;
 
     let api_req: any = new Object();
@@ -223,7 +223,7 @@ export class AddprepaidnoteComponent implements OnInit {
       // this.companyNameList = response.biller_details;
       this.addPI_section3.patchValue({
         'section3_gst_dropdown': response.default_tax_id,
-        'section3_tax_per_hd':response.percent_val,
+        'section3_tax_per_hd': response.percent_val,
       });
       this.tax_per_mod = response.percent_val;
     });
@@ -231,38 +231,38 @@ export class AddprepaidnoteComponent implements OnInit {
     this.totalCalculate();
   }
   billerChangeDetails_initial() {
-var xft='';
-   let api_req: any = new Object();
-   let addBillerChangeAPI: any = new Object();
+    var xft = '';
+    let api_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
 
-   api_req.moduleType = "creditNote";
-   api_req.api_url = "creditNote/getBillerAddress";
-   api_req.api_type = "web";
-   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-   addBillerChangeAPI.action = "prepaidNote";
-   addBillerChangeAPI.billerId=xft;
-   addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
-  
-   api_req.element_data = addBillerChangeAPI;
-   this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
-     // this.companyNameList = response.biller_details;
-     this.addDo_section1.patchValue({
-       'DocNo': response.creditNo,
-       'attn_name_bill': response.userName,
-       'companyName_bill': response.billerName,
-       'address1_bill': response.address1,
-       'address2_bill': response.address2,
-       'address3_bill': response.address3,
-       
+    api_req.moduleType = "creditNote";
+    api_req.api_url = "creditNote/getBillerAddress";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addBillerChangeAPI.action = "prepaidNote";
+    addBillerChangeAPI.billerId = xft;
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      // this.companyNameList = response.biller_details;
+      this.addDo_section1.patchValue({
+        'DocNo': response.creditNo,
+        'attn_name_bill': response.userName,
+        'companyName_bill': response.billerName,
+        'address1_bill': response.address1,
+        'address2_bill': response.address2,
+        'address3_bill': response.address3,
 
 
-     });
-   });
- }
-  billerChangeDetails(event:any) {
-    
-     this.billerChangeID = event.target.value;
+
+      });
+    });
+  }
+  billerChangeDetails(event: any) {
+
+    this.billerChangeID = event.target.value;
 
     let api_req: any = new Object();
     let addBillerChangeAPI: any = new Object();
@@ -272,12 +272,12 @@ var xft='';
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addBillerChangeAPI.action = "creditNote";
-    addBillerChangeAPI.billerId=this.billerChangeID;
+    addBillerChangeAPI.billerId = this.billerChangeID;
     addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
-   
+
     api_req.element_data = addBillerChangeAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-  
+
       // this.companyNameList = response.biller_details;
       this.addDo_section1.patchValue({
         'DocNo': response.creditNo,
@@ -286,7 +286,7 @@ var xft='';
     });
   }
   billerChangeDetails1(id: any) {
-    
+
 
     let api_req: any = new Object();
     let addBillerChangeAPI: any = new Object();
@@ -318,14 +318,14 @@ var xft='';
 
 
       this.addDo_section1.patchValue({
-       // 'DocNo': response.poNo,
+        // 'DocNo': response.poNo,
         'tin': response.addres_arr.tinNo,
         'cst': response.addres_arr.cstNo,
         'kind_Attention': response.addres_arr.abc,
         'attn_name_bill': response.kind_attn,
         'companyName_bill': response.addres_arr.billerName,
         'address_bill': companyAddress,
-       
+
 
 
       });
@@ -349,8 +349,8 @@ var xft='';
       this.currencyList = response.currency_list;
       console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
-       // 'DocNo': response.delivery_no,
-        'companyName':response.defaults_biller_id,
+        // 'DocNo': response.delivery_no,
+        'companyName': response.defaults_biller_id,
       });
       this.billerChangeDetails1(response.defaults_biller_id);
       this.tax_details_cbo();
@@ -360,7 +360,7 @@ var xft='';
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-  
+
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -488,7 +488,7 @@ var xft='';
     });
   }
   searchVendor_selectDropdownData(data: any) {
-    
+
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
@@ -508,13 +508,13 @@ var xft='';
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-    //  console.log("customer_address_details---response", response)
+      //  console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
-   
-        this.cusID=response.customer_details.customerId;
-       
-        this.CurID=response.customer_details.def_currency_id;
+
+        this.cusID = response.customer_details.customerId;
+
+        this.CurID = response.customer_details.def_currency_id;
 
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
@@ -581,8 +581,8 @@ var xft='';
           ship_address_str2 = response.customer_details.customerAddress2;
           ship_address_str3 = address_3;
         }
-        this.getCurrencyCodeChange=response.customer_details.def_currency_id;
-       // console.log("response.customer_details[0].def_currency_id",response.customer_details[0].def_currency_id)
+        this.getCurrencyCodeChange = response.customer_details.def_currency_id;
+        // console.log("response.customer_details[0].def_currency_id",response.customer_details[0].def_currency_id)
 
 
         this.addDo_section1.patchValue({
@@ -590,10 +590,10 @@ var xft='';
           'customerAddress2': response.customer_details.customerAddress2,
           'customerAddress3': response.customer_details.customerAddress3,
           'companyNameDropdown': response.customer_details.kind_Attention,
-     
+
           'currency': response.def_currency_id,
-       
-        
+
+
 
         });
       }
@@ -611,18 +611,18 @@ var xft='';
           'ship_address_2': '',
           'ship_address_3': '',
           'ship_attn': '',
-      
+
           'Currency': '',
-         
+
         });
       }
-      
+
     });
-    
-      
+
+
   }
   searchCustomerData(data: any) {
-   
+
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
@@ -648,8 +648,8 @@ var xft='';
 
   }
   searchVendorData(data: any) {
-  
-    
+
+
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
@@ -663,7 +663,7 @@ var xft='';
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer_name response", response);
+      //  console.log("vignesh-customer_name response", response);
       this.searchResult_vendor = response.customer_list;
 
       if (response.status = true) {
@@ -682,8 +682,12 @@ var xft='';
     // do something when input is focused
     console.log(e);
   }
-  AddPurchaseOrder($event: MouseEvent) {
+   clearInput(event: any) {
    
+    this.customer_ID='';
+    }
+  AddPurchaseOrder($event: MouseEvent) {
+
     let api_req: any = new Object();
     let api_req_addPO: any = new Object();
     api_req.moduleType = "prepaidNote";
@@ -693,21 +697,33 @@ var xft='';
     api_req_addPO.action = "prepaidNote/getPrepaidNoteInsert";
     api_req_addPO.user_id = localStorage.getItem('erp_c4c_user_id');
     //section 1
- 
+
     api_req_addPO.billerId = this.addDo_section1.value.companyName;
     api_req_addPO.credit_note_no = this.addDo_section1.value.DocNo;
     api_req_addPO.date = this.addDo_section1.value.DocDate;
-    api_req_addPO.billGeneratedBy=localStorage.getItem('erp_c4c_user_id');
-    
-  
-    api_req_addPO.customer_id = this.customer_ID;
-    api_req_addPO.customerCompany =     this.customer_NAME;
+    api_req_addPO.billGeneratedBy = localStorage.getItem('erp_c4c_user_id');
+
+
+
+    if (!this.customer_ID) {
+      iziToast.error({
+        message: "Customer Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+
+      api_req_addPO.customer_id = this.customer_ID;
+
+
+    }
+    api_req_addPO.customerCompany = this.customer_NAME;
     api_req_addPO.b_address1 = this.addDo_section1.value.customerAddress1;
     api_req_addPO.b_address2 = this.addDo_section1.value.customerAddress2;
     api_req_addPO.b_address3 = this.addDo_section1.value.customerAddress3;
     api_req_addPO.currency_id = this.addDo_section1.value.currency;
     api_req_addPO.reference = this.addDo_section1.value.reference;
-    
+
 
 
     //section2
@@ -746,14 +762,14 @@ var xft='';
     api_req_addPO.taxPer = this.addPI_section3.value.section3_tax_per_hd;
     api_req_addPO.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
     api_req_addPO.net_total_amt = this.addPI_section3.value.section3_grand_total;
- 
+
 
     api_req.element_data = api_req_addPO;
     ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-       ($event.target as HTMLButtonElement).disabled = false;
+      ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == 'true') {
         this.gotoPurchaseOrderList();
         this.router.navigate(['/prepaidnote']);
@@ -765,7 +781,7 @@ var xft='';
 
       }
       else if (response.status === 500) {
-      
+
         iziToast.error({
           message: "Prepaid Note not added Successfully",
           position: 'topRight'
@@ -847,7 +863,7 @@ var xft='';
     var addr = this.addPI_section2.value.addresses;
     for (let a = 0; a < addr.length; a++) {
       alert("h")
-     var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      var total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
       $('#total_' + a).val(total_amt);
     }
 
@@ -897,40 +913,40 @@ var xft='';
     var sub_total_amt = 0;
 
     let discount_type: any;
- 
+
     var dis_amt_val: any;
 
- 
+
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
     // var tax_per = $('#tax_per_hd_id').val();
     //var tax_per = $('#tax_per_hd_id').val();
-   
+
     this.shipping_amt = $('#shipping_amt_id').val();
     this.bankingCharge = $('#bankingCharge_amt_id').val();
     this.finalTax = 0;
 
     var addr = this.addPI_section2.value.addresses;
-    for (let a = 0; a < addr.length; a++) {   
+    for (let a = 0; a < addr.length; a++) {
     }
 
     for (let a = 0; a < list_cnt; a++) {
 
-      var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      var total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
       $('#total_' + a).val(total_amt);
 
       tax_amt_tot += total_amt;
-   
+
     }
 
     var tax_val = this.tax_per_mod;
-    var tax_amount = tax_amt_tot * tax_val/100;
+    var tax_amount = tax_amt_tot * tax_val / 100;
     this.finalTax = tax_amount;
     this.grossTotal = tax_amt_tot;
-    this.grandTotal = tax_amt_tot+tax_amount+this.addPI_section3.value.section3_bankingCharge_amt_txtbox+this.addPI_section3.value.section3_shipping_amt_txtbox;
+    this.grandTotal = tax_amt_tot + tax_amount + this.addPI_section3.value.section3_bankingCharge_amt_txtbox + this.addPI_section3.value.section3_shipping_amt_txtbox;
 
-    
+
   }
 
   getTaxCals() {
@@ -972,7 +988,7 @@ var xft='';
       this.totalCalculate();
     }, 1000)
 
-    
+
 
   }
   extraFees() {

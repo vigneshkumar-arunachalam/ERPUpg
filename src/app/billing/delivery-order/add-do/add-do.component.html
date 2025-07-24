@@ -20,7 +20,9 @@
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="cmp_name" class="col-lg-3 col-form-label">Company Name </label>
+                            <label for="cmp_name" class="col-lg-3 col-form-label">Company Name<span
+                                    style="color: red;font-size:larger;">
+                                    *</span> </label>
                             <div class="col-lg-9">
                                 <select name="enqFormValue" id="cmp_name" class="form-control"
                                     (change)="billerChangeDetails($event)" formControlName="companyName">
@@ -38,11 +40,11 @@
                     <div class="col-lg-6 form-group row" style="display: flex;">
 
                         <div class="col-lg-6">
-                            <label for="select_footer" class="col-lg-12">Select Footer<span
-                                    style="color: red;font-size:larger;"> *</span></label>
+                            <label for="select_footer">Select Footer<span style="color: red;font-size:larger;">
+                                    *</span></label>
                         </div>
 
-                        <div class="col-lg-6" style="display: flex;">
+                        <div class="col-lg-6" style="display: flex;padding-left: 30px;">
                             <div class="form-check col-lg-12" *ngFor="let display of FooterDetails"
                                 style="margin-right: 20px;">
                                 <input class="form-check-input" type="radio" formControlName="e_selectFooter"
@@ -79,7 +81,9 @@
 
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="dcDate" class="col-lg-2 col-form-label">DO Date *</label>
+                            <label for="dcDate" class="col-lg-2 col-form-label">DO Date <span
+                                    style="color: red;font-size:larger;">
+                                    *</span></label>
                             <div class="col-lg-10">
                                 <input type="date" id="dcDate" class="form-control" formControlName="dcDate">
                             </div>
@@ -96,7 +100,8 @@
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="customer_name" class="col-lg-3 col-form-label"><span>Customer
-                                    Name</span></label>
+                                    Name<span style="color: red;font-size:larger;">
+                                        *</span></span></label>
                             <div class="col-lg-9">
                                 <!-- <input type="text" id="customer_name" class="form-control" formControlName="customer_name"> -->
                                 <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -114,6 +119,21 @@
                                 <ng-template #notFoundTemplate let-notFound>
                                     <div [innerHTML]="notFound"></div>
                                 </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="invoice_number" class="col-lg-3 col-form-label"><span>Invoice Number</span>
+                                :</label>
+                            <div class="col-lg-9">
+                                <select name="templat" id="invoice_number" (change)="handle_invoice($event)"
+                                    class="form-control" formControlName="invoice_number">
+                                    <option [ngValue]="null" selected disabled>Select From</option>
+                                    <option *ngFor="let list of InvoiceList_PopUp" value="{{ list.billId }}">
+                                        {{ list.invoice_no }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -173,47 +193,18 @@
                             <div class="col-lg-3">
                                 <label for="Payment" class="form-label">Warranty</label>
                             </div>
+
                             <div class="col-lg-9">
-
-                                <div class="form-check form-check-inline ">
-
-                                    <input class="form-check-input" type="radio" name="export_state"
-                                        (change)="handleChange_warrantyImp($event)" id="exampleRadios1" value="no">
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        <span style="color:#252525 !important;">No Warranty</span>
-
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="export_state"
-                                        (change)="handleChange_warrantyImp($event)" id="exampleRadios2" value="one">
-
-                                    <label class="form-check-label" for="exampleRadios2">
-                                        <span style="color:#252525 !important;">One Year Warranty</span>
+                                <div class="form-check form-check-inline"
+                                    *ngFor="let display1 of warranty_id_radio; let k = index">
+                                    <input class="form-check-input" type="radio" [id]="'warranty_id_' + k"
+                                        (change)="handleChange_warranty(display1.id, $event)" [value]="display1.id"
+                                        formControlName="warranty_id" />
+                                    <label class="form-check-label" [for]="'warranty_id_' + k">
+                                        <span style="color:#252525 !important;">{{display1.name}}</span>
 
                                     </label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="export_state"
-                                        (change)="handleChange_warrantyImp($event)" id="exampleRadios3" value="two">
-
-                                    <label class="form-check-label" for="exampleRadios3">
-                                        <span style="color:#252525 !important;">Two Year Warranty</span>
-
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="export_state"
-                                        (change)="handleChange_warrantyImp($event)" id="exampleRadios4" value="none">
-
-                                    <label class="form-check-label" for="exampleRadios4">
-                                        <span style="color:#252525 !important;">None</span>
-
-                                    </label>
-                                </div>
-
-
-
                             </div>
 
 
@@ -285,6 +276,8 @@
                                                         <div class="userDatatable-content">
                                                             <input type="text" class="form-control mt-2 mb-2"
                                                                 formControlName="prodName" id="prodName_{{i}}" />
+                                                            <input type="hidden" formControlName="pd_deliveryChildId"
+                                                                id="deliveryChildId_{{i}}">
                                                         </div>
                                                         <div class="userDatatable-content">
                                                             <textarea

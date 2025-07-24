@@ -42,7 +42,7 @@ export class AddDoComponent implements OnInit {
   radioID_Logo: any;
   radio_Value_Export_logo: any;
   selected_pdf_footer: any;
-isReadonly:boolean=true;
+  isReadonly: boolean = true;
   //shipping address
   shipAddress1: any;
   shipAddress2: any;
@@ -50,7 +50,7 @@ isReadonly:boolean=true;
 
   // warranty
   radioSelectWarranty: any;
-  warranty_id_radio: any;
+  warranty_id_radio: any = [];
   warranty_value: any;
   warranty_Logo: any;
   radio_Value_warranty: any;
@@ -78,6 +78,12 @@ isReadonly:boolean=true;
   customerName_Add_DO: any;
   invoice_Add_DO: any;
   warranty_Add_DO: any;
+  customerid_do: any;
+  customername_do: any;
+  invoiceNumber_do: any;
+  warrantyID_do: any;
+  InvoiceList_PopUp: any;
+  invoiceValue_PopUp1: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addDo_section2 = this.fb.group({
@@ -87,39 +93,46 @@ isReadonly:boolean=true;
   }
 
   ngOnInit(): void {
-
-   // this.loadADD();
-    this.ADDLoadDO();
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+    // this.loadADD();
+    // this.ADDLoadDO();
     this.radioSelectWarranty == 'no';
     $('#description_details').val("No Warranty");
 
-    this.Get_add_delivery_order();
+
     this.route.queryParams
       .subscribe(params => {
-      //  console.log("params output value", params);
+        console.log("params output value", params);
         this.customerID_Add_DO = params['customerID_P'];
         this.customerName_Add_DO = params['customerName_P'];
         this.invoice_Add_DO = params['invoice_p'];
         this.warranty_Add_DO = params['warranty_p'];
+        this.customerid_do = params['customerID_P'];
+        this.customername_do = params['customerName_P'];
+        this.invoiceNumber_do = params['invoice_p'];
+        this.warrantyID_do = params['warranty_p'];
 
-        // console.log("this.customerID_Add_DO", this.customerID_Add_DO);
-        // console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
-        // console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
-        // console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
+        console.log("this.customerID_Add_DO-1", this.customerID_Add_DO);
+        console.log(" this.customerName_Add_DO-1", this.customerName_Add_DO);
+        console.log(" this.invoice_Add_DO-1", this.invoice_Add_DO);
+        console.log(" this.warranty_Add_DO-1", this.warranty_Add_DO);
 
 
       }
       );
+    this.Get_add_delivery_order();
     this.bills_logo_id_radio = [
       { name: 'IT Care', selected: false, id: 1 },
       { name: 'Calncall', selected: false, id: 2 },
       { name: 'DID Sg', selected: false, id: 3 },
       { name: 'Callcloud', selected: false, id: 4 },
-      { name: 'Mrvoip', selected: false, id: 5 }
+      { name: 'Mrvoip', selected: false, id: 5 },
+        { name: 'None', selected: false, id: 6 }
     ];
 
     this.warranty_id_radio = [
-      { name: 'No Warranty', selected: false, id: 1 },
+      { name: 'No Warranty', selected: true, id: 1 },
       { name: 'One Year Warranty ', selected: false, id: 2 },
       { name: 'Two Year Warranty', selected: false, id: 3 },
       { name: 'None', selected: false, id: 4 },
@@ -134,6 +147,7 @@ isReadonly:boolean=true;
 
       'dcDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'customer_name': new FormControl(null),
+      'invoice_number': new FormControl(null),
       'customerAddress1': new FormControl(null),
       'customerAddress2': new FormControl(null),
       'customerAddress3': new FormControl(null),
@@ -161,39 +175,71 @@ isReadonly:boolean=true;
     // console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
+  descrWarrenty() {
+    var Nowarranty = "No Warranty";
+    var Onewarranty = "Above items are One year warranty from the date of delivery";
+    var Twowarranty = "Above items are Two year warranty from the date of delivery";
+    var nonewarranty = '';
+    if (this.warranty_value == 1) {
+
+      $('#description_details').val(Nowarranty);
+
+      // console.log($('#description_details').val());
+
+    }
+    if (this.warranty_value == 2) {
+
+      $('#description_details').val(Onewarranty);
+      // console.log($('#description_details').val());
+
+    }
+    if (this.warranty_value == 3) {
+
+      $('#description_details').val(Twowarranty);
+      // console.log($('#description_details').val());
+
+    }
+    if (this.warranty_value == 4) {
+
+      $('#description_details').val(nonewarranty);
+      // console.log($('#description_details').val());
+
+    }
+
+  }
   handleChange_warrantyImp(evt: any) {
 
     this.radioSelectWarranty = evt.target.value;
-  //  console.log("radio button value", this.radioSelectWarranty);
+    //  console.log("radio button value", this.radioSelectWarranty);
 
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
     var Twowarranty = "Above items are Two year warranty from the date of delivery";
-    var nonewarranty='';
+    var nonewarranty = '';
 
     if (this.radioSelectWarranty == 'no') {
 
       $('#description_details').val(Nowarranty);
-     
-     // console.log($('#description_details').val());
+
+      // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'one') {
 
       $('#description_details').val(Onewarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'two') {
 
       $('#description_details').val(Twowarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'none') {
 
       $('#description_details').val(nonewarranty);
-     // console.log($('#description_details').val());
+      // console.log($('#description_details').val());
 
     }
 
@@ -227,6 +273,7 @@ isReadonly:boolean=true;
       prodName: '',
       quantity: '',
       desc: '',
+      pd_deliveryChildId: ''
 
     });
   }
@@ -275,7 +322,61 @@ isReadonly:boolean=true;
     });
 
   }
+  handle_invoice(event: any) {
+    this.invoiceValue_PopUp1 = event.target.value;
+    console.log("this.invoiceValue_PopUp", this.invoiceValue_PopUp1);
+    this.changeInvCust();
+  }
+  changeInvCust() {
+    let api_req: any = new Object();
+    let addAPI: any = new Object();
+
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/getBillDetails";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addAPI.action = "getBillDetails";
+    addAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addAPI.billId = this.invoiceValue_PopUp1;
+    api_req.element_data = addAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if(response.billData){
+          //  this.companyNameList = response.biller_details;
+      const formArray = new FormArray([]);
+
+      for (let index = 0; index < response.billData.length; index++) {
+
+        // console.log('delivery_details++index' + index);
+
+
+        formArray.push(this.fb.group({
+
+          "pd_deliveryChildId": response.billData[index].billChildid,
+          "prodName": response.billData[index].productName,
+          "quantity": response.billData[index].quantity,
+          "desc": response.billData[index].productDesc,
+
+        })
+
+        );
+      }
+
+
+      // console.log(formArray)
+      this.addDo_section2.setControl('addresses', formArray);
+      console.log('FormArray value:', formArray.value);
+
+      }
+    
+    });
+
+  }
   ADDLoadDO() {
+    console.log("this.customerID_Add_DO", this.customerID_Add_DO);
+    console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
+    console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
+    console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
+
     let api_req: any = new Object();
     let addLoadAPI: any = new Object();
 
@@ -285,14 +386,26 @@ isReadonly:boolean=true;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addLoadAPI.action = "add_delivery_order";
     addLoadAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+
+
+    addLoadAPI.customerId = this.customerid_do;
+    addLoadAPI.billId = this.invoiceNumber_do;
+    addLoadAPI.warranty = this.warrantyID_do;
     api_req.element_data = addLoadAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-     //  console.log("response-load-pi", response)
+      //  console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
         'dcNo': response.delivery_no,
         'companyName': response.defaults_biller_id,
+        'customer_name': response.customerData.customerName,
+        'customerAddress1': response.customerData.customerAddress1,
+        'customerAddress2': response.customerData.customerAddress2,
+        'customerAddress3': response.customerData.city,
+          
+        'kind_Attention': response.customerData.kind_Attention,
+
 
       });
     });
@@ -315,7 +428,7 @@ isReadonly:boolean=true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-     // console.log("response-load-pi", response)
+      // console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -323,7 +436,17 @@ isReadonly:boolean=true;
 
 
   }
+  handleChange_warranty(id: number, event: Event) {
+    console.log('Selected warranty ID:', id);
+    this.warranty_value = id;
+    console.log("this.warranty_value", this.warranty_value);
+    this.descrWarrenty();
+  }
   Get_add_delivery_order() {
+    console.log("this.customerID_Add_DO", this.customerID_Add_DO);
+    console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
+    console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
+    console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
 
 
     let api_req: any = new Object();
@@ -335,6 +458,9 @@ isReadonly:boolean=true;
     quot_getDeliOrder_req.action = "add_delivery_order";
 
     quot_getDeliOrder_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    quot_getDeliOrder_req.customerId = this.customerid_do;
+    quot_getDeliOrder_req.billId = this.invoiceNumber_do;
+    quot_getDeliOrder_req.warranty = this.warrantyID_do;
 
     api_req.element_data = quot_getDeliOrder_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -342,6 +468,54 @@ isReadonly:boolean=true;
       if (response.status == true) {
 
         this.billerList = response.biller_details;
+        this.companyNameList = response.biller_details;
+        this.FooterDetails = response.footer_list_details;
+        this.warranty_id_radio = response.warranty_id_radio;
+        this.customerName_Data = response.customerData.customerName;
+        this.customer_ID = response.customerData.customerId;
+        this.customer_NAME= response.customerData.customerName;
+        this.InvoiceList_PopUp = response.invoice_det;
+        const selectedOption = this.warranty_id_radio.find((item: { selected: any; }) => item.selected);
+        this.warranty_value = selectedOption ? selectedOption.id : null;
+        const selected = this.warranty_id_radio.find((item: { selected: any; }) => item.selected);
+        this.addDo_section1.get('warranty_id')?.setValue(selected?.id || null);
+        console.log("warranty_value", this.warranty_value);
+        console.log("hhh", this.addDo_section1.get('warranty_id')?.value);
+        this.addDo_section1.patchValue({
+          'dcNo': response.delivery_no,
+          'companyName': response.defaults_biller_id,
+          'customer_name': response.customerData.customerName,
+          'customerAddress1': response.customerData.customerAddress1,
+          'customerAddress2': response.customerData.customerAddress2,
+          'customerAddress3': response.customerData.city,
+          'kind_Attention': response.customerData.kind_Attention,
+          'invoice_number': response.billId,
+        });
+        this.descrWarrenty();
+        const formArray = new FormArray([]);
+
+        for (let index = 0; index < response.billData.length; index++) {
+
+          // console.log('delivery_details++index' + index);
+
+
+          formArray.push(this.fb.group({
+
+            "pd_deliveryChildId": response.billData[index].billChildid,
+            "prodName": response.billData[index].productName,
+            "quantity": response.billData[index].quantity,
+            "desc": response.billData[index].productDesc,
+
+          })
+
+          );
+        }
+
+
+        // console.log(formArray)
+        this.addDo_section2.setControl('addresses', formArray);
+        console.log('FormArray value:', formArray.value);
+
 
 
       }
@@ -358,7 +532,7 @@ isReadonly:boolean=true;
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-     // console.log("final error", error);
+      // console.log("final error", error);
     }
 
 
@@ -513,7 +687,7 @@ isReadonly:boolean=true;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     // console.log("customer_address_details---response", response)
+      // console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -562,11 +736,11 @@ isReadonly:boolean=true;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer_name response", response);
+      // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
-       
+
 
       }
 
@@ -584,7 +758,7 @@ isReadonly:boolean=true;
   descriptionPermission(event: any) {
 
     this.description_details_show_state = event.target.checked;
-   // console.log(this.description_details_show_state);
+    // console.log(this.description_details_show_state);
 
 
     if (this.description_details_show_state = event.target.checked) {
@@ -640,7 +814,7 @@ isReadonly:boolean=true;
     } else {
       api_saveDO_req.pdf_footer_id = this.addDo_section1.value.e_selectFooter;
     }
-   
+
     api_saveDO_req.dcDate = this.addDo_section1.value.dcDate;
 
     if (this.customerName_Data === null || this.customerName_Data === undefined) {
@@ -658,16 +832,41 @@ isReadonly:boolean=true;
 
     // api_saveDO_req.BillTo_customer_ID = this.customer_ID;
     api_saveDO_req.customer_name = this.customer_NAME;
-    api_saveDO_req.customer_id = this.customer_ID;
-    api_saveDO_req.BillTo_customer_NAME = this.customer_NAME;
+ 
+    if (!this.customer_ID) {
+
+      iziToast.error({
+        message: "Select Customer",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_saveDO_req.customer_id = this.customer_ID;
+    }
+      if (!this.customer_NAME) {
+
+      iziToast.error({
+        message: "Select Customer",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_saveDO_req.customerName = this.customer_NAME;
+    }
+   // api_saveDO_req.BillTo_customer_NAME = this.customer_NAME;
     api_saveDO_req.customerAddress1 = this.addDo_section1.value.customerAddress1;
     api_saveDO_req.customerAddress2 = this.addDo_section1.value.customerAddress2;
     api_saveDO_req.customerAddress3 = this.addDo_section1.value.customerAddress3;
     api_saveDO_req.kind_Attention = this.addDo_section1.value.kind_Attention;
+     api_saveDO_req.billId = this.addDo_section1.value.invoice_number;
 
     api_saveDO_req.bills_logo_id = this.radio_Value_Export_logo;
 
-    if (this.radioSelectWarranty === null || this.radioSelectWarranty === undefined || this.radioSelectWarranty === 'undefined') {
+    if (this.warranty_value === null || this.warranty_value === undefined || this.warranty_value === 'undefined') {
 
       iziToast.error({
         message: "Select Warranty",
@@ -677,11 +876,11 @@ isReadonly:boolean=true;
       return false;
 
     } else {
-      api_saveDO_req.warranty_type = this.radioSelectWarranty;
+      api_saveDO_req.warranty_type = this.warranty_value;
     }
 
-   
-    
+
+
 
     // api_saveDO_req.description_details = this.addDo_section1.value.description_details;
     api_saveDO_req.description_details = $('#description_details').val();
@@ -715,9 +914,9 @@ isReadonly:boolean=true;
 
 
     }
-    if(addr.length>0){
+    if (addr.length > 0) {
       api_saveDO_req.values = addr;
-    }else{
+    } else {
       iziToast.warning({
         message: "Select Minimum 1 Product Details",
         position: 'topRight'
@@ -728,7 +927,7 @@ isReadonly:boolean=true;
     }
 
 
- 
+
 
 
     //section-3 
@@ -748,11 +947,12 @@ isReadonly:boolean=true;
         });
         this.gotoDOList();
         this.spinner.hide();
-        window.location.reload();
+        // window.location.reload();
+        this.router.navigate(['/deliveryorder']);
 
       }
       else if (response.status === 500) {
-       
+
         iziToast.error({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -761,7 +961,7 @@ isReadonly:boolean=true;
         this.gotoDOList();
       }
       else {
-      
+
         iziToast.warning({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -772,12 +972,12 @@ isReadonly:boolean=true;
     }),
       (error: any) => {
         ($event.target as HTMLButtonElement).disabled = false;
-       
+
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("500", error);
+        // console.log("500", error);
       }
 
     this.gotoDOList();

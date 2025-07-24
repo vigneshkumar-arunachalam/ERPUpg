@@ -1676,6 +1676,16 @@ export class AddInvoiceComponent implements OnInit {
       }
     });
   }
+    clearSaveCommission(){
+      $('#CommissionFormId').modal('hide');
+  }
+    clearSaveGrossDiscount(){
+      $('#discountFormFinal').modal('hide');
+  }
+    clearSaveDiscount(){
+      $('#discountFormId').modal('hide');
+  }
+   
 
 }
 

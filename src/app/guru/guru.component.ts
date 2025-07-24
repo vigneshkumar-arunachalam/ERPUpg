@@ -18,6 +18,7 @@ declare var tinymce: any;
 })
 export class GuruComponent implements OnInit {
   guru_list: any;
+   vsView: boolean;
   public addGuru_FormGroup: FormGroup;
   public editGuru_FormGroup: FormGroup;
   public guruForm: FormGroup;
@@ -73,8 +74,26 @@ export class GuruComponent implements OnInit {
     this.GoogleAuthenticationForm = new FormGroup({
       'google_AuthenticationCode': new FormControl(null),
     });
-    $('#GoogleAuthenticationGuruFormId').modal('show');
+   // $('#GoogleAuthenticationGuruFormId').modal('show');
     //this.guruList();
+       const authDataRaw = localStorage.getItem('google_auth');
+    if (authDataRaw) {
+      const authData = JSON.parse(authDataRaw);
+      const currentTime = new Date().getTime();
+      const elapsedTime = (currentTime - authData.timestamp) / 1000; // in seconds
+
+      if (authData.status && elapsedTime < 600) {
+        this.googleAuthentication_status = true;
+        this.spinner.show();
+          this.guruList();
+          this.getGuruBillers();
+      } else {
+        this.spinner.show();
+        localStorage.removeItem('google_auth');
+        this.googleAuthentication_status = false;
+     
+      }
+    }
 
 
 
@@ -427,7 +446,15 @@ export class GuruComponent implements OnInit {
           $("#showhide").show();
         });
         this.googleAuthentication_status = response.status;
+
        // console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
+           const authData = {
+          status: true,
+          timestamp: new Date().getTime()
+        };
+        localStorage.setItem('google_auth', JSON.stringify(authData));
+        console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
+
         if (this.googleAuthentication_status == true) {
           this.guruList();
           this.getGuruBillers();
@@ -750,6 +777,9 @@ export class GuruComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.guru_list = response.data;
+          if(response.data.length==0){
+          this.vsView=true;
+        }
         this.searchGuruForm.controls['customer_id_guru'].reset();
         this.guruSearchcustomerId = '';
         this.spinner.hide();

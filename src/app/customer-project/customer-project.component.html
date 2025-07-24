@@ -1,4 +1,4 @@
-<div class="contents-section">
+<div class="contents-section" *ngIf="this.googleAuthentication_status==true">
 
     <div class="row no-gutters">
         <div class="col-lg-12 mb-30">
@@ -312,6 +312,55 @@
             </div>
         </div>
     </div>
+
+</div>
+<div class="contents-section" *ngIf="this.googleAuthentication_status==false">
+  <div class="modal-content addcustomernewallcss">
+
+    <div class="modal-header">
+      <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #262127, #54b7aa);">
+        Google Authenticator </h2>
+     
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="GoogleAuthenticationForm">
+        <div class="row">
+          <div class="col-lg-4">
+
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>
+                  Google Authentication Code
+                </label>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" formControlName="google_AuthenticationCode"
+                  (keyup.enter)="GoogleAuthenticationValidation()" />
+              </div>
+
+            </div>
+
+          </div>
+           <div class="col-lg-4">
+            
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div style="margin-left:700px;margin-bottom:360px">
+
+      <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+        Validate
+      </button>
+    
+    </div>
+  </div>
 
 </div>
 

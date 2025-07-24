@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,  OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
@@ -26,6 +26,9 @@ export interface FinanceEmailArray {
 export class CustomernewallComponent implements OnInit {
   @Input() customerList: any[] = [];
   @Input() revenueList: any[] = [];
+  @Input() selectedPages: any[] = [];
+  @Input() searchDataGlobal: any = '';
+  @Input() globalSearchStatus: boolean = false;
   submitted = true;
   //view
   viewCustomerForm: FormGroup;
@@ -55,7 +58,7 @@ export class CustomernewallComponent implements OnInit {
   displayDynamicData: any;
   customerPermissionList: any;
   billList: any;
-  customer_list: any=[];
+  customer_list: any = [];
   paymentList: any;
   departmentData: any;
   departmentDataOut: any;
@@ -566,14 +569,23 @@ export class CustomernewallComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.searchResultTest = '';
+    if (this.globalSearchStatus == true) {
+      console.log("into global search");
+      console.log("this.searchDataGlobal", this.globalSearchStatus)
+
+    } else {
+      console.log("out of global search");
+      console.log("this.searchDataGlobal", this.globalSearchStatus)
+
+    }
+    //  this.searchResultTest = this.searchDataGlobal;
     this.customer_list = this.customerList;
 
     const searchParams = this.serverService.getSearchParams();
-    if (searchParams && searchParams.companyName) {
+    if (searchParams && searchParams.companyName && this.selectedPages.includes('Customer New')) {
       this.searchResultTest = searchParams.companyName;
-      
-    }else{
+
+    } else {
       this.searchResultTest = '';
     }
     console.log("this.searchResultTest-from global search", this.searchResultTest);
@@ -1037,20 +1049,42 @@ export class CustomernewallComponent implements OnInit {
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
-     this.customer_list = this.customerList;
-     console.log("this.customerList",this.customerList);
+    this.customer_list = this.customerList;
+    console.log("this.customerList", this.customerList);
 
   }
 
-   ngOnChanges(changes: SimpleChanges) {
-    if (changes['customerList'] && changes['customerList'].currentValue) {
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['customerList'] && changes['customerList'].currentValue && this.selectedPages.includes('Customer New')) {
+  //     this.customer_list = changes['customerList'].currentValue;
+  //   }
+  // }
+  ngOnChanges(changes: SimpleChanges): void {
+    const isCustomerNew = this.selectedPages.includes('Customer New');
+
+    if (
+      isCustomerNew &&
+      changes['customerList'] &&
+      changes['customerList'].currentValue &&
+      this.globalSearchStatus // ✅ only assign if searchData is not empty
+    ) {
       this.customer_list = changes['customerList'].currentValue;
     }
-  }
- closeModalView() {
 
-        $('#viewCustomerFormId_CM').modal('hide');
- }
+    // Optional: clear data if modal is closed and searchData is cleared
+    if (
+      isCustomerNew &&
+      changes['searchDataGlobal'] &&
+      changes['searchDataGlobal'].currentValue === ''
+    ) {
+      this.customer_list = [];
+    }
+  }
+
+  closeModalView() {
+
+    $('#viewCustomerFormId_CM').modal('hide');
+  }
 
 
   get addressControls() {
@@ -1835,8 +1869,40 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
+  openSearch1() {
+    (document.activeElement as HTMLElement)?.blur();
+    $('.modal.show').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+
+    setTimeout(() => {
+      const backdrop = document.querySelector('.modal-backdrop.show') as HTMLElement;
+      if (backdrop) {
+        backdrop.style.opacity = '0'; // Or any other value
+      }
+    }, 100);
+
+    $('.modal.show').on('hidden.bs.modal', function () {
+      $('#searchCustomerFormId').modal('show');
+    });
+    $('.modal.show').modal('hide');
+    $('#searchCustomerFormId').modal('show');
+
+  }
+   openSearch() {
+    (document.activeElement as HTMLElement)?.blur();
+  
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+
+    $('#searchCustomerFormId').modal('show');
+
+  }
   searchCustomerList() {
+    (document.activeElement as HTMLElement)?.blur();
     $('#searchCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
 
@@ -1874,6 +1940,8 @@ export class CustomernewallComponent implements OnInit {
       // this.spinner.hide();
       console.log('12345678')
       $('#searchCustomerFormId').modal('hide');
+      $('.modal-backdrop').remove();
+      $("body").removeClass("modal-open");
       this.response_total_cnt = response.total_cnt;
       if (response.total_cnt == 0) {
         this.response_total_cnt = response.total_cnt;
@@ -1894,6 +1962,8 @@ export class CustomernewallComponent implements OnInit {
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
+        $('.modal-backdrop').remove();
+        $("body").removeClass("modal-open");
 
         this.response_total_cnt = response.total_cnt;
       }
@@ -1933,6 +2003,8 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       //console.log('hgyrdrrd')
       $('#searchCustomerFormId').modal('hide');
+      $('.modal-backdrop').remove();
+      $("body").removeClass("modal-open");
       this.spinner.hide();
 
       if (response.total_cnt == 0) {
@@ -2536,12 +2608,62 @@ export class CustomernewallComponent implements OnInit {
 
   clearcustomer() {
     // this.submitted=false;
-
+    $('#addCustomerFormId').modal('hide');
     this.addCustomer.reset();
     // this.addCustomer.patchValue({
     //   'company_Code': 'D6387',
     // });
   }
+  cancelAddCustomer() {
+    $('#addCustomerFormId').modal('hide');
+  }
+  clearEditCustomer() {
+    $('#editCustomerFormId_CM').modal('hide');
+  }
+  clearSpecialEdit() {
+    $('#specialEditCustomerFormId_CM').modal('hide');
+  }
+  clearMConnect() {
+    $('#mconnectPartnerDetailsFormId_CM').modal('hide');
+  }
+  clearMrVoip() {
+    $('#MrvoipPartnerDetailsFormId_CM').modal('hide');
+  }
+  clearCal4tellPartner() {
+    $('#call4tellPartnerDetailsFormId_CM').modal('hide');
+  }
+  clearInvoiceShare() {
+    $('#invoiceSharedCustomerFormId_CM').modal('hide');
+  }
+  clearShareCusPerm() {
+    $('#SharedCustomerPermissionFormId_CM').modal('hide');
+  }
+  clearNX32Perm() {
+    $('#customer_NX32PermissionFormId_CM').modal('hide');
+  }
+  clearFileAtt() {
+    $('#fileAttachmentFormId_CM').modal('hide');
+  }
+  clearBillCode() {
+    $('#billCodeFormId_CM').modal('hide');
+  }
+  clearLandscapeEmail() {
+    $('#landscapeEmailFormId_CM').modal('hide');
+  }
+  clearSearchCust() {
+    (document.activeElement as HTMLElement)?.blur();
+    $('#searchCustomerFormId').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+
+  }
+  clearAssignAcc() {
+    $('#AssignAccountManager_CM').modal('hide');
+  }
+  clearGoogAuth() {
+    $('#GoogleAuthentication_CM').modal('hide');
+  }
+
 
 
   get f() {
@@ -5522,6 +5644,9 @@ export class CustomernewallComponent implements OnInit {
       };
 
 
+  }
+  clearAction(i: any) {
+    $("#ActionId" + i).modal("hide");
   }
   gotoCustomerMasterList() {
     this.customerslist({});

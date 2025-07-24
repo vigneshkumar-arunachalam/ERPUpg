@@ -2088,6 +2088,19 @@ if(data){
 
 
   }
+    clearDiscount(){
+      $('#discountFormFinal').modal('hide');
+  }
+  clearOtherDiscount(){
+      $('#otherDiscountFormId').modal('hide');
+  }
+   clearUsageDiscount(){
+      $('#usageDiscountFormId').modal('hide');
+  }
+  clearFixedDiscount(){
+      $('#fixedDiscountFormId').modal('hide');
+  }
+ 
 
 
 

@@ -992,10 +992,10 @@
         </section>
     </form>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePI()">
+        <button type="button" class="btn btn-primary"  (click)="updatePI()">
             Update
         </button>
-        <button type="button" class="btn btn-dark ml-4" data-dismiss="modal" (click)="goBack()">
+        <button type="button" class="btn btn-dark ml-4"  (click)="goBack()">
             Cancel
         </button>
     </div>
@@ -1012,7 +1012,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1053,7 +1053,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearDiscount()">
                     Cancel
                 </button>
 
@@ -1074,7 +1074,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearSaveGrossDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1113,7 +1113,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearSaveGrossDiscount()">
                     Cancel
                 </button>
 

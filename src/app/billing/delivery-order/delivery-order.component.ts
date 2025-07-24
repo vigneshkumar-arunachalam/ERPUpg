@@ -90,9 +90,15 @@ export class DeliveryOrderComponent implements OnInit {
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.DOList1({});
-    this.warrantyLisT = [{ "id": "no", "name": "No Year Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
+  //  this.warrantyLisT = [{ "id": "no", "name": "No Year Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
 
+   this.warrantyLisT = [
+      { name: 'No Warranty', selected: false, id: 1 },
+      { name: 'One Year Warranty ', selected: false, id: 2 },
+      { name: 'Two Year Warranty', selected: false, id: 3 },
+      { name: 'None', selected: false, id: 4 },
 
+    ];
 
     this.addDeliveryOrderForm = new FormGroup({
       'customer_name': new FormControl(null),
@@ -191,7 +197,10 @@ export class DeliveryOrderComponent implements OnInit {
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
+         $('#searchDeliveryOrderFormId').modal("hide");
         this.searchDeliveryOrderForm.reset();
+        this.edit_array_SearchBiller_Checkbox=[];
+        this.searchResult1_CustomerName='';
 
       }
     });
@@ -245,6 +254,8 @@ export class DeliveryOrderComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
         this.searchDeliveryOrderForm.reset();
+        this.searchResult1_CustomerName='';
+        this.edit_array_SearchBiller_Checkbox=[];
 
       }
     });
@@ -994,6 +1005,7 @@ console.log(data)
       return false;
     }
     else {
+       $('#addDoFormId').modal('hide');
       this.router.navigate(['/addDeliveryOrder'], { queryParams: { customerID_P: this.searchResult_PopUp_CustomerID, customerName_P: this.searchResult_PopUp_CustomerName, invoice_p: this.invoiceValue_PopUp, warranty_p: this.WarrantyValue_PopUp } });
 
     }

@@ -25,11 +25,11 @@
                                 <tr>
                                     <td colspan="12" class="search-text-tbl">
                                         <div class="input-group"><input type="text" class="form-control"
-                                                (keyup)="getVendorListData({'search_text':call_history_search.value})"
-                                                #call_history_search placeholder="search here">
+                                                (keyup)="getVendorListData1({'search_text':call_history_search.value})"
+                                                #call_history_search placeholder="Search here">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"
-                                                    (click)="getVendorListData({'search_text':call_history_search.value})"><i
+                                                    (click)="getVendorListData1({'search_text':call_history_search.value})"><i
                                                         class="fas fa-search"></i></button>
                                             </div>
                                         </div>
@@ -58,9 +58,9 @@
                                         <th>
                                             <span class="userDatatable-title">Email Id</span>
                                         </th>
-                                        <th>
+                                        <!-- <th>
                                             <span class="userDatatable-title">Bank Details</span>
-                                        </th>
+                                        </th> -->
                                         <th>
                                             <span class="userDatatable-title">Action</span>
                                         </th>
@@ -76,7 +76,7 @@
                                         <td><span>{{list.phone}}</span></td>
                                         <td><span>{{list.companyName}}</span></td>
                                         <td><span>{{list.email}}</span></td>
-                                        <td><span>{{list.Bankdetails}}</span></td>
+                                        <!-- <td><span>{{list.Bankdetails}}</span></td> -->
                                         <td>
                                             <div class="page">
 
@@ -181,103 +181,143 @@
 <!-- ------------------------------------------               ADD VENDOR                ----------------------------------  -->
 
 
-<div class="modal fade bd-example-modal-lg" id="vendorNewManagement" tabindex="-1" role="dialog"
+<div class="modal fade bd-example-modal-lg" id="vendorNewManagement1" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content modal-custom">
-            <div class="modal-header custom-header">
-                <h2 class="modal-title">Vendor Management</h2>
-                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
-                    aria-hidden="true">
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Vendor Management </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body custom-body">
+            <div class="modal-body">
+
                 <form [formGroup]="addVendorForm">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="company_code">Company Code *</label>
-                                <input type="text" class="form-control custom-input " 
-                                    formControlName="company_code" id="company_code" readonly />
-                            </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="company_name">Company Name *</label>
-                                <input type="text" class="form-control custom-input " formControlName="company_name"
-                                    id="company_name" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Code <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="company_code"
+                                        id="company_code" readonly />
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="vendor_name">Vendor Name *</label>
-                                <input type="text" class="form-control custom-input " formControlName="vendor_name"
-                                    id="vendor_name" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Name <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="company_name"
+                                        id="company_name" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="address_1">Address-1</label>
-                                <input type="text" class="form-control custom-input " formControlName="address_1"
-                                    id="address_1" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Vendor Name <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="vendor_name"
+                                        id="vendor_name" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="address_2">Address-2</label>
-                                <input type="text" class="form-control custom-input " formControlName="address_2"
-                                    id="address_2" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-1 <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="address_1"
+                                        id="address_1" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="city">City</label>
-                                <input type="text" class="form-control custom-input " formControlName="city"
-                                    id="city" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-2 <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="address_2"
+                                        id="address_2" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="state">State</label>
-                                <input type="text" class="form-control custom-input " formControlName="state"
-                                    id="state" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">City <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="city" id="city" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="country">Country</label>
-                                <input type="text" class="form-control custom-input " formControlName="country"
-                                    id="country" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">State</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="state" id="state" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="phone">Phone</label>
-                                <input type="number" class="form-control custom-input " formControlName="phone"
-                                    id="phone" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Country</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="country" id="country" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="mobile_phone">Mobile Phone</label>
-                                <input type="number" class="form-control custom-input " formControlName="mobile_phone"
-                                    id="mobile_phone" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Phone</label>
+                                <div class="col-lg-12">
+                                    <input type="number" class="form-control" formControlName="phone" id="phone" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="fax">Fax</label>
-                                <input type="text" class="form-control custom-input " formControlName="fax" id="fax" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Mobile Phone<span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="number" class="form-control" formControlName="mobile_phone"
+                                        id="mobile_phone" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="e_mail">Email</label>
-                                <input type="email" class="form-control custom-input " formControlName="e_mail"
-                                    id="e_mail" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Fax</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="fax" id="fax" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Email <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="email" class="form-control" formControlName="e_mail" id="e_mail" />
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Bank Details <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="bank" id="a_bank" />
+                                </div>
                             </div>
                         </div>
 
@@ -286,9 +326,9 @@
                 </form>
             </div>
 
-            <div class="modal-footer custom-footer">
-                <button type="button" class="btn btn-dark" (click)="AddVendor()">Save</button>
-                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="AddVendor()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -302,101 +342,152 @@
 <div class="modal fade bd-example-modal-lg" id="EditvendorNewManagement" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content modal-custom">
-            <div class="modal-header custom-header">
-                <h2 class="modal-title"> Update Vendor Management</h2>
-                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
-                    aria-hidden="true">
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Update Vendor Management </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body custom-body">
+            <div class="modal-body">
                 <form [formGroup]="editVedorForm">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_company_code">Company Code *</label>
-                                <input type="text" class="form-control custom-input "
-                                    formControlName="edit_company_code" id="edit_company_code" readonly />
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Code <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_company_code"
+                                        id="edit_company_code" readonly />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_company_name">Company Name *</label>
-                                <input type="text" class="form-control custom-input "
-                                    formControlName="edit_company_name" id="edit_company_name" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Name <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_company_name"
+                                        id="edit_company_name" />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_vendor_name">Vendor Name *</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_vendor_name"
-                                    id="edit_vendor_name" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Vendor Name <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_vendor_name"
+                                        id="edit_vendor_name" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_address_1">Address-1</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_address_1"
-                                    id="edit_address_1" />
+
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-1 <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_address_1"
+                                        id="edit_address_1" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_address_2">Address-2</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_address_2"
-                                    id="edit_address_2" />
+
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-2 <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_address_2"
+                                        id="edit_address_2" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_city">City</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_city"
-                                    id="edit_city" />
+
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">City <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_city"
+                                        id="edit_city" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_state">State</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_state"
-                                    id="edit_state" />
+
+
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">State</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_state"
+                                        id="edit_state" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_country">Country</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_country"
-                                    id="edit_country" />
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Country</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_country"
+                                        id="edit_country" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_phone">Phone</label>
-                                <input type="number" class="form-control custom-input " formControlName="edit_phone"
-                                    id="edit_phone" />
+
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Phone</label>
+                                <div class="col-lg-12">
+                                    <input type="number" class="form-control" formControlName="edit_phone"
+                                        id="edit_phone" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_mobile_phone">Mobile Phone</label>
-                                <input type="number" class="form-control custom-input "
-                                    formControlName="edit_mobile_phone" id="edit_mobile_phone" />
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Mobile Phone</label>
+                                <div class="col-lg-12">
+                                    <input type="number" class="form-control" formControlName="edit_mobile_phone"
+                                        id="edit_mobile_phone" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_fax">Fax</label>
-                                <input type="text" class="form-control custom-input " formControlName="edit_fax"
-                                    id="edit_fax" />
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Fax</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_fax"
+                                        id="edit_fax" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="labels" for="edit_e_mail">Email</label>
-                                <input type="email" class="form-control custom-input " formControlName="edit_e_mail"
-                                    id="edit_e_mail" />
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Email</label>
+                                <div class="col-lg-12">
+                                    <input type="email" class="form-control" formControlName="edit_e_mail"
+                                        id="edit_e_mail" />
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Bank Details <span
+                                        style="color:red">*</span></label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="edit_bank" id="e_bank" />
+                                </div>
                             </div>
                         </div>
 
@@ -405,9 +496,9 @@
                 </form>
             </div>
 
-            <div class="modal-footer custom-footer">
-                <button type="button" class="btn btn-dark" (click)="updateVendor()">Update</button>
-                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="updateVendor()">Update</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -420,98 +511,138 @@
 <div class="modal fade bd-example-modal-lg" id="ViewvendorNewManagement" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content modal-custom">
-            <div class="modal-header custom-header">
-                <h2 class="modal-title"> View Vendor Management</h2>
-                <button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"
-                    aria-hidden="true">
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    View Vendor Management </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body custom-body">
+            <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_company_code">Company Code</label>
-                            <span class="spanss">{{edit_company_code}}</span>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_company_name">Company Name</label>
-                            <span class="spanss">{{edit_company_name}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Code </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_company_code}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_vendor_name">Vendor Name</label>
-                            <span class="spanss">{{edit_vendor_name}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Company Name </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_company_name}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_address_1">Address-1</label>
-                            <span class="spanss">{{edit_address_1}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Vendor Name </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_vendor_name}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_address_2">Address-2</label>
-                            <span class="spanss">{{edit_address_2}}</span>
+                           <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-1 </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_address_1}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_city">City</label>
-                            <span class="spanss">{{edit_city}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Address-2 </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_address_2}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_state">State</label>
-                            <span class="spanss">{{edit_state}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">City </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_city}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_country">Country</label>
-                            <span class="spanss">{{edit_country}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">State </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_state}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_phone">Phone</label>
-                            <span class="spanss">{{edit_phone}}</span>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Country </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_country}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_mobile_phone">Mobile Phone</label>
-                            <span class="spanss">{{edit_mobile_phone}}</span>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Phone </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_phone}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_fax">Fax</label>
-                            <span class="spanss">{{edit_fax}}</span>
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Mobile Phone </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_mobile_phone}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="labelss" for="edit_e_mail">Email</label>
-                            <span class="spanss">{{edit_e_mail}}</span>
+                           <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Fax </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_fax}}</span>
+                                    
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                         <div class="col-lg-4">
+                            <div class="form-group row">
+                                <label for="searchText" class="col-lg-12 col-form-label">Email </label>
+                                <div class="col-lg-12">
+                                    <span class="form-control">{{edit_e_mail}}</span>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                  
 
                 </div>
 
 
             </div>
 
-            <div class="modal-footer custom-footer">
-                <button type="button" class="btn btn-dark custom-close-btn" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

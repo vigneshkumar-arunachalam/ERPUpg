@@ -557,7 +557,10 @@ select {
     min-height: 100px;
 }
   
-  
+  .quotation-btn-section{
+  display: flex;
+  align-items: center;
+}
   
   
 .styled-table {

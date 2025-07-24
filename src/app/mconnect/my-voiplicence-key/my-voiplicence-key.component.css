@@ -351,7 +351,7 @@ select {
 }
 
 .userDatatable table td {
-  white-space: pre-line !important;
+  /* white-space: pre-line !important; */
 }
 
 
@@ -361,3 +361,13 @@ select {
     overflow-x: scroll !important;
     width:1380px;
   }
+
+
+  .truncate-text {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+ 

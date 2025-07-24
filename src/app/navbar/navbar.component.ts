@@ -24,6 +24,7 @@ interface Page {
 
 export class NavbarComponent implements OnInit {
   isMenuVisible = false;
+  activePanel: string = 'customer'; // default open
   //others
   userName: any
   userId: any;
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit {
   // Global search
   GlobalSearch: FormGroup;
   pagesNameList: any;
+  globalSearchStatusPara: boolean = false;
 
   live: boolean = true;
   SelectPageListId: any;
@@ -76,7 +78,7 @@ export class NavbarComponent implements OnInit {
   Quotation_list_send: any;
   Customer_list_send: any;
   Invoice_list_send: any;
-  Proforma_list_send:any;
+  Proforma_list_send: any;
   contract_filter = false;
   PG_LicenseKey: any;
   PG_DIDNumbers: any;
@@ -240,7 +242,7 @@ export class NavbarComponent implements OnInit {
   OS_searchResult: any;
   OS_search_CustID: any;
   OS_search_CustName: any;
-  postalInvoiceCount: any;
+  postalInvoiceCount: any = 0;
   sendtoPostalPermission: any;
   SA_Email_BillerId_overdue: any;
   SA_Email_customerid_overdue: any;
@@ -282,14 +284,17 @@ export class NavbarComponent implements OnInit {
   combinedDataLength: any;
   postalInvoiceDetailsLength: any;
   role_vig: any;
+  //global search-gpt2
+  isGlobalModalVisible = false;
   //global search-chatgpt
   selectedPage = ''; // e.g., 'Customer New'
   companyName = '';
-   pageRouteMap: any = {
+  pageRouteMap: any = {
     'Customer New': 'customernewall',
-      'Invoice': 'invoice', 
+    'Invoice': 'invoice',
     // add more as needed
   };
+  preApprCount: any = 0;
 
   constructor(private router: Router, private serverService: ServerService,
     private http: HttpClient, private fb: FormBuilder,
@@ -352,11 +357,11 @@ export class NavbarComponent implements OnInit {
   keywordLicenseNumber = 'license_key';
   OS_keywordCustomerName = 'customerName';
   ngOnInit(): void {
-    console.log("this.role_Permission-initial", localStorage.getItem("role"));
+    //  console.log("this.role_Permission-initial", localStorage.getItem("role"));
     this.role_vig = localStorage.getItem('role');
-   
+
     this.role_vig = this.role_vig.split(',').map((x: string) => x.trim());
-    console.log("role-vig-array",this.role_vig);
+    //  console.log("role-vig-array", this.role_vig);
     this.show = true;
     this.Select_To_Type_radiobox_Value = 'finance';
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
@@ -375,8 +380,9 @@ export class NavbarComponent implements OnInit {
     }, 2000);
     this.PageList();
     this.searchGlobalList();
+    this.preApprovalCount();
     this.roles = localStorage.getItem("role");
-    console.log("roles-vig", this.roles);
+    //  console.log("roles-vig", this.roles);
     this.get_permission();
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
     //  console.log(this.testVariable)
@@ -502,7 +508,7 @@ export class NavbarComponent implements OnInit {
     this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
       if (data.count) {
-        this.postalInvoiceCount = data.count;
+        this.postalInvoiceCount = data.count || 0;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
@@ -521,12 +527,18 @@ export class NavbarComponent implements OnInit {
       // console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     });
     this.getRecurringCountList();
-    console.log("this.role_Permission", this.role_Permission);
+
+    // console.log("this.role_Permission", this.role_Permission);
 
   }
   hasStockPreAppPermission(): boolean {
-  return this.role_vig.includes('1139');
-}
+    return this.role_vig.includes('1139');
+  }
+  hasRecurringPermission(): boolean {
+    // const allowedRoles = ['7009', '3013'];
+    // return allowedRoles.some(role => this.role_vig.includes(role));
+    return this.role_vig.includes('3013');
+  }
   toggleMenu(event: Event): void {
     event.stopPropagation();
     this.isMenuVisible = !this.isMenuVisible;
@@ -634,24 +646,24 @@ export class NavbarComponent implements OnInit {
     // Check if the billId is in the selectedBillIds array
     return this.selectedBillIds.includes(billId);
   }
-selectEventCustomerClear(e:any){
-this.PG_customerName ='';
- this.PG_customerId='';
-}
+  selectEventCustomerClear(e: any) {
+    this.PG_customerName = '';
+    this.PG_customerId = '';
+  }
 
   selectEventCustomer(item: any) {
 
     this.searchResultTest = item.customerName;
     this.PG_customerId = item.customerId;
     this.PG_customerName = item.customerName;
-  //   console.log(" this.PG_customerName-customer select change", this.PG_customerName);
-  //   console.log(item.customerId);
-  //   console.log(item.customerName);
-  //  console.log(item.customerName);
-  //    console.log("this.CompanyName",this.CompanyName);
+    //   console.log(" this.PG_customerName-customer select change", this.PG_customerName);
+    //   console.log(item.customerId);
+    //   console.log(item.customerName);
+    //  console.log(item.customerName);
+    //    console.log("this.CompanyName",this.CompanyName);
 
     this.CompanyName = item.customerName;
-       //  console.log("this.CompanyName",this.CompanyName);
+    //  console.log("this.CompanyName",this.CompanyName);
 
     this.onFocusedCustomer({});
     // this.spinner.show();
@@ -666,11 +678,16 @@ this.PG_customerName ='';
   }
   showFunction() {
     this.show = true;
+    this.isGlobalModalVisible = true;
+    $('.modal.show').modal('hide');
+    this.onFocusedCustomer({});
+    $('#ActionIdxx2').modal('show');
   }
+
   onFocusedCustomer(e: any) {
 
     this.show = false;
-    this.spinner.show();
+    // this.spinner.show();
 
     let api_req: any = new Object();
     let api_contract_req: any = new Object();
@@ -682,13 +699,13 @@ this.PG_customerName ='';
     api_contract_req.user_id = this.user_ids;
     api_contract_req.customer_id = this.PG_customerId;
     api_req.element_data = api_contract_req;
-    console.log("this.PG_customerId",this.PG_customerId);
+    // console.log("this.PG_customerId", this.PG_customerId);
     if (this.PG_customerId == undefined || this.PG_customerId == 'undefined' || this.PG_customerId == '') {
       this.spinner.hide();
       return false;
     }
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
+      // this.spinner.hide();
 
       if (response != '') {
 
@@ -948,7 +965,7 @@ this.PG_customerName ='';
             this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
               if (data.count) {
-                this.postalInvoiceCount = data.count;
+                this.postalInvoiceCount = data.count || 0;
               }
               //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
             });
@@ -1024,7 +1041,7 @@ this.PG_customerName ='';
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+      //  console.log("final error", error);
     }
 
   }
@@ -1036,6 +1053,34 @@ this.PG_customerName ='';
       list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
+  }
+  preApprovalCount() {
+
+
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "product_stock_mgnt";
+    api_req.api_url = "stockPreApproval/preApprovalCount";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "stockPreApproval/preApprovalCount";
+    sendMet_req.user_id = this.user_ids;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.preApprCount = response.count || 0;
+      }
+      else {
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      //  console.log("final error", error);
+    }
+
   }
   stockPreApproval() {
 
@@ -1064,11 +1109,183 @@ this.PG_customerName ='';
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+      // console.log("final error", error);
     }
 
   }
-  searchGlobalList1() {
+  searchGlobalList() {
+    this.spinner.show();
+    this.onFocusedCustomer({});
+    // $('#ActionIdxx3').modal('show');
+    if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
+
+    }
+    const isEmpty = [this.PG_customerId, this.PG_customerName, this.PG_LicenseNum, this.PG_DIDNumber]
+      .every(field => !field || field === 'undefined');
+
+    // if (isEmpty) {
+    //   this.spinner.hide();
+    //   iziToast.warning({ message: "Please enter at least one search criteria", position: 'topRight' });
+    //   return;
+    // }
+
+    // if (!this.selectedPageNames?.length) {
+    //   this.spinner.hide();
+    //   iziToast.error({ message: "Select a Page", position: 'topRight' });
+    //   return;
+    // }
+
+    let api_req: any = new Object();
+    let api_schGlo_req: any = new Object();
+    api_req.moduleType = "global";
+    api_req.api_url = "global/globalSearchAll";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_schGlo_req.action = "globalSearchAll";
+    api_schGlo_req.user_id = this.user_ids;
+    if ((this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) &&
+      (this.PG_customerName == '' || this.PG_customerName == 'undefined' || this.PG_customerName == undefined) &&
+      (this.PG_LicenseNum == '' || this.PG_LicenseNum == 'undefined' || this.PG_LicenseNum == undefined) &&
+      (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined)
+    ) {
+      this.spinner.hide();
+      // iziToast.error({
+      //   message: "Select Customer or license or DID or company",
+      //   position: 'topRight'
+      // });
+      return false;
+
+    } else {
+      api_schGlo_req.customer_id = this.PG_customerId;
+    }
+
+    // console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
+    api_schGlo_req.customer_name = this.PG_customerName;
+    api_schGlo_req.customer_code = this.PG_CustomerCode;
+
+    api_schGlo_req.license_number = this.PG_LicenseNum;
+    api_schGlo_req.did_number = this.PG_DIDNumber;
+
+    if (!this.selectedPageNames) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Select Page ",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+      //  console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
+      api_schGlo_req.pagename = this.selectedPageNames;
+    }
+
+
+    api_req.element_data = api_schGlo_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      // $('#ActionIdxx2').modal('hide');
+      // console.log(" response--pagelist", response)
+      if (response != '') {
+        //  console.log("playboy", response.quotation_list)
+
+        this.SelectPageList = response.menuList;
+
+        this.componentDynamic = response.selected_menu;
+        if (response.quotation_list != 0 || response.quotation_list != '0') {
+          this.Quot_UI_Show = response.quotation_list;
+          this.Quotation_list_send = response.quotation_list.quotation_details;
+          this.Quotation_per_send = response.quotation_list.quotation_permission_arr;
+          // console.log("quotation-global-before send", JSON.stringify(this.Quotation_list_send));
+          // console.log("this.Customer_list_send-before send", JSON.stringify(this.Customer_list_send));
+
+
+          let api_reqs: any = {
+            Quotation_list_send: this.Quotation_list_send,
+            Quotation_per_send: this.Quotation_per_send
+          };
+          this.serverService.global_search_quotation.next(api_reqs);
+        } else {
+          this.Quot_UI_Show = response.quotation_list;
+          //   console.log("Quotation Skipped")
+        }
+        if (response.proforma_invoice_list != 0 || response.proforma_invoice_list != '0') {
+          this.PI_list = response.proforma_details;
+          this.PI_list_send = response.proforma_invoice_list.proforma_details;
+          this.PI_list_send = response.proforma_invoice_list.proforma_details;
+          this.PI_per_send = response.proforma_invoice_list.biller_details;
+          this.PI_UI_Show = response.proforma_invoice_list;
+
+          let api_reqs: any = {
+            PI_list_send: this.PI_list_send,
+            PI_per_send: this.PI_per_send
+          };
+          this.serverService.global_search.next(api_reqs);
+        } else {
+          this.PI_UI_Show = response.proforma_invoice_list;
+
+          //  console.log("Performa invoice Skipped")
+        }
+
+        if (response.customer_list != 0 || response.customer_list != '0') {
+          this.Customer_list_send = response.customer_list.customer_details;
+          this.Customer_revenue_send = response.customer_list.revenue_list;
+          this.Customer_list_send = response.customer_list.customer_details;
+          this.Cust_UI_Show = response.customer_list;
+          let api_reqs: any = {
+            Customer_list_send: this.Customer_list_send,
+            Customer_revenue_send: this.Customer_revenue_send
+          };
+          this.serverService.global_search_customer.next(api_reqs);
+        } else {
+          this.Cust_UI_Show = response.customer_list;
+          // console.log("Customer List Skipped")
+        }
+
+
+        if (response.invoice_list != 0 || response.invoice_list != '0') {
+          this.Invoice_list_send = response.invoice_list.proforma_details;
+          this.Invoice_UI_Show = response.invoice_list;
+          this.Invoice_list_send = response.invoice_list.proforma_details;
+          this.Invoice_per_send = response.invoice_list.invoice_permission_arr;
+          this.Invoice_biller_send = response.invoice_list.biller_details;
+          this.Invoice_revenue_send = response.invoice_list.revenue_list;
+          //  console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
+          let api_reqs: any = {
+            Invoice_list_send: this.Invoice_list_send,
+            Invoice_per_send: this.Invoice_per_send,
+            Invoice_biller_send: this.Invoice_biller_send,
+            Invoice_revenue_send: this.Invoice_revenue_send
+          };
+          this.serverService.global_search_invoice.next(api_reqs);
+        } else {
+          this.Invoice_UI_Show = response.invoice_list;
+          // console.log("Invoice List Skipped")
+        }
+        // console.log(this.Quotation_list_send);
+
+        // console.log("without json stringfy,this.Customer_list_send", this.Customer_list_send);
+        // console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
+        this.dashboard = true;
+        var api_req: any = '{"type":"hello","proformalist":this.PI_list_send}';
+        $('#ActionIdOutput').modal('show');
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  searchGlobalList0() {
     this.spinner.show();
     $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
@@ -1267,12 +1484,12 @@ this.PG_customerName ='';
         // console.log("final error", error);
       };
   }
-   searchGlobalList() {
+  searchGlobalList1() {
     this.spinner.show();
     $('.modal-backdrop').remove();
     $("body").removeClass("modal-open");
     this.onFocusedCustomer({});
-  
+
     if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
 
     }
@@ -1291,7 +1508,7 @@ this.PG_customerName ='';
       (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined)
     ) {
       this.spinner.hide();
- 
+
       return false;
 
     } else {
@@ -1322,9 +1539,9 @@ this.PG_customerName ='';
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
- 
+
       if (response != '') {
-    
+
         if (response.menuList) {
           this.SelectPageList = response.menuList;
         }
@@ -1334,8 +1551,8 @@ this.PG_customerName ='';
 
 
 
- 
-    
+
+
 
         if (response.customer_list != 0 || response.customer_list != '0') {
           if (response.customer_list) {
@@ -1360,9 +1577,9 @@ this.PG_customerName ='';
         }
 
 
-       
+
         this.dashboard = true;
-    
+
 
 
         $('#ActionIdOutput').modal({
@@ -1388,7 +1605,7 @@ this.PG_customerName ='';
         // console.log("final error", error);
       };
   }
- searchNow() {
+  searchNow() {
     if (!this.selectedPageNames.length) {
       alert('Please select at least one page.');
       return;
@@ -1410,84 +1627,112 @@ this.PG_customerName ='';
     this.router.navigate([`/${route}`]);
   }
   searchGlobalList_gpt() {
-  this.spinner.show();
-  $('.modal-backdrop').remove();
-  $("body").removeClass("modal-open");
-  this.onFocusedCustomer({});
+    this.spinner.show();
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+    this.onFocusedCustomer({});
 
-  const isEmpty = [this.PG_customerId, this.PG_customerName, this.PG_LicenseNum, this.PG_DIDNumber]
-    .every(field => !field || field === 'undefined');
+    const isEmpty = [this.PG_customerId, this.PG_customerName, this.PG_LicenseNum, this.PG_DIDNumber]
+      .every(field => !field || field === 'undefined');
 
-  if (isEmpty) {
-    this.spinner.hide();
-    iziToast.warning({ message: "Please enter at least one search criteria", position: 'topRight' });
-    return;
-  }
-
-  if (!this.selectedPageNames?.length) {
-    this.spinner.hide();
-    iziToast.error({ message: "Select a Page", position: 'topRight' });
-    return;
-  }
-
-  const api_req: any = {
-    moduleType: "global",
-    api_url: "global/globalSearchAll",
-    api_type: "web",
-    access_token: "your_access_token",
-    element_data: {
-      action: "globalSearchAll",
-      user_id: this.user_ids,
-      customer_id: this.PG_customerId,
-      customer_name: this.PG_customerName,
-      customer_code: this.PG_CustomerCode,
-      license_number: this.PG_LicenseNum,
-      did_number: this.PG_DIDNumber,
-      pagename: this.selectedPageNames
-    }
-  };
-
-  this.serverService.sendServer(api_req).subscribe({
-    next: (response: any) => {
+    if (isEmpty) {
       this.spinner.hide();
+      iziToast.warning({ message: "Please enter at least one search criteria", position: 'topRight' });
+      return;
+    }
+
+    if (!this.selectedPageNames?.length) {
+      this.spinner.hide();
+      iziToast.error({ message: "Select a Page", position: 'topRight' });
+      return;
+    }
+
+    const api_req: any = {
+      moduleType: "global",
+      api_url: "global/globalSearchAll",
+      api_type: "web",
+      access_token: "your_access_token",
+      element_data: {
+        action: "globalSearchAll",
+        user_id: this.user_ids,
+        customer_id: this.PG_customerId,
+        customer_name: this.PG_customerName,
+        customer_code: this.PG_CustomerCode,
+        license_number: this.PG_LicenseNum,
+        did_number: this.PG_DIDNumber,
+        pagename: this.selectedPageNames
+      }
+    };
+
+    this.serverService.sendServer(api_req).subscribe({
+      next: (response: any) => {
+        this.spinner.hide();
         this.serverService.setSearchParams({
-      companyName: this.PG_customerName,
-      // Add other fields if needed
+          companyName: this.PG_customerName,
+
+          // Add other fields if needed
+        });
+
+        // Set visibility flags
+        this.PI_UI_Show = response.proforma_invoice_list ? 1 : 0;
+        this.Invoice_UI_Show = response.invoice_list ? 1 : 0;
+        this.Quot_UI_Show = response.quotation_list ? 1 : 0;
+        this.Cust_UI_Show = response.customer_list ? 1 : 0;
+
+        // Pass data
+        this.Customer_list_send = response.customer_list?.customer_details;
+        this.Customer_revenue_send = response.customer_list?.revenue_list;
+
+        this.Invoice_list_send = response.invoice_list?.proforma_details;
+        this.Quotation_list_send = response.quotation_list?.quotation_details;
+        this.Proforma_list_send = response.proforma_invoice_list?.proforma_details;
+        this.globalSearchStatusPara = true;
+        // Show modal
+        $('#ActionIdOutput_gpt').modal({
+          backdrop: false,
+          keyboard: false,
+          show: true
+        });
+      },
+      error: () => {
+        this.spinner.hide();
+        iziToast.error({ message: "Server error. Please contact admin.", position: 'topRight' });
+      }
     });
-
-      // Set visibility flags
-      this.PI_UI_Show = response.proforma_invoice_list ? 1 : 0;
-      this.Invoice_UI_Show = response.invoice_list ? 1 : 0;
-      this.Quot_UI_Show = response.quotation_list ? 1 : 0;
-      this.Cust_UI_Show = response.customer_list ? 1 : 0;
-
-      // Pass data
-      this.Customer_list_send = response.customer_list?.customer_details;
-      this.Customer_revenue_send = response.customer_list?.revenue_list;
-
-      this.Invoice_list_send = response.invoice_list?.proforma_details;
-      this.Quotation_list_send = response.quotation_list?.quotation_details;
-      this.Proforma_list_send = response.proforma_invoice_list?.proforma_details;
-
-      // Show modal
-      $('#ActionIdOutput_gpt').modal({
-        backdrop: false,
-        keyboard: false,
-        show: true
-      });
-    },
-    error: () => {
-      this.spinner.hide();
-      iziToast.error({ message: "Server error. Please contact admin.", position: 'topRight' });
-    }
-  });
-}
-
+  }
   gotoRoot() {
+    //  alert(4)
 
     $('#ActionIdxx2').modal('hide');
+    setTimeout(() => {
+      $('.modal-backdrop').remove();
+      $('body').removeClass('modal-open');
+      window.location.reload(); // Reload only after cleanup
+    }, 300);
+    // $('.modal-backdrop').remove();
+    // $("body").removeClass("modal-open");
+
+    //  window.location.reload();
     // this.router.navigate(['/customernewall']);
+  }
+
+  gotoRoot1() {
+    this.GlobalSearch.reset();
+    (document.activeElement as HTMLElement)?.blur();
+    $('#ActionIdxx2').modal('hide');
+    $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+
+    $('.modal.show').modal('hide');
+    this.globalSearchStatusPara = false;
+
+    this.PG_customerName = '';
+    this.searchResultTest = '';
+    this.PG_customerId = '';
+    this.PG_customerName = '';
     // window.location.reload();
+    // this.router.navigate(['/']);
+
   }
   functionclose() {
     //  console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
@@ -1527,11 +1772,35 @@ this.PG_customerName ='';
       }
     }
   }
+  // ngAfterViewInit(): void {
+  //   $('#ActionIdOutput').on('hide.bs.modal', function () {
+  //     (document.activeElement as HTMLElement)?.blur();
+  //   });
+  // }
+  ngAfterViewInit(): void {
+    $('#ActionIdxx2').on('hidden.bs.modal', () => {
+      this.isGlobalModalVisible = false; // Tell Angular to stop rendering content
+    });
+    $('#ActionIdOutput').on('hide.bs.modal', function () {
+      (document.activeElement as HTMLElement)?.blur();
+    });
+
+  }
   closeModal() {
+    //  alert(1)
     this.PageList();
-   // $('#ActionIdOutput').modal('hide');
-        $('#ActionIdOutput_gpt').modal('hide');
-    
+    this.GlobalSearch.reset();
+    // $('#ActionIdOutput').modal('hide');
+    (document.activeElement as HTMLElement)?.blur();
+    $('#ActionIdOutput_gpt').modal('hide');
+    $('#ActionIdOutput').modal('hide');
+    this.globalSearchStatusPara = false;
+
+    this.PG_customerName = '';
+    this.searchResultTest = '';
+    this.PG_customerId = '';
+    this.PG_customerName = '';
+
     setTimeout(() => {
       this.functionclose();
     }, 1000);
@@ -1571,6 +1840,250 @@ this.PG_customerName ='';
 
         this.logSelectedCheckboxIds();
         //  console.log('this.selectedPageIds with customer New only', this.selectedPageIds);
+
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  PIApprovee() {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/recuringApprovalInvoice_PI";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/recuringApprovalInvoice_PI";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.actval = 'Invoice Approve';
+   // api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+
+     if (this.selectedBillIds_RecurringInvoice && this.selectedBillIds_RecurringInvoice.length > 0) {
+
+      api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+
+    } else {
+      Swal.close();
+      iziToast.error({
+        message: "Chooce atleast 1",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      //  console.log(" response--pagelist", response)
+      if (response.status == true) {
+        iziToast.success({
+          message: "PI Approved Successfully",
+          position: 'topRight'
+        });
+
+        this.selectedBillIds_RecurringInvoice = [];
+          $('#RecuringInvoiceFormId').modal('hide');
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  invoiceApprovee() {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/nonDID_recuringApprovalInvoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/nonDID_recuringApprovalInvoice";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.actval = 'Invoice Approve';
+   // api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+    if (this.selectedBillIds_RecurringInvoice && this.selectedBillIds_RecurringInvoice.length > 0) {
+
+      api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+
+    } else {
+      Swal.close();
+      iziToast.error({
+        message: "Chooce atleast 1",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      //  console.log(" response--pagelist", response)
+      if (response.status == true) {
+        iziToast.success({
+          message: "Invoice Approved Successfully",
+          position: 'topRight'
+        });
+        this.selectedBillIds_RecurringInvoice = [];
+        $('#RecuringInvoiceFormId').modal('hide');
+
+
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  nextRecrr() {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/nextApprovalInvoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/nextApprovalInvoice";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.actval = 'Invoice Approve';
+  //  api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+     if (this.selectedBillIds_RecurringInvoice && this.selectedBillIds_RecurringInvoice.length > 0) {
+
+      api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+
+    } else {
+      Swal.close();
+      iziToast.error({
+        message: "Chooce atleast 1",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      //  console.log(" response--pagelist", response)
+      if (response.status == true) {
+        iziToast.success({
+          message: "Next Recurring Approved Successfully",
+          position: 'topRight'
+        });
+        this.selectedBillIds_RecurringInvoice = [];
+          $('#RecuringInvoiceFormId').modal('hide');
+
+
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  RejectRecurr() {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/rejectApprovalInvoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/rejectApprovalInvoice";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.actval = 'Invoice Approve';
+   // api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+    if (this.selectedBillIds_RecurringInvoice && this.selectedBillIds_RecurringInvoice.length > 0) {
+
+      api_page_req.approval_id = this.selectedBillIds_RecurringInvoice;
+
+    } else {
+      Swal.close();
+      iziToast.error({
+        message: "Chooce atleast 1",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      //  console.log(" response--pagelist", response)
+      if (response.status == true) {
+        iziToast.success({
+          message: "Rejected Successfully",
+          position: 'topRight'
+        });
+        this.selectedBillIds_RecurringInvoice = [];
+          $('#RecuringInvoiceFormId').modal('hide');
+
 
 
       } else {
@@ -1817,7 +2330,7 @@ this.PG_customerName ='';
           this.http.get<any>(this.serverService.urlFinal + 'sendPostalInvoiceCount').subscribe((data: any) => {
 
             if (data.count) {
-              this.postalInvoiceCount = data.count;
+              this.postalInvoiceCount = data.count || 0;
             }
             //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
           });
@@ -2204,8 +2717,8 @@ this.PG_customerName ='';
   selected_CustomerCode(item: any) {
     this.PG_CustomerCode = item.customerCode;
     this.PG_customerId = item.customerId;
-     console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
-     console.log(item)
+    // console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
+    // console.log(item)
   }
 
   inpChanged_DIDNumber(data: any) {
@@ -4041,9 +4554,9 @@ this.PG_customerName ='';
         .map(menuItem => menuItem.menu_name);
     }
 
-     console.log('Selected Checkbox IDs:', this.selectedPageIds);
+    // console.log('Selected Checkbox IDs:', this.selectedPageIds);
 
-     console.log('Selected Checkbox Names:', this.selectedPageNames);
+    // console.log('Selected Checkbox Names:', this.selectedPageNames);
   }
 
   // Toggle all checkboxes
@@ -4077,9 +4590,9 @@ this.PG_customerName ='';
   // Log individual checkbox selection/deselection
   logIndividualSelection_RecurringInvoice(item: any) {
     if (item.selected) {
-      //  console.log(`Selected Bill ID: ${item.billId}`);
+      console.log(`Selected Bill ID: ${item.billId}`);
     } else {
-      //  console.log(`Deselected Bill ID: ${item.billId}`);
+      console.log(`Deselected Bill ID: ${item.billId}`);
     }
     this.updateCheckAllState_RecurringInvoice(); // Update Check All checkbox state
   }
@@ -4104,8 +4617,8 @@ this.PG_customerName ='';
     this.deselectedBillIds_RecurringInvoice = [...deselectedSet];
 
     // Log the results
-    // console.log(`Selected Bill IDs: ${this.selectedBillIds_RecurringInvoice.join(', ')}`);
-    // console.log(`Deselected Bill IDs: ${this.deselectedBillIds_RecurringInvoice.join(', ')}`);
+    console.log(`Selected Bill IDs: ${this.selectedBillIds_RecurringInvoice.join(', ')}`);
+    console.log(`Deselected Bill IDs: ${this.deselectedBillIds_RecurringInvoice.join(', ')}`);
   }
 
   selectAll_RecurringReseller(event: any) {
@@ -4281,7 +4794,24 @@ this.PG_customerName ='';
     api_page_req.action = "recurring/recuringApprovalInvoiceNew";
     api_page_req.user_id = this.user_ids;
     api_page_req.actval = value;
-    api_page_req.approval_id = this.arrayRecurringDemo;
+
+    
+
+       if (this.arrayRecurringDemo && this.arrayRecurringDemo.length > 0) {
+
+      api_page_req.approval_id = this.arrayRecurringDemo;
+
+    } else {
+      Swal.close();
+      this.spinner.hide();
+      iziToast.error({
+        message: "Chooce atleast 1",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
     api_req.element_data = api_page_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -4289,6 +4819,11 @@ this.PG_customerName ='';
 
       if (response.status == true) {
         this.spinner.hide();
+         iziToast.success({
+          message: "Success",
+          position: 'topRight'
+        });
+        $('#RecurringInvoicenewFormId').modal('hide');
         // location.reload();
 
 

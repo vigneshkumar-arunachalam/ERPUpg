@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ServerService } from '../../services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +17,10 @@ declare var tinymce: any;
 })
 export class InvoiceComponent implements OnInit {
   @Input() invoiceList: any[] = [];
+  @Input() selectedPages: any[] = [];
+  @Input() searchDataGlobal: any = '';
+  @Input() globalSearchStatus: boolean = false;
+
   //list
   PI_list: any = [];
   biller_list: any;
@@ -364,7 +368,7 @@ export class InvoiceComponent implements OnInit {
   eInvoiceValue: boolean = false;
   geteInvoiceID: any;
 
-  constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+  constructor(private cdr: ChangeDetectorRef, private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -448,7 +452,7 @@ export class InvoiceComponent implements OnInit {
     this.searchResult_CustomerName = '';
     this.PI_list = this.invoiceList;
     const searchParams = this.serverService.getSearchParams();
-    if (searchParams && searchParams.companyName) {
+    if (searchParams && searchParams.companyName && this.selectedPages.includes('Invoice')) {
       this.searchResult_CustomerName = searchParams.companyName;
 
     } else {
@@ -736,11 +740,65 @@ export class InvoiceComponent implements OnInit {
 
   }
   // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['invoiceList'] && changes['invoiceList'].currentValue) {
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['invoiceList'] && changes['invoiceList'].currentValue && this.selectedPages.includes('Invoice')) {
+  //     this.PI_list = changes['invoiceList'].currentValue;
+  //   }
+  // }
+  ngOnChanges1(changes: SimpleChanges): void {
+    const isCustomerNew = this.selectedPages.includes('Invoice');
+
+    if (
+      isCustomerNew &&
+      changes['invoiceList'] &&
+      changes['invoiceList'].currentValue &&
+      this.globalSearchStatus // ✅ only assign if searchData is not empty
+    ) {
       this.PI_list = changes['invoiceList'].currentValue;
     }
+
+    // Optional: clear data if modal is closed and searchData is cleared
+    if (
+
+      isCustomerNew &&
+      changes['searchDataGlobal'] &&
+      changes['searchDataGlobal'].currentValue === ''
+    ) {
+     // alert("have to come");
+      this.PI_list = [];
+    }
   }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const isInvoicePage = this.selectedPages.includes('Invoice');
+
+    if (
+      isInvoicePage &&
+      changes['invoiceList'] &&
+      changes['invoiceList'].currentValue &&
+      this.globalSearchStatus
+    ) {
+      this.PI_list = changes['invoiceList'].currentValue;
+    }
+
+    if (
+      isInvoicePage &&
+      changes['searchDataGlobal'] &&
+      changes['searchDataGlobal'].currentValue === ''
+    ) {
+     // alert('have to come');
+      this.PI_list = [];
+      console.log("last PI Value", this.PI_list);
+      this.cdr.detectChanges(); // ✅ Force UI to update
+      this.searchResult_CustomerID = '';
+      this.searchResult_CustomerName = '';
+      this.getInvoice1({});
+        this.getInvoice1({});
+    }
+  }
+
+
 
 
   get addressControls_rc() {
@@ -5369,6 +5427,73 @@ export class InvoiceComponent implements OnInit {
     this.sstCheckbox = event.target.checked;
     // console.log("this.sstCheckbox", this.sstCheckbox);
 
+  }
+  clearInvSendingMethod() {
+    $('#InvoiceSendingMethodFormId_inv').modal('hide');
+  }
+  clearInvSharePerm() {
+    $('#sharPerissionFormId_inv').modal('hide');
+  }
+  clearProcessPay() {
+    $('#processPaymentId_inv').modal('hide');
+  }
+  clearEmail() {
+    $('#emailFormId_inv').modal('hide');
+  }
+  clearRecur() {
+    $('#RecurringFormId_inv').modal('hide');
+
+  }
+  clearInvRecur() {
+    $('#RecurringFormIdPE_inv').modal('hide');
+  }
+  clearCouponAss() {
+    $('#couponAssignFormId').modal('hide');
+  }
+  clearInFileAtt() {
+    $('#fileAttachmentFormId_inv').modal('hide');
+  }
+  clearSetTerms() {
+    $('#settermsConditionFormId_inv').modal('hide');
+  }
+  clearInvRev() {
+    $('#InvoiceRevenueFormId_inv').modal('hide');
+  }
+  clearDeliveryOrder() {
+    $('#DeliveryOrderFormId_inv').modal('hide');
+  }
+  clearTypeName() {
+    $('#setInvoiceTypeNameFormId_inv').modal('hide');
+  }
+  clearNotes() {
+    $('#NotesFormId_inv').modal('hide');
+  }
+  clearReseComm() {
+    $('#inv_ResellerCommissionFormId').modal('hide');
+  }
+  clearActCost() {
+    $('#setActualCostId_inv').modal('hide');
+  }
+  clearLicenseDet() {
+    $('#LicenseDetailsFormId_inv').modal('hide');
+  }
+  clearInvQuot() {
+    $('#InvoicetoQuotationFormId_inv').modal('hide');
+  }
+  clearSearIv() {
+    $('#searchInvoiceFormId').modal('hide');
+  }
+  clearSuspIv() {
+    $('#suspendInvoiceFormId').modal('hide');
+  }
+  clearSSTTax() {
+    $('#sstTaxFormId_inv').modal('hide');
+  }
+  clearEInvoice() {
+    $('#eInvoiceFormId_inv').modal('hide');
+  }
+  clearAction(i: any) {
+    $("#ActionId" + i).modal("hide");
   }
 
 }

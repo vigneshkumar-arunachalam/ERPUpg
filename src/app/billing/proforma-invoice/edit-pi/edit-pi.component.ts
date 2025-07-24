@@ -1912,6 +1912,11 @@ export class EditPIComponent implements OnInit {
     this.input1 ='';
     $("#enablePerFinal").val('');
   }
-
+ clearSaveGrossDiscount(){
+    $("#discountFormFinal" ).modal("hide");
+  }
+   clearDiscount(){
+    $("#discountFormId" ).modal("hide");
+  }
   
 }

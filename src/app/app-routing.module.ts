@@ -168,19 +168,25 @@ import { CurrentPayslipComponent } from './hr/current-payslip/current-payslip.co
 import { VendorComponent } from './vendor/vendor.component';
 import { CustomerProjectComponent } from './customer-project/customer-project.component';
 import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
-// import { DeliverychallanComponent } from './billing/deliverychallan.component';
+
+import { DeliverychallanComponent } from './billing/deliverychallan/deliverychallan.component';
 //  import { RatecatalogComponent } from './stock/ratecatalog.component';
+import {RatecatalogComponent} from './stock/ratecatalog/ratecatalog.component';
+import { DcipallowComponent } from './tools/dcipallow/dcipallow.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },
-  // {
-  //   path: 'deliverychallan', component: DeliverychallanComponent
-  // },
-  //  {
-  //    path: 'ratecatalog', component: RatecatalogComponent
-  //  }, 
+  {
+    path: 'dcipallow', component: DcipallowComponent
+  },
+  {
+    path: 'deliverychallan', component: DeliverychallanComponent
+  },
+   {
+     path: 'catRate', component: RatecatalogComponent
+   }, 
    {
     path: 'Currentstock', component: CurrentStockOneComponent
   }, {

@@ -19,6 +19,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class QuotationnewComponent implements OnInit {
   @Input() QuotatList: any[] = [];
+  @Input() selectedPages: any[] = [];
+  @Input() searchDataGlobal: any = '';
+  @Input() globalSearchStatus: boolean = false;
 
   //quotation version
   quotationVersion = '1.0';
@@ -209,12 +212,13 @@ export class QuotationnewComponent implements OnInit {
     this.quotation_list = this.QuotatList;
 
     const searchParams = this.serverService.getSearchParams();
-    if (searchParams && searchParams.companyName) {
+    if (searchParams && searchParams.companyName && this.selectedPages.includes('Quotation New')) {
       this.searchResult_CustomerName = searchParams.companyName;
 
     } else {
       this.searchResult_CustomerName = '';
     }
+
     console.log("this.searchResultTest-from global search-Quotation", this.searchResult_CustomerName);
 
 
@@ -301,9 +305,30 @@ export class QuotationnewComponent implements OnInit {
 
     this.search_BillerList();
   }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['QuotatList'] && changes['QuotatList'].currentValue) {
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['QuotatList'] && changes['QuotatList'].currentValue && this.selectedPages.includes('Quotation New')) {
+  //     this.quotation_list = changes['QuotatList'].currentValue;
+  //   }
+  // }
+  ngOnChanges(changes: SimpleChanges): void {
+    const isCustomerNew = this.selectedPages.includes('Quotation New');
+
+    if (
+      isCustomerNew &&
+      changes['QuotatList'] &&
+      changes['QuotatList'].currentValue &&
+      this.globalSearchStatus // ✅ only assign if searchData is not empty
+    ) {
       this.quotation_list = changes['QuotatList'].currentValue;
+    }
+
+    // Optional: clear data if modal is closed and searchData is cleared
+    if (
+      isCustomerNew &&
+      changes['searchDataGlobal'] &&
+      changes['searchDataGlobal'].currentValue === ''
+    ) {
+      this.QuotatList = [];
     }
   }
 
@@ -1543,9 +1568,7 @@ export class QuotationnewComponent implements OnInit {
   fileAttachmentClear() {
     this.FileAttachmentForm.reset();
   }
-  quotationCommentsClear() {
-    this.quotationCommentsForm.reset();
-  }
+
   quotationEmailClear() {
     this.emailForm.reset();
     this.msg_id = '';
@@ -2407,6 +2430,50 @@ export class QuotationnewComponent implements OnInit {
     $('#actual_cost_tot').text(actual_cost_tot);
     $('#actual_net_tot').text(actual_cost_net_tot);
     $('#act_diff_amt_tot').text(act_diff_amt_tot);
+  }
+  clearpdf() {
+    $('#pdfFormId').modal('hide');
+  }
+  clearPI() {
+    $('#PIId').modal('hide');
+  }
+  quotationCommentsClear() {
+    this.quotationCommentsForm.reset();
+    $('#quotationCommentsId').modal('hide');
+  }
+  clearTextEdit() {
+
+    $('#TextEditorId').modal('hide');
+  }
+  clearFileAtt() {
+    $('#fileAttachmentFormId').modal('hide');
+  }
+  clearActCost() {
+    $('#setActualCostId').modal('hide');
+  }
+  clearTempName() {
+    $('#setTemplateNameId').modal('hide');
+  }
+  clearquotAppr() {
+    $('#quotationApprovalId').modal('hide');
+  }
+  clearquotSharedPer() {
+    $('#quotationSharedPersonId').modal('hide');
+  }
+  clearSearchQuot() {
+    $('#searchQuotationFormId').modal('hide');
+  }
+  clearDupQuot() {
+    $('#duplicateQuotationFormId').modal('hide');
+  }
+  clearEditQuot() {
+    $('#editNewQuotationFormId').modal('hide');
+  }
+  clearAddQuot() {
+    $('#addNewQuotationFormId').modal('hide');
+  }
+  clearFullView(i: any) {
+    $("#ActionId" + i).modal("hide");
   }
 
 }

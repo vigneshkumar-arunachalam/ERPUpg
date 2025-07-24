@@ -718,6 +718,10 @@ export class AddcreditnoteComponent implements OnInit {
     // do something when input is focused
     console.log(e);
   }
+    clearInput(event: any) {
+   
+    this.customer_ID='';
+    }
   AddPurchaseOrder($event: MouseEvent) {
 
     let api_req: any = new Object();
@@ -735,8 +739,16 @@ export class AddcreditnoteComponent implements OnInit {
     api_req_addPO.date = this.addDo_section1.value.DocDate;
     api_req_addPO.billGeneratedBy = localStorage.getItem('erp_c4c_user_id');
 
+     if (!this.customer_ID) {
+      iziToast.error({
+        message: "Customer Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+       api_req_addPO.customer_id = this.customer_ID;
+    }
 
-    api_req_addPO.customer_id = this.customer_ID;
     if (this.addDo_section1.value.vendor_name == undefined || this.addDo_section1.value.vendor_name == '' || this.addDo_section1.value.vendor_name == 'undefined') {
 
       iziToast.error({

@@ -57,9 +57,9 @@ table {
 
   
   .form-container {
-    margin: 20px auto;
-    background: #e0f7fa;
-    padding: 20px;
+    /* margin: 20px auto; */
+    /* background: #e0f7fa; */
+    /* padding: 20px; */
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -91,7 +91,7 @@ table {
 
  .modal .checkbox-group,
  .modal .radio-group {
-    display: flex;
+    display: revert-layer;
     gap: 10px;
     align-items: center;
   }
@@ -186,3 +186,49 @@ table {
     overflow-y: scroll;
     padding: 6px;
 }
+
+
+
+.modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #f9021b;
+  transition: all 0.5s ease;
+}
+#addmore label,#edit_template label{
+  font-weight: 500;
+  color: #051b5a !important;
+}
+
+
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+

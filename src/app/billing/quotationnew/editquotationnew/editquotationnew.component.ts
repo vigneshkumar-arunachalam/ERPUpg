@@ -1650,8 +1650,17 @@ export class EditquotationnewComponent implements OnInit {
   }
 
   goBack() {
+     // $("#discountFormId" ).modal("hide");
     this.router.navigate(['/quotationnew']);
 
   }
+   clearsaveGrossDiscount(){
+    $("#discountFormFinal" ).modal("hide");
+  }
+   clearSaveDiscount(){
+    $("#discountFormId" ).modal("hide");
+  }
+  
+
 
 }

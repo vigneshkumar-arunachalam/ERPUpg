@@ -351,7 +351,7 @@ export class PrepaidnoteComponent implements OnInit {
         this.countDetails = response.count;
 
         // console.log(this.Transaction_list);
-        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.totalCount, 'page_limit': this.pageLimit });
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
 
         $('#searchTransactionFormId').modal('hide');
       }

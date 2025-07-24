@@ -1601,4 +1601,10 @@ export class AddquotationnewComponent implements OnInit {
 
     this.router.navigate(['/quotationnew']);
   }
+   clearDiscount(){
+    $("#discountFormFinal" ).modal("hide");
+  }
+    clearSaveDiscount(){
+    $("#discountFormId" ).modal("hide");
+  }
 }

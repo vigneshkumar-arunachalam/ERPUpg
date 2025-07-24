@@ -871,11 +871,11 @@
             </section>
         </form>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveQuotationButton"
+            <button type="button" class="btn btn-primary"  id="saveQuotationButton"
                 (click)="saveQuotationEnquiry($event)">
                 Save
             </button>
-            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="redirecttoQuotation()">
+            <button type="button" class="btn btn-dark"  (click)="redirecttoQuotation()">
                 Cancel
             </button>
         </div>
@@ -895,7 +895,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearSaveDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -937,7 +937,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearSaveDiscount()">
                     Cancel
                 </button>
 
@@ -955,7 +955,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -998,7 +998,7 @@
 
                 <button type="button" class="btn btn-primary"
                     (click)="saveGrossDiscount(); getTaxCals();totalCalculate_last();">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearDiscount()">
                     Cancel
                 </button>
 

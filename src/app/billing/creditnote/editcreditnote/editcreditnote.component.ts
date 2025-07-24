@@ -25,8 +25,8 @@ export class EditcreditnoteComponent implements OnInit {
   purchaseorder_cstNo: any;
   companyNameList: any;
 
-  
-  isReadonly: boolean=true;
+
+  isReadonly: boolean = true;
   // auto complete search
   searchResult_CustomerName: any;
   searchResult: any;
@@ -68,10 +68,11 @@ export class EditcreditnoteComponent implements OnInit {
   getCurrencyCode: any;
   invoicePriceKey: any;
   row_cnt_mod: any;
-  e_vendor_company_name:any;
-  e_vendor_company_address:any;
+  e_vendor_company_name: any;
+  e_vendor_company_address: any;
   credit_note_id: any;
-  
+  defBiller_ID: any;
+
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
@@ -94,14 +95,14 @@ export class EditcreditnoteComponent implements OnInit {
         setTimeout(() => {
           this.totalCalculate();
         }, 2000);
-       
-       
 
-        
+
+
+
 
       }
       );
-      
+
 
     this.addDo_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
@@ -223,7 +224,7 @@ export class EditcreditnoteComponent implements OnInit {
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
-  
+
         this.totalCalculate();
 
         let api_req: any = new Object();
@@ -270,7 +271,7 @@ export class EditcreditnoteComponent implements OnInit {
     });
     // this.tax_details_cbo();
   }
-  tax_details_cbo(){
+  tax_details_cbo() {
     this.billerChangeID = this.addDo_section1.value.companyName;
 
     let api_req: any = new Object();
@@ -282,13 +283,13 @@ export class EditcreditnoteComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addBillerChangeAPI.action = "tax_details_cbo";
     addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
-    addBillerChangeAPI.billerId =$('#e_companyName').val();
+    addBillerChangeAPI.billerId = $('#e_companyName').val();
     api_req.element_data = addBillerChangeAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
       this.addPI_section3.patchValue({
         'section3_gst_dropdown': response.default_tax_id,
-        'section3_tax_per_hd':response.percent_val,
+        'section3_tax_per_hd': response.percent_val,
       });
       this.tax_per_mod = response.percent_val;
     });
@@ -296,50 +297,53 @@ export class EditcreditnoteComponent implements OnInit {
     this.totalCalculate();
   }
 
-  billerChangeDetails(event:any) {
-    
+  billerChangeDetails(event: any) {
+
     this.billerChangeID = event.target.value;
-    console.log("this.billerChangeID",this.billerChangeID);
+    console.log("this.billerChangeID", this.billerChangeID);
 
-   let api_req: any = new Object();
-   let addBillerChangeAPI: any = new Object();
+    let api_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
 
-   api_req.moduleType = "creditNote";
-   api_req.api_url = "creditNote/getBillerAddress";
-   api_req.api_type = "web";
-   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-   addBillerChangeAPI.action = "creditNote";
-   addBillerChangeAPI.billerId=this.billerChangeID;
-   addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
-  
-   api_req.element_data = addBillerChangeAPI;
-   this.serverService.sendServer(api_req).subscribe((response: any) => {
- 
-     // this.companyNameList = response.biller_details;
-     this.addDo_section1.patchValue({
-       'e_DocNo': response.creditNo,
-     });
-     this.totalCalculate();
-   });
- }
+    api_req.moduleType = "creditNote";
+    api_req.api_url = "creditNote/getBillerAddress";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addBillerChangeAPI.action = "creditNote";
+    addBillerChangeAPI.billerId = this.billerChangeID;
+    addBillerChangeAPI.def_biller_id = this.defBiller_ID;
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      // this.companyNameList = response.biller_details;
+      this.addDo_section1.patchValue({
+        'e_DocNo': response.creditNo,
+      });
+      this.totalCalculate();
+    });
+  }
 
   keywordvendorName = 'customerName';
   onFocusedVendor(e: any) {
     // do something when input is focused
     console.log(e);
   }
-  clearInput(event:any){
+  clearInput(event: any) {
+    this.vendor_ID='';
+    
     this.addDo_section1.patchValue({
       'e_customerAddress1': '',
-      'e_customerAddress2':'',
+      'e_customerAddress2': '',
       'e_customerAddress3': '',
-   
+
       'e_vendor_name': '',
       'e_companyNameDropdown': '',
- 
+
       // 'e_currency': 0,
-   
-    
+
+
 
     });
 
@@ -364,7 +368,7 @@ export class EditcreditnoteComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchVendor_req.action = "customer_address_details";
     api_SearchVendor_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchVendor_req.customerId =  this.vendor_ID;
+    api_SearchVendor_req.customerId = this.vendor_ID;
     api_SearchVendor_req.billerId = this.addDo_section1.value.e_companyName;
     api_req.element_data = api_SearchVendor_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -373,26 +377,26 @@ export class EditcreditnoteComponent implements OnInit {
       if (response.status == true) {
 
         this.spinner.hide();
-        
+
         $("#vend_company").val(response.vendorName);
         $("#vend_address").val(response.vendor_address);
-        
-        
+
+
 
         this.e_vendor_name = response.vendorName;
         this.e_vendor_company_name = response.vendorName;
-        this.e_vendor_company_address=response.vendor_address;
+        this.e_vendor_company_address = response.vendor_address;
         this.addDo_section1.patchValue({
           'e_customerAddress1': response.customer_details.customerAddress1,
           'e_customerAddress2': response.customer_details.customerAddress2,
           'e_customerAddress3': response.customer_details.customerAddress3,
-       
+
           'e_vendor_name': response.customer_details.customerName,
           'e_companyNameDropdown': response.customer_details.kind_Attention,
-     
+
           'e_currency': response.def_currency_id,
-       
-        
+
+
 
         });
         // this.addDo_section1.patchValue({
@@ -415,15 +419,15 @@ export class EditcreditnoteComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-     api_Search_req.billerId = this.addDo_section1.value.e_companyName;
+    api_Search_req.billerId = this.addDo_section1.value.e_companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-vendor_name response", response);
       this.searchResult_vendor = response.customer_list;
 
-      if (response!='') {
-       
+      if (response != '') {
+
 
       }
 
@@ -595,7 +599,7 @@ export class EditcreditnoteComponent implements OnInit {
 
 
   editPurchaseOrder() {
-   
+
     let api_req: any = new Object();
     let api_editPODetails: any = new Object();
     api_req.moduleType = "creditNote";
@@ -614,47 +618,48 @@ export class EditcreditnoteComponent implements OnInit {
         // this.currencyList = response.currency_details;
         // this.customernameID = response.purchaseorderparent_details[0].billerId;
         // console.log("  this.customernameID", this.customernameID);
-      
+
         // this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
         // this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
         // this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
-        this.vendor_ID=response.data.credit_note_parent.customer_id,
+        this.vendor_ID = response.data.credit_note_parent.customer_id,
+          this.defBiller_ID = response.data.credit_note_parent.customer_id,
 
-        this.addDo_section1.patchValue({          
-          'e_companyName': response.data.credit_note_parent.billerId,
-          'e_DocNo': response.data.credit_note_parent.credit_note_no,
-          'e_DocDate': response.data.credit_note_parent.credit_note_date,
-          'e_companyNameDropdown': response.data.credit_note_parent.kind_Attention,
+          this.addDo_section1.patchValue({
+            'e_companyName': response.data.credit_note_parent.billerId,
+            'e_DocNo': response.data.credit_note_parent.credit_note_no,
+            'e_DocDate': response.data.credit_note_parent.credit_note_date,
+            'e_companyNameDropdown': response.data.credit_note_parent.kind_Attention,
 
 
-          'e_customerAddress1': response.data.credit_note_parent.b_address1,
-          'e_customerAddress2': response.data.credit_note_parent.b_address2,
-          'e_customerAddress3': response.data.credit_note_parent.b_address3,
-          'e_currency': response.data.credit_note_parent.currency_id,
-          'e_reference': response.data.credit_note_parent.reference,
-         
-           
-          'e_vendor_name': response.data.credit_note_parent.customerName,
+            'e_customerAddress1': response.data.credit_note_parent.b_address1,
+            'e_customerAddress2': response.data.credit_note_parent.b_address2,
+            'e_customerAddress3': response.data.credit_note_parent.b_address3,
+            'e_currency': response.data.credit_note_parent.currency_id,
+            'e_reference': response.data.credit_note_parent.reference,
 
-          'e_customer_name': response.data.credit_note_parent.customerName,
-                 
 
-        });
-        this.credit_note_id=response.data.credit_note_parent.credit_note_id,
-        this.addPI_section3.patchValue({
-          'poId':response.data.credit_note_parent.customerName,
-          'section3_gross_total': response.data.credit_note_parent.total_amt,
-          'section3_gst_dropdown': response.data.credit_note_parent.taxId,
-          'section3_tax_per_hd': response.data.credit_note_parent.taxPer,
-          'section3_taxAmt_txtbox': response.data.credit_note_parent.taxAmt,
-          'section3_grand_total': response.data.credit_note_parent.net_total_amt,
-        });
-      //  this.vendor_Name = response.purchaseorderparent_details[0].vendorName;
-        
+            'e_vendor_name': response.data.credit_note_parent.customerName,
+
+            'e_customer_name': response.data.credit_note_parent.customerName,
+
+
+          });
+        this.credit_note_id = response.data.credit_note_parent.credit_note_id,
+          this.addPI_section3.patchValue({
+            'poId': response.data.credit_note_parent.customerName,
+            'section3_gross_total': response.data.credit_note_parent.total_amt,
+            'section3_gst_dropdown': response.data.credit_note_parent.taxId,
+            'section3_tax_per_hd': response.data.credit_note_parent.taxPer,
+            'section3_taxAmt_txtbox': response.data.credit_note_parent.taxAmt,
+            'section3_grand_total': response.data.credit_note_parent.net_total_amt,
+          });
+        //  this.vendor_Name = response.purchaseorderparent_details[0].vendorName;
+
         const formArray = new FormArray([]);
         for (let index = 0; index < response.data.credit_note_child.length; index++) {
 
-          console.log('credit note child' , index);
+          console.log('credit note child', index);
 
 
           formArray.push(this.fb.group({
@@ -668,7 +673,7 @@ export class EditcreditnoteComponent implements OnInit {
 
 
           })
-            
+
           );
         }
         console.log(formArray)
@@ -676,9 +681,9 @@ export class EditcreditnoteComponent implements OnInit {
         console.log(this.addresses)
         this.editAddress();
         this.removeAddresstest(response.data.credit_note_child.length);
-       
+
         this.getTaxCals();
-       
+
         // this.getInvoice({});
       } else {
 
@@ -701,20 +706,20 @@ export class EditcreditnoteComponent implements OnInit {
     console.log(i)
     console.log(this.addresses)
     this.addresses.removeAt(i);
-   
+
 
   }
   gotoPurchaseOrderList() {
     this.router.navigate(['/creditnote'])
 
   }
-  keyUpText(event: any){
-    this.e_vendor_name=event.target.value;
+  keyUpText(event: any) {
+    this.e_vendor_name = event.target.value;
   }
 
 
   updatePurchaseOrder() {
- 
+
 
     let api_req: any = new Object();
     let api_updatePO_req: any = new Object();
@@ -725,24 +730,32 @@ export class EditcreditnoteComponent implements OnInit {
     api_updatePO_req.action = "creditNote/getCreditNoteupdate";
     api_updatePO_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-              //section 1
+    //section 1
     api_updatePO_req.billerId = this.addDo_section1.value.e_companyName;
     api_updatePO_req.credit_note_id = this.credit_note_id;
     api_updatePO_req.credit_note_no = this.addDo_section1.value.e_DocNo;
     api_updatePO_req.date = this.addDo_section1.value.e_DocDate
-    if(!this.vendor_ID){
-      alert()
-    }
-    api_updatePO_req.customer_id =    this.vendor_ID  ;
    
-    if(this.addDo_section1.value.e_vendor_name==undefined || this.addDo_section1.value.e_vendor_name=='' || this.addDo_section1.value.e_vendor_name=='undefined'){
+   
+
+      if (!this.vendor_ID) {
+      iziToast.error({
+        message: "Customer Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+       api_updatePO_req.customer_id = this.vendor_ID;
+    }
+
+    if (this.addDo_section1.value.e_vendor_name == undefined || this.addDo_section1.value.e_vendor_name == '' || this.addDo_section1.value.e_vendor_name == 'undefined') {
 
       iziToast.error({
         message: "Customer Data Missing",
         position: 'topRight'
       });
       return false;
-    }else{
+    } else {
       api_updatePO_req.customerCompany = this.addDo_section1.value.e_vendor_name;
     }
     api_updatePO_req.b_address1 = this.addDo_section1.value.e_customerAddress1;
@@ -845,7 +858,7 @@ export class EditcreditnoteComponent implements OnInit {
   }
 
   keyPress(event: any, i: any) {
-    
+
     this.invoicePriceKey = i;
     this.row_cnt_mod = i;
     var key = event.target.value;
@@ -857,7 +870,7 @@ export class EditcreditnoteComponent implements OnInit {
     }
 
     var v = $('#quantity_' + i) * $('#price_' + i);
-   
+
     $('#pd_Total_' + i).val(v);
     $('#pd_netPrice_' + i).val(v);
     var gtotel = 0;
@@ -893,43 +906,43 @@ export class EditcreditnoteComponent implements OnInit {
   }
   totalCalculate1() {
 
-  
+
 
     var tax_amt_tot = 0;
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
 
-   
-  
+
+
     this.finalTax = 0;
 
     var addr = this.addPI_section2.value.addresses;
-    for (let a = 0; a < addr.length; a++) {   
+    for (let a = 0; a < addr.length; a++) {
     }
 
     for (let a = 0; a < list_cnt; a++) {
 
-      var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      var total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
       $('#total_' + a).val(total_amt);
 
       tax_amt_tot += total_amt;
-   
+
     }
-    console.log('t',tax_amt_tot);
+    console.log('t', tax_amt_tot);
     var tax_val = this.tax_per_mod;
-    console.log("tax percentage in value",this.tax_per_mod);
-    var tax_amount = tax_amt_tot * tax_val/100;
+    console.log("tax percentage in value", this.tax_per_mod);
+    var tax_amount = tax_amt_tot * tax_val / 100;
     this.finalTax = tax_amount;
     this.grossTotal = tax_amt_tot;
-    this.grandTotal = tax_amt_tot+tax_amount+this.addPI_section3.value.section3_bankingCharge_amt_txtbox+this.addPI_section3.value.section3_shipping_amt_txtbox;
+    this.grandTotal = tax_amt_tot + tax_amount + this.addPI_section3.value.section3_bankingCharge_amt_txtbox + this.addPI_section3.value.section3_shipping_amt_txtbox;
 
-    
+
   }
 
-  
+
   totalCalculate() {
 
-   
+
 
     var tax_amt_tot = 0;
     var addr = this.addPI_section2.value.addresses;
@@ -938,29 +951,29 @@ export class EditcreditnoteComponent implements OnInit {
     this.finalTax = 0;
 
     var addr = this.addPI_section2.value.addresses;
-    for (let a = 0; a < addr.length; a++) {   
+    for (let a = 0; a < addr.length; a++) {
     }
 
     for (let a = 0; a < list_cnt; a++) {
 
-      var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      var total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
       $('#total_' + a).val(total_amt);
 
       tax_amt_tot += total_amt;
-   
-    }
-    console.log('product total in array',tax_amt_tot);
-    var tax_val = this.tax_per_mod;
-    console.log("tax percentage in value",this.tax_per_mod);
-    var tax_amount = tax_amt_tot * tax_val/100;
-    this.finalTax = tax_amount;
-    console.log('final tax amount',this.finalTax);
-    this.grossTotal = tax_amt_tot;
-    console.log('final gross total',this.grossTotal);
-    this.grandTotal = tax_amt_tot+tax_amount;
-    console.log('final grand total',this.grandTotal);
 
-    
+    }
+    console.log('product total in array', tax_amt_tot);
+    var tax_val = this.tax_per_mod;
+    console.log("tax percentage in value", this.tax_per_mod);
+    var tax_amount = tax_amt_tot * tax_val / 100;
+    this.finalTax = tax_amount;
+    console.log('final tax amount', this.finalTax);
+    this.grossTotal = tax_amt_tot;
+    console.log('final gross total', this.grossTotal);
+    this.grandTotal = tax_amt_tot + tax_amount;
+    console.log('final grand total', this.grandTotal);
+
+
   }
 
   getTaxCals() {
@@ -971,7 +984,7 @@ export class EditcreditnoteComponent implements OnInit {
     this.finalDiscount = $('#finalDiscount_amt').val();
     this.finalTax = $('#finalDiscount_amt').val();
 
-    
+
     this.bankingCharge = 0;
     api_req.moduleType = "quotation";
     api_req.api_url = "quotation/get_tax_percent_val";
@@ -994,7 +1007,7 @@ export class EditcreditnoteComponent implements OnInit {
       //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
       // }
       this.finalTax = parseFloat(tax).toFixed(2);
-      console.log("initial final tax",this.finalTax)
+      console.log("initial final tax", this.finalTax)
 
     });
 
@@ -1003,9 +1016,9 @@ export class EditcreditnoteComponent implements OnInit {
       this.totalCalculate();
     }, 1000)
 
-    
+
 
   }
-  
+
 
 }

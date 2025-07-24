@@ -132,7 +132,7 @@ export class AddTransactionNewComponent implements OnInit {
     this.getProductCategory();
     this.getTransferBiller();
     this.http
-      .get<any>(this.serverService.urlFinal + '/vendor/getVendorCode')
+      .get<any>(this.serverService.urlFinal + 'vendor/getVendorCode')
       .subscribe((data: any) => {
         this.getVendorCode = data.vendorCode;
         // console.log("this.getVendorCode", this.getVendorCode)

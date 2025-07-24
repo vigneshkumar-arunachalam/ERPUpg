@@ -1490,6 +1490,12 @@ export class AddPIComponent implements OnInit {
 
 
   }
+    clearsaveGrossDiscount(){
+      $('#discountFormFinal').modal('hide');
+  }
+    clearsaveDiscount(){
+      $('#discountFormId').modal('hide');
+  }
 
 
 

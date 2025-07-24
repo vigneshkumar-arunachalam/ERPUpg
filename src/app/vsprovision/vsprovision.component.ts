@@ -19,6 +19,7 @@ declare var tinymce: any;
 export class VsprovisionComponent implements OnInit {
   vsprovision_list: any;
   googleAuthentication_status: boolean = false;
+  vsView: boolean;
   viewConnectionType: any;
   viewDate: any;
   viewTypeofPhone: any;
@@ -89,6 +90,7 @@ export class VsprovisionComponent implements OnInit {
   searchText_ID: any;
   searchText_Name: any;
   searchTextResult: any;
+ 
 
 
 
@@ -115,10 +117,30 @@ export class VsprovisionComponent implements OnInit {
   keywordCompanyName = 'customerName';
   keywordSearchText = 'search_name';
   ngOnInit(): void {
+  
     this.GoogleAuthenticationForm = new FormGroup({
       'google_AuthenticationCode': new FormControl(null),
     });
-     $('#GoogleAuthenticationVSPFormId').modal('show');
+      
+    const authDataRaw = localStorage.getItem('google_auth');
+    if (authDataRaw) {
+      const authData = JSON.parse(authDataRaw);
+      const currentTime = new Date().getTime();
+      const elapsedTime = (currentTime - authData.timestamp) / 1000; // in seconds
+
+      if (authData.status && elapsedTime < 600) {
+        this.googleAuthentication_status = true;
+        this.spinner.show();
+        this.add_LoadData();         // Optional: if you want to preload data on reload
+        this.vsprovisionList();      // Optional: preload VSP list
+      } else {
+        this.spinner.show();
+        localStorage.removeItem('google_auth');
+        this.googleAuthentication_status = false;
+     
+      }
+    }
+    // $('#GoogleAuthenticationVSPFormId').modal('show');
 
     this.add_LoadData();
     this.vsprovisionList();
@@ -830,7 +852,7 @@ export class VsprovisionComponent implements OnInit {
     api_getReseller.action = "vsprovision/updatevsprovision";
     api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
     var VSP_editBillerName = this.editVSProvisionForm.value.VSP_editBillerName;
-   
+
     if (VSP_editBillerName == null || VSP_editBillerName == '' || VSP_editBillerName == '0') {
       iziToast.error({
         message: "Biller ID Missing",
@@ -867,10 +889,10 @@ export class VsprovisionComponent implements OnInit {
     }
 
 
-   
-   
+
+
     api_getReseller.phone_type = this.editVSProvisionForm.value.VSP_editTypePhone;
-    api_getReseller.phone_entry_type = this.editVSProvisionForm.value.VSP_editPhoneEntryType;  
+    api_getReseller.phone_entry_type = this.editVSProvisionForm.value.VSP_editPhoneEntryType;
     var VSP_editMACAddress = this.editVSProvisionForm.value.VSP_editMACAddress;
     if (VSP_editMACAddress == null || VSP_editMACAddress == '' || VSP_editMACAddress == '0') {
       iziToast.error({
@@ -913,7 +935,7 @@ export class VsprovisionComponent implements OnInit {
       }
     }
 
-    
+
     api_getReseller.master_account = this.editVSProvisionForm.value.VSP_editMasterAccount;
     api_getReseller.master_password = this.editVSProvisionForm.value.VSP_editMasterPassword;
 
@@ -928,7 +950,7 @@ export class VsprovisionComponent implements OnInit {
     } else {
       api_getReseller.label_name_1 = this.editVSProvisionForm.value.VSP_editLabelName;
     }
-  
+
     var VSP_editAccountName = this.editVSProvisionForm.value.VSP_editAccountName;
     if (VSP_editAccountName == null || VSP_editAccountName == '' || VSP_editAccountName == '0') {
       iziToast.error({
@@ -966,9 +988,9 @@ export class VsprovisionComponent implements OnInit {
 
       api_getReseller.password_1 = this.editVSProvisionForm.value.VSP_editPassword;
     }
-    
+
     api_getReseller.DIDNoSelect = this.editVSProvisionForm.value.VSP_editDIDNoSelect;
-   
+
 
 
     // section - 2
@@ -1254,6 +1276,9 @@ export class VsprovisionComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.vsprovision_list = response.data;
+        if(response.data.length==0){
+          this.vsView=true;
+        }
 
         this.spinner.hide();
         $('#searchVSProvisionFormId').modal('hide');
@@ -1278,6 +1303,7 @@ export class VsprovisionComponent implements OnInit {
   }
 
   GoogleAuthenticationValidation() {
+
     this.spinner.show();
 
     let api_req: any = new Object();
@@ -1298,7 +1324,14 @@ export class VsprovisionComponent implements OnInit {
         $(document).ready(function () {
           $("#showhide").show();
         });
+
         this.googleAuthentication_status = response.status;
+        // Store status and timestamp in localStorage
+        const authData = {
+          status: true,
+          timestamp: new Date().getTime()
+        };
+        localStorage.setItem('google_auth', JSON.stringify(authData));
         console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
         if (this.googleAuthentication_status == true) {
           this.add_LoadData();

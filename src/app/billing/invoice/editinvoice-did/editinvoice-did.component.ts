@@ -3222,6 +3222,18 @@ export class EditinvoiceDIDComponent implements OnInit {
   //  console.log("this.sstCheckbox", this.sstCheckbox);
 
   }
+   cancelDiscountFinal(){
+      $('#discountFormFinal').modal('hide');
+  }
+   cancelotherSaveDiscount(){
+      $('#otherDiscountFormId').modal('hide');
+  }
+   cancelusageSaveDiscount(){
+      $('#usageDiscountFormId').modal('hide');
+  }
+   clearfixedSaveDiscount(){
+      $('#fixedDiscountFormId').modal('hide');
+  }
 
 
 }

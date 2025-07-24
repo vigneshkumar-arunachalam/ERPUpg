@@ -7,13 +7,26 @@
   max-width: 65% !important;
 }
 
+#ActionIdxx2  {
+
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #00050b;
+}
 #ActionIdxx2 .modal-dialog {
   max-width: 65% !important;
+
 }
+
+
+
 
 #currencyConvertorUIFormId .modal-dialog {
   max-width: 75% !important;
 }
+
 #stockPreApprovalFormId .modal-dialog {
   max-width: 100% !important;
 }
@@ -37,7 +50,8 @@
   color: rgb(240 241 219);
   box-shadow: none;
 }
-#sendtoPostFormId tr:hover{
+
+#sendtoPostFormId tr:hover {
   background-color: #f8efbd;
 }
 
@@ -424,7 +438,8 @@
   text-transform: uppercase;
   /* background-color: #2C3E50; */
 }
-#overduePaymentFormId .modal-dialog{
+
+#overduePaymentFormId .modal-dialog {
   min-width: 98%;
 }
 
@@ -473,10 +488,19 @@
 
 }
 
-.dropdown__item .hide{display: none;}
-.dropdown__item:hover .hide{display: block;}
-.dropdown__item:hover .show{display: none;}
-.userDatatable .page .dropdown button{
+.dropdown__item .hide {
+  display: none;
+}
+
+.dropdown__item:hover .hide {
+  display: block;
+}
+
+.dropdown__item:hover .show {
+  display: none;
+}
+
+.userDatatable .page .dropdown button {
   border-radius: 0px;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -497,6 +521,7 @@
   height: 30px;
   border-radius: 50%;
 }
+
 .dropdown a {
   font-size: 14px;
   /* margin: 5px 8px!important; */
@@ -507,21 +532,23 @@
   height: 37px;
   width: 37px;
 }
+
 .hover1:hover {
-   
+
   background: rgba(255, 77, 79, 0.5);
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
 .hover2:hover {
 
-background: rgba(118, 177, 103, 0.5);
--webkit-border-radius: 50%;
-border-radius: 50%;
+  background: rgba(118, 177, 103, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
 
 
-#overduePaymentFormId .userDatatable-header th{
+#overduePaymentFormId .userDatatable-header th {
   background: #04001f;
   color: #ffffff;
 }
@@ -529,43 +556,71 @@ border-radius: 50%;
 
 #paymentFollowersId .modal-content,
 #overdue_processPaymentId .modal-content,
-#paymentReminderMailId .modal-content,#overdue_processPaymentIdMultiple .modal-content,
-#payment_selectAllReminderMailId .modal-content
-{ 
+#paymentReminderMailId .modal-content,
+#overdue_processPaymentIdMultiple .modal-content,
+#payment_selectAllReminderMailId .modal-content {
   background: #f7faff;
-  color:#01125f;
+  color: #01125f;
   font-weight: 500;
 
 }
-#paymentFollowersId  .modal-dialog{
+
+#paymentFollowersId .modal-dialog {
   min-width: 50%;
-} 
-#overdue_processPaymentId  .modal-dialog,#payment_selectAllReminderMailId  .modal-dialog,
-#paymentReminderMailId  .modal-dialog,#overdue_processPaymentIdMultiple  .modal-dialog {
+}
+
+#overdue_processPaymentId .modal-dialog,
+#payment_selectAllReminderMailId .modal-dialog,
+#paymentReminderMailId .modal-dialog,
+#overdue_processPaymentIdMultiple .modal-dialog {
   min-width: 70%;
-} 
-#paymentFollowersId .modal-content  .btn-primary,
-#overdue_processPaymentId .modal-content  .btn-primary,
-#paymentReminderMailId .modal-content  .btn-primary,
-#payment_selectAllReminderMailId .modal-content  .btn-primary,
-#overdue_processPaymentIdMultiple .modal-content  .btn-primary{
+}
+
+#paymentFollowersId .modal-content .btn-primary,
+#overdue_processPaymentId .modal-content .btn-primary,
+#paymentReminderMailId .modal-content .btn-primary,
+#payment_selectAllReminderMailId .modal-content .btn-primary,
+#overdue_processPaymentIdMultiple .modal-content .btn-primary {
   background: linear-gradient(to right, #262127, #54b7aa);
   color: rgb(240 241 219);
   box-shadow: none;
 }
-#overdue_processPaymentId  .form-control:disabled,
-.form-control[readonly] ,#overdue_processPaymentIdMultiple  .form-control:disabled,
-.form-control[readonly]{
-    background-color: #d9eee8 !important;
-    opacity: 0.6;
-    color: black!important;
+
+#overdue_processPaymentId .form-control:disabled,
+.form-control[readonly],
+#overdue_processPaymentIdMultiple .form-control:disabled,
+.form-control[readonly] {
+  background-color: #d9eee8 !important;
+  opacity: 0.6;
+  color: black !important;
 }
-.customer_details,.customer_details ul{display: flex;margin-bottom: 0;}
-.customer_details ul li img{width: 22px;cursor: pointer;margin-left: 15px;}
-.customer_details ul li img.show{display: block;}
-.customer_details ul li img.hide{display: none;}
-.customer_details ul li:hover .hide{display: block;}
-.customer_details ul li:hover .show{display: none;
+
+.customer_details,
+.customer_details ul {
+  display: flex;
+  margin-bottom: 0;
+}
+
+.customer_details ul li img {
+  width: 22px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.customer_details ul li img.show {
+  display: block;
+}
+
+.customer_details ul li img.hide {
+  display: none;
+}
+
+.customer_details ul li:hover .hide {
+  display: block;
+}
+
+.customer_details ul li:hover .show {
+  display: none;
 }
 
 
@@ -573,59 +628,64 @@ border-radius: 50%;
 #overduePaymentFormId .modal-body {
   padding: 0 1.75rem;
 }
+
 #overduePaymentFormId .modal-body .card {
   padding: 20px;
   margin-bottom: 25px;
-  
+
 }
-#overduePaymentFormId .modal-body .card label{
+
+#overduePaymentFormId .modal-body .card label {
   font-weight: 600;
   color: #01125f;
   margin-bottom: 0;
-  
+
 }
 
-.count{
+.count {
   display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    font-size: 12px;
-    position: absolute;
-    top: -6px;
-    right: -14px;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 12px;
+  position: absolute;
+  top: -6px;
+  right: -14px;
 }
-.countRight{
+
+.countRight {
   display: flex;
-    align-items: center;
-    justify-content: center;
-    /* background: white; */
-    background: #a1f78df0;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    font-size: 12px;
-    position: absolute;
-    top: -10px;
-    right: -16px;
+  align-items: center;
+  justify-content: center;
+  /* background: white; */
+  background: #a1f78df0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 12px;
+  position: absolute;
+  top: -10px;
+  right: -16px;
 }
-.countRightBottom{
+
+.countRightBottom {
   display: flex;
-    align-items: center;
-    justify-content: center;
-    /* background: white; */
-    background: #eaadb3f0;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    font-size: 12px;
-    position: absolute;
-    top: 26px;
-    right: -14px;
+  align-items: center;
+  justify-content: center;
+  /* background: white; */
+  background: #eaadb3f0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 12px;
+  position: absolute;
+  top: 26px;
+  right: -14px;
 }
+
 .countLeft {
   display: flex;
   align-items: center;
@@ -640,6 +700,7 @@ border-radius: 50%;
   top: -10px;
   right: 20px;
 }
+
 .countLeftBottom {
   display: flex;
   align-items: center;
@@ -687,86 +748,101 @@ border-radius: 50%;
 }
 
 
-.badge.badge-lg,.dropdown-menu li {
+.badge.badge-lg,
+.dropdown-menu li {
   display: flex;
   align-items: center;
 }
 
-.email-cc-template{
-  height:150px;
+.email-cc-template {
+  height: 150px;
   overflow-y: scroll;
 }
 
-#RecuredInvoiceListFormId  .modal-dialog{
+#RecuredInvoiceListFormId .modal-dialog {
   min-width: 80%;
-} 
+}
 
 
-#ResellerRecuringFormId  .modal-dialog{
+#ResellerRecuringFormId .modal-dialog {
   min-width: 80%;
-} 
-#RecuringInvoiceFormId .modal-dialog,#eInvoiceRegFormId .modal-dialog{
-  min-width: 80%;
-} 
+}
 
-#RecurringInvoicenewFormId .modal-dialog{
+#RecuringInvoiceFormId .modal-dialog,
+#eInvoiceRegFormId .modal-dialog {
   min-width: 80%;
-} 
-#getRevenueDataListFormId .modal-dialog{
+}
+
+#RecurringInvoicenewFormId .modal-dialog {
+  min-width: 80%;
+}
+
+#getRevenueDataListFormId .modal-dialog {
   min-width: 100%;
 }
 
-#RecuringInvoiceFormId tr:nth-child(even):hover,#RecurringInvoicenewFormId tr:nth-child(even):hover,
-#ResellerRecuringFormId tr:nth-child(even):hover,#getRevenueDataListFormId tr:nth-child(even):hover,
-#RecuredInvoiceListFormId tr:nth-child(even):hover
-{
+#RecuringInvoiceFormId tr:nth-child(even):hover,
+#RecurringInvoicenewFormId tr:nth-child(even):hover,
+#ResellerRecuringFormId tr:nth-child(even):hover,
+#getRevenueDataListFormId tr:nth-child(even):hover,
+#RecuredInvoiceListFormId tr:nth-child(even):hover {
   background: linear-gradient(to right, #c9f1a2, #df97b4);
 }
 
-#RecuringInvoiceFormId tr:nth-child(odd):hover,#RecurringInvoicenewFormId tr:nth-child(odd):hover,
-#ResellerRecuringFormId tr:nth-child(odd):hover,#getRevenueDataListFormId tr:nth-child(odd):hover,
-#RecuredInvoiceListFormId tr:nth-child(odd):hover
- {
+#RecuringInvoiceFormId tr:nth-child(odd):hover,
+#RecurringInvoicenewFormId tr:nth-child(odd):hover,
+#ResellerRecuringFormId tr:nth-child(odd):hover,
+#getRevenueDataListFormId tr:nth-child(odd):hover,
+#RecuredInvoiceListFormId tr:nth-child(odd):hover {
   background: linear-gradient(to right, #f5fb97, #fcb35f);
 }
 
-#RecuringInvoiceFormId tr:hover td,#RecurringInvoicenewFormId tr:hover td,
-#ResellerRecuringFormId tr:hover td,#getRevenueDataListFormId tr:hover td,
-#RecuredInvoiceListFormId tr:hover td
- {
+#RecuringInvoiceFormId tr:hover td,
+#RecurringInvoicenewFormId tr:hover td,
+#ResellerRecuringFormId tr:hover td,
+#getRevenueDataListFormId tr:hover td,
+#RecuredInvoiceListFormId tr:hover td {
   color: #0000;
   background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   transition: background 2s, color 2s;
 }
-#RecuringInvoiceFormId .userDatatable table tbody tr td,#RecurringInvoicenewFormId .userDatatable table tbody tr td,
-#ResellerRecuringFormId .userDatatable table tbody tr td,#getRevenueDataListFormId .userDatatable table tbody tr td,
+
+#RecuringInvoiceFormId .userDatatable table tbody tr td,
+#RecurringInvoicenewFormId .userDatatable table tbody tr td,
+#ResellerRecuringFormId .userDatatable table tbody tr td,
+#getRevenueDataListFormId .userDatatable table tbody tr td,
 #RecuredInvoiceListFormId .userDatatable table tbody tr td {
   border: 1px solid #C5D9E0;
 }
-#RecuringInvoiceFormId .userDatatable table thead tr th,#RecurringInvoicenewFormId .userDatatable table thead tr th,
-#ResellerRecuringFormId .userDatatable table thead tr th,#getRevenueDataListFormId .userDatatable table thead tr th,
+
+#RecuringInvoiceFormId .userDatatable table thead tr th,
+#RecurringInvoicenewFormId .userDatatable table thead tr th,
+#ResellerRecuringFormId .userDatatable table thead tr th,
+#getRevenueDataListFormId .userDatatable table thead tr th,
 #RecuredInvoiceListFormId .userDatatable table thead tr th {
   border: 1px solid #ebf2f4;
 }
 
 
 #getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(6),
-#getRevenueDataListFormId .userDatatable table  tr th:nth-child(6){
+#getRevenueDataListFormId .userDatatable table tr th:nth-child(6) {
   width: 20%;
   white-space: normal;
 }
+
 #getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(2),
-#getRevenueDataListFormId .userDatatable table  tr th:nth-child(2),
+#getRevenueDataListFormId .userDatatable table tr th:nth-child(2),
 #getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(3),
-#getRevenueDataListFormId .userDatatable table  tr th:nth-child(3),
+#getRevenueDataListFormId .userDatatable table tr th:nth-child(3),
 #getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(4),
-#getRevenueDataListFormId .userDatatable table  tr th:nth-child(4),
+#getRevenueDataListFormId .userDatatable table tr th:nth-child(4),
 #getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(5),
-#getRevenueDataListFormId .userDatatable table  tr th:nth-child(5){
+#getRevenueDataListFormId .userDatatable table tr th:nth-child(5) {
   width: 10%;
 }
+
 #getRevenueDataListFormId .modal-body {
   position: relative;
   flex: 1 1 auto;
@@ -774,44 +850,54 @@ border-radius: 50%;
 }
 
 .loaderRecurring {
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #c80606; /* Blue */
+  border: 8px solid #f3f3f3;
+  /* Light grey */
+  border-top: 8px solid #c80606;
+  /* Blue */
   border-radius: 50%;
   width: 60px;
   height: 60px;
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
-.loaderRecurring-content{
-  margin: 0 auto;    
+
+.loaderRecurring-content {
+  margin: 0 auto;
   text-align: center;
   width: 200px;
   padding: 10px;
   box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
   border-radius: 5px;
 }
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
+
 .backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  background: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* Ensures it's above other elements */
+  z-index: 1000;
+  /* Ensures it's above other elements */
 }
+
 .long-text {
-  max-width: 200px; /* adjust width as needed */
+  max-width: 200px;
+  /* adjust width as needed */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -819,8 +905,3 @@ border-radius: 50%;
   vertical-align: top;
   cursor: pointer;
 }
-
-
-
-
-

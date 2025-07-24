@@ -74,6 +74,7 @@
                     <div class="col-lg-9">
                         <ng-autocomplete [data]="searchResult_vendor" [searchKeyword]="keywordvendorName"
                             formControlName="vendor_name" (selected)='searchVendor_selectDropdownData($event)'
+                             (inputCleared)='clearInput($event)'
                             (inputChanged)='searchVendorData($event)' (inputFocused)='onFocusedVendor($event)'
                             [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate">
 
@@ -149,7 +150,8 @@
                 <div class="form-group row">
                     <label for="reference" class="col-lg-3 col-form-label">Reference</label>
                     <div class="col-lg-9">
-                        <input type="text" class="form-control" formControlName="reference">
+                        <!-- <input type="text" class="form-control" formControlName="reference"> -->
+                        <textarea class="form-control" rows="5" formControlName="reference"></textarea>
                     </div>
 
                 </div>

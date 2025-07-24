@@ -274,7 +274,7 @@ export class AdddebitnoteComponent implements OnInit {
     api_req.api_url = "creditNote/getBillerAddress";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    addBillerChangeAPI.action = "creditNote";
+    addBillerChangeAPI.action = "debitNote";
     addBillerChangeAPI.billerId=this.billerChangeID;
     addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
    
@@ -688,6 +688,10 @@ export class AdddebitnoteComponent implements OnInit {
     // do something when input is focused
     console.log(e);
   }
+   clearInput(event: any) {
+   
+    this.customer_ID='';
+    }
   AddPurchaseOrder($event: MouseEvent) {
    
     let api_req: any = new Object();
@@ -706,7 +710,17 @@ export class AdddebitnoteComponent implements OnInit {
     api_req_addPO.billGeneratedBy=localStorage.getItem('erp_c4c_user_id');
     
   
-    api_req_addPO.customer_id = this.customer_ID;
+   
+       if (!this.customer_ID) {
+      iziToast.error({
+        message: "Customer Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+       api_req_addPO.customer_id = this.customer_ID;
+      
+    }
    
     if(this.customer_NAME==undefined || this.customer_NAME=='' || this.customer_NAME=='undefined'){
 
@@ -722,7 +736,20 @@ export class AdddebitnoteComponent implements OnInit {
     api_req_addPO.b_address1 = this.addDo_section1.value.customerAddress1;
     api_req_addPO.b_address2 = this.addDo_section1.value.customerAddress2;
     api_req_addPO.b_address3 = this.addDo_section1.value.customerAddress3;
-    api_req_addPO.currency_id = this.addDo_section1.value.currency;
+
+     if(!this.addDo_section1.value.currency){
+
+      iziToast.error({
+        message: "Currency Missing",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      
+       api_req_addPO.currency_id = this.addDo_section1.value.currency;
+    }
+
+   
     api_req_addPO.reference = this.addDo_section1.value.reference;
     
 

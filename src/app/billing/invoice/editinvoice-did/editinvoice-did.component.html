@@ -1426,7 +1426,7 @@
             <div class="modal-header">
                 <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
                     style="color: black !important;">Set Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearfixedSaveDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1471,7 +1471,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="fixedSaveDiscount();getTaxCals_2()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearfixedSaveDiscount()">
                     Cancel
                 </button>
 
@@ -1609,7 +1609,7 @@
             <div class="modal-header">
                 <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
                     style="color: black !important;">Set Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="cancelusageSaveDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1654,7 +1654,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="usageSaveDiscount();getTaxCals_2()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="cancelusageSaveDiscount()">
                     Cancel
                 </button>
 
@@ -1672,7 +1672,7 @@
             <div class="modal-header">
                 <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
                     style="color: black !important;">Set Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="cancelotherSaveDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1717,7 +1717,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="otherSaveDiscount();getTaxCals_2()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="cancelotherSaveDiscount()">
                     Cancel
                 </button>
 
@@ -1738,7 +1738,7 @@
             <div class="modal-header">
                 <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
                     style="color: black !important;">Set Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="cancelDiscountFinal()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1784,7 +1784,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="finalSaveDiscount();getTaxCals_2()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="cancelDiscountFinal()">
                     Cancel
                 </button>
 

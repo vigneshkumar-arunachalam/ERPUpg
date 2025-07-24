@@ -80,6 +80,7 @@ export class VendorComponent implements OnInit {
       mobile_phone: new FormControl(null),
       fax: new FormControl(null),
       e_mail: new FormControl(null),
+      bank: new FormControl(null),
     });
     this.editVedorForm = new FormGroup({
       edit_company_code: new FormControl(null),
@@ -94,6 +95,7 @@ export class VendorComponent implements OnInit {
       edit_mobile_phone: new FormControl(null),
       edit_fax: new FormControl(null),
       edit_e_mail: new FormControl(null),
+      edit_bank: new FormControl(null),
     });
   }
 
@@ -165,6 +167,42 @@ export class VendorComponent implements OnInit {
       }
     });
   }
+    getVendorListData1(data: any) {
+   
+
+    var list_data = this.listDataInfo(data);
+    let requestObj = {
+      moduleType: 'vendor',
+      api_url: 'vendor/vendorlist',
+      api_type: 'web',
+      access_token:
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI',
+      element_data: {
+        action: 'vendor/vendorlist',
+        user_id: this.userId,
+        offset: list_data.offset,
+        limit: list_data.limit,
+        search_txt: list_data.search_text,
+      },
+    };
+
+    let api_req: any = JSON.parse(JSON.stringify(requestObj));
+
+    this.serverService.sendServerpath(api_req).subscribe((response: any) => {
+      if (response != '') {
+        this.vendor_list = response.total_cnt;
+        this.paginationData = this.serverService.pagination({
+          offset: response.off_set,
+          total: response.total,
+          page_limit: this.pageLimit,
+        });
+
+        this.recordNotFound = this.vendor_list.length == 0 ? true : false;
+
+        this.spinner.hide();
+      }
+    });
+  }
 
   getCountryCode() {
     let api_req =
@@ -183,8 +221,10 @@ export class VendorComponent implements OnInit {
   }
 
   open_Vendor_popup() {
+    //  $('#vendorNewManagement1').modal('show');
     this.getCountryCode();
-    $('#vendorNewManagement').modal('show');
+    $('#vendorNewManagement1').modal('show');
+    
   }
 
   AddVendor() {
@@ -200,14 +240,15 @@ export class VendorComponent implements OnInit {
     let mobile_phone = this.addVendorForm.value.mobile_phone;
     let fax = this.addVendorForm.value.company_name;
     let e_mail = this.addVendorForm.value.e_mail;
+    
 
     if (
       company_code == '' ||
       company_code == null ||
       company_code == undefined
     ) {
-      iziToast.warning({
-        message: 'please Enter Company Code',
+      iziToast.error({
+        message: 'Please Enter Company Code',
         position: 'topRight',
       });
       return false;
@@ -217,15 +258,50 @@ export class VendorComponent implements OnInit {
       company_name == null ||
       company_name == undefined
     ) {
-      iziToast.warning({
-        message: 'please Enter Company Name',
+      iziToast.error({
+        message: 'Please Enter Company Name',
         position: 'topRight',
       });
       return false;
     }
     if (vendor_name == '' || vendor_name == null || vendor_name == undefined) {
-      iziToast.warning({
-        message: 'please Enter Vendor Name',
+      iziToast.error({
+        message: 'Please Enter Vendor Name',
+        position: 'topRight',
+      });
+      return false;
+    }
+     if (address_1 == '' || address_1 == null || address_1 == undefined) {
+      iziToast.error({
+        message: 'Please Enter Address1',
+        position: 'topRight',
+      });
+      return false;
+    }
+      if (address_2 == '' || address_2 == null || address_2 == undefined) {
+      iziToast.error({
+        message: 'Please Enter Address2',
+        position: 'topRight',
+      });
+      return false;
+    }
+     if (city == '' || city == null || city == undefined) {
+      iziToast.error({
+        message: 'Please Enter City',
+        position: 'topRight',
+      });
+      return false;
+    }
+    if (mobile_phone == '' || mobile_phone == null || mobile_phone == undefined) {
+      iziToast.error({
+        message: 'Please Enter Mobile Phone',
+        position: 'topRight',
+      });
+      return false;
+    }
+    if (e_mail == '' || e_mail == null || e_mail == undefined) {
+      iziToast.error({
+        message: 'Please Enter Email',
         position: 'topRight',
       });
       return false;
@@ -261,7 +337,7 @@ export class VendorComponent implements OnInit {
     this.serverService.sendServerpath(api_req).subscribe((response: any) => {
       if (response.status == 'true') {
         this.getVendorListData({});
-        $('#vendorNewManagement').modal('hide');
+        $('#vendorNewManagement1').modal('hide');
         this.addVendorForm.reset();
         iziToast.success({
           message: response.data,

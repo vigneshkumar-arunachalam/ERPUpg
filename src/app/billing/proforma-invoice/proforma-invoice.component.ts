@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import { NgxSpinnerService } from 'ngx-spinner';
 
 
+
 @Component({
   selector: 'app-proforma-invoice',
   templateUrl: './proforma-invoice.component.html',
@@ -18,6 +19,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ProformaInvoiceComponent implements OnInit {
   @Input() proformaList: any[] = [];
+   @Input() selectedPages: any[] = [];
+  @Input() searchDataGlobal: any = '';
+  @Input() globalSearchStatus: boolean = false;
   //list
   PI_list: any = [];
   biller_list: any;
@@ -161,9 +165,9 @@ export class ProformaInvoiceComponent implements OnInit {
       // console.log(k.type)
       // console.log(k.proformalist)
       if (k != '') {
-        this.Global_search_filter = true;
+       // this.Global_search_filter = true;
       } else {
-        this.Global_search_filter = false;
+       // this.Global_search_filter = false;
       }
       // console.log(this.Global_search_filter)
     });
@@ -177,7 +181,7 @@ export class ProformaInvoiceComponent implements OnInit {
     this.PI_list = this.proformaList;
 
     const searchParams = this.serverService.getSearchParams();
-    if (searchParams && searchParams.companyName) {
+    if (searchParams && searchParams.companyName  && this.selectedPages.includes('Proforma Invoice')) {
       this.searchResult_CustomerName = searchParams.companyName;
 
     } else {
@@ -269,12 +273,33 @@ export class ProformaInvoiceComponent implements OnInit {
     // console.log("checklist-this.upd_searchFlag", this.upd_searchFlag);
 
   }
-   ngOnChanges(changes: SimpleChanges) {
-      if (changes['proformaList'] && changes['proformaList'].currentValue) {
-        this.PI_list = changes['proformaList'].currentValue;
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['proformaList'] && changes['proformaList'].currentValue && this.selectedPages.includes('Proforma Invoice')) {
+  //     this.PI_list = changes['proformaList'].currentValue;
+  //   }
+  // }
+   ngOnChanges(changes: SimpleChanges): void {
+        const isCustomerNew = this.selectedPages.includes('Proforma Invoice');
+    
+        if (
+          isCustomerNew &&
+          changes['proformaList'] &&
+          changes['proformaList'].currentValue &&
+          this.globalSearchStatus // ✅ only assign if searchData is not empty
+        ) {
+          this.PI_list = changes['proformaList'].currentValue;
+        }
+    
+        // Optional: clear data if modal is closed and searchData is cleared
+        if (
+          isCustomerNew &&
+          changes['searchDataGlobal'] &&
+          changes['searchDataGlobal'].currentValue === ''
+        ) {
+          this.PI_list = [];
+        }
       }
-    }
-  
+
   selectEventCustomer(item: any) {
     // console.log(item)
     this.searchResult_CustomerID = item.customerId;
@@ -1615,6 +1640,34 @@ export class ProformaInvoiceComponent implements OnInit {
   setTermsConditionClear() {
     this.setTermCondition.reset();
   }
+  clearcustomer() {
+    $('#searchPIFormId').modal('hide');
+  }
+  clearShowPerm() {
+    $('#showPerissionFormId_ProfIn').modal('hide');
+  }
+  clearTerms() {
+    $('#settermsConditionFormId_ProfIn').modal('hide');
+  }
+    clearType() {
+    $('#setInvoiceTypeNameFormId_ProfIn').modal('hide');
+  }
+    clearMail() {
+    $('#emailFormId_ProfIn').modal('hide');
+  }
+   clearCoupon() {
+    $('#couponAssignFormId').modal('hide');
+  }
+   clearInvTypeDet() {
+    $('#invoiceTypeDetailsFormId').modal('hide');
+  }
+   clearProcessPay() {
+    $('#processPaymentFormId_PI').modal('hide');
+  }
+  clearAction(i:any) {
+     $("#ActionId" + i).modal("hide");
+  }
+
 
 
 }

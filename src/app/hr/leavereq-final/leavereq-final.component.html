@@ -40,7 +40,7 @@
         <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
       background: linear-gradient(to right, #262127, #54b7aa);">
-          Holiday List </h2>
+          Holiday Information </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -51,7 +51,7 @@
             <div class="card-header" id="Leave_cal1">
               <h2 class="mb-0"><button type="button" aria-expanded="true" class="btn btn-link" data-toggle="collapse"
                   data-target="#leavetype" aria-controls="leavetype">
-                  Leave Type Table </button></h2>
+                  Leave Type Information </button></h2>
             </div>
             <div data-parent="#accordionleave" class="collapse show" id="leavetype" aria-labelledby="Leave_cal1">
               <div class="card-body">
@@ -190,10 +190,40 @@
           <div class="card ng-star-inserted">
             <div class="card-header" id="Leave_cal3">
               <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
-                  data-target="#leave_calculation" aria-controls="leave_calculation">Employer Leave
-                  calculations</button></h2>
+                  data-target="#leave_calculation" aria-controls="leave_calculation">Employee Leave
+                  Details</button></h2>
             </div>
             <div data-parent="#accordionleave" class="collapse" id="leave_calculation" aria-labelledby="Leave_cal3">
+                <ul class="nav nav-pills" role="tablist"
+                      *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListSGid" (click)="changeCountry1(countryListSGid)" aria-selected="true">
+                          SG</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListMYid" (click)="changeCountry1(countryListMYid)" aria-selected="true">
+                          MY</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListINDid" (click)="changeCountry1(countryListINDid)"
+                          aria-selected="true">
+                          IND</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListPHid" (click)="changeCountry1(countryListPHid)" aria-selected="true">
+                          PH</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#CurrentYear" role="tab"
+                          aria-controls="countryListUSAid" (click)="changeCountry1(countryListUSAid)"
+                          aria-selected="true">
+                          USA</a>
+                      </li>
+                    </ul>
               <table cellpadding="10" style="border-collapse:collapse"
                 *ngIf="[2, 7, 36,39,  26, 57, 119, 80, 169].includes(+this.user_ids)">
                 <thead>
@@ -241,7 +271,7 @@
           <div class="card ng-star-inserted">
             <div class="card-header" id="Leave_cal4">
               <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
-                  data-target="#leave_list" aria-controls="leave_list">Leave
+                  data-target="#leave_list" aria-controls="leave_list">Holiday
                   List</button></h2>
             </div>
             <div data-parent="#accordionleave" class="collapse" id="leave_list" aria-labelledby="Leave_cal4">
@@ -325,10 +355,10 @@
           <div class="card ng-star-inserted">
             <div class="card-header" id="Leave_cal4">
               <h2 class="mb-0"><button type="button" aria-expanded="false" class="btn btn-link" data-toggle="collapse"
-                  data-target="#leave_list" aria-controls="leave_list">
-                  Policy</button></h2>
+                  data-target="#leave_list1" aria-controls="leave_list1">
+                  HR Policy</button></h2>
             </div>
-            <div data-parent="#accordionleave" class="collapse" id="leave_list" aria-labelledby="Leave_cal4">
+            <div data-parent="#accordionleave" class="collapse" id="leave_list1" aria-labelledby="Leave_cal4">
               <div class="policy-content" [innerHTML]="policyDescription"></div>
             </div>
           </div>

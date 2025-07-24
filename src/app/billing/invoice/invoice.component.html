@@ -10,7 +10,7 @@
           </h3>
 
 
-          <div class="quotation-btn-section">
+          <div class="quotation-btn-section" *ngIf="this.globalSearchStatus===false">
 
             <button type="button" title="Suspend" *ngIf="(  this.invoicePermissionList_suspend==1)"
               class="btn btn-primary btn-default btn-squared" (click)="suspendInvoiceGo()"
@@ -178,7 +178,7 @@
                                   <span class="col-12 modal-title text-center"
                                     style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
                                   </span>
-                                  <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
+                                  <h6 type="button" class=""   (click)="clearAction(i)" aria-label="Close">
                                     <span aria-hidden="true"
                                       style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
                                   </h6>
@@ -650,7 +650,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-dark" style="line-height: 10px;"
-                                    data-dismiss="modal">
+                               (click)="clearAction(i)">
                                     Cancel
                                   </button>
 
@@ -863,7 +863,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Invoice Sending Method</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearInvSendingMethod()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -902,7 +902,7 @@
           <button type="submit" class="btn btn-primary" (click)="setInvoice_Post()">Save</button>
 
 
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearInvSendingMethod()">
             Cancel
           </button>
 
@@ -922,7 +922,7 @@
         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #262127, #54b7aa);">
             Share Permission </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <button type="button" class="close" (click)="clearInvSharePerm()" aria-label="Close" title="close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -952,7 +952,7 @@
           <button type="button" class="btn btn-primary" (click)="invoiceSharPermissionUpdate()">
             Update
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearInvSharePerm()">
             Close
           </button>
         </div>
@@ -975,7 +975,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Payment Process</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
+          <button type="button" class="close" (click)="clearProcessPay()" aria-label="Close" (click)="clearPayProcess()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1102,7 +1102,7 @@
           <!-- <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
           Cancel
         </button> -->
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
+          <button type="button" class="btn btn-dark"  (click)="clearProcessPay();clearPayProcess()">
             Cancel
           </button>
 
@@ -1125,7 +1125,7 @@
           background: linear-gradient(to right, #262127, #54b7aa);">
           Email</h2>
 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearEmail()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1297,7 +1297,7 @@
             Mail
 
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+          <button type="button" class="btn btn-dark"  (click)="PIEmailClear();clearEmail()">
             Close
           </button>
 
@@ -1320,7 +1320,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Select New Recurring Options</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearRecur()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1519,7 +1519,7 @@
         <div class="modal-footer">
 
           <button type="submit" class="btn btn-primary" (click)="RecurringUpdate()">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearRecur()">
             Cancel
           </button>
 
@@ -1540,7 +1540,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Reseller Recurring</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearInvRecur()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1557,7 +1557,7 @@
         <div class="modal-footer">
 
           <button type="submit" class="btn btn-primary" (click)="setResellerRecurringUpdate()">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearInvRecur()">
             Cancel
           </button>
 
@@ -1579,7 +1579,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Select Coupon Code</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearCouponAss()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1605,7 +1605,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearCouponAss()">
             Cancel
           </button>
 
@@ -1627,7 +1627,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           File Attachment</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearInFileAtt()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1679,7 +1679,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="fileAttachmentUpdate()">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearFile()">
+          <button type="button" class="btn btn-dark"  (click)="clearFile();clearInFileAtt()">
             Cancel
           </button>
 
@@ -1704,7 +1704,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Terms Condition Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearSetTerms()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1730,7 +1730,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="setTermsConditionUpdate()">Update</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setTermsConditionClear()">
+          <button type="button" class="btn btn-dark"  (click)="setTermsConditionClear();clearSetTerms()">
             Cancel
           </button>
 
@@ -1754,7 +1754,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Invoice Revenue Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearInvRev()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1892,7 +1892,7 @@
           <button type="button" class="btn btn-primary" (click)="invoiceRevenueUpdate()">
             Save
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearInvRev()">
             Cancel
           </button>
         </div>
@@ -1916,7 +1916,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Delivery Order Conversion</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearDeliveryOrder()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1943,7 +1943,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="DeliveryOrderUpdate()">Update</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearDeliveryOrder()">
             Cancel
           </button>
 
@@ -1967,7 +1967,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Invoice Type Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearTypeName()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1994,7 +1994,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="setInvoiceTypeNameUpdate()">Update</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setInvoiceTypeClear()">
+          <button type="button" class="btn btn-dark" (click)="setInvoiceTypeClear();clearTypeName()">
             Cancel
           </button>
 
@@ -2017,7 +2017,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Invoice Notes</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearNotes()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2038,7 +2038,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="setNotes()">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearNotes()">
             Cancel
           </button>
 
@@ -2063,7 +2063,7 @@
             background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #262127, #54b7aa);">
             Reseller Commission Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearReseComm()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2249,7 +2249,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearReseComm()">
             Cancel
           </button>
 
@@ -2273,7 +2273,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Actual Price Update</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearActCost()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2455,7 +2455,7 @@
           <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
             Save
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearActCost()">
             Close
           </button>
         </div>
@@ -2475,7 +2475,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Licence Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearLicenseDet()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2605,7 +2605,7 @@
           <!-- </form> -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearLicenseDet()">
             Cancel
           </button>
 
@@ -2627,7 +2627,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
           Enquiry From Details</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearInvQuot()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2709,7 +2709,7 @@
             (click)=" invoicetoQuotationSave()">Inv->Quot</button>
 
 
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearInvQuot()">
             Cancel
           </button>
 
@@ -2735,7 +2735,7 @@
           Advanced Search</h2>
 
 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearSearIv()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2848,7 +2848,7 @@
           <button type="button" class="btn btn-primary" (click)="getSearch1();getInvoice1({});">
             Search
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearSearch()">
+          <button type="button" class="btn btn-dark"  (click)="clearSearch();clearSearIv()">
             Close
           </button>
         </div>
@@ -2870,7 +2870,7 @@
           Invoice List</h2>
 
 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearSuspIv()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -2996,7 +2996,7 @@
             </button>
 
 
-            <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
+            <button type="button" class="btn btn-dark btn-default btn-squared" (click)="clearSuspIv()"
               style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
             </button>
           </div>
@@ -3103,7 +3103,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
            SST Tax Update </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearSSTTax()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -3130,7 +3130,7 @@
           <button type="button" class="btn btn-primary" (click)="updateSST()">
             Update
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearSSTTax()">
             Close
           </button>
         </div>
@@ -3150,7 +3150,7 @@
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
            e-Invoice Status Update </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" (click)="clearEInvoice()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -3177,7 +3177,7 @@
           <button type="button" class="btn btn-primary" (click)="eInvoiceDetailsUpdate()">
             Update
           </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
+          <button type="button" class="btn btn-dark" (click)="clearEInvoice()">
             Close
           </button>
         </div>

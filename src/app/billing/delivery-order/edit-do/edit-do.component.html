@@ -20,7 +20,8 @@
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="cmp_name" class="col-lg-3 col-form-label">Company Name </label>
+                            <label for="cmp_name" class="col-lg-3 col-form-label">Company Name<span style="color: red;font-size:larger;">
+                                    *</span> </label>
                             <div class="col-lg-9">
                                 <select name="enqFormValue" id="cmp_name" class="form-control"
                                     (change)="billerChangeDetails($event)" formControlName="companyName">
@@ -35,7 +36,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="form-group row">
                             <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span
                                     style="color: red;font-size:larger;"> *</span></label>
@@ -56,6 +57,32 @@
 
                             </div>
                         </div>
+                    </div> -->
+                    <div class="col-lg-6 form-group row" style="display: flex;">
+
+                        <div class="col-lg-6">
+                            <label for="select_footer">Select Footer<span style="color: red;font-size:larger;">
+                                    *</span></label>
+                        </div>
+
+                        <div class="col-lg-6" style="display: flex;padding-left: 30px;">
+                            <div class="form-check col-lg-12" *ngFor="let display of FooterDetails"
+                                style="margin-right: 20px;">
+
+                                <input class="form-check-input" type="radio" formControlName="e_selectFooter"
+                                    id="footer_{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
+                                    (change)="handleChange($event)" style="margin-top: revert;" />
+                                {{display.footer_name}}
+
+                            </div>
+                            <div class="alert alert-danger alertdangerCustomCSS1"
+                                *ngIf="editDo_section1.controls['e_selectFooter'].invalid && editDo_section1.controls['e_selectFooter'].touched">
+                                Please
+                                Select Footer
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -72,25 +99,27 @@
 
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="dcDate" class="col-lg-3 col-form-label">DO Date *</label>
+                            <label for="dcDate" class="col-lg-3 col-form-label">DO Date<span style="color: red;font-size:larger;">
+                                    *</span></label>
                             <div class="col-lg-9">
                                 <input type="date" id="dcDate" class="form-control" formControlName="dcDate">
                             </div>
                         </div>
                     </div>
                 </div>
-              
+
 
                 <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
                             background: -webkit-linear-gradient(to right, #262127, #54b7aa); /* Chrome 10-25, Safari 5.1-6 */
                             background: linear-gradient(to right, #262127, #54b7aa);">
-                            Customer Details</h2>
+                    Customer Details</h2>
 
                 <div class="col-lg-8">
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="customer_name" class="col-lg-3 col-form-label"><span>Customer
-                                    Name</span></label>
+                                    Name<span style="color: red;font-size:larger;">
+                                    *</span></span></label>
                             <div class="col-lg-9">
                                 <!-- <input type="text" id="customer_name" class="form-control" formControlName="customer_name"> -->
                                 <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -108,6 +137,23 @@
                                 <ng-template #notFoundTemplate let-notFound>
                                     <div [innerHTML]="notFound"></div>
                                 </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="invoice_number" class="col-lg-3 col-form-label"><span>Invoice Number</span>
+                                </label>
+                            <div class="col-lg-9">
+                                <!-- <select name="templat" id="invoice_number" (change)="handle_invoice($event)" 
+                                    class="form-control" formControlName="invoice_number">
+                                    <option [ngValue]="null"  disabled>Select From</option>
+                                    <option *ngFor="let list of InvoiceList_PopUp" value="{{ list.billId }}" disabled>
+                                        {{ list.invoice_no }}
+                                    </option>
+                                </select> -->
+                                 <input type="text"  class="form-control"
+                                    formControlName="invoice_number">
                             </div>
                         </div>
                     </div>
@@ -209,9 +255,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group row">
-                     
 
-                            <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+
+                        <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
                             background: -webkit-linear-gradient(to right, #262127, #54b7aa); /* Chrome 10-25, Safari 5.1-6 */
                             background: linear-gradient(to right, #262127, #54b7aa);">
                             Product Details</h2>
@@ -261,8 +307,9 @@
                                                         </div>
                                                     </td>
 
-                                                    <td  valign="top" style="width:15%">
-                                                        <div *ngIf="i>0" class="userDatatable-content d-inline-block  mt-2 mb-2"
+                                                    <td valign="top" style="width:15%">
+                                                        <div *ngIf="i>0"
+                                                            class="userDatatable-content d-inline-block  mt-2 mb-2"
                                                             style="margin-left: 15px;">
                                                             <button type="button" class="btn btn-danger btn-sm"
                                                                 (click)="removeParticular(i)">X</button>

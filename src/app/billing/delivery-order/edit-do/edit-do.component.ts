@@ -66,6 +66,8 @@ export class EditDoComponent implements OnInit {
 
   itre = 0;
   test: boolean[] = [];
+  InvoiceList_PopUp: any;
+  invoiceValue_PopUp1: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.editDo_section2 = this.fb.group({
@@ -77,7 +79,7 @@ export class EditDoComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.ADDLoadDO();
+   // this.ADDLoadDO();
     this.loadADD();
     this.route.queryParams
       .subscribe(params => {
@@ -104,12 +106,19 @@ export class EditDoComponent implements OnInit {
     ];
 
     this.warranty_id_radio = [
-      { name: 'No Warranty', selected: false, id: 1, val: 'no' },
-      { name: 'One Warranty ', selected: false, id: 2, val: 'one' },
-      { name: 'Two Warranty', selected: false, id: 3, val: 'two' },
-      { name: 'None', selected: false, id: 4, val: 'none' },
+      { name: 'No Warranty', selected: false, id: 1, val: '1' },
+      { name: 'One Warranty ', selected: false, id: 2, val: '2' },
+      { name: 'Two Warranty', selected: false, id: 3, val: '3' },
+      { name: 'None', selected: false, id: 4, val: '4' },
 
     ];
+    //    this.warranty_id_radio1 = [
+    //   { name: 'No Warranty', selected: false, id: 1, val: 'no' },
+    //   { name: 'One Warranty ', selected: false, id: 2, val: 'one' },
+    //   { name: 'Two Warranty', selected: false, id: 3, val: 'two' },
+    //   { name: 'None', selected: false, id: 4, val: 'none' },
+
+    // ];
 
     this.editDo_section1 = new FormGroup({
       'companyName': new FormControl(null),
@@ -117,6 +126,7 @@ export class EditDoComponent implements OnInit {
       'dcNo': new FormControl(null),
       'dcDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'customer_name': new FormControl(null),
+      'invoice_number': new FormControl(null),
       'customerAddress1': new FormControl(null),
       'customerAddress2': new FormControl(null),
       'customerAddress3': new FormControl(null),
@@ -567,7 +577,11 @@ export class EditDoComponent implements OnInit {
   selectFooter(selval: any) {
     $('#footer_' + selval).prop('checked', true);
   }
-
+ handle_invoice(event: any) {
+    this.invoiceValue_PopUp1 = event.target.value;
+    console.log("this.invoiceValue_PopUp", this.invoiceValue_PopUp1);
+   // this.changeInvCust();
+  }
   editDo() {
     let api_req: any = new Object();
     let edit_DO_req: any = new Object();
@@ -586,8 +600,12 @@ export class EditDoComponent implements OnInit {
         this.dynamicChange_footer(response.delivery_pararent_details[0].billerId);
         this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
         this.warranty_value = response.delivery_pararent_details[0].warranty_type;
+        if(this.warranty_value=='one'){
+          this.warranty_value=='1';
+        }
         this.customer_ID = response.delivery_pararent_details[0].customer_id;
         this.customer_NAME = response.delivery_pararent_details[0].customerName;
+           this.InvoiceList_PopUp = response.invoice_det;
         this.editDo_section1.patchValue({
 
           'companyName': response.delivery_pararent_details[0].billerId,
@@ -596,6 +614,7 @@ export class EditDoComponent implements OnInit {
           'dcNo': response.delivery_pararent_details[0].delivery_no,
           'dcDate': response.delivery_pararent_details[0].delivery_date,
           'customer_name': response.delivery_pararent_details[0].customerName,
+          'invoice_number': response.cus_invoice_no,
           'customerAddress1': response.delivery_pararent_details[0].customerAddress1,
           'customerAddress2': response.delivery_pararent_details[0].customerAddress2,
           'customerAddress3': response.delivery_pararent_details[0].customerAddress3,
@@ -782,7 +801,8 @@ export class EditDoComponent implements OnInit {
           message: 'Delivery Order Updated Successfully !',
         });
         this.spinner.hide();
-        window.location.reload();
+         this.router.navigate(['/deliveryorder']);
+       // window.location.reload();
 
       }
       else {

@@ -204,11 +204,13 @@ import { VendorComponent } from './vendor/vendor.component';
 import { CustomerProjectComponent } from './customer-project/customer-project.component';
  import { NgApexchartsModule } from 'ng-apexcharts';
 import { CurrentStockOneComponent } from './stock/current-stock-one/current-stock-one.component';
-
+import { DeliverychallanComponent } from './billing/deliverychallan/deliverychallan.component';
 // import { RatecaDeliverychallanComponenttalogComponent} from './ratecatalog/ratecatalog.component';
 //  import {RatecatalogComponent} from './stock/ratecatalog.component';
 //  import {RatecatalogComponent} from './stock/ratecatalog.component';
 // import {RatecatalogComponent} from './stock/ratecatalog.component;
+import {RatecatalogComponent} from './stock/ratecatalog/ratecatalog.component';
+import { DcipallowComponent } from './tools/dcipallow/dcipallow.component';
 
 
 
@@ -389,6 +391,9 @@ import { CurrentStockOneComponent } from './stock/current-stock-one/current-stoc
      VendorComponent,
      CustomerProjectComponent,
      CurrentStockOneComponent,
+     DeliverychallanComponent,
+     RatecatalogComponent,
+     DcipallowComponent
  
    
     

@@ -114,7 +114,15 @@
             "subchild": [],
             "isVisible": true,
             "value": "/deliveryorder"
-        },  {
+        }, {
+            "name": "Delivery Chellan",
+            "icon": "anchor",
+            "IDs": [9711, 9712, 9713, 9714, 9715],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/deliverychallan"
+        }, {
             "name": "Proforma Invoice",
             "icon": "save",
             "IDs": [3101, 3102, 3103, 3104, 3105],

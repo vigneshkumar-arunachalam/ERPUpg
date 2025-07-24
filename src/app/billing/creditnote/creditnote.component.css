@@ -691,7 +691,7 @@
   }
   #addNewQuotationFormId .modal-content,  #editNewQuotationFormId .modal-content,  
   #editNewQuotationFormId .modal-content,#searchTransactionFormId .modal-content{ 
-    background: #e4ebf5;
+    background: #fbfdff;
   }
   #addNewQuotationFormId .modal-content label,  #editNewQuotationFormId .modal-content label,  #searchTransactionFormId .modal-content label{
     color: #5f63f2;

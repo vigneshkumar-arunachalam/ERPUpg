@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef,AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import interactionPlugin from '@fullcalendar/interaction';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormControl,FormBuilder,Validators  } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import listPlugin from '@fullcalendar/list';
 import { ServerService } from '../../services/server.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./leavereq-final.component.css']
 })
 
-export class LeavereqFinalComponent implements OnInit, AfterViewInit{
+export class LeavereqFinalComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
   user_ids: any;
   holidayForm: FormGroup;
@@ -33,10 +33,10 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
     // events: [] as EventInput[],
     editable: false,
     selectable: true,
-   
+
     eventClick: this.handleEventClick.bind(this),
-   dateClick: this.preventEmptyDateClick.bind(this),
-   select: this.handleDateSelect.bind(this),
+    dateClick: this.preventEmptyDateClick.bind(this),
+    select: this.handleDateSelect.bind(this),
     // eventClick: this.onEventClick.bind(this), 
     // dateClick: this.onDateClick.bind(this), 
     // displayEventTime: false,
@@ -50,11 +50,11 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
         text: '<',
         click: () => {
           console.log('Previous button clicked');
-         // this.prevMonth();
-         const calendarApi = this.calendarComponent.getApi();
-        calendarApi.prev();
-        this.getLeaveRequestDetails();
-        this.getHolidayList();
+          // this.prevMonth();
+          const calendarApi = this.calendarComponent.getApi();
+          calendarApi.prev();
+          this.getLeaveRequestDetails();
+          this.getHolidayList();
         }
       },
       next: {
@@ -64,20 +64,20 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
           const calendarApi = this.calendarComponent.getApi();
           calendarApi.next();
           // this.nextMonth();
-           this.getLeaveRequestDetails();
-        this.getHolidayList();
+          this.getLeaveRequestDetails();
+          this.getHolidayList();
         }
       },
       today: {
         text: 'today',
         click: () => {
           console.log('Today button clicked');
-            const calendarApi = this.calendarComponent.getApi();
-            calendarApi.today(); // Move calendar to today's date
+          const calendarApi = this.calendarComponent.getApi();
+          calendarApi.today(); // Move calendar to today's date
         }
       }
     },
-    
+
     datesSet: this.onDatesSet.bind(this),
   };
   showModal = false;
@@ -142,13 +142,15 @@ export class LeavereqFinalComponent implements OnInit, AfterViewInit{
   countryListUSAid: any;
   countryBillerID: any;
   assinedYear: number;
-  durationTypeValue:any;
-  timeStatus:boolean=false;
+  durationTypeValue: any;
+  timeStatus: boolean = false;
   editLeaveForm: FormGroup;
-   editTimeStatus: boolean = false;
+  editTimeStatus: boolean = false;
   editMedicalCertRequired: boolean = false;
-leaveAttachmentUrl: string = '';
-  constructor(private cd: ChangeDetectorRef,private fb: FormBuilder,private spinner: NgxSpinnerService, private http: HttpClient, private serverService: ServerService, private datePipe: DatePipe) {
+  leaveAttachmentUrl: string = '';
+  countryListDetails: any;
+  selectedTabIndex = 0;
+  constructor(private cd: ChangeDetectorRef, private fb: FormBuilder, private spinner: NgxSpinnerService, private http: HttpClient, private serverService: ServerService, private datePipe: DatePipe) {
     this.taskForm = new FormGroup({
       taskStatus: new FormControl(''),
       notifyState: new FormControl(false),
@@ -157,7 +159,7 @@ leaveAttachmentUrl: string = '';
     });
     this.today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
-     this.editLeaveForm = this.fb.group({
+    this.editLeaveForm = this.fb.group({
       startDate: [''],
       endDate: [''],
       leaveType: [''],
@@ -167,7 +169,7 @@ leaveAttachmentUrl: string = '';
       leaveReason: ['']
     });
   }
- 
+
   ngAfterViewInit(): void {
     if (this.calendarComponent) {
       const calendarApi = this.calendarComponent.getApi();
@@ -184,7 +186,7 @@ leaveAttachmentUrl: string = '';
     $("#holidayFormId").modal("show");
     this.currentYearValue = new Date().getFullYear();
     console.log("this.currentYearValue", this.currentYearValue);
-    this.assinedYear=this.currentYearValue; 
+    this.assinedYear = this.currentYearValue;
     this.leaveRequestForm = this.fb.group({
       startDate: [null, Validators.required],
       endDate: [null, Validators.required],
@@ -198,18 +200,18 @@ leaveAttachmentUrl: string = '';
 
 
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
-   // this.user_ids = 169;
-   // this.getLeaveHolidayDetails();
-  
-     this.getLeaveRequestDetails();
-     this.getHolidayList();
-     this.getCountryList();
-     this.getLeaveHolidayDetails();
+    // this.user_ids = 169;
+    // this.getLeaveHolidayDetails();
+
+    this.getLeaveRequestDetails();
+    this.getHolidayList();
+    this.getCountryList();
+    this.getLeaveHolidayDetails();
     this.calendarOptions.hiddenDays = [0];
     // this.cd.detectChanges(); // Force Angular to update
- 
-  
-   
+
+
+
 
 
   }
@@ -226,43 +228,43 @@ leaveAttachmentUrl: string = '';
   //     }
   //   });
   // }
-  durationTypeChange(event:any){
-    this.durationTypeValue=event.target.value;
-    console.log("this.durationTypeValue",this.durationTypeValue);
-    if(this.durationTypeValue==1){
-      this.timeStatus=true;
-    }else{
-      this.timeStatus=false;
+  durationTypeChange(event: any) {
+    this.durationTypeValue = event.target.value;
+    console.log("this.durationTypeValue", this.durationTypeValue);
+    if (this.durationTypeValue == 1) {
+      this.timeStatus = true;
+    } else {
+      this.timeStatus = false;
     }
 
   }
-durationTypeChange1(event: any) {
- this.durationTypeValue=event.target.value;
-  console.log("this.durationTypeValue", this.durationTypeValue);
+  durationTypeChange1(event: any) {
+    this.durationTypeValue = event.target.value;
+    console.log("this.durationTypeValue", this.durationTypeValue);
 
-  if (this.durationTypeValue == 1) {
-    this.timeStatus = true;
-  this.leaveRequestForm.get('startTime')?.updateValueAndValidity();
-  this.leaveRequestForm.get('endTime')?.updateValueAndValidity();
-    // ✅ Set validators for time
-    this.leaveRequestForm.get('startTime')?.setValidators(Validators.required);
-    this.leaveRequestForm.get('endTime')?.setValidators(Validators.required);
+    if (this.durationTypeValue == 1) {
+      this.timeStatus = true;
+      this.leaveRequestForm.get('startTime')?.updateValueAndValidity();
+      this.leaveRequestForm.get('endTime')?.updateValueAndValidity();
+      // ✅ Set validators for time
+      this.leaveRequestForm.get('startTime')?.setValidators(Validators.required);
+      this.leaveRequestForm.get('endTime')?.setValidators(Validators.required);
 
-    // ❌ Remove validator for medical cert
-    this.leaveRequestForm.get('medicalcert')?.clearValidators();
-    this.leaveRequestForm.get('medicalcert')?.reset();
+      // ❌ Remove validator for medical cert
+      this.leaveRequestForm.get('medicalcert')?.clearValidators();
+      this.leaveRequestForm.get('medicalcert')?.reset();
 
-  } else {
-    // Full Day – Show medical certificate if needed
-    this.timeStatus = false;
+    } else {
+      // Full Day – Show medical certificate if needed
+      this.timeStatus = false;
 
-    // ✅ Set validator for medical cert
-    //this.leaveRequestForm.get('medicalcert')?.setValidators(Validators.required);
+      // ✅ Set validator for medical cert
+      //this.leaveRequestForm.get('medicalcert')?.setValidators(Validators.required);
 
 
+    }
   }
-}
- leavetypechange(event: any) {
+  leavetypechange(event: any) {
     this.medicalcert = event.target.value;
 
     //  if (this.medicalcert == 1) {
@@ -274,11 +276,11 @@ durationTypeChange1(event: any) {
   prevMonth(calendar: any) {
     calendar.getApi().prev();
   }
-  
+
   nextMonth(calendar: any) {
     calendar.getApi().next();
   }
-  
+
   onEventClick(info: any) {
     alert('hi'); // When clicking on a leave event
   }
@@ -311,8 +313,8 @@ durationTypeChange1(event: any) {
       return '';
     }
   }
- 
-  createLeave1(){
+
+  createLeave1() {
     this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
@@ -334,7 +336,7 @@ durationTypeChange1(event: any) {
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-   
+
       if (response) {
         this.spinner.hide();
 
@@ -358,7 +360,7 @@ durationTypeChange1(event: any) {
 
 
   }
-  getCountryList(){
+  getCountryList() {
     this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
@@ -372,19 +374,22 @@ durationTypeChange1(event: any) {
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-   
+
       if (response) {
         this.spinner.hide();
-        this.countryListSG=response.biller[0].biller;
-        this.countryListSGid=response.biller[0].biller_id;
-        this.countryListMY=response.biller[1].biller;
-        this.countryListMYid=response.biller[1].biller_id;
-        this.countryListIND=response.biller[2].biller;
-        this.countryListINDid=response.biller[2].biller_id;
-        this.countryListPH=response.biller[3].biller;
-        this.countryListPHid=response.biller[3].biller_id;
-        this.countryListUSA=response.biller[3].biller;
-        this.countryListUSAid=response.biller[3].biller_id;
+        this.countryListDetails = response.biller;
+        console.log(" this.countryListDetails", this.countryListDetails);
+        this.countryListSG = response.biller[0].biller;
+        this.countryListSGid = response.biller[0].biller_id;
+          this.countryBillerID=this.countryListSGid;
+        this.countryListMY = response.biller[1].biller;
+        this.countryListMYid = response.biller[1].biller_id;
+        this.countryListIND = response.biller[2].biller;
+        this.countryListINDid = response.biller[2].biller_id;
+        this.countryListPH = response.biller[3].biller;
+        this.countryListPHid = response.biller[3].biller_id;
+        this.countryListUSA = response.biller[3].biller;
+        this.countryListUSAid = response.biller[3].biller_id;
 
 
       } else {
@@ -409,15 +414,15 @@ durationTypeChange1(event: any) {
 
   }
   onFileChange(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    const files: FileList = input.files;
-    const filesArray = Array.from(files);
-    this.leaveRequestForm.patchValue({
-      medicalcert: filesArray
-    });
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const files: FileList = input.files;
+      const filesArray = Array.from(files);
+      this.leaveRequestForm.patchValue({
+        medicalcert: filesArray
+      });
+    }
   }
-}
 
   adjustTime() {
     let timeValue = this.leaveRequestForm.value.startTime;
@@ -435,7 +440,7 @@ durationTypeChange1(event: any) {
     this.leaveRequestForm.patchValue({ startTime: date.toISOString().slice(0, 16) });
   }
 
- createLeave() {
+  createLeave() {
     if (this.leaveRequestForm.invalid) {
       this.leaveRequestForm.markAllAsTouched();
       return;
@@ -443,8 +448,8 @@ durationTypeChange1(event: any) {
 
     // Proceed with saving
     console.log(this.leaveRequestForm.value);
-    console.log("this.leaveRequestForm.value.startTime",this.leaveRequestForm.value.startTime);
-    console.log("this.leaveRequestForm.value.endTime",this.leaveRequestForm.value.endTime);
+    console.log("this.leaveRequestForm.value.startTime", this.leaveRequestForm.value.startTime);
+    console.log("this.leaveRequestForm.value.endTime", this.leaveRequestForm.value.endTime);
     this.spinner.show();
 
     const formData = new FormData();
@@ -454,75 +459,75 @@ durationTypeChange1(event: any) {
     formData.append('api_type', 'web');
     formData.append('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI'); // Replace with your access token
     formData.append('action', 'hr/createLeave');
-   if(this.durationTypeValue!=1){
-    formData.append('StartTime', this.startLeave);
-   formData.append('EndTime', this.leaveRequestForm.value.endDate);
-    
-    formData.append('start_time', this.startLeave);
-    formData.append('end_time', this.leaveRequestForm.value.endDate);
+    if (this.durationTypeValue != 1) {
+      formData.append('StartTime', this.startLeave);
+      formData.append('EndTime', this.leaveRequestForm.value.endDate);
 
-    formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
-    formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
-    formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
-    formData.append('product_img', this.leaveRequestForm.value.medicalcert);
-     if (files && files.length > 0) {
-    files.forEach(file => {
-      formData.append('product_img[]', file);
-    });
-  }
-    formData.append('StartTime_value', this.startLeave);
-   }else{
-    
-     formData.append('StartTime', this.leaveRequestForm.value.startTime);
-    formData.append('EndTime', this.leaveRequestForm.value.endTime);
-     
-    formData.append('start_time', this.startLeave);
-    formData.append('end_time', this.EndDate);
-    
+      formData.append('start_time', this.startLeave);
+      formData.append('end_time', this.leaveRequestForm.value.endDate);
 
-    formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
-    formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
-    formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
-     if (files && files.length > 0) {
-    files.forEach(file => {
-      formData.append('product_img[]', file);
-    });
-  }
-    formData.append('StartTime_value', this.startLeave);
+      formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
+      formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
+      formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
+      formData.append('product_img', this.leaveRequestForm.value.medicalcert);
+      if (files && files.length > 0) {
+        files.forEach(file => {
+          formData.append('product_img[]', file);
+        });
+      }
+      formData.append('StartTime_value', this.startLeave);
+    } else {
 
-   }
-   
+      formData.append('StartTime', this.leaveRequestForm.value.startTime);
+      formData.append('EndTime', this.leaveRequestForm.value.endTime);
 
-    
+      formData.append('start_time', this.startLeave);
+      formData.append('end_time', this.EndDate);
+
+
+      formData.append('LeaveType', this.leaveRequestForm.value.leaveType);
+      formData.append('LeaveCat', this.leaveRequestForm.value.durationType);
+      formData.append('LeaveDesc', this.leaveRequestForm.value.leaveReason);
+      if (files && files.length > 0) {
+        files.forEach(file => {
+          formData.append('product_img[]', file);
+        });
+      }
+      formData.append('StartTime_value', this.startLeave);
+
+    }
+
+
+
 
     $.ajax({
       type: 'POST',
-     // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
-      url:this.serverService.urlFinal + 'hr/createLeave',
+      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      url: this.serverService.urlFinal + 'hr/createLeave',
 
       cache: false,
       contentType: false,
       processData: false,
       data: formData,
-      
+
       success: (result: any) => {
         this.spinner.hide();
         if (result.status === true) {
-      
+
           // this.contractList({});
           $("#leaveRequestFormId").modal("hide");
 
-        iziToast.success({
-          message: "Leave has been Saved",
-          position: 'topRight'
-        });
-          this.leaveRequestForm.reset(); 
-           this.getLeaveRequestDetails();
-        }else if(result.status === false){
-         
+          iziToast.success({
+            message: "Leave has been Saved",
+            position: 'topRight'
+          });
+          this.leaveRequestForm.reset();
+          this.getLeaveRequestDetails();
+        } else if (result.status === false) {
+
           this.spinner.hide();
           $("#leaveRequestFormId").modal("hide");
-           const errorMessage = result.message || "Leave not Saved!";
+          const errorMessage = result.message || "Leave not Saved!";
           console.log(errorMessage);
           iziToast.error({
             title: 'Error',
@@ -531,32 +536,38 @@ durationTypeChange1(event: any) {
           });
           this.leaveRequestForm.reset();
         }
-       
+
       },
       error: (err: any) => {
         this.spinner.hide();
         console.log(err);
-         iziToast.error({
-            title: 'An error occurred while saving the contract.',
-            position:'topRight',
-          });
-       this.leaveRequestForm.reset();
+        iziToast.error({
+          title: 'An error occurred while saving the contract.',
+          position: 'topRight',
+        });
+        this.leaveRequestForm.reset();
       }
     });
   }
 
 
-  changeCountry(billerid:any){
-    this.countryBillerID=billerid;
-    console.log("this.countryBillerID",this.countryBillerID);
+  changeCountry(billerid: any) {
+    this.countryBillerID = billerid;
+    console.log("this.countryBillerID", this.countryBillerID);
+    this.getHolidayList();
+
+  }
+   changeCountry1(billerid: any) {
+    this.leaveBillerID = billerid;
+    console.log("this.countryBillerID", this.leaveBillerID);
     this.getHolidayList();
 
   }
   handleDateSelect(selectInfo: any) {
     this.leaveRequestForm.reset();
-    console.log("selectInfo",selectInfo);
-    
-   // alert("hi")
+    console.log("selectInfo", selectInfo);
+
+    // alert("hi")
     this.startLeave = selectInfo.startStr;
     // const end = selectInfo.endStr;
     console.log("start-drag", this.startLeave);
@@ -575,7 +586,7 @@ durationTypeChange1(event: any) {
     let api_req: any = new Object();
     let sendMet_req: any = new Object();
     api_req.moduleType = "hr";
-   
+
     api_req.api_url = "hr/currenctDayLeave";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
@@ -588,33 +599,33 @@ durationTypeChange1(event: any) {
     api_req.element_data = sendMet_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response.status==true) {
+      if (response.status == true) {
         this.leaveCategory = response.leavecat;
         this.LeaveType = response.leavetype;
         this.leaveDataList = response.leaveData;
         this.permissionCount = response.permissionCount;
         this.remainingPermi = Number(2 - this.permissionCount);
 
-        if(response.indLeaveDatas && response.indLeaveDatas.length>0){
+        if (response.indLeaveDatas && response.indLeaveDatas.length > 0) {
           this.availableALCurrentMonth = response.indLeaveDatas[0].available_al_current_month;
 
-        this.TotalAL = response.indLeaveDatas[0].total_al;
-        this.balanceAL = response.indLeaveDatas[0].balance_al;
-        this.consumedAL = response.indLeaveDatas[0].consumed_al;
+          this.TotalAL = response.indLeaveDatas[0].total_al;
+          this.balanceAL = response.indLeaveDatas[0].balance_al;
+          this.consumedAL = response.indLeaveDatas[0].consumed_al;
 
-        this.balanceML = response.indLeaveDatas[0].balance_ml;
-        this.consumedML = response.indLeaveDatas[0].consumed_ml;
-        this.TotalML = response.indLeaveDatas[0].total_ml;
+          this.balanceML = response.indLeaveDatas[0].balance_ml;
+          this.consumedML = response.indLeaveDatas[0].consumed_ml;
+          this.TotalML = response.indLeaveDatas[0].total_ml;
 
-        this.consumedLOP = response.indLeaveDatas[0].consumed_lop;
-        this.pendingApproval = response.indLeaveDatas[0].pending_approval;
-        this.TotalAvailableLeave = response.indLeaveDatas[0].totalavailableLeave;
+          this.consumedLOP = response.indLeaveDatas[0].consumed_lop;
+          this.pendingApproval = response.indLeaveDatas[0].pending_approval;
+          this.TotalAvailableLeave = response.indLeaveDatas[0].totalavailableLeave;
 
-        }else{
+        } else {
           alert("not")
         }
 
-        
+
 
 
 
@@ -639,10 +650,10 @@ durationTypeChange1(event: any) {
   }
   handleEventClick(arg: any) {
     const leaveId = arg.event.extendedProps.LeaveId;
-  console.log("Clicked Leave ID:", leaveId);
+    console.log("Clicked Leave ID:", leaveId);
     // console.log("arg",arg)
- 
-  //  alert("hello-bottom-last")
+
+    //  alert("hello-bottom-last")
     $('#editLeaveRequestFormId').modal('show');
     const currentDate = arg.event.start;
     console.log('Clicked event date:', currentDate);
@@ -650,7 +661,7 @@ durationTypeChange1(event: any) {
     console.log('Formatted date:', formattedDate1);
     const formattedDate = currentDate ? currentDate.toISOString().split('T')[0] : '';
     console.log("currentDate", formattedDate);
-   
+
     // alert(`Event: ${arg.event.title}`);
     this.selectedEvent = arg.event;
 
@@ -675,20 +686,20 @@ durationTypeChange1(event: any) {
 
       if (response) {
         this.leaveDataList = response.data;
-         this.editMedicalCertRequired = this.leaveDataList.LeaveTypeName === 'Medical Leave';
-         this.leaveAttachmentUrl = this.leaveDataList.leave_attachment_filename || '';
-         const isTimeLeave = /^\d{2}:\d{2}$/.test(this.leaveDataList.StartTime) &&
-                          /^\d{2}:\d{2}$/.test(this.leaveDataList.EndTime);
-         this.editTimeStatus = isTimeLeave;
-      
+        this.editMedicalCertRequired = this.leaveDataList.LeaveTypeName === 'Medical Leave';
+        this.leaveAttachmentUrl = this.leaveDataList.leave_attachment_filename || '';
+        const isTimeLeave = /^\d{2}:\d{2}$/.test(this.leaveDataList.StartTime) &&
+          /^\d{2}:\d{2}$/.test(this.leaveDataList.EndTime);
+        this.editTimeStatus = isTimeLeave;
+
         this.editLeaveForm.patchValue({
           startDate: this.extractDate(this.leaveDataList.start_time),
           endDate: this.extractDate(this.leaveDataList.end_time),
           subject: this.leaveDataList.Subject,
-          startTime: isTimeLeave ? this.leaveDataList.StartTime : '',
-          endTime: isTimeLeave ? this.leaveDataList.EndTime : '',
+          startTime: this.editTimeStatus ? this.leaveDataList.StartTime : '',
+          endTime: this.editTimeStatus? this.leaveDataList.EndTime : '',
           leaveReason: this.leaveDataList.LeaveDesc,
-          
+
         });
       } else {
         iziToast.error({
@@ -706,29 +717,29 @@ durationTypeChange1(event: any) {
 
   }
   extractDate(value: string): string | null {
-  // If it's already a date format, return it directly
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return value;
-  }
+    // If it's already a date format, return it directly
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return value;
+    }
 
-  // If it's time (like "14:15") or empty/null
-  if (/^\d{2}:\d{2}$/.test(value) || !value) {
-    return null; // Or return today's date if fallback is needed
-  }
+    // If it's time (like "14:15") or empty/null
+    if (/^\d{2}:\d{2}$/.test(value) || !value) {
+      return null; // Or return today's date if fallback is needed
+    }
 
-  // If it's a full ISO datetime string, split and return only the date part
-  if (value.includes("T")) {
-    return value.split("T")[0];
-  }
+    // If it's a full ISO datetime string, split and return only the date part
+    if (value.includes("T")) {
+      return value.split("T")[0];
+    }
 
-  // Try parsing manually in case of other formats
-  const date = new Date(value);
-  if (!isNaN(date.getTime())) {
-    return date.toISOString().split("T")[0];
-  }
+    // Try parsing manually in case of other formats
+    const date = new Date(value);
+    if (!isNaN(date.getTime())) {
+      return date.toISOString().split("T")[0];
+    }
 
-  return null;
-}
+    return null;
+  }
 
   preventEmptyDateClick(arg: any) {
     return false;
@@ -813,19 +824,19 @@ durationTypeChange1(event: any) {
       if (response.status == true) {
         if (response.leaveCount && Array.isArray(response.leaveCount)) {
           let sortedLeaves = response.leaveCount.sort((a: { start_dt_time: string; }, b: { start_dt_time: string; }) =>
-            new Date(this.formatDate1(a.start_dt_time)).getTime() - 
+            new Date(this.formatDate1(a.start_dt_time)).getTime() -
             new Date(this.formatDate1(b.start_dt_time)).getTime()
           );
-    
+
           let mergedLeaves: any[] = [];
           let currentLeave = null;
-    
+
           for (let i = 0; i < sortedLeaves.length; i++) {
             let leave = sortedLeaves[i];
             let start = this.formatDate1(leave.start_dt_time);
             let end = this.formatDate1(leave.end_dt_time);
-        
-            
+
+
             if (currentLeave && new Date(start).getTime() === new Date(currentLeave.end).getTime()) {
               // Extend the existing event if it's consecutive
               currentLeave.end = end;
@@ -839,16 +850,16 @@ durationTypeChange1(event: any) {
                 backgroundColor: leave.colorCodes || '#B8860B',
                 classNames: ['leave-event'],
                 display: 'block',
-                 extendedProps: {
+                extendedProps: {
                   LeaveId: leave.LeaveId //  include this!
                 }
               };
             }
           }
-    
+
           // Push the last merged leave event
           if (currentLeave) mergedLeaves.push(currentLeave);
-    
+
           this.calendarOptions.events = mergedLeaves;
         }
 
@@ -879,9 +890,9 @@ durationTypeChange1(event: any) {
     const parts = dateString.split('-');
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
   }
-  changeYear(year:any){
-    this.assinedYear=year;
-    console.log("this.assinedYear",this.assinedYear);
+  changeYear(year: any) {
+    this.assinedYear = year;
+    console.log("this.assinedYear", this.assinedYear);
     this.getHolidayList();
 
   }
@@ -897,12 +908,12 @@ durationTypeChange1(event: any) {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     sendMet_req.action = "hr/holidayList";
     sendMet_req.user_id = this.user_ids;
-    if(!this.countryBillerID){
+    if (!this.countryBillerID) {
       sendMet_req.biller_id = '';
-    }else{
+    } else {
       sendMet_req.biller_id = this.countryBillerID;
     }
-   
+    sendMet_req.leave_biller = this.leaveBillerID;
     sendMet_req.year = this.assinedYear;
     api_req.element_data = sendMet_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -928,7 +939,7 @@ durationTypeChange1(event: any) {
         this.holidaysArray = response.holidays;
         this.lastyearHolidaysArray = response.last_year_holidays;
 
-        this.userLeaveDatas=response.userleaveDatas;
+        this.userLeaveDatas = response.userleaveDatas;
 
       }
       else {
@@ -960,12 +971,12 @@ durationTypeChange1(event: any) {
     sendMet_req.action = "hr/holidayListYear";
 
     sendMet_req.user_id = this.user_ids;
-  
+
     api_req.element_data = sendMet_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.holidaysCurrent=response.holidays;
+        this.holidaysCurrent = response.holidays;
         if (response.status && response.holidays) {
           const formattedEvents = response.holidays.map((holiday: { description: any; date: string; }) => ({
             title: holiday.description,
@@ -974,7 +985,7 @@ durationTypeChange1(event: any) {
           }));
 
           this.calendarOptions = { ...this.calendarOptions, events: formattedEvents };
-        } 
+        }
 
 
       }
@@ -996,7 +1007,7 @@ durationTypeChange1(event: any) {
 
   }
   convertDateFormat(dateStr: string): string {
-    const [day, month, year] = dateStr.split('-'); 
+    const [day, month, year] = dateStr.split('-');
     return `${year}-${month}-${day}`; // Rearrange to YYYY-MM-DD
   }
 

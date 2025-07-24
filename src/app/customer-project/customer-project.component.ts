@@ -98,22 +98,20 @@ export class CustomerProjectComponent implements OnInit {
   searchResult_CustomerID: any;
   searchResult_CustomerName: any;
   //search
-  searchCustomerProjectForm:FormGroup;
+  searchCustomerProjectForm: FormGroup;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.Select_To_Type_radiobox_Value = 'finance';
+    this.deptValue = 'Sales';
     this.GoogleAuthenticationForm = new FormGroup({
       'google_AuthenticationCode': new FormControl(null),
     });
-     this.searchCustomerProjectForm = new FormGroup({
+    this.searchCustomerProjectForm = new FormGroup({
       'addc_selectCustomer': new FormControl(null),
       'searchText': new FormControl(null),
 
     });
-    // $('#GoogleAuthenticationGuruFormId').modal('show');
-    this.getTransactionNewList({});
-    this.addBasicDetails();
-
     this.viewCustomerPjctMgmtForm = new FormGroup({
       'view_comments': new FormControl(null),
       'viewDescription': new FormControl(null),
@@ -174,11 +172,31 @@ export class CustomerProjectComponent implements OnInit {
 
 
     });
-    this.Select_To_Type_radiobox_Value = 'finance';
-    this.deptValue = 'Sales';
+    const authDataRaw = localStorage.getItem('google_auth');
+    if (authDataRaw) {
+      const authData = JSON.parse(authDataRaw);
+      const currentTime = new Date().getTime();
+      const elapsedTime = (currentTime - authData.timestamp) / 1000; // in seconds
 
+      if (authData.status && elapsedTime < 600) {
+        this.googleAuthentication_status = true;
+        this.spinner.show();
+        this.getTransactionNewList({});
+
+      } else {
+        this.spinner.show();
+        localStorage.removeItem('google_auth');
+        this.googleAuthentication_status = false;
+
+      }
+    }
+
+    // $('#GoogleAuthenticationGuruFormId').modal('show');
+    this.getTransactionNewList({});
+    this.addBasicDetails();
     this.addProjectFollowers();
   }
+
   departmentChange(event: any, id: any) {
     this.deptValue = id;
     console.log("this.deptValue", this.deptValue);
@@ -320,7 +338,7 @@ export class CustomerProjectComponent implements OnInit {
     TNapi_req.search_txt = this.searchCustomerProjectForm.value.searchText;
 
     TNapi_req.current_page = "";
-    TNapi_req.cus_pro_customer_name =  this.searchResult_CustomerID ;
+    TNapi_req.cus_pro_customer_name = this.searchResult_CustomerID;
     api_req.element_data = TNapi_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -329,10 +347,10 @@ export class CustomerProjectComponent implements OnInit {
 
 
         this.Transaction_list = response.data;
-         this.searchResult_CustomerID ='';
+        this.searchResult_CustomerID = '';
         // console.table(this.Transaction_list);
-       // console.dir(this.Transaction_list);
-       $('#searchCustProjFormId').modal('hide');
+        // console.dir(this.Transaction_list);
+        $('#searchCustProjFormId').modal('hide');
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
 
 
@@ -1067,7 +1085,14 @@ export class CustomerProjectComponent implements OnInit {
           $("#showhide").show();
         });
         this.googleAuthentication_status = response.status;
+        // Store status and timestamp in localStorage
+        const authData = {
+          status: true,
+          timestamp: new Date().getTime()
+        };
+        localStorage.setItem('google_auth', JSON.stringify(authData));
         console.log(" this.googleAuthentication_status", this.googleAuthentication_status);
+
         if (this.googleAuthentication_status == true) {
           this.getTransactionNewList({});
         }
@@ -1583,7 +1608,7 @@ export class CustomerProjectComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_nx32PermissionUpdate_req.action = "customer_projects/customer_projects_details_create";
     api_nx32PermissionUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
-     if (this.addCustomerProjectForm.value.addc_billerName) {
+    if (this.addCustomerProjectForm.value.addc_billerName) {
       api_nx32PermissionUpdate_req.billerId = this.addCustomerProjectForm.value.addc_billerName;
     } else {
       this.spinner.hide();
@@ -1607,9 +1632,9 @@ export class CustomerProjectComponent implements OnInit {
     }
 
     api_nx32PermissionUpdate_req.description = tinymce.get('tinyID_addAllCP').getContent();
-   
-     if (this.addCustomerProjectForm.value.addc_owner) {
-        api_nx32PermissionUpdate_req.owner_id = this.addCustomerProjectForm.value.addc_owner;
+
+    if (this.addCustomerProjectForm.value.addc_owner) {
+      api_nx32PermissionUpdate_req.owner_id = this.addCustomerProjectForm.value.addc_owner;
     } else {
       this.spinner.hide();
       iziToast.error({
@@ -1620,7 +1645,7 @@ export class CustomerProjectComponent implements OnInit {
 
     }
 
-  
+
     api_nx32PermissionUpdate_req.project_follower_id = this.selectedList;
     api_req.element_data = api_nx32PermissionUpdate_req;
 

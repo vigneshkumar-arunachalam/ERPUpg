@@ -6,12 +6,12 @@
         <div class="card-header color-dark fw-500">
           <h3 class="card-header-section">
             <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-            <span class="breadcrumb-item active">DID Number Catalog</span>
+            <span class="breadcrumb-item active"> DID Number Catalog</span>
           </h3>
           <div class="quotation-btn-section">
 
 
-            <button type="button" class="btn btn-primary btn-default btn-squared" title="Search Product Category"
+            <button type="button" class="btn btn-primary btn-default btn-squared" title="Search DID"
               style="margin-right: 10px;">
               <i class="fas fa-search" style="margin-right:10px;"></i>Search
             </button>
@@ -232,64 +232,51 @@
                       <td [ngStyle]="{ 'background-color': did.did_trunk_name_color }">{{ did.did_numbers }}</td>
                       <td [ngStyle]="{ 'background-color': did.cus_color }" class="customer-col">
                         <span *ngIf="did.status==0">{{ did.customerName }}</span>
-                    
+
                         <span *ngIf="did.status == 1">
-                              <img  src="assets/img/icon2/R-black.png" height="30px" width="30px" (click)="onRClick(did.did_entry_id)">
+                          <img src="assets/img/icon2/R-black.png" height="30px" width="30px"
+                            (click)="onRClick(did.did_entry_id)">
                         </span>
-                        
-                      <span *ngIf="did.status==2" (click)="onReleaseClick(did.did_entry_id)" style="cursor: pointer;">
-                        <span>{{ did.customerName }}</span>
-                       
-                      </span>
+
+                        <span *ngIf="did.status==2" (click)="onReleaseClick(did.did_entry_id)" style="cursor: pointer;">
+                          <span>{{ did.customerName }}</span>
+
+                        </span>
 
                       </td>
-                    
+
                       <!-- ONE td PER column: None -->
                       <td [ngStyle]="{ 'background-color': did.none_color }">
-                        <input *ngIf="did.status == 1"
-                               type="radio"
-                               [name]="'option_' + did.did_entry_id"
-                               value="4"
-                               [checked]="did.none == 4"
-                               (change)="onRadioSelect(did, 'none')">
+                        <input *ngIf="did.status == 1" type="radio" [name]="'option_' + did.did_entry_id" value="4"
+                          [checked]="did.none == 4" (change)="onRadioSelect(did, 'none')">
                         <!-- <span *ngIf="did.status != 1">{{ did.none }}</span> -->
                       </td>
-                    
+
                       <!-- Bronze -->
                       <td [ngStyle]="{ 'background-color': did.bronze_color }">
-                        <input *ngIf="did.status == 1"
-                               type="radio"
-                               [name]="'option_' + did.did_entry_id"
-                               value="1"
-                               [checked]="did.bronze == 1"
-                               (change)="onRadioSelect(did, 'bronze')">
+                        <input *ngIf="did.status == 1" type="radio" [name]="'option_' + did.did_entry_id" value="1"
+                          [checked]="did.bronze == 1" (change)="onRadioSelect(did, 'bronze')">
                         <!-- <span *ngIf="did.status != 1">{{ did.bronze }}</span> -->
                       </td>
-                    
+
                       <!-- Silver -->
                       <td [ngStyle]="{ 'background-color': did.silver_color }">
-                        <input *ngIf="did.status == 1"
-                               type="radio"
-                               [name]="'option_' + did.did_entry_id"
-                               value="2"
-                               [checked]="did.silver == 2"
-                               (change)="onRadioSelect(did, 'silver')">
+                        <input *ngIf="did.status == 1" type="radio" [name]="'option_' + did.did_entry_id" value="2"
+                          [checked]="did.silver == 2" (change)="onRadioSelect(did, 'silver')">
                         <!-- <span *ngIf="did.status != 1">{{ did.silver }}</span> -->
                       </td>
-                    
+
                       <!-- Gold -->
                       <td [ngStyle]="{ 'background-color': did.gold_color }">
-                        <input *ngIf="did.status == 1"
-                               type="radio"
-                               [name]="'option_' + did.did_entry_id"
-                               value="3"
-                               [checked]="did.gold == 3"
-                               (change)="onRadioSelect(did, 'gold')">
-                        <span *ngIf="did.status ==2" style="color: blue; text-decoration: underline; margin-left: 8px;"> <img  title="Release" src="assets/img/icon2/swap.png" height="30px" width="30px" (click)="onImageClick(did.did_entry_id)"></span>
+                        <input *ngIf="did.status == 1" type="radio" [name]="'option_' + did.did_entry_id" value="3"
+                          [checked]="did.gold == 3" (change)="onRadioSelect(did, 'gold')">
+                        <span *ngIf="did.status ==2" style="color: blue; text-decoration: underline; margin-left: 8px;">
+                          <img title="Release" src="assets/img/icon2/swap.png" height="30px" width="30px"
+                            (click)="onImageClick(did.did_entry_id)"></span>
                         <!-- <span *ngIf="did.status != 1">{{ did.gold }}</span> -->
                       </td>
                     </tr>
-                    
+
 
                   </tbody>
                 </table>
@@ -301,84 +288,83 @@
         </div>
 
       </div>
-
     </div>
+
   </div>
 
 </div>
 
 
 
-  
-  <!----------Modal Pop Up (BEGIN)  for SST Tax begin ------------------>
-  <div class="modal fade" id="DIDInvReserve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content searchQuotationCSS">
-        <div class="modal-header">
+<!----------Modal Pop Up (BEGIN)  for SST Tax begin ------------------>
+<div class="modal fade" id="DIDInvReserve" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
 
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
-           DID Inventory Reserve </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="DIDInvReserveForm">
-            <div class="row">
-              <div class="col-lg-12" style="display: flex; ">
-                <div class="col-lg-3 ">
-                  <label>Reserve Customer </label>
-                </div>
-                <div class="col-lg-9">
-                  <div class="form-group row">
-                    <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+          DID Inventory Reserve </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="DIDInvReserveForm">
+          <div class="row">
+            <div class="col-lg-12" style="display: flex; ">
+              <div class="col-lg-3 ">
+                <label>Reserve Customer </label>
+              </div>
+              <div class="col-lg-9">
+                <div class="form-group row">
+                  <div class="ng-autocomplete" style="padding: 4px 5px !important;">
 
-                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
-                        formControlName="reseller_name" (selected)='selectEventReseller($event)'
-                        (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
-                        [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
-                        style="padding: 4px 5px !important;">
-                      </ng-autocomplete>
+                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
+                      formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                      (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                      style="padding: 4px 5px !important;">
+                    </ng-autocomplete>
 
-                      <ng-template #itemTemplateCustomer let-item>
-                        <a [innerHTML]="item.customerName"></a>
-                      </ng-template>
+                    <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                    </ng-template>
 
-                      <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-
-                    </div>
-
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
 
                   </div>
+
+
                 </div>
-         
               </div>
 
-
-
-
             </div>
-            <div class="mt-4">
 
-            </div>
-          </form>
 
-        </div>
-        <div class="modal-footer">
 
-          <button type="button" class="btn btn-primary" (click)="saveCustomer()">
-            Update
-          </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Close
-          </button>
-        </div>
+
+          </div>
+          <div class="mt-4">
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="saveCustomer()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
-  <!----------Modal Pop Up (END)  for SST Tax end------------------>
+</div>
+<!----------Modal Pop Up (END)  for SST Tax end------------------>

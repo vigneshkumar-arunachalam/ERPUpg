@@ -108,7 +108,7 @@ export class ContractComponent implements OnInit {
   myFiles_add1: any;
   getResult: any;
   response_total_cnt: any;
-  contactFileForm:FormGroup;
+  contactFileForm: FormGroup;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -179,7 +179,7 @@ export class ContractComponent implements OnInit {
       'company_Name': new FormControl(null),
 
     });
-    this.contactFileForm= new FormGroup({
+    this.contactFileForm = new FormGroup({
       'up': new FormControl(null),
 
     });
@@ -236,14 +236,14 @@ export class ContractComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this.fb.group({
-        company_Name: ['', Validators.required],
-        contractName: ['', Validators.required],
-        classificationName: ['', Validators.required],
-        fromDate: ['', Validators.required],
-        toDate: ['', Validators.required],
-        remarks: [''], // You can add validators if needed
-        attachment: [''], // You can add validators if needed
-        billerName: ['', Validators.required]
+      company_Name: ['', Validators.required],
+      contractName: [null, Validators.required],
+      classificationName: [null, Validators.required],
+      fromDate: ['', Validators.required],
+      toDate: ['', Validators.required],
+      remarks: [''], // You can add validators if needed
+      attachment: [''], // You can add validators if needed
+      billerName: [null, Validators.required]
     });
   }
   edit_createAddress(): FormGroup {
@@ -286,7 +286,12 @@ export class ContractComponent implements OnInit {
   }
 
   addContractOpen() {
-    this.addressForm.reset()
+    this.addressForm.reset();
+    const addressesArray = this.addressForm.get('addresses') as FormArray;
+    addressesArray.clear(); // removes all form groups
+
+    // Optionally add a fresh one createAddress(
+    addressesArray.push(this.createAddress());
   }
 
 
@@ -386,7 +391,7 @@ export class ContractComponent implements OnInit {
     }
     return false; // Return false if no company_Name is null
   }
- 
+
   contractSave0riginal() {
     this.spinner.show();
     var data = new FormData();
@@ -553,8 +558,8 @@ export class ContractComponent implements OnInit {
 
     $.ajax({
       type: 'POST',
-     // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
-      url: this.serverService.urlFinal +'customer_contract/customer_contract_save',
+      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      url: this.serverService.urlFinal + 'customer_contract/customer_contract_save',
 
       cache: false,
       contentType: false,
@@ -564,8 +569,9 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
         if (result.status === true) {
           this.edit_array = [];
-        
+
           this.contractList({});
+
           $("#addCustomerContractId").modal("hide");
           Swal.fire({
             icon: 'success',
@@ -573,15 +579,15 @@ export class ContractComponent implements OnInit {
             showConfirmButton: false,
             timer: 1200,
           });
-        }else if(result.status === false){
+        } else if (result.status === false) {
           this.spinner.hide();
-            iziToast.error({
+          iziToast.error({
             title: 'Error,Check Missing Field Values',
             message: 'Contract not Saved !',
-            position:'topRight',
+            position: 'topRight',
           });
         }
-       
+
       },
       error: (err: any) => {
         this.spinner.hide();
@@ -638,7 +644,7 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
 
         const formArray = new FormArray([]);
-        if( response.edit_contract_details){
+        if (response.edit_contract_details) {
           for (let index = 0; index < response.edit_contract_details.length; index++) {
             this.CustomerIDUpdate = response.edit_contract_details[index].customer_id,
               formArray.push(this.fb.group({
@@ -656,7 +662,7 @@ export class ContractComponent implements OnInit {
           }
 
         }
-       
+
 
         console.log(formArray);
 
@@ -670,14 +676,14 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  contractUpdate(index:any) {
+  contractUpdate(index: any) {
     this.spinner.show();
-    
+
     console.log(this.editContractGroupForm.value)
-    console.log("e_company_Name",this.editContractGroupForm.value.edit_addresses[index].e_company_Name)
-    console.log("e_contractName",this.editContractGroupForm.value.edit_addresses[index].e_contractName)
+    console.log("e_company_Name", this.editContractGroupForm.value.edit_addresses[index].e_company_Name)
+    console.log("e_contractName", this.editContractGroupForm.value.edit_addresses[index].e_contractName)
     // console.log("group select id",this.edit_array)
-  
+
     let api_req: any = new Object();
     let update_req: any = new Object();
     api_req.moduleType = "customer_contract";
@@ -689,7 +695,7 @@ export class ContractComponent implements OnInit {
     update_req.user_id = localStorage.getItem('erp_c4c_user_id');
     // update_req.e_company_Name=this.customerIDJoin;
 
-    
+
     const hasNullCompanyNames_e = this.editContractGroupForm.value.edit_addresses[index].e_company_Name
     if (this.editContractGroupForm.value.edit_addresses[index].e_company_Name == null || this.editContractGroupForm.value.edit_addresses[index].e_company_Name == '') {
       this.spinner.hide();
@@ -700,7 +706,7 @@ export class ContractComponent implements OnInit {
       return false;
     }
     const hasNullContractName_e = this.editContractGroupForm.value.edit_addresses[index].e_contractName;
-    if (hasNullContractName_e===null || hasNullContractName_e=='' ) {
+    if (hasNullContractName_e === null || hasNullContractName_e == '') {
       this.spinner.hide();
       iziToast.error({
         title: 'Contract Name Null',
@@ -708,9 +714,9 @@ export class ContractComponent implements OnInit {
       });
       return false;
     }
-    
+
     const hasNullClassification_e = this.editContractGroupForm.value.edit_addresses[index].e_classificationName;
-    if (hasNullClassification_e===null || hasNullClassification_e=='') {
+    if (hasNullClassification_e === null || hasNullClassification_e == '') {
       this.spinner.hide();
       iziToast.error({
         title: 'Classification Null',
@@ -718,9 +724,9 @@ export class ContractComponent implements OnInit {
       });
       return false;
     }
-    
+
     const hasNullfromDate_e = this.editContractGroupForm.value.edit_addresses[index].e_fromDate;
-    if (hasNullfromDate_e===null || hasNullfromDate_e=='') {
+    if (hasNullfromDate_e === null || hasNullfromDate_e == '') {
       this.spinner.hide();
       iziToast.error({
         title: 'From Date Null',
@@ -728,9 +734,9 @@ export class ContractComponent implements OnInit {
       });
       return false;
     }
-    
+
     const hasNullToDate_e = this.editContractGroupForm.value.edit_addresses[index].e_toDate;
-    if (hasNullToDate_e===null || hasNullToDate_e=='') {
+    if (hasNullToDate_e === null || hasNullToDate_e == '') {
       this.spinner.hide();
       iziToast.error({
         title: 'To Date Null',
@@ -738,8 +744,8 @@ export class ContractComponent implements OnInit {
       });
       return false;
     }
-    
-    
+
+
     update_req.values = this.editContractGroupForm.value.edit_addresses;
     api_req.element_data = update_req;
 
@@ -777,7 +783,7 @@ export class ContractComponent implements OnInit {
     this.spinner.show();
     $("#editCustomerContractId").modal("hide");
     console.log(this.editContractGroupForm.value)
-  
+
     let api_req: any = new Object();
     let update_req: any = new Object();
     api_req.moduleType = "customer_contract";
@@ -956,7 +962,7 @@ export class ContractComponent implements OnInit {
           this.serverService.sendServer(api_req).subscribe((response: any) => {
 
             if (response.status == true) {
-              this.edit_array=[];
+              this.edit_array = [];
               this.spinner.hide();
               iziToast.success({
                 message: "Contract attachment deleted successfully",
@@ -1092,7 +1098,7 @@ export class ContractComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-     // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
+      // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
       url: this.serverService.urlFinal + 'customer_contract/customer_contract_attachment_file_save',
       cache: false,
       contentType: false,
@@ -1383,7 +1389,7 @@ export class ContractComponent implements OnInit {
     updateCR_req.user_id = localStorage.getItem('erp_c4c_user_id');
     //updateCR_req.comments = this.contractRemarkForm.value.remark_desc;
     var test = $('#remark_desc').val();
-   
+
     if (test == null || test == '' || test == undefined || test == 'undefined') {
       console.log("test", test)
       iziToast.error({
@@ -1416,9 +1422,9 @@ export class ContractComponent implements OnInit {
   }
 
   searchCustomerData(data: any) {
-    if(data.length>4){
+    if (data.length > 4) {
       this.spinner.show();
- 
+
     }
     console.log("search data", data)
 
@@ -2007,14 +2013,14 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
         $('#searchContractId').modal('hide');
         this.result = response.customer_contract_details;
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         this.edit_array = [];
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
       } else {
         this.spinner.hide();
         this.result = [];
-        this.response_total_cnt=0;
+        this.response_total_cnt = 0;
         $('#searchContractId').modal('hide');
       }
     }),

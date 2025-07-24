@@ -1,0 +1,654 @@
+.userDatatable table td {
+  padding: 4px 0px 4px !important;
+}
+
+.userDatatable table tr td span {
+  display: block;
+  white-space: nowrap;
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+.userDatatable__imgWrapper.d-flex.align-items-center {
+  justify-content: center;
+}
+
+.userDatatable .d-flex {
+  justify-content: center;
+  margin-right: 0;
+}
+
+.userDatatable tbody .custom-checkbox input[type="checkbox"]+label {
+  margin-right: 0px !important;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown__list {
+  z-index: 2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  border: 1px solid;
+  text-align: center;
+}
+
+.dropdown__item {
+  list-style-type: none;
+}
+
+.dropdown__link {
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
+}
+
+.dropdown__link:hover {
+  opacity: 0.9;
+}
+
+.dropdown:hover .button {
+  opacity: 0.9;
+}
+
+/* changes made by aashiq starts */
+.dropdown:hover .dropdown__list {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
+}
+
+.view:hover {
+
+  background: rgba(255, 77, 79, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.remove:hover {
+
+  background: rgba(118, 177, 103, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.close:hover {
+
+  background: rgba(195, 101, 233, 0.1);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.dropdown a {
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
+}
+
+/* changes made by aashiq ends */
+
+
+.button {
+  padding: 0.6em 1.5em;
+
+}
+
+.btn1 {
+  background-color: #007cbc;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.btn1:hover {
+  background-color: rgb(221, 109, 152);
+}
+
+.dropdown__item .hide {
+  display: none;
+}
+
+.dropdown__item:hover .hide {
+  display: block;
+}
+
+.dropdown__item:hover .show {
+  display: none;
+}
+
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+i.fa.fa-bars {
+  color: #fff !important;
+}
+
+tr:nth-child(even) {
+  background: rgb(241, 238, 241)
+}
+
+tr:nth-child(odd) {
+  background: #FFF
+}
+
+
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  background: transparent;
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input:focus {
+  outline: none;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.form-control {
+  border: 1px solid #e1e1e1;
+  background: transparent;
+}
+
+.form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+
+label {
+  font-weight: 500;
+  color: #051b5a !important;
+}
+
+input.form-control {
+  padding: 4px 8px !important;
+}
+
+select {
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+
+/* td .PIlistlabel{
+  padding-left: 15px!important;
+ 
+} */
+
+
+
+.hover1:hover {
+
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover2:hover {
+
+  background: rgba(118, 177, 103, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover3:hover {
+
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover4:hover {
+
+  background: rgba(118, 177, 103, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover5:hover {
+
+  background: rgba(12, 1, 39, 0.973);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover6:hover {
+
+  background: rgba(228, 231, 14, 0.973);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover7:hover {
+
+  background: rgb(34, 46, 32);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hover8:hover {
+
+  background: rgba(23, 198, 241, 0.973);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+
+.emailLabel {
+  color: rgba(0, 0, 0, 0.589) !important;
+  font-weight: 400 !important;
+}
+
+#processPaymentFormId .modal-dialog {
+  max-width: 60% !important;
+}
+
+#processPaymentFormId label {
+  color: rgb(27, 1, 121) !important;
+  font-weight: 500 !important;
+}
+
+
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f3ecf2 !important;
+  opacity: 0.6;
+  color: black !important;
+}
+
+#searchDeliveryOrderFormId .modal-dialog {
+  max-width: 60%;
+}
+
+#searchPIFormId .modal-dialog {
+  max-width: 95%;
+}
+
+#DO_emailFormId .modal-dialog {
+  max-width: 65%;
+}
+
+#DO_emailFormId label {
+  font-weight: 500;
+}
+
+.card.quotation .card-header {
+  display: flex;
+}
+
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#quotationSharedPersonId .modal-dialog {
+  max-width: 50%;
+}
+
+.quotationsharedCSS {
+  height: 300px;
+
+  overflow-y: scroll;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.email-cc-template {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* #emailFormId span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label {
+  text-align: right;
+}
+
+
+#delivery-order-section .userDatatable table td
+{
+  padding: 4px 4px 4px !important;
+  white-space: normal;
+  width: 25%;
+}
+#delivery-order-section .userDatatable table th {
+  padding: 10px
+}
+#delivery-order-section .userDatatable table td:nth-child(5),
+#delivery-order-section .userDatatable table th:nth-child(5),
+#delivery-order-section .userDatatable table td:last-child,
+#delivery-order-section .userDatatable table th:last-child {
+  width: 12%;
+}
+
+#delivery-order-section .userDatatable table td:nth-child(2),
+#delivery-order-section .userDatatable table th:nth-child(2),
+#delivery-order-section .userDatatable table td:first-child,
+#delivery-order-section .userDatatable table th:first-child {
+  width: 16%;
+}
+
+
+
+
+/*  i have deleted .ng-autocomplete 
+::ng-deep .autocomplete-container */
+
+
+/* .ng-autocomplete ::ng-deep{
+  padding: 0px;
+} */
+
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
+
+  text-align: left;
+  display: block;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0.375rem 1.2rem;
+  padding-left: 4px !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #f9f9fa;;
+  background-clip: padding-box;
+  /* border: 1px solid #f1f2f6; */
+  border: 1px solid #beeaca;
+  border-radius: 5px;
+  box-shadow: 0 0;
+  color: #495057;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
+
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input:focus {
+  border: 1px solid #3d0096;
+  /* border: 1px solid #009688; */
+  box-shadow: 1px 1px 10px #ededed
+}
+
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
+  color: #495057;
+
+}
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container {
+  border-width: 0px;
+}
+
+ng-autocomplete .ng-autocomplete.ng-pristine.ng-valid.ng-touched,
+.ng-autocomplete {
+  padding: 0 !important;
+}
+
+
+
+.buttonClass {
+  border: none
+}
+
+.userDatatable table td {
+  padding: 10px 4px;
+}
+
+.userDatatable table td:first-child {
+  text-align: center;
+}
+
+.userDatatable table td:first-child button.buttonClass {
+  border-radius: 25px;
+  padding: 2px 10px;
+}
+
+.border-section td {
+  height: 1px;
+  border-bottom: 2px solid #00C;
+  padding: 0px 0px !important;
+}
+
+.userDatatable-header th {
+  background: #6d5dfc;
+}
+
+.userDatatable-header th span {
+  color: #e4ebf5;
+}
+
+td {
+  border-bottom: 1px solid #ee96c2 !important;
+}
+
+.userDatatable .buttonClass {
+  border: 1px solid #ddd;
+  border-radius: 5px !important;
+}
+
+
+
+/* modal pop up */
+.modal-content label{
+  color: #5f63f2;
+  font-weight: 600;
+}
+#popup1 .modal-dialog,
+#popedit .modal-dialog {
+    max-width: 90% !important;
+
+}
+
+
+#popup1 .btn-primary,
+#popedit .btn-primary {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+
+#popup1 .modal-content,
+#popedit .modal-content {
+  background: #e4ebf5;
+
+}
+
+#popup1 .modal-content label,
+#popedit .modal-content label {
+  color: #5f63f2!important;
+  padding: 10px;
+}
+
+
+#popup1 .modal-content .form-control,
+#popedit .modal-content .form-control {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+}
+
+#popup1 .modal-content .form-control:focus,
+#popedit .modal-content .form-control:focus {
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+}
+
+/* #addDoFormId .modal-content button.close,
+#editDoFormId .modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #9baacf;
+  transition: all 0.5s ease;
+} */
+
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 0px!important;
+}
+
+
+.userDatatable  table  tbody tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  tbody  td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr th{
+  border:1px solid #aeb3b6;
+}
+/* .userDatatable  table  thead tr th span{
+  border:1px solid #aeb3b6;
+} */
+td {
+  border-bottom: 1px solid #c5d9e0 !important;
+}
+th {
+  border-bottom: 1px solid #c5d9e0 !important;
+}
+
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
+  border: 1px solid #033555 !important;
+  
+}
+
+.modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+
+
+  .pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+  .pagination-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pagination-btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-btn:not([disabled]):hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pagination-info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .arrow {
+    font-size: 20px;
+  }
+  
+
+  .input-error {
+    border: 2px solid red !important;
+    border-radius: 4px;
+  }
+
+

@@ -494,7 +494,7 @@
                                                                 class="form-control" aria-label="Default select example"
                                                                 formControlName="contractName" required >
 
-                                                                <option value="0">Select Contract</option>
+                                                                <option value=null>Select Contract</option>
 
                                                                 <option *ngFor="let display of contractDetails"
                                                                     value="{{display.contract_id}}">
@@ -516,7 +516,7 @@
                                                             <select name="classificationID" id="classificationID"
                                                                 class="form-control" aria-label="Default select example"
                                                                 formControlName="classificationName" required >
-                                                                <option value="0">Select Contract</option>
+                                                                <option value=null>Select Classification</option>
 
                                                                 <option *ngFor="let classif of contractClassification"
                                                                     value="{{classif.contract_classification_id}}">
@@ -554,8 +554,10 @@
                                                     </th>
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            <input type="text" class="form-control"
-                                                                formControlName="remarks" />
+                                                            <!-- <input type="text" class="form-control"
+                                                                formControlName="remarks" /> -->
+                                                                <textarea class="form-control"
+                                                                formControlName="remarks"></textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -587,7 +589,7 @@
                                                             <select name="billerID" id="billerID" class="form-control"
                                                                 aria-label="Default select example"
                                                                 formControlName="billerName">
-                                                                <option value="0">Select Biller</option>
+                                                                <option value=null>Select Biller</option>
 
                                                                 <option *ngFor="let e_billname of billDetails"
                                                                     value="{{e_billname.billerId}}">
@@ -791,10 +793,12 @@
                                                     </th>
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            <input type="text" class="form-control"
-                                                                formControlName="e_remarks" />
+                                                            <!-- <input type="text" class="form-control"
+                                                                formControlName="e_remarks" /> -->
                                                                 <input type="hidden" class="form-control"
                                                                 formControlName="e_customer_contract_id" />
+                                                                  <textarea class="form-control"
+                                                                formControlName="e_remarks"></textarea>
                                                         </div>
                                                     </td>
                                                     

@@ -22,7 +22,7 @@
             </button>
           </div>
         </div>
-        <div >
+        <div>
           <div class="userDatatable global-shadow border-0 bg-white w-100" *ngIf="this.vsprovision_list!=null">
             <div class="table-responsive ">
               <table class="table mb-0 table-borderless">
@@ -74,7 +74,7 @@
                 <tbody *ngFor="let list of vsprovision_list; let i = index">
 
                   <tr>
-                    <td colspan="10" style="background-color: black;color:azure;text-align: left;">
+                    <td colspan="10" style="background-color: #607d8b;color:#faf39d;font-weight: 500;text-align: left;">
                       <span>{{list.customerName}}</span>
                     </td>
                     <td colspan="2" style="background-color: rgb(238, 228, 228);color:azure;">
@@ -221,7 +221,7 @@
               </table>
             </div>
           </div>
-          <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
+          <table border="0" cellspacing="0" cellpadding="0" style="width:100%" *ngIf="vsView==true">
             <tbody>
               <tr *ngIf="this.vsprovision_list==null || this.vsprovision_list=='null'">
 
@@ -242,6 +242,55 @@
 
         </div>
       </div>
+    </div>
+  </div>
+
+</div>
+<div class="contents-section" *ngIf="this.googleAuthentication_status==false">
+  <div class="modal-content addcustomernewallcss">
+
+    <div class="modal-header">
+      <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #262127, #54b7aa);">
+        Google Authenticator </h2>
+     
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="GoogleAuthenticationForm">
+        <div class="row">
+          <div class="col-lg-4">
+
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>
+                  Google Authentication Code
+                </label>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" formControlName="google_AuthenticationCode"
+                  (keyup.enter)="GoogleAuthenticationValidation()" />
+              </div>
+
+            </div>
+
+          </div>
+           <div class="col-lg-4">
+            
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div style="margin-left:700px;margin-bottom:360px">
+
+      <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+        Validate
+      </button>
+    
     </div>
   </div>
 

@@ -1237,6 +1237,9 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   getInvoice1(data: any) {
+     $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+  
     // console.log("getinvoice1")
 
     // console.log("billerid", this.edit_array_SearchBiller_Checkbox);
@@ -1286,6 +1289,9 @@ export class DupInvoiceComponent implements OnInit {
         //   position: 'topRight'
         // });
         $("#invsearchInvoiceFormIdDI").modal("hide");
+         $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+  
 
       }
       if (response) {
@@ -1406,6 +1412,9 @@ export class DupInvoiceComponent implements OnInit {
 
 
         $("#invsearchInvoiceFormIdDI").modal("hide");
+         $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+  
       }
       else {
         Swal.fire({
@@ -1418,10 +1427,17 @@ export class DupInvoiceComponent implements OnInit {
       }
     });
   }
-  convertTupleToArray(y: string): string[] {
-    // Split the string by comma and filter out empty strings
-    return y.split(',').filter(element => element.trim() !== '');
+  // convertTupleToArray(y: string): string[] {
+   
+  //   return y.split(',').filter(element => element.trim() !== '');
+  // }
+  convertTupleToArray(y: string | undefined | null): string[] {
+  if (!y) {
+    return [];
   }
+
+  return y.split(',').filter(element => element.trim() !== '');
+}
   isArray(variable: any): boolean {
     return Array.isArray(variable);
   }
@@ -1565,6 +1581,9 @@ export class DupInvoiceComponent implements OnInit {
         //   position: 'topRight'
         // });
         $("#invsearchInvoiceFormIdDI").modal("hide");
+         $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+  
 
       }
       if (response) {
@@ -1659,6 +1678,9 @@ export class DupInvoiceComponent implements OnInit {
         //   'years':response.selected_filtervalues[0].year_filter,
         // });
         $("#invsearchInvoiceFormIdDI").modal("hide");
+         $('.modal-backdrop').remove();
+    $("body").removeClass("modal-open");
+  
       }
       else {
         Swal.fire({
@@ -1768,6 +1790,9 @@ export class DupInvoiceComponent implements OnInit {
   }
   clearSearch() {
     $("#invsearchInvoiceFormIdDI").modal("show");
+  }
+   clearSearch1() {
+    $("#invsearchInvoiceFormIdDI").modal("hide");
   }
   suspendInvoiceGo() {
     $('#invsuspendInvoiceFormIdDI').modal('show');

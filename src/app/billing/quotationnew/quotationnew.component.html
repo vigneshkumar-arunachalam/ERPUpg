@@ -9,7 +9,7 @@
                         <span class="breadcrumb-item active">Quotation</span>
                     </h3>
                     <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
-                    <div class="quotation-btn-section">
+                    <div class="quotation-btn-section" *ngIf="this.globalSearchStatus===false">
                         <button type="button" *ngIf="(this.quotationPermission_Add=='1')" title="Add New Quotation"
                             class="btn btn-primary btn-default btn-squared" data-toggle="modal"
                             (click)="addQuotationNew()" style="margin-right: 10px;">
@@ -210,7 +210,7 @@
                                                                     <span class="col-12 modal-title text-center"
                                                                         style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
                                                                     </span>
-                                                                    <h6 type="button" class="" data-dismiss="modal"
+                                                                    <h6 type="button" class=""  (click)="clearFullView(i)"
                                                                         aria-label="Close">
                                                                         <span aria-hidden="true"
                                                                             style="    font-size: 30px; position: absolute;          top: 23px;">&times;</span>
@@ -486,7 +486,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-dark"
-                                                                        style="line-height: 10px;" data-dismiss="modal">
+                                                                        style="line-height: 10px;" (click)="clearFullView(i)">
                                                                         Cancel
                                                                     </button>
 
@@ -573,7 +573,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Enquiry From Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearAddQuot()" aria-label="Close">
                     <span aria-hidden="true" (click)="clearAddQuotationGo()">&times;</span>
                 </button>
             </div>
@@ -682,7 +682,7 @@
                     (click)="AddQuotationGo($event)">Go>></button>
 
 
-                <button type="button" class="btn btn-dark" (click)="clearAddQuotationGo()" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearAddQuotationGo();clearAddQuot()">
                     Cancel
                 </button>
 
@@ -705,7 +705,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Edit Enquiry From Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearEditQuot()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -794,7 +794,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="EditQuotationGo()">Go>></button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearEditQuot()">
                     Cancel
                 </button>
 
@@ -815,7 +815,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Duplicate Enquiry From Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearDupQuot()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -904,7 +904,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="DuplicateQuotationGo()">Go>></button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearDupQuot()">
                     Cancel
                 </button>
 
@@ -928,7 +928,7 @@
                     background: linear-gradient(to right, #262127, #54b7aa);">
                    Advanced Search</h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearSearchQuot()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -990,7 +990,7 @@
                 <button type="button" class="btn btn-primary" (click)="getSearch1();quotationList({});">
                     Search
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearSearchQuot()">
                     Close
                 </button>
             </div>
@@ -1010,7 +1010,7 @@
               background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
               background: linear-gradient(to right, #262127, #54b7aa);">
                   Quotation Shared Person </h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+                <button type="button" class="close" (click)="clearquotSharedPer()" aria-label="Close" title="close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -1052,7 +1052,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationSharedPersonUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearquotSharedPer()">
                     Close
                 </button>
             </div>
@@ -1075,7 +1075,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Quotation Approval</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearquotAppr()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1187,7 +1187,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-dark" (click)="quotationApprovalClear()" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="quotationApprovalClear();clearquotAppr()" >
                     Cancel
                 </button>
             </div>
@@ -1209,7 +1209,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Template Name Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearTempName()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1232,7 +1232,7 @@
                 <button type="button" class="btn btn-primary" (click)="templateNameUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearTempName()">
                     Close
                 </button>
             </div>
@@ -1253,7 +1253,7 @@
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Actual Price Update  </h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearActCost()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1445,7 +1445,7 @@
                 <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearActCost()">
                     Close
                 </button>
             </div>
@@ -1466,7 +1466,7 @@
                     background: linear-gradient(to right, #262127, #54b7aa);">
                    File Attachment  </h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearFileAtt()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1523,7 +1523,7 @@
                 <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="fileAttachmentClear()">
+                <button type="button" class="btn btn-dark"  (click)="fileAttachmentClear();clearFileAtt()">
                     Close
                 </button>
 
@@ -1546,7 +1546,7 @@
                 background: linear-gradient(to right, #262127, #54b7aa);">
                Quotation-Email  </h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearTextEdit()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1698,7 +1698,7 @@
                     Mail
 
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationEmailClear()">
+                <button type="button" class="btn btn-dark"  (click)="quotationEmailClear();clearTextEdit()">
                     Close
                 </button>
 
@@ -1721,7 +1721,7 @@
                     background: linear-gradient(to right, #262127, #54b7aa);">
                     Comments Entry  </h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="quotationCommentsClear()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1747,7 +1747,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationCommentsSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationCommentsClear()">
+                <button type="button" class="btn btn-dark"  (click)="quotationCommentsClear()">
                     Close
                 </button>
 
@@ -1770,7 +1770,7 @@
                     background: linear-gradient(to right, #262127, #54b7aa);">
                     PI Convertion </h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearPI()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1796,7 +1796,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationConvertPI($event)">
                     Update
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearPI()">
                     Close
                 </button>
             </div>
@@ -1818,7 +1818,7 @@
                 background: linear-gradient(to right, #262127, #54b7aa);">
                 PDF</h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearpdf()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1827,7 +1827,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearpdf()">
                     Cancel
                 </button>
 

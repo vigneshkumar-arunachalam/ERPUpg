@@ -2327,4 +2327,10 @@ export class AddquotaionnewsdnComponent implements OnInit {
     this.calculate_grosstotal_new();
 
   }
+   clearGrossDiscount(){
+      $('#discountFormFinal').modal('hide');
+  }
+   clearDiscount(){
+      $('#discountFormId').modal('hide');
+  }
 }

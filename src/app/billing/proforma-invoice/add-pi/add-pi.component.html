@@ -921,7 +921,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearsaveDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -963,7 +963,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearsaveDiscount()">
                     Close
                 </button>
 
@@ -980,7 +980,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" (click)="clearsaveGrossDiscount()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1022,7 +1022,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" (click)="clearsaveGrossDiscount()">
                     Cancel
                 </button>
 

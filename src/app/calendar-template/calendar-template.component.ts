@@ -82,6 +82,18 @@ export class CalendarTemplateComponent implements OnInit {
   taskForm: FormGroup;
   edit_taskForm: FormGroup;
   edit_temp_id: any;
+  getColorCode: any;
+  //email-checkbox
+  email_array_emailCC_Checkbox: any = [];
+  groupSelect_emailCCId: any;
+  email_checkbox_value: any;
+  checkbox_value: any;
+  edit_array_emailCC_Checkbox: any = [];
+  //email-checkbox-edit
+  groupSelect_emailCCIdEdit: any;
+  edit_array_emailCC_CheckboxEdit: any = [];
+  searchForm: FormGroup;
+
 
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService, private http: HttpClient) {
@@ -91,6 +103,10 @@ export class CalendarTemplateComponent implements OnInit {
   // filteredData: TableData[] = [...this.data]; // Initialize with original data
 
   ngOnInit(): void {
+    this.searchForm = new FormGroup({
+      'calendarTempSearch': new FormControl(null)
+
+    });
 
     this.taskForm = this.fb.group({
       tasks: this.fb.array([this.createTask()])
@@ -98,7 +114,7 @@ export class CalendarTemplateComponent implements OnInit {
     this.edit_taskForm = this.fb.group({
       edit_tasks: this.fb.array([]) // Initialize edit_tasks as an empty FormArray
     });
-
+    const today = new Date().toISOString().substring(0, 10); // 'YYYY-MM-DD'
     this.calendarForm = this.fb.group({
       calendarName: ['', Validators.required],
       billerId: [''],
@@ -106,9 +122,10 @@ export class CalendarTemplateComponent implements OnInit {
       starting_from: [''],
       supervisor_name: [''],
       short_name: [''],
-      entry_date: [''],
+      entry_date: [today, Validators.required],
+
       color_code: [''],
-      recurring_value: [''],
+      recurring_value: [null],
       onetime_value: [''],
       calendar_hours_tasks: this.fb.array([this.createTaskEntry()]), // Initialize with one task
     });
@@ -133,11 +150,26 @@ export class CalendarTemplateComponent implements OnInit {
     this.taskentrytype('Recurring');
   }
   // Create a task entry
+
   createTaskEntry(): FormGroup {
+    const now = new Date();
+    const formattedNow = this.formatDateTimeLocal(now);
     return this.fb.group({
-      task_date_time: [''], // Store datetime-local input value
+      task_date_time: [formattedNow], // Store datetime-local input value
     });
   }
+  formatDateTimeLocal(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
   editTaskEntry(): FormGroup {
     return this.fb.group({
       task_date_time: [''], // Store datetime-local input value
@@ -446,6 +478,11 @@ export class CalendarTemplateComponent implements OnInit {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }
+  getColor(color_code: any) {
+    this.getColorCode = color_code;
+    console.log("this.getColorCode", this.getColorCode);
+
+  }
 
 
   edit_calender(data: any) {
@@ -468,13 +505,14 @@ export class CalendarTemplateComponent implements OnInit {
       if (response.status == true) {
         const calendarData = response.data[0];
         console.log(calendarData.child_data);
+        this.edit_array_emailCC_CheckboxEdit = [...calendarData.assign_users_super];
         // Setting values to the form
         this.calendarForm_edit.patchValue({
           edit_calendarName: calendarData.calendar_template_name,
           edit_billerId: calendarData.billerId,
           edit_reportToEmail: calendarData.report_to_email,
           edit_starting_from: calendarData.starting_from_days,
-          edit_supervisor_name: calendarData.assign_users_super, // Convert array to comma-separated string
+
           edit_short_name: calendarData.calendar_short_name,
           edit_entry_date: calendarData.calendar_entry_date,
           edit_color_code: calendarData.label_color_code,
@@ -626,6 +664,50 @@ export class CalendarTemplateComponent implements OnInit {
       };
 
   }
+  calenderlist1(data: any) {
+
+    const searchText = typeof event === 'string' ? data : data.search_text || '';
+    // Handle filtering or processing here
+    console.log('Search Text:', searchText);
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let get_req: any = new Object();
+    api_req.moduleType = "calendar_template";
+    api_req.api_url = "calendar_template/getCalendarTaskList"
+    api_req.api_type = "web";
+
+
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    get_req.action = "getCalendarTaskList";
+    get_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    get_req.search_txt = list_data.search_text;
+    get_req.off_set = list_data.offset;
+    get_req.limit_val = list_data.limit;
+    api_req.element_data = get_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.spinner.hide();
+        this.calender_list = response.data;
+        this.response_total_cnt = response.totalCount;
+        this.off_set = response.off_set;
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.totalCount, 'page_limit': this.pageLimit });
+
+      } else {
+        this.spinner.hide();
+        this.calender_list = [];
+        this.response_total_cnt = 0;
+        $('#searchContractId').modal('hide');
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log(error);
+      };
+
+  }
 
   customerlist(data: any) {
     let api_req: any = new Object();
@@ -731,7 +813,8 @@ export class CalendarTemplateComponent implements OnInit {
         task_date: '',
         task_time: '',
       };
-    })
+    });
+    console.log("task_hours_value-on submit", task_hours_value)
     this.spinner.show();
     this.formarray_values = "";
     // $('#addProductCategoryFormId').modal('show');
@@ -743,22 +826,126 @@ export class CalendarTemplateComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_postUPd.action = "insertCalendarTask";
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.calendar_template_name = formdata.calendarName;
+
+    var CalendarName = formdata.calendarName;
+    if (CalendarName === null || CalendarName === '' || CalendarName === 'undefined' || CalendarName === undefined) {
+
+      iziToast.warning({
+        message: "Choose Calendar Name",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.calendar_template_name = formdata.calendarName;
+    }
     api_postUPd.calendar_short_name = formdata.short_name;
-    api_postUPd.billerId = formdata.billerId;
-    api_postUPd.colorCodes = formdata.color_code;
+    var billerId = formdata.billerId;
+    if (billerId === null || billerId === '' || billerId === 'undefined' || billerId === undefined) {
+
+      iziToast.warning({
+        message: "Choose Biller Name",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.billerId = formdata.billerId;
+    }
+
+    var colorCode = formdata.color_code;
+    if (colorCode === null || colorCode === '' || colorCode === 'undefined' || colorCode === undefined) {
+
+      iziToast.warning({
+        message: "Choose Color Code",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.colorCodes = formdata.color_code;
+    }
+
+
+
     if ($('#Public').prop('checked')) {
       api_postUPd.calendar_type = '1';
     } else if ($('#Personal').prop('checked')) {
       api_postUPd.calendar_type = '2';
+    } else {
+      iziToast.warning({
+        message: "Choose Calendar Type",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
     }
-    api_postUPd.report_to_email = formdata.reportToEmail;
-    api_postUPd.calendar_template_entry_date = formdata.entry_date;
-    api_postUPd.starting_from_days = formdata.starting_from;
+
+
+    var reportEmail = formdata.reportToEmail;
+    if (reportEmail === null || reportEmail === '' || reportEmail === 'undefined' || reportEmail === undefined) {
+
+      iziToast.warning({
+        message: "Enter Report to Email",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.report_to_email = formdata.reportToEmail;
+    }
+    var entryDate = formdata.entry_date;
+    if (entryDate === null || entryDate === '' || entryDate === 'undefined' || entryDate === undefined) {
+
+      iziToast.warning({
+        message: "Enter Entry Date",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.calendar_template_entry_date = formdata.entry_date;
+    }
+
+    var startFrom = formdata.starting_from;
+    if (startFrom === null || startFrom === '' || startFrom === 'undefined' || startFrom === undefined) {
+
+      iziToast.warning({
+        message: "Choose Starting From",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.starting_from_days = formdata.starting_from;
+    }
+
 
     if ($('#recurring').prop('checked')) {
       api_postUPd.calendar_entry_type = '1';
-      api_postUPd.calendar_duration = formdata.recurring_value;
+
+
+      var RecurrValue = formdata.recurring_value;
+      if (RecurrValue === null || RecurrValue === '' || RecurrValue === 'undefined' || RecurrValue === undefined) {
+
+        iziToast.warning({
+          message: "Choose Recurring Value",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+
+      } else {
+        api_postUPd.calendar_duration = formdata.recurring_value;
+      }
+
       api_postUPd.onetime_date = '';
       api_postUPd.calendar_hours_tasks = [
         {
@@ -768,9 +955,23 @@ export class CalendarTemplateComponent implements OnInit {
         },
       ];
     } else if ($('#oneTime').prop('checked')) {
+      alert("one time")
       api_postUPd.calendar_entry_type = '2';
       api_postUPd.calendar_duration = '';
-      api_postUPd.onetime_date = formattedDate;
+      var formattedDate1 = formdata.task_date_time;
+      if (!formattedDate1 || formattedDate1.trim() === '') {
+
+        iziToast.warning({
+          message: "Choose One Time Value",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+
+      } else {
+        api_postUPd.onetime_date = formattedDate;
+      }
+
       api_postUPd.calendar_hours_tasks = [
         {
           task_date_time: '',
@@ -782,7 +983,21 @@ export class CalendarTemplateComponent implements OnInit {
       api_postUPd.calendar_entry_type = '3';
       api_postUPd.calendar_duration = '';
       api_postUPd.onetime_date = '';
-      api_postUPd.calendar_hours_tasks = task_hours_value;
+
+
+      if (task_hours_value === null || task_hours_value === '' || task_hours_value === 'undefined' || task_hours_value === undefined) {
+
+        iziToast.warning({
+          message: "Choose Hour Value",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+
+      } else {
+        api_postUPd.calendar_hours_tasks = task_hours_value;
+      }
+
     }
     if ($('#alart_stat').prop('checked')) {
       api_postUPd.alart_stat = '1';
@@ -790,8 +1005,49 @@ export class CalendarTemplateComponent implements OnInit {
       api_postUPd.alart_stat = '0';
     }
 
-    api_postUPd.supervisor_user_id = formdata.supervisor_name;
-    api_postUPd.calendar_template_children = formarrayvalue.tasks;
+    if (!this.edit_array_emailCC_Checkbox || this.edit_array_emailCC_Checkbox.length === 0) {
+
+      iziToast.warning({
+        message: "Select Supervisor",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.supervisor_user_id = this.edit_array_emailCC_Checkbox;
+    }
+
+    if (formarrayvalue.tasks.length == 0) {
+
+      iziToast.warning({
+        message: "Enter Atleat 1 Task",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    }
+    const taskArray = this.taskForm.get('tasks') as FormArray;
+    const firstTaskGroup = taskArray.at(0) as FormGroup;
+    const firstTaskValue = formarrayvalue.tasks[0];
+    if (
+      !firstTaskValue.customer_id ||
+      !firstTaskValue.work_name ||
+
+      !firstTaskValue.assign_user_id || firstTaskValue.assign_user_id.length === 0 ||
+      !firstTaskValue.assign_template_id
+    ) {
+      iziToast.warning({
+        message: "All fields in the first task are mandatory",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.calendar_template_children = formarrayvalue.tasks;
+    }
+
 
     api_req.element_data = api_postUPd;
     console.log("api_req", api_req);
@@ -799,14 +1055,21 @@ export class CalendarTemplateComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
-
+        $('#addmore').modal('hide');
+        this.calendarForm.reset();
+        this.taskForm.reset();
         this.spinner.hide();
         this.calenderlist({});
-      } else {
-        iziToast.warning({
-          message: "View List Loading Failed. Please try again",
+        iziToast.success({
+          message: "Saved Successfully",
           position: 'topRight'
         });
+      } else {
+        iziToast.error({
+          message: "Failed. Please try again",
+          position: 'topRight'
+        });
+        $('#addmore').modal('hide');
 
       }
     }),
@@ -842,7 +1105,8 @@ export class CalendarTemplateComponent implements OnInit {
         task_date: '',
         task_time: '',
       };
-    })
+    });
+    console.log("task_hours_value", task_hours_value)
     this.spinner.show();
     this.formarray_values = "";
     // $('#addProductCategoryFormId').modal('show');
@@ -855,18 +1119,92 @@ export class CalendarTemplateComponent implements OnInit {
     api_postUPd.action = "updateCalendarTask";
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.calendar_template_id = this.edit_temp_id;
-    api_postUPd.calendar_template_name = formdata.edit_calendarName;
+
+    var CalendarName = formdata.edit_calendarName;
+    if (CalendarName === null || CalendarName === '' || CalendarName === 'undefined' || CalendarName === undefined) {
+
+      iziToast.warning({
+        message: "Choose Calendar Name",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.calendar_template_name = formdata.edit_calendarName;
+    }
     api_postUPd.calendar_short_name = formdata.edit_short_name;
-    api_postUPd.billerId = formdata.edit_billerId;
-    api_postUPd.colorCodes = formdata.edit_color_code;
+
+
+    var billerId = formdata.edit_billerId;
+    if (billerId === null || billerId === '' || billerId === 'undefined' || billerId === undefined) {
+
+      iziToast.warning({
+        message: "Choose Biller Name",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.billerId = formdata.edit_billerId;
+    }
+
+    var colorCode = formdata.edit_color_code;
+    if (colorCode === null || colorCode === '' || colorCode === 'undefined' || colorCode === undefined) {
+
+      iziToast.warning({
+        message: "Choose Color Code",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.colorCodes = formdata.edit_color_code;
+    }
+
     if ($('#edPublic').prop('checked')) {
       api_postUPd.calendar_type = '1';
     } else if ($('#edPersonal').prop('checked')) {
       api_postUPd.calendar_type = '2';
+    } else {
+      iziToast.warning({
+        message: "Choose Calendar Type",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
     }
-    api_postUPd.report_to_email = formdata.edit_reportToEmail;
+
+    var reportEmail = formdata.edit_reportToEmail;
+    if (reportEmail === null || reportEmail === '' || reportEmail === 'undefined' || reportEmail === undefined) {
+
+      iziToast.warning({
+        message: "Enter Report to Email",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.report_to_email = formdata.edit_reportToEmail;
+    }
     api_postUPd.calendar_template_entry_date = formdata.edit_entry_date;
-    api_postUPd.starting_from_days = formdata.edit_starting_from;
+
+    var startFrom = formdata.edit_starting_from;
+    if (startFrom === null || startFrom === '' || startFrom === 'undefined' || startFrom === undefined) {
+
+      iziToast.warning({
+        message: "Choose Starting From",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.starting_from_days = formdata.edit_starting_from;
+    }
 
     if ($('#edrecurring').prop('checked')) {
       api_postUPd.calendar_entry_type = '1';
@@ -902,8 +1240,34 @@ export class CalendarTemplateComponent implements OnInit {
       api_postUPd.alart_stat = '0';
     }
 
-    api_postUPd.supervisor_user_id = formdata.edit_supervisor_name;
-    api_postUPd.calendar_template_children = formarrayvalue.edit_tasks;
+
+    if (!this.edit_array_emailCC_CheckboxEdit || this.edit_array_emailCC_CheckboxEdit.length === 0) {
+
+      iziToast.warning({
+        message: "Select Supervisor",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.supervisor_user_id = this.edit_array_emailCC_CheckboxEdit;
+    }
+
+
+
+    if (formarrayvalue.edit_tasks.length == 0) {
+
+      iziToast.warning({
+        message: "Enter Atleat 1 Task",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_postUPd.calendar_template_children = formarrayvalue.edit_tasks;
+    }
 
     api_req.element_data = api_postUPd;
     console.log("api_req", api_req);
@@ -914,11 +1278,16 @@ export class CalendarTemplateComponent implements OnInit {
         $('#edit_template').modal('hide');
         this.spinner.hide();
         this.calenderlist({});
-      } else {
-        iziToast.warning({
-          message: "View List Loading Failed. Please try again",
+        iziToast.success({
+          message: "Updated Successfully",
           position: 'topRight'
         });
+      } else {
+        iziToast.warning({
+          message: "Failed. Please try again",
+          position: 'topRight'
+        });
+        $('#edit_template').modal('hide');
 
       }
     }),
@@ -994,7 +1363,46 @@ export class CalendarTemplateComponent implements OnInit {
     const formattedDate = `${day}-${month}-${year} ${time}`;
     console.log('Formatted Date:', formattedDate); // Use this formatted value
   }
+  EditCHK_emailCC(data: any, event: any) {
+    //  console.log("List - CheckBox ID", data);
+    this.groupSelect_emailCCId = data;
+    this.checkbox_value = event.target.checked;
+    //  console.log(this.checkbox_value)
+    if (this.checkbox_value) {
 
+      this.edit_array_emailCC_Checkbox.push(data);
+      this.edit_array_emailCC_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+    }
+    else {
+      const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+
+    }
+  }
+  EditCHK_emailCC_Edit(data: any, event: any) {
+    //  console.log("List - CheckBox ID", data);
+    this.groupSelect_emailCCIdEdit = data;
+    this.checkbox_value = event.target.checked;
+    //  console.log(this.checkbox_value)
+    if (this.checkbox_value) {
+
+      this.edit_array_emailCC_CheckboxEdit.push(data);
+      this.edit_array_emailCC_CheckboxEdit.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_CheckboxEdit);
+    }
+    else {
+      const index = this.edit_array_emailCC_CheckboxEdit.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_CheckboxEdit.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_CheckboxEdit)
+
+    }
+  }
   // Filter data based on search text
   // filterTable() {
   //   this.filteredData = this.data.filter(item =>

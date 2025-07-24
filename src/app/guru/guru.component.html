@@ -64,7 +64,8 @@
                 </thead>
                 <tbody *ngFor="let list of guru_list; let i = index">
                   <tr>
-                    <td colspan="8" style="background-color: #153d62;color:azure;text-align: left;">{{list.customerName}}
+                    <td colspan="8" style="background-color: #153d62;color:azure;text-align: left;">
+                      {{list.customerName}}
                     </td>
 
                   </tr>
@@ -164,85 +165,137 @@
   </div>
 
 </div>
-  <!----------Modal Pop Up (BEGIN) add  ------------------>
-  <div class="modal fade" id="addGuruDetailsFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content addcustomernewallcss">
+<div class="contents-section" *ngIf="this.googleAuthentication_status==false">
+  <div class="modal-content addcustomernewallcss">
 
-        <div class="modal-header">
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+    <div class="modal-header">
+      <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #262127, #54b7aa);">
+        Google Authenticator </h2>
+
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="GoogleAuthenticationForm">
+        <div class="row">
+          <div class="col-lg-4">
+
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label>
+                  Google Authentication Code
+                </label>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" formControlName="google_AuthenticationCode"
+                  (keyup.enter)="GoogleAuthenticationValidation()" />
+             
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-lg-4">
+
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div style="margin-left:700px;margin-bottom:360px">
+
+      <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+        Validate
+      </button>
+   
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!----------Modal Pop Up (BEGIN) add  ------------------>
+<div class="modal fade" id="addGuruDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content addcustomernewallcss">
+
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
       background: linear-gradient(to right, #262127, #54b7aa);">
-            ADD GURU DETAILS </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close"
-          (click)="clearForm()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="addGuru_FormGroup">
-            <div class="row">
-              <div class="col-12">
+          ADD GURU DETAILS </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close" (click)="clearForm()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addGuru_FormGroup">
+          <div class="row">
+            <div class="col-12">
 
-                <section>
+              <section>
 
-                  <div>
+                <div>
 
-                    <div class="table-responsive">
-                      <table class="add-contact-table-section">
-                        <thead>
-                          <tr class="userDatatable-header">
+                  <div class="table-responsive">
+                    <table class="add-contact-table-section">
+                      <thead>
+                        <tr class="userDatatable-header">
 
-                            <th><span class="userDatatable-title">Biller Name</span></th>
+                          <th><span class="userDatatable-title">Biller Name</span></th>
 
-                            <th><span class="userDatatable-title">Customer Name</span></th>
-                            <th><span class="userDatatable-title">Description</span>
-                            </th>
-                            <th><span class="userDatatable-title">
-                                Account Type</span></th>
-                            <th><span class="userDatatable-title">
-                                UserName</span></th>
-                            <th><span class="userDatatable-title">
-                                GURU</span></th>
-                            <th><span class="userDatatable-title">URL</span>
-                            </th>
-                            <th><span class="userDatatable-title">S Perm</span>
-                            </th>
-                            <th>
-                              <span class="userDatatable-title">Action</span>
-                            </th>
+                          <th><span class="userDatatable-title">Customer Name</span></th>
+                          <th><span class="userDatatable-title">Description</span>
+                          </th>
+                          <th><span class="userDatatable-title">
+                              Account Type</span></th>
+                          <th><span class="userDatatable-title">
+                              UserName</span></th>
+                          <th><span class="userDatatable-title">
+                              GURU</span></th>
+                          <th><span class="userDatatable-title">URL</span>
+                          </th>
+                          <th><span class="userDatatable-title">S Perm</span>
+                          </th>
+                          <th>
+                            <span class="userDatatable-title">Action</span>
+                          </th>
 
-                          </tr>
-                        </thead>
-                        <tbody formArrayName="addresses"
-                          *ngFor="let address of addressControls.controls; let i = index;">
+                        </tr>
+                      </thead>
+                      <tbody formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
 
 
-                          <tr [formGroupName]="i" class="marginSpace">
-                            <td>
+                        <tr [formGroupName]="i" class="marginSpace">
+                          <td>
 
 
-                              <div class="userDatatable-content">
-                                <select name="billerId" id="pd_billername_txtbox_{{i}}" class="form-control"
-                                  formControlName="billerId">
-                                  <option [ngValue]="0" selected>Select Biller</option>
+                            <div class="userDatatable-content">
+                              <select name="billerId" id="pd_billername_txtbox_{{i}}" class="form-control"
+                                formControlName="billerId">
+                                <option [ngValue]="0" selected>Select Biller</option>
 
-                                  <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
-                                    {{bill.billerName}}
-                                  </option>
+                                <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
+                                  {{bill.billerName}}
+                                </option>
 
-                                </select>
+                              </select>
 
-                                <!--                                           
+                              <!--                                           
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                     formControlName="pd_billername"
                                                     id="pd_billername_txtbox_{{i}}" /> -->
 
-                              </div>
-                            </td>
-                            <td>
-                              <!-- <div class="userDatatable-content">
+                            </div>
+                          </td>
+                          <td>
+                            <!-- <div class="userDatatable-content">
 
 
 
@@ -253,202 +306,200 @@
                               </div> -->
 
 
-                              <div class="ng-autocomplete userDatatable-content" >
-                                <!-- <label for="companyName" class="col-lg-12 "></label> -->
-                                <ng-autocomplete id="pd_customername_txtbox_{{i}}" [data]="searchResult_customerName"
-                                  [searchKeyword]="keyword_customerName" formControlName="customer_id"
-                                  (selected)='selectEventCustomer($event, i)'
-                                  (inputChanged)='searchCustomerName($event)' (inputFocused)='onFocusedCustomer($event)'
-                                  [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                                </ng-autocomplete>
+                            <div class="ng-autocomplete userDatatable-content">
+                              <!-- <label for="companyName" class="col-lg-12 "></label> -->
+                              <ng-autocomplete id="pd_customername_txtbox_{{i}}" [data]="searchResult_customerName"
+                                [searchKeyword]="keyword_customerName" formControlName="customer_id"
+                                (selected)='selectEventCustomer($event, i)' (inputChanged)='searchCustomerName($event)'
+                                (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                [notFoundTemplate]="notFoundTemplate">
+                              </ng-autocomplete>
 
-                                <ng-template #itemTemplateCustomer let-item>
-                                  <a [innerHTML]="item.customerName"></a>
-                                </ng-template>
+                              <ng-template #itemTemplateCustomer let-item>
+                                <a [innerHTML]="item.customerName"></a>
+                              </ng-template>
 
-                                <ng-template #notFoundTemplate let-notFound>
-                                  <div [innerHTML]="notFound"></div>
-                                </ng-template>
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                              </ng-template>
 
-                              </div>
+                            </div>
 
-                            </td>
+                          </td>
 
-                            <td>
-                              <div class="userDatatable-content">
-                                <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
-                                  id="pd_description_txtArea_{{i}}"></textarea>
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <select name="account_type" id="pd_accountType_{{i}}" class="form-control"
-                                  formControlName="account_type">
-                                  <option [ngValue]="0" selected disabled>Select Type</option>
+                          <td>
+                            <div class="userDatatable-content">
+                              <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
+                                id="pd_description_txtArea_{{i}}"></textarea>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <select name="account_type" id="pd_accountType_{{i}}" class="form-control"
+                                formControlName="account_type">
+                                <option [ngValue]="0" selected disabled>Select Type</option>
 
-                                  <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
-                                    {{bill.value}}
-                                  </option>
+                                <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
+                                  {{bill.value}}
+                                </option>
 
-                                </select>
+                              </select>
 
-                                <!-- <input type="text" class="form-control" 
+                              <!-- <input type="text" class="form-control" 
                                                     formControlName="pd_accountType" id="pd_accountType_{{i}}" /> -->
 
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="text" class="form-control" formControlName="pwd_username"
-                                  id="pd_username_{{i}}" />
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="text" class="form-control" formControlName="pwd_guru" id="pd_guru_{{i}}" />
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="url" class="form-control" formControlName="webpage_url"
-                                  id="pd_url_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="text" class="form-control" formControlName="pwd_username"
+                                id="pd_username_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="text" class="form-control" formControlName="pwd_guru" id="pd_guru_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="url" class="form-control" formControlName="webpage_url" id="pd_url_{{i}}" />
 
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="checkbox" formControlName="special_per" id="pd_s_perm_{{i}}">
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="checkbox" formControlName="special_per" id="pd_s_perm_{{i}}">
 
-                              </div>
-                            </td>
-                            <td *ngIf="i>0">
-                              <div *ngIf="i>0" class="userDatatable-content d-inline-block">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                  (click)="removeAddress(i)">X</button>
+                            </div>
+                          </td>
+                          <td *ngIf="i>0">
+                            <div *ngIf="i>0" class="userDatatable-content d-inline-block">
+                              <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)">X</button>
 
-                              </div>
-                            </td>
+                            </div>
+                          </td>
 
-                          </tr>
+                        </tr>
 
-                        </tbody>
+                      </tbody>
 
-                      </table>
-                    </div>
-
-
-
+                    </table>
                   </div>
-                </section>
-
-                <div class="text-right">
 
 
-                  <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
-                    style="margin-right: 10px;">
-                    <i class="fas fa-plus" style="margin-right:0;"> Add</i>
-                  </button>
+
                 </div>
+              </section>
 
+              <div class="text-right">
+
+
+                <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                  style="margin-right: 10px;">
+                  <i class="fas fa-plus" style="margin-right:0;"> Add</i>
+                </button>
               </div>
 
-
             </div>
-          </form>
 
 
-        </div>
-        <div class="modal-footer">
+          </div>
+        </form>
 
-          <button type="button" class="btn btn-primary" (click)="insertGuruDetails()">
-            Save
-          </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Close
-          </button>
-        </div>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="insertGuruDetails()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
-  <!----------Modal Pop Up (END)  add ------------------>
+</div>
+<!----------Modal Pop Up (END)  add ------------------>
 
-  <!----------Modal Pop Up (BEGIN) edit  ------------------>
-  <div class="modal fade" id="editGuruDetailsFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content addcustomernewallcss">
+<!----------Modal Pop Up (BEGIN) edit  ------------------>
+<div class="modal fade" id="editGuruDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content addcustomernewallcss">
 
-        <div class="modal-header">
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
       background: linear-gradient(to right, #262127, #54b7aa);">
-            EDIT GURU DETAILS </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="editGuru_FormGroup">
-            <div class="row">
-              <div class="col-12">
+          EDIT GURU DETAILS </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editGuru_FormGroup">
+          <div class="row">
+            <div class="col-12">
 
-                <section>
+              <section>
 
-                  <div>
+                <div>
 
-                    <div class="table-responsive">
-                      <table class="add-contact-table-section">
-                        <thead>
-                          <tr class="userDatatable-header">
+                  <div class="table-responsive">
+                    <table class="add-contact-table-section">
+                      <thead>
+                        <tr class="userDatatable-header">
 
-                            <th><span class="userDatatable-title">Biller Name</span></th>
+                          <th><span class="userDatatable-title">Biller Name</span></th>
 
-                            <th><span class="userDatatable-title">Customer Name</span></th>
-                            <th><span class="userDatatable-title">Description</span>
-                            </th>
-                            <th><span class="userDatatable-title">
-                                Account Type</span></th>
-                            <th><span class="userDatatable-title">
-                                UserName</span></th>
-                            <th><span class="userDatatable-title">
-                                GURU</span></th>
-                            <th><span class="userDatatable-title">URL</span>
-                            </th>
-                            <th><span class="userDatatable-title">S Perm</span>
-                            </th>
-                            <th><span class="userDatatable-title">Action</span>
-                            </th>
+                          <th><span class="userDatatable-title">Customer Name</span></th>
+                          <th><span class="userDatatable-title">Description</span>
+                          </th>
+                          <th><span class="userDatatable-title">
+                              Account Type</span></th>
+                          <th><span class="userDatatable-title">
+                              UserName</span></th>
+                          <th><span class="userDatatable-title">
+                              GURU</span></th>
+                          <th><span class="userDatatable-title">URL</span>
+                          </th>
+                          <th><span class="userDatatable-title">S Perm</span>
+                          </th>
+                          <th><span class="userDatatable-title">Action</span>
+                          </th>
 
-                          </tr>
-                        </thead>
-                        <tbody formArrayName="editaddresses"
-                          *ngFor="let editaddress of editaddressControls.controls; let i = index;">
-
-
-                          <tr [formGroupName]="i" class="marginSpace">
-                            <td>
+                        </tr>
+                      </thead>
+                      <tbody formArrayName="editaddresses"
+                        *ngFor="let editaddress of editaddressControls.controls; let i = index;">
 
 
-                              <div class="userDatatable-content">
-                                <select name="billerId" id="pd_e_billername_txtbox_{{i}}" class="form-control"
-                                  formControlName="billerId">
-                                  <option [ngValue]="0" selected disabled>Select Biller</option>
+                        <tr [formGroupName]="i" class="marginSpace">
+                          <td>
 
-                                  <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
-                                    {{bill.billerName}}
-                                  </option>
 
-                                </select>
+                            <div class="userDatatable-content">
+                              <select name="billerId" id="pd_e_billername_txtbox_{{i}}" class="form-control"
+                                formControlName="billerId">
+                                <option [ngValue]="0" selected disabled>Select Biller</option>
 
-                                <!--                                           
+                                <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
+                                  {{bill.billerName}}
+                                </option>
+
+                              </select>
+
+                              <!--                                           
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                     formControlName="pd_billername"
                                                     id="pd_billername_txtbox_{{i}}" /> -->
 
-                              </div>
-                            </td>
-                            <td>
-                              <!-- <div class="userDatatable-content">
+                            </div>
+                          </td>
+                          <td>
+                            <!-- <div class="userDatatable-content">
 
 
 
@@ -459,99 +510,98 @@
                               </div> -->
 
 
-                              <div class="ng-autocomplete userDatatable-content">
-                                <!-- <label for="companyName" class="col-lg-12 "></label> -->
-                                <ng-autocomplete id="pd_e_customername_txtbox_{{i}}" [data]="searchResult_customerName"
-                                  [searchKeyword]="keyword_customerName" formControlName="customerName"
-                                  (selected)='selectEventCustomer($event, i)'
-                                  (inputChanged)='searchCustomerName($event)' (inputFocused)='onFocusedCustomer($event)'
-                                  [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                                </ng-autocomplete>
+                            <div class="ng-autocomplete userDatatable-content">
+                              <!-- <label for="companyName" class="col-lg-12 "></label> -->
+                              <ng-autocomplete id="pd_e_customername_txtbox_{{i}}" [data]="searchResult_customerName"
+                                [searchKeyword]="keyword_customerName" formControlName="customerName"
+                                (selected)='selectEventCustomer($event, i)' (inputChanged)='searchCustomerName($event)'
+                                (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                [notFoundTemplate]="notFoundTemplate">
+                              </ng-autocomplete>
 
-                                <ng-template #itemTemplateCustomer let-item>
-                                  <a [innerHTML]="item.customerName"></a>
-                                </ng-template>
+                              <ng-template #itemTemplateCustomer let-item>
+                                <a [innerHTML]="item.customerName"></a>
+                              </ng-template>
 
-                                <ng-template #notFoundTemplate let-notFound>
-                                  <div [innerHTML]="notFound"></div>
-                                </ng-template>
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                              </ng-template>
 
-                              </div>
-                              <input type="hidden" formControlName="customer_id" id="pd_e_customerID_txtbox_{{i}}">
+                            </div>
+                            <input type="hidden" formControlName="customer_id" id="pd_e_customerID_txtbox_{{i}}">
 
-                            </td>
+                          </td>
 
-                            <td>
-                              <div class="userDatatable-content">
-                                <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
-                                  id="pd_e_description_txtArea_{{i}}"></textarea>
-                                <input type="hidden" formControlName="guru_details_id">
-                              </div>
+                          <td>
+                            <div class="userDatatable-content">
+                              <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
+                                id="pd_e_description_txtArea_{{i}}"></textarea>
+                              <input type="hidden" formControlName="guru_details_id">
+                            </div>
 
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <select name="account_type" id="pd_e_accountType_{{i}}" class="form-control"
-                                  formControlName="account_type">
-                                  <option [ngValue]="0" selected disabled>Select Type</option>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <select name="account_type" id="pd_e_accountType_{{i}}" class="form-control"
+                                formControlName="account_type">
+                                <option [ngValue]="0" selected disabled>Select Type</option>
 
-                                  <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
-                                    {{bill.value}}
-                                  </option>
+                                <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
+                                  {{bill.value}}
+                                </option>
 
-                                </select>
+                              </select>
 
-                                <!-- <input type="text" class="form-control" 
+                              <!-- <input type="text" class="form-control" 
                                                     formControlName="pd_accountType" id="pd_accountType_{{i}}" /> -->
 
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="text" class="form-control" formControlName="pwd_username"
-                                  id="pd_e_username_{{i}}" />
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="text" class="form-control" formControlName="pwd_guru" 
-                                id="pd_e_guru_{{i}}" />
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="url" class="form-control" formControlName="webpage_url"
-                                  id="pd_e_url_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="text" class="form-control" formControlName="pwd_username"
+                                id="pd_e_username_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="text" class="form-control" formControlName="pwd_guru" id="pd_e_guru_{{i}}" />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="url" class="form-control" formControlName="webpage_url"
+                                id="pd_e_url_{{i}}" />
 
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="checkbox" formControlName="special_per" id="pd_e_s_perm_{{i}}">
+                            </div>
+                          </td>
+                          <td>
+                            <div class="userDatatable-content">
+                              <input type="checkbox" formControlName="special_per" id="pd_e_s_perm_{{i}}">
 
-                              </div>
-                            </td>
-                            <td *ngIf="i>0">
-                              <div *ngIf="i>0" class="userDatatable-content d-inline-block">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                  (click)="removeAddressedit(i)">X</button>
+                            </div>
+                          </td>
+                          <td *ngIf="i>0">
+                            <div *ngIf="i>0" class="userDatatable-content d-inline-block">
+                              <button type="button" class="btn btn-danger btn-sm"
+                                (click)="removeAddressedit(i)">X</button>
 
-                              </div>
-                            </td>
+                            </div>
+                          </td>
 
-                          </tr>
+                        </tr>
 
-                        </tbody>
+                      </tbody>
 
-                      </table>
-                    </div>
-
-
-
+                    </table>
                   </div>
-                </section>
 
-                <!-- <div class="text-right">
+
+
+                </div>
+              </section>
+
+              <!-- <div class="text-right">
 
 
                   <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
@@ -560,273 +610,267 @@
                   </button>
                 </div> -->
 
-              </div>
-
-
             </div>
-          </form>
 
 
-        </div>
-        <div class="modal-footer">
+          </div>
+        </form>
 
-          <button type="button" class="btn btn-primary" (click)="guruUpdate()">
-            Update
-          </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
-        </div>
+
       </div>
-    </div>
-  </div>
-  <!----------Modal Pop Up (END)  edit ------------------>
+      <div class="modal-footer">
 
-  <!----------Modal Pop Up (BEGIN) View  ------------------>
-  <div class="modal fade" id="viewGuruDetailsFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content addcustomernewallcss">
-
-        <div class="modal-header">
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-     background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-     background: linear-gradient(to right, #262127, #54b7aa);">
-            GURU DETAILS </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <div class="row">
-            <div class="col-lg-12 mb-3" style="align-items: center;color:#6f0000">
-              <label for="view_ML_Country" class="col-form-label font-weight-bold">User Name:</label>
-              <span class=" ml-3">{{ viewUsername }}</span>
-            </div>
-
-            <div class="col-lg-12 mb-3" style="align-items: center;color:#0c7211">
-              <label for="view_ML_Country" class="col-form-label font-weight-bold">Password:</label>
-              <span class=" ml-3">{{ viewPwdGuru }}</span>
-            </div>
-
-            <div class="col-lg-12 mb-3" style="align-items: center;color:darkmagenta">
-              <label for="view_ML_Country" class="col-form-label font-weight-bold">URL:</label>
-              <span class=" ml-3">{{ viewWebpageURL }}</span>
-            </div>
-          </div>
-          <div class="modal-footer">
-
-
-            <button type="button" class="btn btn-dark" data-dismiss="modal">
-              Close
-            </button>
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary" (click)="guruUpdate()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
       </div>
-    </div>
-  </div>
-  <!----------Modal Pop Up (END)  View ------------------>
-
-
-  <!----------Modal Pop Up (BEGIN)  for Guru- User Access Permission ------------------>
-  <div class="modal fade" id="userAccessGuruDetailsFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #262127, #54b7aa);">
-            User Access Permission </h2>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="guruForm">
-            <div class="col-lg-12 ">
-              <div class="row">
-                <div class="col-lg-4">
-
-                </div>
-                <div class="col-lg-2">
-                  <label class="form-label mt-2" style="color:#cb0b2a!important;">User Access Group</label>
-
-                </div>
-                <div class="col-lg-3">
-                  <select class="form-control" formControlName="user" (change)="userChange($event)" id="userVVV">
-                    <option [ngValue]="null" selected disabled>Select User</option>
-                    <option *ngFor="let term of UserAccessGroup" value="{{term.access_group_id}}">
-                      {{term.access_name}}
-                    </option>
-
-                  </select>
-
-                </div>
-                <div class="col-lg-3">
-
-                </div>
-              </div>
-            </div>
-          </form>
-
-
-          <div class="row mt-4">
-            <div class="d-flex col-lg-2" *ngFor="let quot of guruShowPermission_List;let i=index">
-              <div class="d-flex">
-                <div class="">
-                  <div class="checkbox-group-wrapper">
-                    <div class="checkbox-group">
-
-                      <input type="checkbox" id="{{ quot.userId }}" [value]="quot.userId"
-                        checked="{{quot.status==true ? 'checked':''}}" class="chb chb-3"
-                        (change)="InvoiceShowCHK(quot.userId,$event)">
-                      <label class=" ml-2" for="{{ quot.userId }}">{{quot.firstname}}</label>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-primary" (click)="userPermissionUpdate()">
-            Update
-          </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!----------Modal Pop Up (END) for Guru- User Access Permission------------------>
-
-
-  <!----------Modal Pop Up (BEGIN) add  ------------------>
-  <div class="modal fade" id="GoogleAuthenticationGuruFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content addcustomernewallcss">
-
-        <div class="modal-header">
-          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #262127, #54b7aa);">
-            Google Authenticator </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <form [formGroup]="GoogleAuthenticationForm">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="form-group row">
-                  <div class="col-lg-6">
-                    <label>
-                      Google Authentication Code
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <input type="text" class="form-control" 
-                    (keyup.enter)="GoogleAuthenticationValidation()"
-                    formControlName="google_AuthenticationCode" />
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-          </form>
-
-        </div>
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
-            Validate
-          </button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!----------Modal Pop Up (END)  add ------------------>
-
-
-  <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchGuruFormId" tabindex="-1" role="dialog"
-aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-  <div class="modal-content searchQuotationCSS">
-    <div class="modal-header">
-
-      <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
-       background: linear-gradient(to right, #262127, #54b7aa);">
-        Advanced Search </h2>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="searchGuruForm" class="form-horizontal">
-        <div class="form-group row ng-autocomplete userDatatable-content">
-          <label for="customer_id_guru" class="col-lg-12 col-form-label">Customer Name</label>
-          <div class="col-lg-12">
-            <ng-autocomplete 
-              id="pd_customername_txtbo" 
-              [data]="searchResult_customerName"
-              [searchKeyword]="keyword_customerName" 
-              formControlName="customer_id_guru"
-              (selected)='selectEventCustomerGuru($event)'
-              (inputChanged)='searchCustomerName($event)' 
-              (inputFocused)='onFocusedCustomer($event)'
-              [itemTemplate]="itemTemplateCustomer" 
-              [notFoundTemplate]="notFoundTemplate">
-            </ng-autocomplete>
-          </div>
-        </div>
-    
-        <div class="form-group row">
-          <div class="col-lg-12">
-            <ng-template #itemTemplateCustomer let-item>
-              <a [innerHTML]="item.customerName"></a>
-            </ng-template>
-          </div>
-        </div>
-    
-        <div class="form-group row">
-          <div class="col-lg-12">
-            <ng-template #notFoundTemplate let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
-          </div>
-        </div>
-        
-      </form>
-    </div>
-    
-    <div class="modal-footer">
-    
-      <button type="button" class="btn btn-primary" (click)="guruList()">
-        Search
-      </button>
-      <button type="button" class="btn btn-dark" data-dismiss="modal">
-        Close
-      </button>
     </div>
   </div>
 </div>
+<!----------Modal Pop Up (END)  edit ------------------>
+
+<!----------Modal Pop Up (BEGIN) View  ------------------>
+<div class="modal fade" id="viewGuruDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content addcustomernewallcss">
+
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #262127, #54b7aa);">
+          GURU DETAILS </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-lg-12 mb-3" style="align-items: center;color:#6f0000">
+            <label for="view_ML_Country" class="col-form-label font-weight-bold">User Name:</label>
+            <span class=" ml-3">{{ viewUsername }}</span>
+          </div>
+
+          <div class="col-lg-12 mb-3" style="align-items: center;color:#0c7211">
+            <label for="view_ML_Country" class="col-form-label font-weight-bold">Password:</label>
+            <span class=" ml-3">{{ viewPwdGuru }}</span>
+          </div>
+
+          <div class="col-lg-12 mb-3" style="align-items: center;color:darkmagenta">
+            <label for="view_ML_Country" class="col-form-label font-weight-bold">URL:</label>
+            <span class=" ml-3">{{ viewWebpageURL }}</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  View ------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for Guru- User Access Permission ------------------>
+<div class="modal fade" id="userAccessGuruDetailsFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #262127, #54b7aa);">
+          User Access Permission </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="guruForm">
+          <div class="col-lg-12 ">
+            <div class="row">
+              <div class="col-lg-4">
+
+              </div>
+              <div class="col-lg-2">
+                <label class="form-label mt-2" style="color:#cb0b2a!important;">User Access Group</label>
+
+              </div>
+              <div class="col-lg-3">
+                <select class="form-control" formControlName="user" (change)="userChange($event)" id="userVVV">
+                  <option [ngValue]="null" selected disabled>Select User</option>
+                  <option *ngFor="let term of UserAccessGroup" value="{{term.access_group_id}}">
+                    {{term.access_name}}
+                  </option>
+
+                </select>
+
+              </div>
+              <div class="col-lg-3">
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+        <div class="row mt-4">
+          <div class="d-flex col-lg-2" *ngFor="let quot of guruShowPermission_List;let i=index">
+            <div class="d-flex">
+              <div class="">
+                <div class="checkbox-group-wrapper">
+                  <div class="checkbox-group">
+
+                    <input type="checkbox" id="{{ quot.userId }}" [value]="quot.userId"
+                      checked="{{quot.status==true ? 'checked':''}}" class="chb chb-3"
+                      (change)="InvoiceShowCHK(quot.userId,$event)">
+                    <label class=" ml-2" for="{{ quot.userId }}">{{quot.firstname}}</label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="userPermissionUpdate()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END) for Guru- User Access Permission------------------>
+
+
+<!----------Modal Pop Up (BEGIN) add  ------------------>
+<div class="modal fade" id="GoogleAuthenticationGuruFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content addcustomernewallcss">
+
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #262127, #54b7aa);">
+          Google Authenticator </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="GoogleAuthenticationForm">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <div class="col-lg-6">
+                  <label>
+                    Google Authentication Code
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <input type="text" class="form-control" (keyup.enter)="GoogleAuthenticationValidation()"
+                    formControlName="google_AuthenticationCode" />
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="GoogleAuthenticationValidation()">
+          Validate
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  add ------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchGuruFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+          Advanced Search </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="searchGuruForm" class="form-horizontal">
+          <div class="form-group row ng-autocomplete userDatatable-content">
+            <label for="customer_id_guru" class="col-lg-12 col-form-label">Customer Name</label>
+            <div class="col-lg-12">
+              <ng-autocomplete id="pd_customername_txtbo" [data]="searchResult_customerName"
+                [searchKeyword]="keyword_customerName" formControlName="customer_id_guru"
+                (selected)='selectEventCustomerGuru($event)' (inputChanged)='searchCustomerName($event)'
+                (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <ng-template #itemTemplateCustomer let-item>
+                <a [innerHTML]="item.customerName"></a>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-12">
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="guruList()">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
